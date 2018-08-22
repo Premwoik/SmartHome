@@ -1,0 +1,15 @@
+var _Fresheyeball$elm_guards$Guards_ops = _Fresheyeball$elm_guards$Guards_ops || {};
+_Fresheyeball$elm_guards$Guards_ops['=>'] = F2(
+	function (v0, v1) {
+		return {ctor: '_Tuple2', _0: v0, _1: v1};
+	});
+var _Fresheyeball$elm_guards$Guards_ops = _Fresheyeball$elm_guards$Guards_ops || {};
+_Fresheyeball$elm_guards$Guards_ops['|='] = F2(
+	function (p, x) {
+		var _p0 = p;
+		if (_p0._0 === false) {
+			return x;
+		} else {
+			return _p0._1;
+		}
+	});

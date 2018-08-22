@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="itHome1" uuid="d745192f-121d-4daf-abb2-c994ab0f06bb">
+      <database-info product="SQLite" version="3.20.1" jdbc-version="2.1" driver-name="SQLite JDBC" driver-version="3.20.1.1" />
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <introspection-schemas>*:main</introspection-schemas>
+    </data-source>
+    <data-source name="itHome" uuid="8e6c902a-9ca9-4fde-948a-bb4c900c6226">
+      <database-info product="SQLite" version="3.20.1" jdbc-version="2.1" driver-name="SQLite JDBC" driver-version="3.20.1.1" />
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <introspection-schemas>*:main</introspection-schemas>
+    </data-source>
+    <data-source name="itHome1 [2]" uuid="bc964963-650c-46d3-abd2-fb3113ce9afe">
+      <database-info product="SQLite" version="3.20.1" jdbc-version="2.1" driver-name="SQLite JDBC" driver-version="3.20.1.1" />
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <introspection-schemas>*:main</introspection-schemas>
+    </data-source>
+  </component>
+</project>
