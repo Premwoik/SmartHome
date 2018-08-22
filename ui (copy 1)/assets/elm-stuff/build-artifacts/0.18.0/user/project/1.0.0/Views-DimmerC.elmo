@@ -1,0 +1,316 @@
+var _user$project$Views_DimmerC$toggleBtn = F2(
+	function (mdl, dimmer) {
+		var state = dimmer.undrawn ? _debois$elm_mdl$Material_Button$colored : _debois$elm_mdl$Material_Options$nop;
+		return A5(
+			_debois$elm_mdl$Material_Button$render,
+			_user$project$Model$Mdl,
+			{
+				ctor: '::',
+				_0: 0,
+				_1: {
+					ctor: '::',
+					_0: _user$project$Data_Dimmer$getId(dimmer),
+					_1: {ctor: '[]'}
+				}
+			},
+			mdl,
+			{
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'align', 'center'),
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Options$onClick(
+						_user$project$Model$UndrawDimmer(dimmer)),
+					_1: {
+						ctor: '::',
+						_0: state,
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('Pokaż lampy'),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Views_DimmerC$toggleLightBtn = F3(
+	function (mdl, dimmer, light) {
+		var state = _user$project$Data_Light$isOn(light) ? _debois$elm_mdl$Material_Button$colored : _debois$elm_mdl$Material_Options$nop;
+		return A5(
+			_debois$elm_mdl$Material_Button$render,
+			_user$project$Model$Mdl,
+			{
+				ctor: '::',
+				_0: 1,
+				_1: {
+					ctor: '::',
+					_0: _user$project$Data_Light$getId(light),
+					_1: {ctor: '[]'}
+				}
+			},
+			mdl,
+			{
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Button$fab,
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Options$onClick(
+						A2(_user$project$Model$ToggleLight, dimmer, light)),
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Button$icon,
+						_1: {
+							ctor: '::',
+							_0: state,
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Icon$i('highlight'),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Views_DimmerC$icon = 'wb_sunny';
+var _user$project$Views_DimmerC$color = A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Amber, _debois$elm_mdl$Material_Color$S500);
+var _user$project$Views_DimmerC$cell = A2(_debois$elm_mdl$Material_Options$css, 'width', '64px');
+var _user$project$Views_DimmerC$lightRow = F3(
+	function (mdl, dimmer, light) {
+		return A2(
+			_debois$elm_mdl$Material_Card$subhead,
+			{
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'justify-content', 'space-between'),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 2rem'),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$span,
+					{
+						ctor: '::',
+						_0: _user$project$Views_DimmerC$cell,
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(light.name),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Options$span,
+						{
+							ctor: '::',
+							_0: _user$project$Views_DimmerC$cell,
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
+								_1: {ctor: '[]'}
+							}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Icon$view,
+								_user$project$Views_DimmerC$icon,
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Color$text(_user$project$Views_DimmerC$color),
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Icon$size18,
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Options$span,
+							{
+								ctor: '::',
+								_0: _user$project$Views_DimmerC$cell,
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'right'),
+									_1: {ctor: '[]'}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A3(_user$project$Views_DimmerC$toggleLightBtn, mdl, dimmer, light),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	});
+var _user$project$Views_DimmerC$renderLights = F2(
+	function (mdl, dimmer) {
+		var render = A2(
+			_elm_lang$core$List$map,
+			function (x) {
+				return A3(_user$project$Views_DimmerC$lightRow, mdl, dimmer, x);
+			},
+			dimmer.lights);
+		return dimmer.undrawn ? render : {ctor: '[]'};
+	});
+var _user$project$Views_DimmerC$slider = function (dim) {
+	return _debois$elm_mdl$Material_Slider$view(
+		{
+			ctor: '::',
+			_0: _debois$elm_mdl$Material_Slider$step(25),
+			_1: {
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Slider$value(dim.fill),
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Slider$onChange(
+						_user$project$Model$DimSlide(dim)),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
+var _user$project$Views_DimmerC$turningBtn = F2(
+	function (mdl, dimmer) {
+		var state = _user$project$Data_Dimmer$isOn(dimmer) ? _debois$elm_mdl$Material_Button$colored : _debois$elm_mdl$Material_Options$nop;
+		return A5(
+			_debois$elm_mdl$Material_Button$render,
+			_user$project$Model$Mdl,
+			{
+				ctor: '::',
+				_0: 0,
+				_1: {ctor: '[]'}
+			},
+			mdl,
+			{
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Button$fab,
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'align', 'center'),
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$onClick(
+							_user$project$Model$DimToggle(dimmer)),
+						_1: {
+							ctor: '::',
+							_0: state,
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Icon$i('highlight'),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Views_DimmerC$dimmerCard = F4(
+	function (mdl, dimmer, k, raised) {
+		var action = A2(
+			_debois$elm_mdl$Material_Card$actions,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$div,
+					{
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-direction', 'column'),
+							_1: {ctor: '[]'}
+						}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Card$subhead,
+							{
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 2.5rem'),
+										_1: {ctor: '[]'}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A2(_user$project$Views_DimmerC$turningBtn, mdl, dimmer),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Card$subhead,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: _user$project$Views_DimmerC$slider(dimmer),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Card$subhead,
+									{
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+										_1: {
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
+											_1: {
+												ctor: '::',
+												_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 2.5rem'),
+												_1: {ctor: '[]'}
+											}
+										}
+									},
+									{
+										ctor: '::',
+										_0: A2(_user$project$Views_DimmerC$toggleBtn, mdl, dimmer),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_debois$elm_mdl$Material_Options$div,
+										{ctor: '[]'},
+										A2(_user$project$Views_DimmerC$renderLights, mdl, dimmer)),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}),
+				_1: {ctor: '[]'}
+			});
+		return A5(_user$project$Views_Card$card, 'ściemniacz', dimmer.name, k, raised, action);
+	});

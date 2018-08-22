@@ -1,0 +1,98 @@
+var _sporto$erl$Erl_Query$getValuesForKey = function (key) {
+	return function (_p0) {
+		return A2(
+			_elm_lang$core$List$map,
+			_elm_lang$core$Tuple$second,
+			A2(
+				_elm_lang$core$List$filter,
+				function (_p1) {
+					var _p2 = _p1;
+					return _elm_lang$core$Native_Utils.eq(_p2._0, key);
+				},
+				_p0));
+	};
+};
+var _sporto$erl$Erl_Query$remove = F2(
+	function (key, query) {
+		return A2(
+			_elm_lang$core$List$filter,
+			function (_p3) {
+				var _p4 = _p3;
+				return !_elm_lang$core$Native_Utils.eq(_p4._0, key);
+			},
+			query);
+	});
+var _sporto$erl$Erl_Query$add = F2(
+	function (key, val) {
+		return function (_p5) {
+			return _elm_lang$core$List$reverse(
+				A2(
+					F2(
+						function (x, y) {
+							return {ctor: '::', _0: x, _1: y};
+						}),
+					{ctor: '_Tuple2', _0: key, _1: val},
+					_elm_lang$core$List$reverse(_p5)));
+		};
+	});
+var _sporto$erl$Erl_Query$set = F3(
+	function (key, val, query) {
+		var without = A2(_sporto$erl$Erl_Query$remove, key, query);
+		return A3(_sporto$erl$Erl_Query$add, key, val, without);
+	});
+var _sporto$erl$Erl_Query$toString = function (query) {
+	var encodedTuples = A2(
+		_elm_lang$core$List$map,
+		function (_p6) {
+			var _p7 = _p6;
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$http$Http$encodeUri(_p7._0),
+				_1: _elm_lang$http$Http$encodeUri(_p7._1)
+			};
+		},
+		query);
+	var parts = A2(
+		_elm_lang$core$List$map,
+		function (_p8) {
+			var _p9 = _p8;
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_p9._0,
+				A2(_elm_lang$core$Basics_ops['++'], '=', _p9._1));
+		},
+		encodedTuples);
+	return _elm_lang$core$List$isEmpty(query) ? '' : A2(
+		_elm_lang$core$Basics_ops['++'],
+		'?',
+		A2(_elm_lang$core$String$join, '&', parts));
+};
+var _sporto$erl$Erl_Query$queryStringElementToTuple = function (element) {
+	var splitted = A2(_elm_lang$core$String$split, '=', element);
+	var first = A2(
+		_elm_lang$core$Maybe$withDefault,
+		'',
+		_elm_lang$core$List$head(splitted));
+	var firstDecoded = A2(
+		_elm_lang$core$Maybe$withDefault,
+		'',
+		_elm_lang$http$Http$decodeUri(first));
+	var second = A2(
+		_elm_lang$core$Maybe$withDefault,
+		'',
+		_elm_lang$core$List$head(
+			A2(_elm_lang$core$List$drop, 1, splitted)));
+	var secondDecoded = A2(
+		_elm_lang$core$Maybe$withDefault,
+		'',
+		_elm_lang$http$Http$decodeUri(second));
+	return {ctor: '_Tuple2', _0: firstDecoded, _1: secondDecoded};
+};
+var _sporto$erl$Erl_Query$parse = function (queryString) {
+	var trimmed = A2(
+		_elm_lang$core$String$join,
+		'',
+		A2(_elm_lang$core$String$split, '?', queryString));
+	var splitted = A2(_elm_lang$core$String$split, '&', trimmed);
+	return _elm_lang$core$String$isEmpty(trimmed) ? {ctor: '[]'} : A2(_elm_lang$core$List$map, _sporto$erl$Erl_Query$queryStringElementToTuple, splitted);
+};

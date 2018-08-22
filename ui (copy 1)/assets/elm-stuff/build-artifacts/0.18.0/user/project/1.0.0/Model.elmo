@@ -1,0 +1,35 @@
+var _user$project$Model$Model = F5(
+	function (a, b, c, d, e) {
+		return {dimmers: a, sunblinds: b, blindUndrawn: c, raised: d, mdl: e};
+	});
+var _user$project$Model$Mdl = function (a) {
+	return {ctor: 'Mdl', _0: a};
+};
+var _user$project$Model$ToggleSunblind = function (a) {
+	return {ctor: 'ToggleSunblind', _0: a};
+};
+var _user$project$Model$SetAllSunblinds = {ctor: 'SetAllSunblinds'};
+var _user$project$Model$UndrawSunblinds = {ctor: 'UndrawSunblinds'};
+var _user$project$Model$UndrawDimmer = function (a) {
+	return {ctor: 'UndrawDimmer', _0: a};
+};
+var _user$project$Model$ToggleLight = F2(
+	function (a, b) {
+		return {ctor: 'ToggleLight', _0: a, _1: b};
+	});
+var _user$project$Model$DimToggle = function (a) {
+	return {ctor: 'DimToggle', _0: a};
+};
+var _user$project$Model$DimSlide = F2(
+	function (a, b) {
+		return {ctor: 'DimSlide', _0: a, _1: b};
+	});
+var _user$project$Model$InitDimmers = function (a) {
+	return {ctor: 'InitDimmers', _0: a};
+};
+var _user$project$Model$InitSunblinds = function (a) {
+	return {ctor: 'InitSunblinds', _0: a};
+};
+var _user$project$Model$Raise = function (a) {
+	return {ctor: 'Raise', _0: a};
+};

@@ -1,0 +1,85 @@
+var _user$project$Data_Sunblind$set = F2(
+	function (s, state) {
+		return _elm_lang$core$Native_Utils.update(
+			s,
+			{state: state});
+	});
+var _user$project$Data_Sunblind$setList = F2(
+	function (s, state) {
+		return A2(
+			_elm_lang$core$List$map,
+			function (x) {
+				return _elm_lang$core$Native_Utils.update(
+					x,
+					{state: state});
+			},
+			s);
+	});
+var _user$project$Data_Sunblind$getId = function (sun) {
+	return _user$project$Data_Id$toInt(sun.id);
+};
+var _user$project$Data_Sunblind$Sunblind = F3(
+	function (a, b, c) {
+		return {id: a, name: b, state: c};
+	});
+var _user$project$Data_Sunblind$Close = {ctor: 'Close'};
+var _user$project$Data_Sunblind$setCloseList = function (l) {
+	return A2(_user$project$Data_Sunblind$setList, l, _user$project$Data_Sunblind$Close);
+};
+var _user$project$Data_Sunblind$setClose = function (s) {
+	return A2(_user$project$Data_Sunblind$set, s, _user$project$Data_Sunblind$Close);
+};
+var _user$project$Data_Sunblind$Open = {ctor: 'Open'};
+var _user$project$Data_Sunblind$notState = function (state) {
+	var _p0 = state;
+	if (_p0.ctor === 'Open') {
+		return _user$project$Data_Sunblind$Close;
+	} else {
+		return _user$project$Data_Sunblind$Open;
+	}
+};
+var _user$project$Data_Sunblind$toggleList = function (list) {
+	var state = _user$project$Data_Sunblind$notState(
+		function (x) {
+			var _p1 = x;
+			if (_p1.ctor === 'Just') {
+				return _p1._0.state;
+			} else {
+				return _user$project$Data_Sunblind$Close;
+			}
+		}(
+			_elm_lang$core$List$head(list)));
+	return A2(_user$project$Data_Sunblind$setList, list, state);
+};
+var _user$project$Data_Sunblind$toggle = function (s) {
+	return A2(
+		_user$project$Data_Sunblind$set,
+		s,
+		_user$project$Data_Sunblind$notState(s.state));
+};
+var _user$project$Data_Sunblind$stateDecoder = A2(
+	_elm_lang$core$Json_Decode$andThen,
+	function (b) {
+		var _p2 = b;
+		if (_p2 === true) {
+			return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Sunblind$Open);
+		} else {
+			return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Sunblind$Close);
+		}
+	},
+	_elm_lang$core$Json_Decode$bool);
+var _user$project$Data_Sunblind$decoder = A4(
+	_elm_lang$core$Json_Decode$map3,
+	_user$project$Data_Sunblind$Sunblind,
+	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'state', _user$project$Data_Sunblind$stateDecoder));
+var _user$project$Data_Sunblind$isOpen = function (sun) {
+	return _elm_lang$core$Native_Utils.eq(sun.state, _user$project$Data_Sunblind$Open);
+};
+var _user$project$Data_Sunblind$setOpenList = function (list) {
+	return A2(_user$project$Data_Sunblind$setList, list, _user$project$Data_Sunblind$Open);
+};
+var _user$project$Data_Sunblind$setOpen = function (s) {
+	return A2(_user$project$Data_Sunblind$set, s, _user$project$Data_Sunblind$Open);
+};
