@@ -1,13 +1,13 @@
-var _user$project$Views_SunblindC$icon = function (sunblind) {
+var _user$project$Page_Room_Views_SunblindC$icon = function (sunblind) {
 	return _user$project$Data_Sunblind$isOpen(sunblind) ? 'bookmark' : 'bookmark_border';
 };
-var _user$project$Views_SunblindC$icon_ = function (state) {
+var _user$project$Page_Room_Views_SunblindC$icon_ = function (state) {
 	return state ? 'bookmark' : 'bookmark_border';
 };
-var _user$project$Views_SunblindC$state = function (sunblind) {
+var _user$project$Page_Room_Views_SunblindC$state = function (sunblind) {
 	return _user$project$Data_Sunblind$isOpen(sunblind) ? _debois$elm_mdl$Material_Button$colored : _debois$elm_mdl$Material_Options$nop;
 };
-var _user$project$Views_SunblindC$toggleSunblind = F2(
+var _user$project$Page_Room_Views_SunblindC$toggleSunblind = F2(
 	function (mdl, sunblind) {
 		return A5(
 			_debois$elm_mdl$Material_Button$render,
@@ -34,7 +34,7 @@ var _user$project$Views_SunblindC$toggleSunblind = F2(
 						_0: _debois$elm_mdl$Material_Button$icon,
 						_1: {
 							ctor: '::',
-							_0: _user$project$Views_SunblindC$state(sunblind),
+							_0: _user$project$Page_Room_Views_SunblindC$state(sunblind),
 							_1: {ctor: '[]'}
 						}
 					}
@@ -43,11 +43,11 @@ var _user$project$Views_SunblindC$toggleSunblind = F2(
 			{
 				ctor: '::',
 				_0: _debois$elm_mdl$Material_Icon$i(
-					_user$project$Views_SunblindC$icon(sunblind)),
+					_user$project$Page_Room_Views_SunblindC$icon(sunblind)),
 				_1: {ctor: '[]'}
 			});
 	});
-var _user$project$Views_SunblindC$row = F2(
+var _user$project$Page_Room_Views_SunblindC$row = F2(
 	function (mdl, sunblind) {
 		var color = A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Amber, _debois$elm_mdl$Material_Color$S500);
 		var cell = A2(_debois$elm_mdl$Material_Options$css, 'width', '64px');
@@ -99,24 +99,24 @@ var _user$project$Views_SunblindC$row = F2(
 						},
 						{
 							ctor: '::',
-							_0: A2(_user$project$Views_SunblindC$toggleSunblind, mdl, sunblind),
+							_0: A2(_user$project$Page_Room_Views_SunblindC$toggleSunblind, mdl, sunblind),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
 				}
 			});
 	});
-var _user$project$Views_SunblindC$renderSunblinds = F3(
+var _user$project$Page_Room_Views_SunblindC$renderSunblinds = F3(
 	function (mdl, list, toggled) {
 		var render = A2(
 			_elm_lang$core$List$map,
 			function (x) {
-				return A2(_user$project$Views_SunblindC$row, mdl, x);
+				return A2(_user$project$Page_Room_Views_SunblindC$row, mdl, x);
 			},
 			list);
 		return toggled ? render : {ctor: '[]'};
 	});
-var _user$project$Views_SunblindC$toggleMoreBtn = F2(
+var _user$project$Page_Room_Views_SunblindC$toggleMoreBtn = F2(
 	function (mdl, toggled) {
 		var state = toggled ? _debois$elm_mdl$Material_Button$colored : _debois$elm_mdl$Material_Options$nop;
 		return A5(
@@ -147,7 +147,7 @@ var _user$project$Views_SunblindC$toggleMoreBtn = F2(
 				_1: {ctor: '[]'}
 			});
 	});
-var _user$project$Views_SunblindC$turningBtn = F2(
+var _user$project$Page_Room_Views_SunblindC$turningBtn = F2(
 	function (mdl, state) {
 		var state_ = state ? _debois$elm_mdl$Material_Button$colored : _debois$elm_mdl$Material_Options$nop;
 		return A5(
@@ -179,11 +179,11 @@ var _user$project$Views_SunblindC$turningBtn = F2(
 			{
 				ctor: '::',
 				_0: _debois$elm_mdl$Material_Icon$i(
-					_user$project$Views_SunblindC$icon_(state)),
+					_user$project$Page_Room_Views_SunblindC$icon_(state)),
 				_1: {ctor: '[]'}
 			});
 	});
-var _user$project$Views_SunblindC$sunblindCard = F5(
+var _user$project$Page_Room_Views_SunblindC$sunblindCard = F5(
 	function (mdl, sunblinds, k, raised, toggled) {
 		var state = A2(
 			_elm_lang$core$List$any,
@@ -226,7 +226,7 @@ var _user$project$Views_SunblindC$sunblindCard = F5(
 							},
 							{
 								ctor: '::',
-								_0: A2(_user$project$Views_SunblindC$turningBtn, mdl, state),
+								_0: A2(_user$project$Page_Room_Views_SunblindC$turningBtn, mdl, state),
 								_1: {ctor: '[]'}
 							}),
 						_1: {
@@ -248,7 +248,7 @@ var _user$project$Views_SunblindC$sunblindCard = F5(
 								},
 								{
 									ctor: '::',
-									_0: A2(_user$project$Views_SunblindC$toggleMoreBtn, mdl, toggled),
+									_0: A2(_user$project$Page_Room_Views_SunblindC$toggleMoreBtn, mdl, toggled),
 									_1: {ctor: '[]'}
 								}),
 							_1: {
@@ -256,12 +256,12 @@ var _user$project$Views_SunblindC$sunblindCard = F5(
 								_0: A2(
 									_debois$elm_mdl$Material_Options$div,
 									{ctor: '[]'},
-									A3(_user$project$Views_SunblindC$renderSunblinds, mdl, sunblinds, toggled)),
+									A3(_user$project$Page_Room_Views_SunblindC$renderSunblinds, mdl, sunblinds, toggled)),
 								_1: {ctor: '[]'}
 							}
 						}
 					}),
 				_1: {ctor: '[]'}
 			});
-		return A5(_user$project$Views_Card$card, 'rolety', 'All', k, raised, action);
+		return A5(_user$project$Page_Room_Views_Card$card, 'rolety', 'All', k, raised, action);
 	});

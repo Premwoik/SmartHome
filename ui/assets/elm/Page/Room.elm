@@ -17,34 +17,27 @@ import Material.Color as Color
 import Material.Options as Options exposing (css)
 import Material.Typography as Typography
 import Material.Elevation as Elevation
+import Material.Helpers as Helpers exposing (pure, effect)
 import List exposing (filter, head)
 
-import Views.DimmerC exposing (dimmerCard)
-import Views.SunblindC exposing (sunblindCard)
+import Page.Room.Views.DimmerC exposing (dimmerCard)
+import Page.Room.Views.SunblindC exposing (sunblindCard)
 
+import Page.Room.Model exposing (..)
 import Data.Dimmer as DimmerM exposing (Dimmer, DimmerJson)
 import Data.Sunblind as SunblindM exposing (Sunblind)
 import Data.Light as LightM exposing (Light)
 import Util exposing (replaceListElem)
 import Data.Id as Id
-import Request.Room
-import Http
+import Request.Room exposing (..)
+import Request
 
 
--- MODEL
-type alias Model =
-    { dimmers : List Dimmer
-    , sunblinds: List Sunblind
-    , blindUndrawn : Bool
-    , raised : Int
-    }
-model : Model
-model =
-    { dimmers = []
-    , sunblinds = []
-    , blindUndrawn = False
-    , raised = -1
-    }
+-- INIT
+init : Cmd Msg
+init =
+    Request.send2 InitRoom Request.Room.loadSunblinds Request.Room.loadDimmers
+
 
 -- SUB
 subscriptions : Model -> Sub Msg
@@ -53,47 +46,42 @@ subscriptions model =
 
 -- UPDATE
 
-type Msg =
-    Raise Int
-    | InitSunblinds (Result Http.Error (List Sunblind))
-    | InitDimmers (Result Http.Error (List DimmerJson))
-    | DimToggleResponse (Result Http.Error String)
-    | DimSlide Dimmer Float
-    | DimToggle Dimmer
-    | ToggleLight Dimmer Light
-    | UndrawDimmer Dimmer
-    | UndrawSunblinds
-    | SetAllSunblinds
-    | ToggleSunblind Sunblind
-
-
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
+    let
+        skip = (model, Cmd.none)
+    in
     case msg of
-        DimToggleResponse _->
-            (model, Cmd.none)
-        InitSunblinds (Ok sunblinds) ->
-            ({model | sunblinds = sunblinds}, Request.Room.loadDimmers)
-        InitSunblinds (Err _) ->
-            (model, Cmd.none)
-        InitDimmers (Ok dimmers) ->
+        Response _->
+            skip
+
+        InitRoom (Ok (sunblinds, dimmers)) ->
             let
---                newDimmers = List.map2 DimmerM.updateExt dimmers model.dimmers
                 newDimmers = List.map DimmerM.fromJson dimmers
             in
-            ({model | dimmers = newDimmers}, Cmd.none)
-        InitDimmers (Err error) ->
-            let
-                _=Debug.log "error" (toString error)
-            in
-            (model, Cmd.none)
+            { model
+            | sunblinds = sunblinds
+            , dimmers = newDimmers
+            } |> pure
+        InitRoom (Err _) ->
+            skip
+
         Raise k ->
-            ({ model | raised = k}, Cmd.none)
+            { model
+            | raised = k
+            } |> pure
+
         DimSlide dim val ->
-            ({model | dimmers = replaceListElem model.dimmers (DimmerM.setFill dim val)}, Request.Room.setDimFill dim.id (round val))
+            {model
+            | dimmers = replaceListElem model.dimmers (DimmerM.setFill dim val)
+            } |> effect (Request.send Response <| setDimFill dim.id <| round val)
+
         DimToggle dim ->
-            ({model | dimmers = replaceListElem model.dimmers (DimmerM.toggle dim)}, Request.Room.toggleDimmer dim.id)
+            { model
+            | dimmers = replaceListElem model.dimmers (DimmerM.toggle dim)
+            } |> effect (Request.send Response <| toggleDimmer dim.id)
+
         ToggleLight dim light ->
             let
                 newLights = replaceListElem dim.lights (LightM.toggle light)
@@ -106,15 +94,31 @@ update msg model =
                 newDim2 = {newDim | fill = newFill}
                 newModel = {model | dimmers = replaceListElem model.dimmers newDim2}
             in
-            (newModel, Request.Room.toggleDimLight light.id)
+            newModel
+            |> effect (Request.send Response <| toggleDimLight light.id)
+
         UndrawDimmer dimmer ->
-            ({model | dimmers = replaceListElem model.dimmers (DimmerM.toggleUndrawn dimmer)}, Cmd.none)
+            { model
+            | dimmers = replaceListElem model.dimmers (DimmerM.toggleUndrawn dimmer)
+            } |> pure
+
         UndrawSunblinds ->
-            ({model | blindUndrawn = not model.blindUndrawn}, Cmd.none)
+            { model
+            | blindUndrawn = not model.blindUndrawn
+            } |> pure
+
         SetAllSunblinds->
-            ({model | sunblinds = SunblindM.toggleList model.sunblinds}, Cmd.none)
+            { model
+            | sunblinds = SunblindM.toggleList model.sunblinds
+            } |> pure
+
         ToggleSunblind sunblind ->
-            ({model | sunblinds = replaceListElem model.sunblinds (SunblindM.toggle sunblind)}, Request.Room.toggleSunblind sunblind.id)
+            { model
+            | sunblinds = replaceListElem model.sunblinds (SunblindM.toggle sunblind)
+            } |> effect (Request.send Response <| toggleSunblind sunblind.id)
+
+        Mdl action_ ->
+            Material.update Mdl action_ model
 
 -- VIEW
 

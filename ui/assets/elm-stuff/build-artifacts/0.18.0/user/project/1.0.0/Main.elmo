@@ -1,10 +1,117 @@
-var _user$project$Main$tabs = {ctor: '[]'};
+var _user$project$Main$e404 = function (_p0) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A3(
+				_debois$elm_mdl$Material_Options$styled,
+				_elm_lang$html$Html$h1,
+				{
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Options$cs('mdl-typography--display-4'),
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Typography$center,
+						_1: {ctor: '[]'}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('404'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Main$header = {
+	ctor: '::',
+	_0: A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$h5,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'float', _1: 'left'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'padding-left', _1: '40px'},
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('easyHome'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		}),
+	_1: {ctor: '[]'}
+};
+var _user$project$Main$model = {mdl: _debois$elm_mdl$Material$model, selectedTab: 0, rooms: _user$project$Page_Room_Model$model};
+var _user$project$Main$Model = F3(
+	function (a, b, c) {
+		return {mdl: a, rooms: b, selectedTab: c};
+	});
+var _user$project$Main$RoomMsg = function (a) {
+	return {ctor: 'RoomMsg', _0: a};
+};
+var _user$project$Main$tabs = {
+	ctor: '::',
+	_0: {
+		ctor: '_Tuple4',
+		_0: 'Rooms',
+		_1: 'rooms',
+		_2: function (_p1) {
+			return A2(
+				_elm_lang$html$Html$map,
+				_user$project$Main$RoomMsg,
+				_user$project$Page_Room$view(
+					function (_) {
+						return _.rooms;
+					}(_p1)));
+		},
+		_3: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$RoomMsg, _user$project$Page_Room$init)
+	},
+	_1: {ctor: '[]'}
+};
+var _user$project$Main$tabInit = _elm_lang$core$Array$fromList(
+	A2(
+		_elm_lang$core$List$map,
+		function (_p2) {
+			var _p3 = _p2;
+			return _p3._3;
+		},
+		_user$project$Main$tabs));
+var _user$project$Main$tabTitles = A2(
+	_elm_lang$core$List$map,
+	function (_p4) {
+		var _p5 = _p4;
+		return _elm_lang$html$Html$text(_p5._0);
+	},
+	_user$project$Main$tabs);
+var _user$project$Main$tabViews = _elm_lang$core$Array$fromList(
+	A2(
+		_elm_lang$core$List$map,
+		function (_p6) {
+			var _p7 = _p6;
+			return _p7._2;
+		},
+		_user$project$Main$tabs));
 var _user$project$Main$tabUrls = _elm_lang$core$Array$fromList(
 	A2(
 		_elm_lang$core$List$map,
-		function (_p0) {
-			var _p1 = _p0;
-			return _p1._1;
+		function (_p8) {
+			var _p9 = _p8;
+			return _p9._1;
 		},
 		_user$project$Main$tabs));
 var _user$project$Main$urlOf = function (model) {
@@ -28,111 +135,105 @@ var _user$project$Main$urlTabs = _elm_lang$core$Dict$fromList(
 	A2(
 		_elm_lang$core$List$indexedMap,
 		F2(
-			function (idx, _p2) {
-				var _p3 = _p2;
-				return {ctor: '_Tuple2', _0: _p3._1, _1: idx};
+			function (idx, _p10) {
+				var _p11 = _p10;
+				return {ctor: '_Tuple2', _0: _p11._1, _1: idx};
 			}),
 		_user$project$Main$tabs));
-var _user$project$Main$header = A2(
-	_elm_lang$html$Html$div,
-	{ctor: '[]'},
-	{
-		ctor: '::',
-		_0: A2(
-			_elm_lang$html$Html$h5,
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$style(
-					{
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: 'float', _1: 'left'},
-						_1: {
-							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'padding-left', _1: '40px'},
-							_1: {ctor: '[]'}
-						}
-					}),
-				_1: {ctor: '[]'}
-			},
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html$text('easyHome'),
-				_1: {ctor: '[]'}
-			}),
-		_1: {ctor: '[]'}
-	});
-var _user$project$Main$model = {mdl: _debois$elm_mdl$Material$model, selectedTab: 0};
-var _user$project$Main$Model = F2(
-	function (a, b) {
-		return {mdl: a, selectedTab: b};
-	});
 var _user$project$Main$Mdl = function (a) {
 	return {ctor: 'Mdl', _0: a};
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p4 = msg;
-		if (_p4.ctor === 'SelectTab') {
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					model,
-					{selectedTab: _p4._0}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		} else {
-			return A3(_debois$elm_mdl$Material$update, _user$project$Main$Mdl, _p4._0, model);
+		var _p12 = msg;
+		switch (_p12.ctor) {
+			case 'SelectTab':
+				var _p13 = _p12._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{selectedTab: _p13}),
+					_1: A2(
+						_elm_lang$core$Maybe$withDefault,
+						_elm_lang$core$Platform_Cmd$none,
+						A2(_elm_lang$core$Array$get, _p13, _user$project$Main$tabInit))
+				};
+			case 'Mdl':
+				return A3(_debois$elm_mdl$Material$update, _user$project$Main$Mdl, _p12._0, model);
+			default:
+				return A6(
+					_debois$elm_mdl$Material_Helpers$lift,
+					function (_) {
+						return _.rooms;
+					},
+					F2(
+						function (m, x) {
+							return _elm_lang$core$Native_Utils.update(
+								m,
+								{rooms: x});
+						}),
+					_user$project$Main$RoomMsg,
+					_user$project$Page_Room$update,
+					_p12._0,
+					model);
 		}
 	});
-var _user$project$Main$view = function (model) {
-	return A3(
-		_debois$elm_mdl$Material_Scheme$topWithScheme,
-		_debois$elm_mdl$Material_Color$Cyan,
-		_debois$elm_mdl$Material_Color$Lime,
+var _user$project$Main$SelectTab = function (a) {
+	return {ctor: 'SelectTab', _0: a};
+};
+var _user$project$Main$view_ = function (model) {
+	var top = A2(
+		_elm_lang$core$Maybe$withDefault,
+		_user$project$Main$e404,
+		A2(_elm_lang$core$Array$get, model.selectedTab, _user$project$Main$tabViews))(model);
+	return _debois$elm_mdl$Material_Scheme$top(
 		A4(
 			_debois$elm_mdl$Material_Layout$render,
 			_user$project$Main$Mdl,
 			model.mdl,
 			{
 				ctor: '::',
-				_0: _debois$elm_mdl$Material_Layout$fixedHeader,
+				_0: _debois$elm_mdl$Material_Layout$selectedTab(model.selectedTab),
 				_1: {
 					ctor: '::',
-					_0: _debois$elm_mdl$Material_Layout$scrolling,
-					_1: {ctor: '[]'}
+					_0: _debois$elm_mdl$Material_Layout$onSelectTab(_user$project$Main$SelectTab),
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Layout$scrolling,
+						_1: {ctor: '[]'}
+					}
 				}
 			},
 			{
-				header: {
+				drawer: {ctor: '[]'},
+				header: _user$project$Main$header,
+				main: {
 					ctor: '::',
-					_0: _user$project$Main$header,
+					_0: top,
 					_1: {ctor: '[]'}
 				},
-				drawer: {ctor: '[]'},
 				tabs: {
 					ctor: '_Tuple2',
-					_0: {ctor: '[]'},
+					_0: _user$project$Main$tabTitles,
 					_1: {ctor: '[]'}
-				},
-				main: {ctor: '[]'}
+				}
 			}));
 };
-var _user$project$Main$SelectTab = function (a) {
-	return {ctor: 'SelectTab', _0: a};
-};
+var _user$project$Main$view = _elm_lang$html$Html_Lazy$lazy(_user$project$Main$view_);
 var _user$project$Main$location2messages = function (location) {
 	return {
 		ctor: '::',
 		_0: function () {
-			var _p5 = A2(_elm_lang$core$String$dropLeft, 1, location.hash);
-			if (_p5 === '') {
+			var _p14 = A2(_elm_lang$core$String$dropLeft, 1, location.hash);
+			if (_p14 === '') {
 				return _user$project$Main$SelectTab(0);
 			} else {
 				return _user$project$Main$SelectTab(
 					A2(
 						_elm_lang$core$Maybe$withDefault,
 						-1,
-						A2(_elm_lang$core$Dict$get, _p5, _user$project$Main$urlTabs)));
+						A2(_elm_lang$core$Dict$get, _p14, _user$project$Main$urlTabs)));
 			}
 		}(),
 		_1: {ctor: '[]'}
@@ -147,7 +248,7 @@ var _user$project$Main$main = _rgrempel$elm_route_url$RouteUrl$program(
 			_0: _elm_lang$core$Native_Utils.update(
 				_user$project$Main$model,
 				{
-					mdl: A2(_debois$elm_mdl$Material_Layout$setTabsWidth, 2124, _user$project$Main$model.mdl)
+					mdl: A2(_debois$elm_mdl$Material_Layout$setTabsWidth, 250, _user$project$Main$model.mdl)
 				}),
 			_1: _debois$elm_mdl$Material$init(_user$project$Main$Mdl)
 		},

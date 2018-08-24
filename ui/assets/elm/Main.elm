@@ -22,22 +22,22 @@ import Navigation
 import Array exposing (Array)
 import Dict exposing (Dict)
 import Page.Room
+import Page.Room.Model
 import Material.Helpers exposing (lift)
 
 -- MODEL
 
 type alias Model =
     { mdl : Material.Model
-    , rooms : Page.Room.Model
+    , rooms : Page.Room.Model.Model
     , selectedTab : Int
-    ,
     }
 
 model : Model
 model =
     { mdl = Material.model
     , selectedTab = 0
-    , rooms = Page.Room.model
+    , rooms = Page.Room.Model.model
     }
 
 -- UPDATE
@@ -45,7 +45,7 @@ model =
 type Msg
     = SelectTab Int
     | Mdl (Material.Msg Msg)
-    | RoomMsg Page.Room.Msg
+    | RoomMsg Page.Room.Model.Msg
 
 
 
@@ -53,12 +53,12 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         SelectTab k ->
-            ( { model | selectedTab = k }, Cmd.none )
+            ( { model | selectedTab = k }, Array.get k tabInit |> Maybe.withDefault Cmd.none)
         Mdl action_ ->
             Material.update Mdl action_ model
-
         RoomMsg a ->
-                      lift .buttons (\m x -> { m | rooms = x }) RoomMsg Page.Room.update a model
+            lift .rooms (\m x -> { m | rooms = x }) RoomMsg Page.Room.update a model
+
 
 -- VIEW
 
@@ -73,22 +73,23 @@ view_ model =
         top =
             (Array.get model.selectedTab tabViews |> Maybe.withDefault e404) model
     in
-        Layout.render Mdl
+      Scheme.top <|  Layout.render Mdl
             model.mdl
             [ Layout.selectedTab model.selectedTab
             , Layout.onSelectTab SelectTab
             , Layout.scrolling
             ]
-            { header = header
-            , drawer = []
+            { drawer = []
+            , header = header
+            , main = [top]
             , tabs =
-                    ( tabTitles, [ Color.background (Color.color model.layout.primary Color.S400) ] )
-            , main = [ top ]
+                    ( tabTitles, [] )
             }
 
-header : Html Msg
+
+header : List (Html Msg)
 header =
-    div []
+    [div []
         [ h5
             [ style
                 [ ( "float", "left" )
@@ -96,32 +97,36 @@ header =
                 ]
             ]
             [ text "easyHome" ]
-        ]
+        ]]
 
 
-tabs : List ( String, String, Model -> Html Msg )
+tabs : List ( String, String, Model -> Html Msg, Cmd Msg )
 tabs =
-    [ ( "Rooms", "rooms", .rooms >> Page.Room.view >> Html.map RoomMsg )
+    [ ( "Rooms", "rooms", .rooms >> Page.Room.view >> Html.map RoomMsg, Page.Room.init |> Cmd.map RoomMsg)
     ]
+
+tabInit : Array (Cmd Msg)
+tabInit =
+    List.map (\(_, _, _, x) -> x) tabs |> Array.fromList
 
 tabTitles : List (Html a)
 tabTitles =
-    List.map (\( x, _, _ ) -> text x) tabs
+    List.map (\( x, _, _, _ ) -> text x) tabs
 
 
 tabViews : Array (Model -> Html Msg)
 tabViews =
-    List.map (\( _, _, v ) -> v) tabs |> Array.fromList
+    List.map (\( _, _, v, _ ) -> v) tabs |> Array.fromList
 
 
 tabUrls : Array String
 tabUrls =
-    List.map (\( _, x, _ ) -> x) tabs |> Array.fromList
+    List.map (\( _, x, _, _) -> x) tabs |> Array.fromList
 
 
 urlTabs : Dict String Int
 urlTabs =
-    List.indexedMap (\idx ( _, x, _ ) -> ( x, idx )) tabs |> Dict.fromList
+    List.indexedMap (\idx ( _, x, _, _ ) -> ( x, idx )) tabs |> Dict.fromList
 
 
 e404 : Model -> Html Msg
@@ -176,7 +181,7 @@ main =
         , init =
             ( { model
                 | mdl =
-                    Layout.setTabsWidth 2124 model.mdl
+                    Layout.setTabsWidth 250 model.mdl
                     {- elm gives us no way to measure the actual width of tabs. We
                        hardwire it. If you add a tab, remember to update this. Find the
                        new value using:

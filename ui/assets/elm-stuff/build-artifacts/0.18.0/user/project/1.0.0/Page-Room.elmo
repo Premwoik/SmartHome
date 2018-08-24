@@ -1,0 +1,196 @@
+var _user$project$Page_Room$makeDimList = function (model) {
+	return A2(
+		_elm_lang$core$List$map,
+		function (x) {
+			return A4(
+				_user$project$Page_Room_Views_DimmerC$dimmerCard,
+				model.mdl,
+				x,
+				_user$project$Data_Dimmer$getId(x),
+				model.raised);
+		},
+		model.dimmers);
+};
+var _user$project$Page_Room$makeSunblind = function (model) {
+	return A5(_user$project$Page_Room_Views_SunblindC$sunblindCard, model.mdl, model.sunblinds, -2, model.raised, model.blindUndrawn);
+};
+var _user$project$Page_Room$view = function (model) {
+	return A2(
+		_debois$elm_mdl$Material_Options$div,
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', 'auto'),
+			_1: {
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-left', '8%'),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-right', '8%'),
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_debois$elm_mdl$Material_Options$div,
+				{
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-flow', 'row wrap'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'stretch'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '95%'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '1rem'),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _user$project$Page_Room$makeSunblind(model),
+					_1: _user$project$Page_Room$makeDimList(model)
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Page_Room$update = F2(
+	function (msg, model) {
+		var skip = {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'Response':
+				return skip;
+			case 'InitRoom':
+				if (_p0._0.ctor === 'Ok') {
+					var newDimmers = A2(_elm_lang$core$List$map, _user$project$Data_Dimmer$fromJson, _p0._0._0._1);
+					return _debois$elm_mdl$Material_Helpers$pure(
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{sunblinds: _p0._0._0._0, dimmers: newDimmers}));
+				} else {
+					return skip;
+				}
+			case 'Raise':
+				return _debois$elm_mdl$Material_Helpers$pure(
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{raised: _p0._0}));
+			case 'DimSlide':
+				var _p2 = _p0._1;
+				var _p1 = _p0._0;
+				return A2(
+					_debois$elm_mdl$Material_Helpers$effect,
+					A2(
+						_user$project$Request$send,
+						_user$project$Page_Room_Model$Response,
+						A2(
+							_user$project$Request_Room$setDimFill,
+							_p1.id,
+							_elm_lang$core$Basics$round(_p2))),
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							dimmers: A2(
+								_user$project$Util$replaceListElem,
+								model.dimmers,
+								A2(_user$project$Data_Dimmer$setFill, _p1, _p2))
+						}));
+			case 'DimToggle':
+				var _p3 = _p0._0;
+				return A2(
+					_debois$elm_mdl$Material_Helpers$effect,
+					A2(
+						_user$project$Request$send,
+						_user$project$Page_Room_Model$Response,
+						_user$project$Request_Room$toggleDimmer(_p3.id)),
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							dimmers: A2(
+								_user$project$Util$replaceListElem,
+								model.dimmers,
+								_user$project$Data_Dimmer$toggle(_p3))
+						}));
+			case 'ToggleLight':
+				var _p5 = _p0._1;
+				var _p4 = _p0._0;
+				var newLights = A2(
+					_user$project$Util$replaceListElem,
+					_p4.lights,
+					_user$project$Data_Light$toggle(_p5));
+				var newDim = _elm_lang$core$Native_Utils.update(
+					_p4,
+					{lights: newLights});
+				var isOn = _user$project$Data_Dimmer$isOn(newDim);
+				var newFill = (_elm_lang$core$Native_Utils.eq(_p4.fill, 0) && isOn) ? 100 : (isOn ? _p4.fill : 0);
+				var newDim2 = _elm_lang$core$Native_Utils.update(
+					newDim,
+					{fill: newFill});
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{
+						dimmers: A2(_user$project$Util$replaceListElem, model.dimmers, newDim2)
+					});
+				return A2(
+					_debois$elm_mdl$Material_Helpers$effect,
+					A2(
+						_user$project$Request$send,
+						_user$project$Page_Room_Model$Response,
+						_user$project$Request_Room$toggleDimLight(_p5.id)),
+					newModel);
+			case 'UndrawDimmer':
+				return _debois$elm_mdl$Material_Helpers$pure(
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							dimmers: A2(
+								_user$project$Util$replaceListElem,
+								model.dimmers,
+								_user$project$Data_Dimmer$toggleUndrawn(_p0._0))
+						}));
+			case 'UndrawSunblinds':
+				return _debois$elm_mdl$Material_Helpers$pure(
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{blindUndrawn: !model.blindUndrawn}));
+			case 'SetAllSunblinds':
+				return _debois$elm_mdl$Material_Helpers$pure(
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							sunblinds: _user$project$Data_Sunblind$toggleList(model.sunblinds)
+						}));
+			case 'ToggleSunblind':
+				var _p6 = _p0._0;
+				return A2(
+					_debois$elm_mdl$Material_Helpers$effect,
+					A2(
+						_user$project$Request$send,
+						_user$project$Page_Room_Model$Response,
+						_user$project$Request_Room$toggleSunblind(_p6.id)),
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							sunblinds: A2(
+								_user$project$Util$replaceListElem,
+								model.sunblinds,
+								_user$project$Data_Sunblind$toggle(_p6))
+						}));
+			default:
+				return A3(_debois$elm_mdl$Material$update, _user$project$Page_Room_Model$Mdl, _p0._0, model);
+		}
+	});
+var _user$project$Page_Room$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$none;
+};
+var _user$project$Page_Room$init = A3(_user$project$Request$send2, _user$project$Page_Room_Model$InitRoom, _user$project$Request_Room$loadSunblinds, _user$project$Request_Room$loadDimmers);
