@@ -1,4 +1,4 @@
-module Views.Card exposing (..)
+module Page.Room.Views.Card exposing (..)
 
 import Html exposing (..)
 import Material.Card as Card
@@ -8,7 +8,7 @@ import Material.Typography as Typography
 import Material.Elevation as Elevation
 import Material.Icon as Icon
 
-import Page.Room exposing (..)
+import Page.Room.Model exposing (..)
 
 card : String -> String -> Int -> Int -> Card.Block Msg -> Html Msg
 card type_ name k raised action=

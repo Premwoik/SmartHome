@@ -7,7 +7,8 @@ import Data.Dimmer as Dimmer exposing (DimmerJson)
 import Data.Sunblind as Sunblind exposing (Sunblind)
 import Data.Id as Id
 
-import Request.Request exposing (url)
+import Request exposing (url)
+
 
 loadSunblinds : Http.Request (List Sunblind)
 loadSunblinds =

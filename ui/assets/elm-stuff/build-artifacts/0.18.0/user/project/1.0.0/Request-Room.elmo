@@ -1,95 +1,3 @@
-var _user$project$Request_Room$url = 'http://192.168.2.119:4000/api/';
-var _user$project$Request_Room$loadSunblinds = function () {
-	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Sunblind$decoder);
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request_Room$url, 'sunblinds');
-	return A2(
-		_elm_lang$http$Http$send,
-		_user$project$Model$InitSunblinds,
-		A2(_elm_lang$http$Http$get, url_, decoder));
-}();
-var _user$project$Request_Room$loadDimmers = function () {
-	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Dimmer$decoder);
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request_Room$url, 'dimmers');
-	return A2(
-		_elm_lang$http$Http$send,
-		_user$project$Model$InitDimmers,
-		A2(_elm_lang$http$Http$get, url_, decoder));
-}();
-var _user$project$Request_Room$toggleDimmer = function (id) {
-	var data = _elm_lang$core$Json_Encode$object(
-		{
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(
-					_user$project$Data_Id$toInt(id))
-			},
-			_1: {ctor: '[]'}
-		});
-	var decoder = _elm_lang$core$Json_Decode$string;
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request_Room$url, 'dimmers/toggle');
-	return A2(
-		_elm_lang$http$Http$send,
-		_user$project$Model$DimToggleResponse,
-		A3(
-			_elm_lang$http$Http$post,
-			url_,
-			_elm_lang$http$Http$jsonBody(data),
-			decoder));
-};
-var _user$project$Request_Room$toggleDimLight = function (id) {
-	var data = _elm_lang$core$Json_Encode$object(
-		{
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(0)
-			},
-			_1: {
-				ctor: '::',
-				_0: {
-					ctor: '_Tuple2',
-					_0: 'lightId',
-					_1: _elm_lang$core$Json_Encode$int(
-						_user$project$Data_Id$toInt(id))
-				},
-				_1: {ctor: '[]'}
-			}
-		});
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request_Room$url, 'dimmers/toggle_light');
-	return A2(
-		_elm_lang$http$Http$send,
-		_user$project$Model$DimToggleResponse,
-		A3(
-			_elm_lang$http$Http$post,
-			url_,
-			_elm_lang$http$Http$jsonBody(data),
-			_elm_lang$core$Json_Decode$string));
-};
-var _user$project$Request_Room$toggleSunblind = function (id) {
-	var data = _elm_lang$core$Json_Encode$object(
-		{
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(
-					_user$project$Data_Id$toInt(id))
-			},
-			_1: {ctor: '[]'}
-		});
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request_Room$url, 'sunblinds/toggle_one');
-	return A2(
-		_elm_lang$http$Http$send,
-		_user$project$Model$DimToggleResponse,
-		A3(
-			_elm_lang$http$Http$post,
-			url_,
-			_elm_lang$http$Http$jsonBody(data),
-			_elm_lang$core$Json_Decode$string));
-};
 var _user$project$Request_Room$setDimFill = F2(
 	function (id, fill) {
 		var data = _elm_lang$core$Json_Encode$object(
@@ -111,13 +19,86 @@ var _user$project$Request_Room$setDimFill = F2(
 					_1: {ctor: '[]'}
 				}
 			});
-		var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request_Room$url, 'dimmers/set_fill');
-		return A2(
-			_elm_lang$http$Http$send,
-			_user$project$Model$DimToggleResponse,
-			A3(
-				_elm_lang$http$Http$post,
-				url_,
-				_elm_lang$http$Http$jsonBody(data),
-				_elm_lang$core$Json_Decode$string));
+		var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/set_fill');
+		return A3(
+			_elm_lang$http$Http$post,
+			url_,
+			_elm_lang$http$Http$jsonBody(data),
+			_elm_lang$core$Json_Decode$string);
 	});
+var _user$project$Request_Room$toggleSunblind = function (id) {
+	var data = _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(
+					_user$project$Data_Id$toInt(id))
+			},
+			_1: {ctor: '[]'}
+		});
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'sunblinds/toggle_one');
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$jsonBody(data),
+		_elm_lang$core$Json_Decode$string);
+};
+var _user$project$Request_Room$toggleDimLight = function (id) {
+	var data = _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(0)
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'lightId',
+					_1: _elm_lang$core$Json_Encode$int(
+						_user$project$Data_Id$toInt(id))
+				},
+				_1: {ctor: '[]'}
+			}
+		});
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/toggle_light');
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$jsonBody(data),
+		_elm_lang$core$Json_Decode$string);
+};
+var _user$project$Request_Room$toggleDimmer = function (id) {
+	var data = _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(
+					_user$project$Data_Id$toInt(id))
+			},
+			_1: {ctor: '[]'}
+		});
+	var decoder = _elm_lang$core$Json_Decode$string;
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/toggle');
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$jsonBody(data),
+		decoder);
+};
+var _user$project$Request_Room$loadDimmers = function () {
+	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Dimmer$decoder);
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers');
+	return A2(_elm_lang$http$Http$get, url_, decoder);
+}();
+var _user$project$Request_Room$loadSunblinds = function () {
+	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Sunblind$decoder);
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'sunblinds');
+	return A2(_elm_lang$http$Http$get, url_, decoder);
+}();

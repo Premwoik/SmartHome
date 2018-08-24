@@ -1,4 +1,4 @@
-module Views.SunblindC exposing (sunblindCard)
+module Page.Room.Views.SunblindC exposing (sunblindCard)
 
 
 import Html exposing (..)
@@ -18,11 +18,10 @@ import Material.Color as Color
 import Material.Options as Options exposing (css)
 import Material.Typography as Typography
 import Material.Elevation as Elevation
-import Array
 import Material.Icon as Icon
-import Model exposing (..)
+import Page.Room.Model exposing (..)
 
-import Views.Card exposing (card)
+import Page.Room.Views.Card exposing (card)
 import Data.Dimmer as DimmerM exposing (Dimmer)
 import Data.Sunblind as SunblindM exposing (Sunblind)
 import Data.Light as LightM exposing (Light)

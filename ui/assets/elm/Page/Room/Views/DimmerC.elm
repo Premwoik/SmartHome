@@ -1,4 +1,4 @@
-module Views.DimmerC exposing (..)
+module Page.Room.Views.DimmerC exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -22,15 +22,13 @@ import Material.Icon as Icon
 
 import Data.Light exposing (Light)
 import Data.Dimmer exposing (Dimmer)
-import Views.Card exposing (card)
+import Page.Room.Views.Card exposing (card)
 
-import Model exposing (..)
 import Data.Dimmer as DimmerM exposing (Dimmer)
 import Data.Sunblind as SunblindM exposing (Sunblind)
 import Data.Light as LightM exposing (Light)
 
-import Page.Room exposing (..)
-
+import Page.Room.Model exposing (..)
 
 
 
