@@ -13,8 +13,29 @@ config :nerves, :firmware, rootfs_overlay: "rootfs_overlay"
 # docs for separating out critical OTP applications such as those
 # involved with firmware updates.
 config :shoehorn,
-  init: [:nerves_runtime, :nerves_network],
+  init: [:nerves_runtime, :nerves_init_gadget],
   app: Mix.Project.config()[:app]
+
+# Add the RingLogger backend. This removes the
+# default :console backend.
+config :logger, backends: [RingLogger]
+
+# Set the number of messages to hold in the circular buffer
+config :logger, RingLogger, max_size: 100
+
+
+config :nerves_firmware_ssh,
+       authorized_keys: [
+         File.read!(Path.join(System.user_home!, ".ssh/id_rsa.pub"))
+       ]
+
+config :nerves_init_gadget,
+       ifname: "eth0",
+       address_method: :dhcp,
+       mdns_domain: "home.local",
+       node_name: "rpi3",
+       ssh_console_port: 22
+
 
 #import_config "../../ui/config/config.exs"
 

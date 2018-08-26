@@ -5,44 +5,199 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2598d553-3e9d-452d-ac4f-43c45975f23a" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/ui/assets/elm/Data/Action.elm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/assets/elm/Data/Port.elm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/assets/elm/Page.elm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/assets/elm/Page/Action.elm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/assets/elm/Page/Group.elm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/assets/elm/Page/Statistics.elm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/lib/ui_web/controllers/action_controller.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/8e6c902a-9ca9-4fde-948a-bb4c900c6226.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/8e6c902a-9ca9-4fde-948a-bb4c900c6226.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/lib/db/application.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/application.ex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/lib/db/init.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/init.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/config/config.exs" beforeDir="false" afterPath="$PROJECT_DIR$/db/config/config.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/itHome.sqlite3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/db/lib/db/model/action.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/model/action.ex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/lib/db/model/dao.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/model/dao.ex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Repl.elmi" beforeDir="false" afterPath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Repl.elmi" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Repl.elmo" beforeDir="false" afterPath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Repl.elmo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Array.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Array.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Basics.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Basics.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Bitwise.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Bitwise.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Char.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Char.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Color.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Color.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Date.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Date.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Debug.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Debug.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Dict.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Dict.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Json-Decode.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Json-Decode.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Json-Encode.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Json-Encode.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/List.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/List.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Maybe.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Maybe.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Platform-Cmd.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Platform-Cmd.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Platform-Sub.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Platform-Sub.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Platform.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Platform.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Process.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Process.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Random.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Random.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Regex.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Regex.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Result.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Result.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Set.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Set.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/String.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/String.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Task.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Task.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Time.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Time.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Tuple.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/Tuple.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/core/5.1.1/graph.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/html/2.0.0/Html-Attributes.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/html/2.0.0/Html-Attributes.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/html/2.0.0/Html-Events.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/html/2.0.0/Html-Events.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/html/2.0.0/Html-Keyed.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/html/2.0.0/Html-Keyed.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/html/2.0.0/Html-Lazy.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/html/2.0.0/Html-Lazy.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/html/2.0.0/Html.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/html/2.0.0/Html.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/html/2.0.0/graph.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-Debug.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-Debug.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-Expando.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-Expando.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-Helpers.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-Helpers.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-History.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-History.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-Metadata.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-Metadata.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-Overlay.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-Overlay.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-Report.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom-Report.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/VirtualDom.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/elm-lang/virtual-dom/2.0.4/graph.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Repl.elmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Repl.elmo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/exact-dependencies.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/.eslintrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/.travis.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/CONTRIBUTING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/changelog.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/elm-package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Array.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Basics.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Bitwise.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Char.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Color.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Date.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Debug.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Dict.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Json/Decode.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Json/Encode.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/List.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Maybe.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/Array.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/Basics.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/Bitwise.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/Char.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/Date.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/Debug.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/Json.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/List.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/Platform.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/Regex.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/Scheduler.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/String.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/Time.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Native/Utils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Platform.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Platform/Cmd.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Platform/Sub.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Process.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Random.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Regex.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Result.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Set.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/String.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Task.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Time.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/src/Tuple.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Main.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/Array.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/Basics.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/Bitwise.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/Char.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/CodeGen.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/Dict.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/Equality.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/Json.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/List.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/Maybe.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/Regex.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/Result.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/Set.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/Test/String.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/elm-package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/core/5.1.1/tests/run-tests.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/html/2.0.0/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/html/2.0.0/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/html/2.0.0/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/html/2.0.0/elm-package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/html/2.0.0/properties-vs-attributes.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/html/2.0.0/src/Html.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/html/2.0.0/src/Html/Attributes.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/html/2.0.0/src/Html/Events.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/html/2.0.0/src/Html/Keyed.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/html/2.0.0/src/Html/Lazy.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/.travis.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/elm-package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/src/Native/Debug.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/src/Native/VirtualDom.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/src/VirtualDom.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/src/VirtualDom/Debug.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/src/VirtualDom/Expando.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/src/VirtualDom/Helpers.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/src/VirtualDom/History.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/src/VirtualDom/Metadata.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/src/VirtualDom/Overlay.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/src/VirtualDom/Report.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/tests/Native/TestHelpers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/tests/TestCases/Lazy.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/tests/TestHelpers.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/tests/TestMain.elm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/tests/elm-package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/packages/elm-lang/virtual-dom/2.0.4/tests/run-tests.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/fw/config/config.exs" beforeDir="false" afterPath="$PROJECT_DIR$/fw/config/config.exs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fw/config/host.exs" beforeDir="false" afterPath="$PROJECT_DIR$/fw/config/host.exs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fw/config/rpi3.exs" beforeDir="false" afterPath="$PROJECT_DIR$/fw/config/rpi3.exs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fw/itHome1.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/fw/itHome1.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fw/itHome1.sqlite3-shm" beforeDir="false" afterPath="$PROJECT_DIR$/fw/itHome1.sqlite3-shm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fw/itHome1.sqlite3-wal" beforeDir="false" afterPath="$PROJECT_DIR$/fw/itHome1.sqlite3-wal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fw/lib/fw/application.ex" beforeDir="false" afterPath="$PROJECT_DIR$/fw/lib/fw/application.ex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fw/mix.exs" beforeDir="false" afterPath="$PROJECT_DIR$/fw/mix.exs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fw/mix.lock.host" beforeDir="false" afterPath="$PROJECT_DIR$/fw/mix.lock.host" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fw/mix.lock.rpi3" beforeDir="false" afterPath="$PROJECT_DIR$/fw/mix.lock.rpi3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fw/rel/config.exs" beforeDir="false" afterPath="$PROJECT_DIR$/fw/rel/config.exs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Main.elmi" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Main.elmi" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Main.elmo" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Main.elmo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Page-Room.elmi" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Page-Room.elmi" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Page-Room.elmo" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Page-Room.elmo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Request.elmo" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Request.elmo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/assets/elm/Main.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm/Main.elm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/assets/elm/Page/Room.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm/Page/Room.elm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/assets/elm/Request.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm/Request.elm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/assets/elm/Request/Action.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm/Request/Action.elm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/assets/elm/Util.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm/Util.elm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/assets/js/elm.js" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/js/elm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/assets/js/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/js/socket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/config/config.exs" beforeDir="false" afterPath="$PROJECT_DIR$/ui/config/config.exs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/itHome1.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/ui/itHome1.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/itHome1.sqlite3-shm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/itHome1.sqlite3-shm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/itHome1.sqlite3-wal" beforeDir="false" afterPath="$PROJECT_DIR$/ui/itHome1.sqlite3-wal" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/lib/ui_web/router.ex" beforeDir="false" afterPath="$PROJECT_DIR$/ui/lib/ui_web/router.ex" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -69,43 +224,27 @@
     <expand>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="itHome1" type="feb32156:DbDataSourceImpl" />
+        <item name="itHome" type="feb32156:DbDataSourceImpl" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="itHome1 [2]" type="feb32156:DbDataSourceImpl" />
+        <item name="itHome" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="itHome" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="main: schema" type="90513b60:SqliteImplModel$Schema" />
       </path>
     </expand>
     <select />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="mix.exs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fw/mix.exs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="882">
-              <caret line="49" column="16" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Util.elm" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Util.elm">
+      <file leaf-file-name="socket_test2.ex" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/socket_test2/lib/socket_test2.ex">
           <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="iex.exs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fw/rootfs_overlay/etc/iex.exs">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="config.exs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fw/rel/config.exs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-9">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
-            </state>
-          </provider>
         </entry>
       </file>
       <file leaf-file-name="Request.elm" pinned="false" current-in-tab="false">
@@ -117,47 +256,70 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.elm" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Main.elm">
+      <file leaf-file-name="config.exs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fw/config/config.exs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="116" column="14" selection-start-line="116" selection-start-column="14" selection-end-line="116" selection-end-column="14" />
+            <state relative-caret-position="153">
+              <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Action.elm" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request/Action.elm">
+      <file leaf-file-name="router.ex" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/router.ex">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+            <state relative-caret-position="180">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Page.elm" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page.elm">
+      <file leaf-file-name="actions.ex" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/actions.ex">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-252">
+              <caret line="28" column="29" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.exs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/db/config/config.exs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="171">
+              <caret line="26" selection-start-line="26" selection-end-line="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application.ex" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/nerves_init_gadget/lib/nerves_init_gadget/application.ex">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="options.ex" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/nerves_init_gadget/lib/nerves_init_gadget/options.ex">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ssh_console.ex" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/nerves_init_gadget/lib/nerves_init_gadget/ssh_console.ex">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rpi3.exs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fw/config/rpi3.exs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="216">
-              <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Room.elm" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page/Room.elm">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="98" column="42" selection-start-line="98" selection-start-column="42" selection-end-line="98" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Action.elm" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page/Action.elm">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="89" column="41" selection-start-line="89" selection-start-column="41" selection-end-line="89" selection-end-column="41" />
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
@@ -176,8 +338,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Already</find>
-      <find>ItHome</find>
       <find>parse_repo</find>
       <find>ensure_imple</find>
       <find>Ui1</find>
@@ -206,6 +366,8 @@
       <find>mdl</find>
       <find>Model</find>
       <find>socket</find>
+      <find>socket_test2</find>
+      <find>do_release</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -234,10 +396,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/socket_test2/test/device/controller_test.exs" />
-        <option value="$PROJECT_DIR$/socket_test2/config/config.exs" />
-        <option value="$PROJECT_DIR$/ui/lib/ui_web/controllers/dimmer_controller.ex" />
-        <option value="$PROJECT_DIR$/ui/lib/ui_web/controllers/sunblind_controller.ex" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Data/Dimmer.elm" />
         <option value="$PROJECT_DIR$/ui/mix.exs" />
         <option value="$PROJECT_DIR$/socket_test2/lib/device/controller.ex" />
@@ -263,15 +421,11 @@
         <option value="$PROJECT_DIR$/ui/assets/elm/Page/Room.elm" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Util.elm" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Request/Action.elm" />
-        <option value="$PROJECT_DIR$/ui/lib/ui_web/router.ex" />
         <option value="$PROJECT_DIR$/ui/lib/ui_web/controllers/light_controller.ex" />
         <option value="$PROJECT_DIR$/ui/lib/ui_web/controllers/action_controller.ex" />
         <option value="$PROJECT_DIR$/socket_test2/lib/socket_test2.ex" />
-        <option value="$PROJECT_DIR$/db/lib/db/model/action.ex" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Data/Action.elm" />
         <option value="$PROJECT_DIR$/db/lib/db/model/dao.ex" />
-        <option value="$PROJECT_DIR$/fw/config/rpi3.exs" />
-        <option value="$PROJECT_DIR$/fw/config/config.exs" />
         <option value="$PROJECT_DIR$/ui/config/config.exs" />
         <option value="$PROJECT_DIR$/fw/config/host.exs" />
         <option value="$PROJECT_DIR$/ui/assets/js/socket.js" />
@@ -280,11 +434,19 @@
         <option value="$PROJECT_DIR$/ui/assets/js/app.js" />
         <option value="$PROJECT_DIR$/db/lib/db/application.ex" />
         <option value="$PROJECT_DIR$/db/lib/db/init.ex" />
-        <option value="$PROJECT_DIR$/fw/mix.exs" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Request.elm" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Page.elm" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Main.elm" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Page/Action.elm" />
+        <option value="$PROJECT_DIR$/db/lib/db/model/action.ex" />
+        <option value="$PROJECT_DIR$/db/priv/repo/migrations/20180826093105_add_action_time.exs" />
+        <option value="$PROJECT_DIR$/db/config/config.exs" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Request.elm" />
+        <option value="$PROJECT_DIR$/fw/deps/rpi3/shoehorn/mix.exs" />
+        <option value="$PROJECT_DIR$/fw/mix.exs" />
+        <option value="$PROJECT_DIR$/fw/config/rpi3.exs" />
+        <option value="$PROJECT_DIR$/fw/lib/fw/application.ex" />
+        <option value="$PROJECT_DIR$/ui/lib/ui_web/router.ex" />
+        <option value="$PROJECT_DIR$/fw/config/config.exs" />
       </list>
     </option>
   </component>
@@ -336,25 +498,18 @@
           <expand>
             <path>
               <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="socket_test2" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="socket_test2" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="elm" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="elm" type="462c0819:PsiDirectoryNode" />
-              <item name="Page" type="462c0819:PsiDirectoryNode" />
+              <item name="socket_test2" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="device" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -366,7 +521,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ui" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cpu_monitor" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -411,6 +566,25 @@
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
+    <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
+      <module name="socket_test2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -427,10 +601,75 @@
       </option>
       <patterns />
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <module name="socket_test2" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+    </configuration>
     <configuration name="Mix ExUnit socket_test2 test/device/controller_test.exs" type="MixExUnitRunConfigurationType" factoryName="Elixir Mix ExUnit" temporary="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <option name="passParentEnvs" value="false" />
       <option name="programParameters" value="test/device/controller_test.exs" />
       <option name="workingDirectory" value="$PROJECT_DIR$/socket_test2" />
+    </configuration>
+    <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
+      <module name="socket_test2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
+    </configuration>
+    <configuration default="true" type="PyLettuceRunConfigurationType" factoryName="Lettuce">
+      <module name="socket_test2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="socket_test2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration default="true" type="Python.FlaskServer" factoryName="Flask server">
+      <module name="socket_test2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -453,6 +692,93 @@
       <option name="PROPERTIES_FILE" />
       <properties />
       <listeners />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="socket_test2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <module name="socket_test2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <module name="socket_test2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_regexPattern" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Twisted Trial">
+      <module name="socket_test2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <module name="socket_test2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="py.test">
+      <module name="socket_test2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
     </configuration>
     <recent_temporary>
       <list>
@@ -497,7 +823,7 @@
       <workItem from="1535122931831" duration="2025000" />
       <workItem from="1535132177239" duration="7680000" />
       <workItem from="1535156270667" duration="29536000" />
-      <workItem from="1535234441698" duration="6341000" />
+      <workItem from="1535234441698" duration="21260000" />
     </task>
     <servers />
   </component>
@@ -507,21 +833,21 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="402930000" />
+    <option name="totallyTimeSpent" value="417849000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="21" width="2560" height="1059" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Tool Output" order="13" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.20278884" side_tool="true" visible="true" weight="0.36655948" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.20318726" side_tool="true" visible="true" weight="0.43944266" />
       <window_info anchor="right" id="Maven Projects" order="4" sideWeight="0.49624062" weight="0.3292683" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="right" id="REPL" order="12" sideWeight="0.5037594" side_tool="true" weight="0.3292683" />
       <window_info anchor="right" id="Leiningen" order="5" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="2" />
-      <window_info anchor="right" id="Database" order="7" sideWeight="0.4981203" visible="true" weight="0.015139442" />
+      <window_info anchor="right" id="Database" order="7" sideWeight="0.4981203" weight="0.798374" />
       <window_info anchor="bottom" id="ANTLR Preview" order="12" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -534,18 +860,18 @@
       <window_info anchor="right" id="PsiViewer" order="6" weight="0.3292683" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946523" weight="0.32905984" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.79721117" visible="true" weight="0.36655948" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12191235" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.7968128" visible="true" weight="0.43944266" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.09880478" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49641433" weight="0.3290461" />
       <window_info anchor="right" id="SciView" order="10" />
       <window_info anchor="right" id="Theme Preview" order="11" />
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="bottom" id="Database Console" order="10" weight="0.32905984" />
+      <window_info anchor="bottom" id="Database Console" order="10" sideWeight="0.4996016" weight="0.3290461" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49674797" weight="0.3290461" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -560,118 +886,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/controllers/scene_controller.ex">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page/Room/Views/SunblindC.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="676">
-          <caret line="129" column="21" selection-start-line="129" selection-start-column="21" selection-end-line="129" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/lib/db/model/dimmer.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/lib/db/model/port.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/controllers/dimmer_controller.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="20" column="11" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Data/Port.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/controllers/light_controller.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="39" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/actions.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/socket_test2.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Data/Action.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/controllers/action_controller.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/lib/db/model/dao.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="48" column="35" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/config/config.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-292" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/config/config.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-378" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/priv/static/css/app.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1026" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/config/dev.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/config/test.exs">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/channels/user_socket.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/assets/package.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -736,45 +950,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/router.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="34" column="54" selection-start-line="34" selection-start-column="54" selection-end-line="34" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/config/config.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/config/host.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/config/rpi3.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/lib/db/application.ex">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="594">
           <caret line="33" column="18" selection-start-line="33" selection-start-column="18" selection-end-line="33" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/lib/db/model/action.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -811,27 +990,8 @@
     <entry file="file://$PROJECT_DIR$/fw/deps/host/distillery/mix.exs">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/distillery/mix.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1255" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/mix.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="882">
-          <caret line="49" column="16" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/assets/elm/Util.elm">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request/Action.elm">
       <provider selected="true" editor-type-id="text-editor">
@@ -861,10 +1021,174 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/fw/_build/host/test/lib/fw/ebin/fw.app">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page/Action.elm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="89" column="41" selection-start-line="89" selection-start-column="41" selection-end-line="89" selection-end-column="41" />
+        <state relative-caret-position="342">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/lib/db/model/action.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="3" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://d745192f-121d-4daf-abb2-c994ab0f06bb/schema/main/table/actions">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/priv/repo/migrations/20180710132359_init_database.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://8e6c902a-9ca9-4fde-948a-bb4c900c6226/schema/main/table/actions">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/d745192f-121d-4daf-abb2-c994ab0f06bb/console.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/priv/repo/migrations/20180826093105_add_action_time.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://4ec03994-16da-4086-a045-a6ab067f096e/schema/main/table/actions">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/distillery/lib/distillery/tasks/release.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1962">
+          <caret line="109" column="7" selection-start-line="109" selection-start-column="7" selection-end-line="109" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/deps/host/shoehorn/mix.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="29" column="25" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/shoehorn/mix.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/distillery/mix.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-378" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/lib/fw.ex">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/mix.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="599">
+          <caret line="62" column="23" selection-start-line="62" selection-start-column="23" selection-end-line="62" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/config/host.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/lib/fw/application.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request.elm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/config/rpi3.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/socket_test2/lib/socket_test2.ex">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/nerves_init_gadget/lib/nerves_init_gadget/ssh_console.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/nerves_init_gadget/lib/nerves_init_gadget/options.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/nerves_init_gadget/lib/nerves_init_gadget/application.ex">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/config/config.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/config/config.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/router.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/actions.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-252">
+          <caret line="28" column="29" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -885,7 +1209,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited>No facets are configured</last-edited>
+          <last-edited />
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -897,7 +1221,7 @@
       </state>
       <state key="GlobalLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Python 3.6 interpreter library</last-edited>
+          <last-edited />
           <splitter-proportions>
             <option name="proportions">
               <list>

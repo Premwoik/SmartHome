@@ -10,7 +10,7 @@ defmodule UiWeb.Router do
   end
 
   pipeline :api do
-    plug CORSPlug, origin: "http://192.168.2.119:4000"
+    plug CORSPlug, origin: ["http://192.168.2.100", "http://home.local"]
     plug :accepts, ["json"]
   end
 

@@ -10,7 +10,7 @@ defmodule Fw.Application do
   def start(_type, _args) do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    start_network_conf(@target)
+#    start_network_conf(@target)
     opts = [strategy: :one_for_one, name: Fw.Supervisor]
     Supervisor.start_link(children(@target), opts)
   end
