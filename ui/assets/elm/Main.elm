@@ -23,6 +23,8 @@ import Array exposing (Array)
 import Dict exposing (Dict)
 import Page.Room
 import Page.Room.Model
+import Page.Action
+
 import Material.Helpers exposing (lift)
 
 -- MODEL
@@ -30,6 +32,7 @@ import Material.Helpers exposing (lift)
 type alias Model =
     { mdl : Material.Model
     , rooms : Page.Room.Model.Model
+    , actions : Page.Action.Model
     , selectedTab : Int
     }
 
@@ -38,6 +41,7 @@ model =
     { mdl = Material.model
     , selectedTab = 0
     , rooms = Page.Room.Model.model
+    , actions = Page.Action.model
     }
 
 -- UPDATE
@@ -46,6 +50,7 @@ type Msg
     = SelectTab Int
     | Mdl (Material.Msg Msg)
     | RoomMsg Page.Room.Model.Msg
+    | ActionMsg Page.Action.Msg
 
 
 
@@ -54,10 +59,15 @@ update msg model =
     case msg of
         SelectTab k ->
             ( { model | selectedTab = k }, Array.get k tabInit |> Maybe.withDefault Cmd.none)
+
         Mdl action_ ->
             Material.update Mdl action_ model
+
         RoomMsg a ->
             lift .rooms (\m x -> { m | rooms = x }) RoomMsg Page.Room.update a model
+
+        ActionMsg a ->
+            lift .actions (\m x -> { m | actions = x }) ActionMsg Page.Action.update a model
 
 
 -- VIEW
@@ -77,6 +87,7 @@ view_ model =
             model.mdl
             [ Layout.selectedTab model.selectedTab
             , Layout.onSelectTab SelectTab
+            , Layout.fixedHeader
             , Layout.scrolling
             ]
             { drawer = []
@@ -102,7 +113,8 @@ header =
 
 tabs : List ( String, String, Model -> Html Msg, Cmd Msg )
 tabs =
-    [ ( "Rooms", "rooms", .rooms >> Page.Room.view >> Html.map RoomMsg, Page.Room.init |> Cmd.map RoomMsg)
+    [ ( "Pokoje", "rooms", .rooms >> Page.Room.view >> Html.map RoomMsg, Page.Room.init |> Cmd.map RoomMsg)
+    , ( "Akcje", "actions", .actions >> Page.Action.view >> Html.map ActionMsg, Page.Action.init |> Cmd.map ActionMsg)
     ]
 
 tabInit : Array (Cmd Msg)
@@ -179,15 +191,15 @@ main =
         { delta2url = delta2url
         , location2messages = location2messages
         , init =
-            ( { model
-                | mdl =
-                    Layout.setTabsWidth 250 model.mdl
+            ( model
+--                | mdl =
+--                    Layout.setTabsWidth 250 model.mdl
                     {- elm gives us no way to measure the actual width of tabs. We
                        hardwire it. If you add a tab, remember to update this. Find the
                        new value using:
                        document.getElementsByClassName("mdl-layout__tab-bar")[0].scrollWidth
                     -}
-              }
+--              }
             , Material.init Mdl
             )
         , view = view

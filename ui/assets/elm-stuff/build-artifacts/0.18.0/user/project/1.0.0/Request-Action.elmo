@@ -1,0 +1,24 @@
+var _user$project$Request_Action$toggleAction = function (id) {
+	var data = _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(
+					_user$project$Data_Id$toInt(id))
+			},
+			_1: {ctor: '[]'}
+		});
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'actions/toggle');
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$jsonBody(data),
+		_elm_lang$core$Json_Decode$string);
+};
+var _user$project$Request_Action$getActions = function () {
+	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Action$decoder);
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'actions');
+	return A2(_elm_lang$http$Http$get, url_, decoder);
+}();

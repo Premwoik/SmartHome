@@ -44,6 +44,15 @@ defmodule DB.Dao do
     |> Repo.preload(:args)
   end
 
+  def get_actions() do
+    (Repo.all Action)
+    |> (Repo.preload [:args, :port])
+  end
+
+  def set_action_state(action, state) do
+    uport = Ecto.Changeset.change action, active: state
+    Repo.update! uport
+  end
 
   def get_port(id),
       do: Repo.get(Port, id)

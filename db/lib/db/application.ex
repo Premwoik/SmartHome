@@ -30,7 +30,7 @@ defmodule DB.Application do
     IO.inspect repos
     for repo <- repos do
       if Application.get_env(@otp_app, repo)[:adapter] == Elixir.Sqlite.Ecto2 do
-        drop_repo!(repo)
+#        drop_repo!(repo)
         setup_repo!(repo)
         migrate_repo!(repo)
       end
