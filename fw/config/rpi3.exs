@@ -11,6 +11,7 @@ config :ui, UiWeb.Endpoint,
        pubsub: [name: Nerves.PubSub, adapter: Phoenix.PubSub.PG2],
        code_reloader: false
 
+
 config :db, DB.Repo,
        adapter: Sqlite.Ecto2,
        database: "/root/#{Mix.env}.sqlite3"

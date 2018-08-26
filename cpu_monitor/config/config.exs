@@ -7,27 +7,19 @@ use Mix.Config
 # file won't be loaded nor affect the parent project. For this reason,
 # if you want to provide default values for your application for
 # 3rd-party users, it should be done in your "mix.exs" file.
+
 # You can configure your application as:
 #
-#     config :db, key: :value
+#     config :cpu_monitor, key: :value
 #
 # and access this configuration in your application as:
 #
-#     Application.get_env(:db, :key)
+#     Application.get_env(:cpu_monitor, :key)
 #
 # You can also configure a 3rd-party app:
 #
 #     config :logger, level: :info
 #
-
-config :db,
-       DB.Repo,
-       adapter: Sqlite.Ecto2,
-       database: "../db/itHome.sqlite3"
-
-config :db,
-       ecto_repos: [DB.Repo]
-
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
@@ -35,4 +27,4 @@ config :db,
 # Configuration from the imported file will override the ones defined
 # here (which is why it is important to import them last).
 #
-#     import_config "#{Mix.env}.exs"
+#     import_config "#{Mix.env()}.exs"

@@ -35,7 +35,7 @@ defmodule Fw.MixProject do
     [
       mod: {Fw.Application, []},
       extra_applications: [:logger, :runtime_tools],
-#      included_applications: [:socket_test2, :db]
+      #      included_applications: [:socket_test2, :db]
     ]
   end
 
@@ -51,11 +51,16 @@ defmodule Fw.MixProject do
   end
 
   # Specify target specific dependencies
-  defp deps("host"), do: []
+  defp deps("host") do
+    [
+      {:ring_logger, "~> 0.4"},
+    ]
+  end
 
   defp deps(target) do
     [
       {:nerves_runtime, "~> 0.6"},
+      {:nerves_init_gadget, "~> 0.3"},
       {:nerves_network, "~> 0.3"}
     ] ++ system(target)
   end

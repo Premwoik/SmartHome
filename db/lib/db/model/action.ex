@@ -9,6 +9,8 @@ defmodule DB.Action do
     field :function, :string
     field :active, :boolean
     field :params, :string
+    field :start_time, :time
+    field :end_time, :time
     belongs_to :port, DB.Port
     many_to_many :args, DB.Port, join_through: "actions_arguments", on_delete: :delete_all
   end
