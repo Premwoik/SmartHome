@@ -1,0 +1,40 @@
+var _user$project$Data_Port$Port = F7(
+	function (a, b, c, d, e, f, g) {
+		return {id: a, device_id: b, name: c, type_: d, number: e, timeout: f, state: g};
+	});
+var _user$project$Data_Port$Unknown = function (a) {
+	return {ctor: 'Unknown', _0: a};
+};
+var _user$project$Data_Port$Sunblind = {ctor: 'Sunblind'};
+var _user$project$Data_Port$Light = {ctor: 'Light'};
+var _user$project$Data_Port$DimLight = {ctor: 'DimLight'};
+var _user$project$Data_Port$Dimmer = {ctor: 'Dimmer'};
+var _user$project$Data_Port$typeDecoder = A2(
+	_elm_lang$core$Json_Decode$andThen,
+	function (type_) {
+		var _p0 = type_;
+		switch (_p0) {
+			case 'dimmer':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Port$Dimmer);
+			case 'dimLight':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Port$Light);
+			case 'light':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Port$Light);
+			case 'sunblind':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Port$Sunblind);
+			default:
+				return _elm_lang$core$Json_Decode$succeed(
+					_user$project$Data_Port$Unknown(_p0));
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _user$project$Data_Port$decoder = A8(
+	_elm_lang$core$Json_Decode$map7,
+	_user$project$Data_Port$Port,
+	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'device_id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'type', _user$project$Data_Port$typeDecoder),
+	A2(_elm_lang$core$Json_Decode$field, 'number', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'timeout', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'state', _elm_lang$core$Json_Decode$bool));

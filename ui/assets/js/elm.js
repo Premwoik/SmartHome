@@ -16077,6 +16077,183 @@ var _debois$elm_mdl$Material_Slider$Config = F6(
 		return {value: a, min: b, max: c, step: d, input: e, container: f};
 	});
 
+var _debois$elm_mdl$Material_Table$defaultCell = {numeric: false};
+var _debois$elm_mdl$Material_Table$td = F2(
+	function (options, html) {
+		var _p0 = A2(_debois$elm_mdl$Material_Options_Internal$collect, _debois$elm_mdl$Material_Table$defaultCell, options);
+		var summary = _p0;
+		var config = _p0.config;
+		return A5(
+			_debois$elm_mdl$Material_Options_Internal$apply,
+			summary,
+			_elm_lang$html$Html$td,
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$when,
+					config.numeric,
+					_debois$elm_mdl$Material_Options$cs('mdl-data-table__cell--non-numeric')),
+				_1: {ctor: '[]'}
+			},
+			{ctor: '[]'},
+			html);
+	});
+var _debois$elm_mdl$Material_Table$sorted = function (order) {
+	return _debois$elm_mdl$Material_Options_Internal$option(
+		function (self) {
+			return _elm_lang$core$Native_Utils.update(
+				self,
+				{
+					sorted: _elm_lang$core$Maybe$Just(order)
+				});
+		});
+};
+var _debois$elm_mdl$Material_Table$numeric = _debois$elm_mdl$Material_Options_Internal$option(
+	function (self) {
+		return _elm_lang$core$Native_Utils.update(
+			self,
+			{numeric: true});
+	});
+var _debois$elm_mdl$Material_Table$defaultHeader = {numeric: false, sorted: _elm_lang$core$Maybe$Nothing};
+var _debois$elm_mdl$Material_Table$th = F2(
+	function (options, html) {
+		var _p1 = A2(_debois$elm_mdl$Material_Options_Internal$collect, _debois$elm_mdl$Material_Table$defaultHeader, options);
+		var summary = _p1;
+		var config = _p1.config;
+		return A5(
+			_debois$elm_mdl$Material_Options_Internal$apply,
+			summary,
+			_elm_lang$html$Html$th,
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$when,
+					config.numeric,
+					_debois$elm_mdl$Material_Options$cs('mdl-data-table__cell--non-numeric')),
+				_1: {
+					ctor: '::',
+					_0: function () {
+						var _p2 = config.sorted;
+						if (_p2.ctor === 'Just') {
+							if (_p2._0.ctor === 'Ascending') {
+								return _debois$elm_mdl$Material_Options$cs('mdl-data-table__header--sorted-ascending');
+							} else {
+								return _debois$elm_mdl$Material_Options$cs('mdl-data-table__header--sorted-descending');
+							}
+						} else {
+							return _debois$elm_mdl$Material_Options$nop;
+						}
+					}(),
+					_1: {ctor: '[]'}
+				}
+			},
+			{ctor: '[]'},
+			html);
+	});
+var _debois$elm_mdl$Material_Table$selected = _debois$elm_mdl$Material_Options_Internal$option(
+	function (self) {
+		return _elm_lang$core$Native_Utils.update(
+			self,
+			{selected: true});
+	});
+var _debois$elm_mdl$Material_Table$defaultRow = {selected: false};
+var _debois$elm_mdl$Material_Table$tr = F2(
+	function (options, html) {
+		var _p3 = A2(_debois$elm_mdl$Material_Options_Internal$collect, _debois$elm_mdl$Material_Table$defaultRow, options);
+		var summary = _p3;
+		var config = _p3.config;
+		return A5(
+			_debois$elm_mdl$Material_Options_Internal$apply,
+			summary,
+			_elm_lang$html$Html$tr,
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$when,
+					config.selected,
+					_debois$elm_mdl$Material_Options$cs('is-selected')),
+				_1: {ctor: '[]'}
+			},
+			{ctor: '[]'},
+			html);
+	});
+var _debois$elm_mdl$Material_Table$tfoot = F2(
+	function (options, html) {
+		var summary = A2(
+			_debois$elm_mdl$Material_Options_Internal$collect,
+			{},
+			options);
+		return A5(
+			_debois$elm_mdl$Material_Options_Internal$apply,
+			summary,
+			_elm_lang$html$Html$tfoot,
+			{ctor: '[]'},
+			{ctor: '[]'},
+			html);
+	});
+var _debois$elm_mdl$Material_Table$tbody = F2(
+	function (options, html) {
+		var summary = A2(
+			_debois$elm_mdl$Material_Options_Internal$collect,
+			{},
+			options);
+		return A5(
+			_debois$elm_mdl$Material_Options_Internal$apply,
+			summary,
+			_elm_lang$html$Html$tbody,
+			{ctor: '[]'},
+			{ctor: '[]'},
+			html);
+	});
+var _debois$elm_mdl$Material_Table$thead = F2(
+	function (options, html) {
+		var summary = A2(
+			_debois$elm_mdl$Material_Options_Internal$collect,
+			{},
+			options);
+		return A5(
+			_debois$elm_mdl$Material_Options_Internal$apply,
+			summary,
+			_elm_lang$html$Html$thead,
+			{ctor: '[]'},
+			{ctor: '[]'},
+			html);
+	});
+var _debois$elm_mdl$Material_Table$table = F2(
+	function (options, nodes) {
+		return A3(
+			_debois$elm_mdl$Material_Options$styled,
+			_elm_lang$html$Html$table,
+			{
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Options$cs('mdl-data-table'),
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Options$cs('mdl-js-data-table'),
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$cs('is-upgraded'),
+						_1: options
+					}
+				}
+			},
+			nodes);
+	});
+var _debois$elm_mdl$Material_Table$Row = function (a) {
+	return {selected: a};
+};
+var _debois$elm_mdl$Material_Table$Header = F2(
+	function (a, b) {
+		return {numeric: a, sorted: b};
+	});
+var _debois$elm_mdl$Material_Table$Cell = function (a) {
+	return {numeric: a};
+};
+var _debois$elm_mdl$Material_Table$Descending = {ctor: 'Descending'};
+var _debois$elm_mdl$Material_Table$descending = _debois$elm_mdl$Material_Table$sorted(_debois$elm_mdl$Material_Table$Descending);
+var _debois$elm_mdl$Material_Table$Ascending = {ctor: 'Ascending'};
+var _debois$elm_mdl$Material_Table$ascending = _debois$elm_mdl$Material_Table$sorted(_debois$elm_mdl$Material_Table$Ascending);
+
 var _debois$elm_mdl$Material_Typography$uppercase = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-uppercase');
 var _debois$elm_mdl$Material_Typography$lowercase = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-lowercase');
 var _debois$elm_mdl$Material_Typography$capitalize = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-capitalize');
@@ -17710,6 +17887,85 @@ var _user$project$Data_Id$Id = function (a) {
 };
 var _user$project$Data_Id$decoder = A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Id$Id, _elm_lang$core$Json_Decode$int);
 
+var _user$project$Data_Port$Port = F7(
+	function (a, b, c, d, e, f, g) {
+		return {id: a, device_id: b, name: c, type_: d, number: e, timeout: f, state: g};
+	});
+var _user$project$Data_Port$Unknown = function (a) {
+	return {ctor: 'Unknown', _0: a};
+};
+var _user$project$Data_Port$Sunblind = {ctor: 'Sunblind'};
+var _user$project$Data_Port$Light = {ctor: 'Light'};
+var _user$project$Data_Port$DimLight = {ctor: 'DimLight'};
+var _user$project$Data_Port$Dimmer = {ctor: 'Dimmer'};
+var _user$project$Data_Port$typeDecoder = A2(
+	_elm_lang$core$Json_Decode$andThen,
+	function (type_) {
+		var _p0 = type_;
+		switch (_p0) {
+			case 'dimmer':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Port$Dimmer);
+			case 'dimLight':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Port$Light);
+			case 'light':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Port$Light);
+			case 'sunblind':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Port$Sunblind);
+			default:
+				return _elm_lang$core$Json_Decode$succeed(
+					_user$project$Data_Port$Unknown(_p0));
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _user$project$Data_Port$decoder = A8(
+	_elm_lang$core$Json_Decode$map7,
+	_user$project$Data_Port$Port,
+	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'device_id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'type', _user$project$Data_Port$typeDecoder),
+	A2(_elm_lang$core$Json_Decode$field, 'number', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'timeout', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'state', _elm_lang$core$Json_Decode$bool));
+
+var _user$project$Data_Action$fnToString = function (_p0) {
+	var _p1 = _p0;
+	return _p1._0;
+};
+var _user$project$Data_Action$Action = F5(
+	function (a, b, c, d, e) {
+		return {id: a, state: b, $function: c, activator: d, params: e};
+	});
+var _user$project$Data_Action$Function = function (a) {
+	return {ctor: 'Function', _0: a};
+};
+var _user$project$Data_Action$functionDecoder = A2(
+	_elm_lang$core$Json_Decode$andThen,
+	function (func) {
+		return _elm_lang$core$Json_Decode$succeed(
+			_user$project$Data_Action$Function(func));
+	},
+	_elm_lang$core$Json_Decode$string);
+var _user$project$Data_Action$decoder = A6(
+	_elm_lang$core$Json_Decode$map5,
+	_user$project$Data_Action$Action,
+	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'active', _elm_lang$core$Json_Decode$bool),
+	A2(_elm_lang$core$Json_Decode$field, 'function', _user$project$Data_Action$functionDecoder),
+	A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'port',
+			_1: {
+				ctor: '::',
+				_0: 'name',
+				_1: {ctor: '[]'}
+			}
+		},
+		_elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'params', _elm_lang$core$Json_Decode$string));
+
 var _user$project$Data_Light$set = F2(
 	function (light, state) {
 		return _elm_lang$core$Native_Utils.update(
@@ -18766,7 +19022,7 @@ var _user$project$Request$send = F2(
 	function (msg, request) {
 		return A2(_elm_lang$http$Http$send, msg, request);
 	});
-var _user$project$Request$url = 'http://0.0.0.0:4000/api/';
+var _user$project$Request$url = 'http://192.168.2.119:4000/api/';
 
 var _user$project$Request_Room$setDimFill = F2(
 	function (id, fill) {
@@ -18873,6 +19129,33 @@ var _user$project$Request_Room$loadSunblinds = function () {
 	return A2(_elm_lang$http$Http$get, url_, decoder);
 }();
 
+var _user$project$Page$body1 = _debois$elm_mdl$Material_Options$div(
+	{
+		ctor: '::',
+		_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', 'auto'),
+		_1: {
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Options$css, 'max-width', '1000px'),
+			_1: {
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-left', '1%'),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-right', '1%'),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-top', '1%'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'overflow-x', 'auto'),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		}
+	});
+
 var _user$project$Page_Room$makeDimList = function (model) {
 	return A2(
 		_elm_lang$core$List$map,
@@ -18890,21 +19173,7 @@ var _user$project$Page_Room$makeSunblind = function (model) {
 	return A5(_user$project$Page_Room_Views_SunblindC$sunblindCard, model.mdl, model.sunblinds, -2, model.raised, model.blindUndrawn);
 };
 var _user$project$Page_Room$view = function (model) {
-	return A2(
-		_debois$elm_mdl$Material_Options$div,
-		{
-			ctor: '::',
-			_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', 'auto'),
-			_1: {
-				ctor: '::',
-				_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-left', '8%'),
-				_1: {
-					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-right', '8%'),
-					_1: {ctor: '[]'}
-				}
-			}
-		},
+	return _user$project$Page$body1(
 		{
 			ctor: '::',
 			_0: A2(
@@ -19070,6 +19339,365 @@ var _user$project$Page_Room$subscriptions = function (model) {
 };
 var _user$project$Page_Room$init = A3(_user$project$Request$send2, _user$project$Page_Room_Model$InitRoom, _user$project$Request_Room$loadSunblinds, _user$project$Request_Room$loadDimmers);
 
+var _user$project$Request_Action$toggleAction = function (id) {
+	var data = _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(
+					_user$project$Data_Id$toInt(id))
+			},
+			_1: {ctor: '[]'}
+		});
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'actions/toggle');
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$jsonBody(data),
+		_elm_lang$core$Json_Decode$string);
+};
+var _user$project$Request_Action$getActions = function () {
+	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Action$decoder);
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'actions');
+	return A2(_elm_lang$http$Http$get, url_, decoder);
+}();
+
+var _user$project$Page_Action$model = {
+	mdl: _debois$elm_mdl$Material$model,
+	actions: {ctor: '[]'}
+};
+var _user$project$Page_Action$Model = F2(
+	function (a, b) {
+		return {mdl: a, actions: b};
+	});
+var _user$project$Page_Action$Response = function (a) {
+	return {ctor: 'Response', _0: a};
+};
+var _user$project$Page_Action$Init = function (a) {
+	return {ctor: 'Init', _0: a};
+};
+var _user$project$Page_Action$init = A2(_user$project$Request$send, _user$project$Page_Action$Init, _user$project$Request_Action$getActions);
+var _user$project$Page_Action$ToggleAction = function (a) {
+	return {ctor: 'ToggleAction', _0: a};
+};
+var _user$project$Page_Action$Mdl = function (a) {
+	return {ctor: 'Mdl', _0: a};
+};
+var _user$project$Page_Action$update = F2(
+	function (msg, model) {
+		var _p0 = A2(_elm_lang$core$Debug$log, 'debug Action Page: ', msg);
+		var _p1 = msg;
+		switch (_p1.ctor) {
+			case 'Mdl':
+				return A3(_debois$elm_mdl$Material$update, _user$project$Page_Action$Mdl, _p1._0, model);
+			case 'Init':
+				if (_p1._0.ctor === 'Ok') {
+					return _debois$elm_mdl$Material_Helpers$pure(
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{actions: _p1._0._0}));
+				} else {
+					return _debois$elm_mdl$Material_Helpers$pure(model);
+				}
+			case 'Response':
+				return _debois$elm_mdl$Material_Helpers$pure(model);
+			default:
+				var _p2 = _p1._0;
+				var newAction = _elm_lang$core$Native_Utils.update(
+					_p2,
+					{state: !_p2.state});
+				return A2(
+					_debois$elm_mdl$Material_Helpers$effect,
+					A2(
+						_user$project$Request$send,
+						_user$project$Page_Action$Response,
+						_user$project$Request_Action$toggleAction(_p2.id)),
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							actions: A2(_user$project$Util$replaceListElem, model.actions, newAction)
+						}));
+		}
+	});
+var _user$project$Page_Action$modifyBarView = function (model) {
+	return A2(
+		_debois$elm_mdl$Material_Options$div,
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Options$css, 'background-color', '#cecece'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A5(
+				_debois$elm_mdl$Material_Button$render,
+				_user$project$Page_Action$Mdl,
+				{
+					ctor: '::',
+					_0: 0,
+					_1: {
+						ctor: '::',
+						_0: 0,
+						_1: {ctor: '[]'}
+					}
+				},
+				model.mdl,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Add'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Page_Action$toggleButton = F2(
+	function (action, mdl) {
+		var nb = _user$project$Data_Id$toInt(action.id);
+		return A5(
+			_debois$elm_mdl$Material_Button$render,
+			_user$project$Page_Action$Mdl,
+			{
+				ctor: '::',
+				_0: nb,
+				_1: {ctor: '[]'}
+			},
+			mdl,
+			{
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Options$onClick(
+					_user$project$Page_Action$ToggleAction(action)),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$when, action.state, _debois$elm_mdl$Material_Button$colored),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: function (_p3) {
+					return _elm_lang$html$Html$text(
+						_elm_lang$core$Basics$toString(_p3));
+				}(action.state),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Page_Action$row = F2(
+	function (action, mdl) {
+		return A2(
+			_debois$elm_mdl$Material_Table$tr,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Table$td,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: function (_p4) {
+							return _elm_lang$html$Html$text(
+								_elm_lang$core$Basics$toString(
+									_user$project$Data_Id$toInt(_p4)));
+						}(action.id),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Table$td,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(action.activator),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Table$td,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: function (_p5) {
+									return _elm_lang$html$Html$text(
+										_user$project$Data_Action$fnToString(_p5));
+								}(action.$function),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Table$td,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A2(_user$project$Page_Action$toggleButton, action, mdl),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Table$td,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: function (_p6) {
+											return _elm_lang$html$Html$text(
+												_elm_lang$core$Basics$toString(_p6));
+										}(action.params),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Page_Action$tableView = function (model) {
+	return A2(
+		_debois$elm_mdl$Material_Table$table,
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', 'auto'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_debois$elm_mdl$Material_Table$thead,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Table$tr,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Table$th,
+								{
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('id'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Table$th,
+									{
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('aktywator'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_debois$elm_mdl$Material_Table$th,
+										{
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('funkcja'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_Table$th,
+											{
+												ctor: '::',
+												_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('aktywny'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_debois$elm_mdl$Material_Table$th,
+												{
+													ctor: '::',
+													_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('parametry'),
+													_1: {ctor: '[]'}
+												}),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Table$tbody,
+					{ctor: '[]'},
+					A2(
+						_elm_lang$core$List$map,
+						function (x) {
+							return A2(_user$project$Page_Action$row, x, model.mdl);
+						},
+						model.actions)),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Page_Action$view = function (model) {
+	return _user$project$Page$body1(
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$h1,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Akcje'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: _user$project$Page_Action$tableView(model),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$br,
+						{ctor: '[]'},
+						{ctor: '[]'}),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Page_Action$modifyBarView(model),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		});
+};
+
 var _user$project$Main$e404 = function (_p0) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -19128,11 +19756,14 @@ var _user$project$Main$header = {
 		}),
 	_1: {ctor: '[]'}
 };
-var _user$project$Main$model = {mdl: _debois$elm_mdl$Material$model, selectedTab: 0, rooms: _user$project$Page_Room_Model$model};
-var _user$project$Main$Model = F3(
-	function (a, b, c) {
-		return {mdl: a, rooms: b, selectedTab: c};
+var _user$project$Main$model = {mdl: _debois$elm_mdl$Material$model, selectedTab: 0, rooms: _user$project$Page_Room_Model$model, actions: _user$project$Page_Action$model};
+var _user$project$Main$Model = F4(
+	function (a, b, c, d) {
+		return {mdl: a, rooms: b, actions: c, selectedTab: d};
 	});
+var _user$project$Main$ActionMsg = function (a) {
+	return {ctor: 'ActionMsg', _0: a};
+};
 var _user$project$Main$RoomMsg = function (a) {
 	return {ctor: 'RoomMsg', _0: a};
 };
@@ -19140,7 +19771,7 @@ var _user$project$Main$tabs = {
 	ctor: '::',
 	_0: {
 		ctor: '_Tuple4',
-		_0: 'Rooms',
+		_0: 'Pokoje',
 		_1: 'rooms',
 		_2: function (_p1) {
 			return A2(
@@ -19153,37 +19784,55 @@ var _user$project$Main$tabs = {
 		},
 		_3: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$RoomMsg, _user$project$Page_Room$init)
 	},
-	_1: {ctor: '[]'}
+	_1: {
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple4',
+			_0: 'Akcje',
+			_1: 'actions',
+			_2: function (_p2) {
+				return A2(
+					_elm_lang$html$Html$map,
+					_user$project$Main$ActionMsg,
+					_user$project$Page_Action$view(
+						function (_) {
+							return _.actions;
+						}(_p2)));
+			},
+			_3: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$ActionMsg, _user$project$Page_Action$init)
+		},
+		_1: {ctor: '[]'}
+	}
 };
 var _user$project$Main$tabInit = _elm_lang$core$Array$fromList(
 	A2(
 		_elm_lang$core$List$map,
-		function (_p2) {
-			var _p3 = _p2;
-			return _p3._3;
+		function (_p3) {
+			var _p4 = _p3;
+			return _p4._3;
 		},
 		_user$project$Main$tabs));
 var _user$project$Main$tabTitles = A2(
 	_elm_lang$core$List$map,
-	function (_p4) {
-		var _p5 = _p4;
-		return _elm_lang$html$Html$text(_p5._0);
+	function (_p5) {
+		var _p6 = _p5;
+		return _elm_lang$html$Html$text(_p6._0);
 	},
 	_user$project$Main$tabs);
 var _user$project$Main$tabViews = _elm_lang$core$Array$fromList(
 	A2(
 		_elm_lang$core$List$map,
-		function (_p6) {
-			var _p7 = _p6;
-			return _p7._2;
+		function (_p7) {
+			var _p8 = _p7;
+			return _p8._2;
 		},
 		_user$project$Main$tabs));
 var _user$project$Main$tabUrls = _elm_lang$core$Array$fromList(
 	A2(
 		_elm_lang$core$List$map,
-		function (_p8) {
-			var _p9 = _p8;
-			return _p9._1;
+		function (_p9) {
+			var _p10 = _p9;
+			return _p10._1;
 		},
 		_user$project$Main$tabs));
 var _user$project$Main$urlOf = function (model) {
@@ -19207,9 +19856,9 @@ var _user$project$Main$urlTabs = _elm_lang$core$Dict$fromList(
 	A2(
 		_elm_lang$core$List$indexedMap,
 		F2(
-			function (idx, _p10) {
-				var _p11 = _p10;
-				return {ctor: '_Tuple2', _0: _p11._1, _1: idx};
+			function (idx, _p11) {
+				var _p12 = _p11;
+				return {ctor: '_Tuple2', _0: _p12._1, _1: idx};
 			}),
 		_user$project$Main$tabs));
 var _user$project$Main$Mdl = function (a) {
@@ -19217,23 +19866,23 @@ var _user$project$Main$Mdl = function (a) {
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p12 = msg;
-		switch (_p12.ctor) {
+		var _p13 = msg;
+		switch (_p13.ctor) {
 			case 'SelectTab':
-				var _p13 = _p12._0;
+				var _p14 = _p13._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{selectedTab: _p13}),
+						{selectedTab: _p14}),
 					_1: A2(
 						_elm_lang$core$Maybe$withDefault,
 						_elm_lang$core$Platform_Cmd$none,
-						A2(_elm_lang$core$Array$get, _p13, _user$project$Main$tabInit))
+						A2(_elm_lang$core$Array$get, _p14, _user$project$Main$tabInit))
 				};
 			case 'Mdl':
-				return A3(_debois$elm_mdl$Material$update, _user$project$Main$Mdl, _p12._0, model);
-			default:
+				return A3(_debois$elm_mdl$Material$update, _user$project$Main$Mdl, _p13._0, model);
+			case 'RoomMsg':
 				return A6(
 					_debois$elm_mdl$Material_Helpers$lift,
 					function (_) {
@@ -19247,7 +19896,23 @@ var _user$project$Main$update = F2(
 						}),
 					_user$project$Main$RoomMsg,
 					_user$project$Page_Room$update,
-					_p12._0,
+					_p13._0,
+					model);
+			default:
+				return A6(
+					_debois$elm_mdl$Material_Helpers$lift,
+					function (_) {
+						return _.actions;
+					},
+					F2(
+						function (m, x) {
+							return _elm_lang$core$Native_Utils.update(
+								m,
+								{actions: x});
+						}),
+					_user$project$Main$ActionMsg,
+					_user$project$Page_Action$update,
+					_p13._0,
 					model);
 		}
 	});
@@ -19272,8 +19937,12 @@ var _user$project$Main$view_ = function (model) {
 					_0: _debois$elm_mdl$Material_Layout$onSelectTab(_user$project$Main$SelectTab),
 					_1: {
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Layout$scrolling,
-						_1: {ctor: '[]'}
+						_0: _debois$elm_mdl$Material_Layout$fixedHeader,
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Layout$scrolling,
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			},
@@ -19297,15 +19966,15 @@ var _user$project$Main$location2messages = function (location) {
 	return {
 		ctor: '::',
 		_0: function () {
-			var _p14 = A2(_elm_lang$core$String$dropLeft, 1, location.hash);
-			if (_p14 === '') {
+			var _p15 = A2(_elm_lang$core$String$dropLeft, 1, location.hash);
+			if (_p15 === '') {
 				return _user$project$Main$SelectTab(0);
 			} else {
 				return _user$project$Main$SelectTab(
 					A2(
 						_elm_lang$core$Maybe$withDefault,
 						-1,
-						A2(_elm_lang$core$Dict$get, _p14, _user$project$Main$urlTabs)));
+						A2(_elm_lang$core$Dict$get, _p15, _user$project$Main$urlTabs)));
 			}
 		}(),
 		_1: {ctor: '[]'}
@@ -19317,11 +19986,7 @@ var _user$project$Main$main = _rgrempel$elm_route_url$RouteUrl$program(
 		location2messages: _user$project$Main$location2messages,
 		init: {
 			ctor: '_Tuple2',
-			_0: _elm_lang$core$Native_Utils.update(
-				_user$project$Main$model,
-				{
-					mdl: A2(_debois$elm_mdl$Material_Layout$setTabsWidth, 250, _user$project$Main$model.mdl)
-				}),
+			_0: _user$project$Main$model,
 			_1: _debois$elm_mdl$Material$init(_user$project$Main$Mdl)
 		},
 		view: _user$project$Main$view,

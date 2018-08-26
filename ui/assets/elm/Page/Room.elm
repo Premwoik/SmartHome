@@ -31,6 +31,7 @@ import Util exposing (replaceListElem)
 import Data.Id as Id
 import Request.Room exposing (..)
 import Request
+import Page
 
 
 -- INIT
@@ -124,20 +125,16 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    Options.div
-    [ css "margin" "auto"
-    , css "padding-left" "8%"
-    , css "padding-right" "8%"
-    ]
-    [ Options.div
-            [ css "display" "flex"
-            , css "flex-flow" "row wrap"
-            , css "align-items" "stretch"
-            , css "width" "95%"
-            , css "margin" "1rem"
+    Page.body1
+        [ Options.div
+                [ css "display" "flex"
+                , css "flex-flow" "row wrap"
+                , css "align-items" "stretch"
+                , css "width" "95%"
+                , css "margin" "1rem"
+                ]
+                ((makeSunblind model) :: (makeDimList model))
             ]
-            ((makeSunblind model) :: (makeDimList model))
-        ]
 
 
 makeSunblind : Model -> Html Msg

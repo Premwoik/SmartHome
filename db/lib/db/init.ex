@@ -17,11 +17,16 @@ defmodule DB.Init do
   def run do
     Logger.info("Creating data!")
 #    :ok = delete_all()
-    :ok = insert_ard_mega()
-    :ok = insert_integra64()
+    if !exist do
+      :ok = insert_ard_mega()
+      :ok = insert_integra64()
+    end
     Logger.info("Data created!")
   end
 
+  defp exist do
+    (length Repo.all Port) > 0
+  end
 
   defp delete_all() do
     Repo.delete_all(Action)
@@ -43,8 +48,8 @@ defmodule DB.Init do
     p24 = %Port{name: "Tv", type: "dimmer", number: 24, mode: "output", state: false}#8
     p25 = %Port{name: "Lewa", type: "light", number: 25, mode: "output", state: false}#9
     p26 = %Port{name: "Prawa", type: "light", number: 26, mode: "output", state: false}#10
-    p34 = %Port{name: "Sypialnia", type: "sunblind", number: 34, mode: "output", timeout: 1000, state: true}#11
-    p35 = %Port{name: "Dzienny", type: "sunblind", number: 35, mode: "output", timeout: 1000, state: true}#12
+    p34 = %Port{name: "Sypialnia", type: "sunblind", number: 34, mode: "output", timeout: 1000, state: false}#11
+    p35 = %Port{name: "Dzienny", type: "sunblind", number: 35, mode: "output", timeout: 1000, state: false}#12
     p36 = %Port{name: "TarasP", type: "sunblind", number: 36, mode: "output", state: false}#13
     p37 = %Port{name: "BalkonP", type: "sunblind", number: 37, mode: "output", state: false}#14
     p38 = %Port{name: "Michał", type: "sunblind", number: 38, mode: "output", state: false}#16
@@ -98,7 +103,7 @@ defmodule DB.Init do
     #CałyDom - RoletyZamykanie
     %Action{
       function: "close_sunblinds",
-      active: true,
+      active: false,
       params: "{}",
       port_id: 21,
       args: sunblids

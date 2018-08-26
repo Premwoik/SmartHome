@@ -48,7 +48,7 @@ appendErrors model errors =
     { model | errors = model.errors ++ errors }
 
 
---replaceListElem : List record -> record -> List record
+--replaceListElem : List r -> r-> List r
 replaceListElem list record =
     let
         f = \x -> if x.id == record.id then record else x

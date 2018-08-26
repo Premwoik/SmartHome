@@ -1,0 +1,37 @@
+var _user$project$Data_Action$fnToString = function (_p0) {
+	var _p1 = _p0;
+	return _p1._0;
+};
+var _user$project$Data_Action$Action = F5(
+	function (a, b, c, d, e) {
+		return {id: a, state: b, $function: c, activator: d, params: e};
+	});
+var _user$project$Data_Action$Function = function (a) {
+	return {ctor: 'Function', _0: a};
+};
+var _user$project$Data_Action$functionDecoder = A2(
+	_elm_lang$core$Json_Decode$andThen,
+	function (func) {
+		return _elm_lang$core$Json_Decode$succeed(
+			_user$project$Data_Action$Function(func));
+	},
+	_elm_lang$core$Json_Decode$string);
+var _user$project$Data_Action$decoder = A6(
+	_elm_lang$core$Json_Decode$map5,
+	_user$project$Data_Action$Action,
+	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'active', _elm_lang$core$Json_Decode$bool),
+	A2(_elm_lang$core$Json_Decode$field, 'function', _user$project$Data_Action$functionDecoder),
+	A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'port',
+			_1: {
+				ctor: '::',
+				_0: 'name',
+				_1: {ctor: '[]'}
+			}
+		},
+		_elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'params', _elm_lang$core$Json_Decode$string));

@@ -32,11 +32,12 @@ defmodule UiWeb.Router do
      post "/sunblinds/toggle_one", SunblindController, :toggle_one
      post "/sunblinds/set_position", SunblindController, :set_position
 
-
+     post "/actions/toggle", ActionController, :toggle
 
      resources "/lights", LightController
      resources "/dimmers", DimmerController
      resources "/sunblinds", SunblindController
      resources "/scenes", SceneController
+     resources "/actions", ActionController
    end
 end

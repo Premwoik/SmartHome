@@ -4,7 +4,47 @@
     <bookmark url="file://$PROJECT_DIR$/socket_test2/lib/device/controller.ex" line="131" mnemonic="9" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2598d553-3e9d-452d-ac4f-43c45975f23a" name="Default" comment="" />
+    <list default="true" id="2598d553-3e9d-452d-ac4f-43c45975f23a" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/ui/assets/elm/Data/Action.elm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/assets/elm/Data/Port.elm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/assets/elm/Page.elm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/assets/elm/Page/Action.elm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/assets/elm/Page/Group.elm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/assets/elm/Page/Statistics.elm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/lib/ui_web/controllers/action_controller.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/application.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/application.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/init.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/init.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/model/action.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/model/action.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/model/dao.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/model/dao.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Repl.elmi" beforeDir="false" afterPath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Repl.elmi" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Repl.elmo" beforeDir="false" afterPath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Repl.elmo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fw/config/config.exs" beforeDir="false" afterPath="$PROJECT_DIR$/fw/config/config.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fw/config/host.exs" beforeDir="false" afterPath="$PROJECT_DIR$/fw/config/host.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fw/config/rpi3.exs" beforeDir="false" afterPath="$PROJECT_DIR$/fw/config/rpi3.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fw/itHome1.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/fw/itHome1.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fw/mix.exs" beforeDir="false" afterPath="$PROJECT_DIR$/fw/mix.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fw/mix.lock.host" beforeDir="false" afterPath="$PROJECT_DIR$/fw/mix.lock.host" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fw/mix.lock.rpi3" beforeDir="false" afterPath="$PROJECT_DIR$/fw/mix.lock.rpi3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fw/rel/config.exs" beforeDir="false" afterPath="$PROJECT_DIR$/fw/rel/config.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Main.elmi" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Main.elmi" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Main.elmo" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Main.elmo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Page-Room.elmi" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Page-Room.elmi" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Page-Room.elmo" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Page-Room.elmo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Request.elmo" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Request.elmo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm/Main.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm/Main.elm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm/Page/Room.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm/Page/Room.elm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm/Request.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm/Request.elm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm/Request/Action.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm/Request/Action.elm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm/Util.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm/Util.elm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/js/elm.js" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/js/elm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/js/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/js/socket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/config/config.exs" beforeDir="false" afterPath="$PROJECT_DIR$/ui/config/config.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/itHome1.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/ui/itHome1.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/itHome1.sqlite3-shm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/itHome1.sqlite3-shm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/itHome1.sqlite3-wal" beforeDir="false" afterPath="$PROJECT_DIR$/ui/itHome1.sqlite3-wal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/lib/ui_web/router.ex" beforeDir="false" afterPath="$PROJECT_DIR$/ui/lib/ui_web/router.ex" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,66 +80,39 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="config.exs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fw/config/config.exs">
+      <file leaf-file-name="mix.exs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fw/mix.exs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="882">
+              <caret line="49" column="16" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Util.elm" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Util.elm">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file leaf-file-name="Room.elm" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request/Room.elm">
+      <file leaf-file-name="iex.exs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fw/rootfs_overlay/etc/iex.exs">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="config.exs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fw/rel/config.exs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="-9">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Request.elm" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request/Request.elm">
+        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request.elm">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Action.elm" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request/Action.elm">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="Http.elm" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/assets/elm-stuff/packages/elm-lang/http/1.0.0/src/Http.elm">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2862">
-              <caret line="159" selection-start-line="159" selection-end-line="159" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Card.elm" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Views/Card.elm">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DimmerC.elm" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Views/DimmerC.elm">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="738">
-              <caret line="41" column="15" selection-start-line="41" selection-start-column="15" selection-end-line="41" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Button.elm" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/src/Material/Button.elm">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="552">
-              <caret line="434" column="45" selection-start-line="434" selection-start-column="45" selection-end-line="434" selection-end-column="45" />
+            <state relative-caret-position="144">
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
             </state>
           </provider>
         </entry>
@@ -107,8 +120,26 @@
       <file leaf-file-name="Main.elm" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/assets/elm/Main.elm">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="576">
-              <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+            <state relative-caret-position="279">
+              <caret line="116" column="14" selection-start-line="116" selection-start-column="14" selection-end-line="116" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Action.elm" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request/Action.elm">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Page.elm" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page.elm">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -116,8 +147,17 @@
       <file leaf-file-name="Room.elm" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page/Room.elm">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1458">
-              <caret line="81" column="31" selection-start-line="81" selection-start-column="31" selection-end-line="81" selection-end-column="31" />
+            <state relative-caret-position="527">
+              <caret line="98" column="42" selection-start-line="98" selection-start-column="42" selection-end-line="98" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Action.elm" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page/Action.elm">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="293">
+              <caret line="89" column="41" selection-start-line="89" selection-start-column="41" selection-end-line="89" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -129,8 +169,8 @@
       <list>
         <option value="Python Script" />
         <option value="Elm Empty File" />
-        <option value="Elixir Module" />
         <option value="Elm Module" />
+        <option value="Elixir Module" />
       </list>
     </option>
   </component>
@@ -164,6 +204,8 @@
       <find>fill_to_time</find>
       <find>{-</find>
       <find>mdl</find>
+      <find>Model</find>
+      <find>socket</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -173,6 +215,9 @@
     <dirStrings>
       <dir>$PROJECT_DIR$/socket_test2/config</dir>
     </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
     <option name="projectSyncType">
@@ -189,57 +234,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/socket_test2/mix.exs" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/cards/DimmerCard.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/cards/DimmerCard1.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/DimmerCard.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/types.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm-package.json" />
-        <option value="$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/src/Material/Tabs.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/DimCard.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Data/Scene.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Types.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Data/State.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Util.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Data/Id.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Data/Sunblind.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Data/Light.elm" />
-        <option value="$PROJECT_DIR$/ui/lib/ui_web/controllers/page_controller.ex" />
-        <option value="$PROJECT_DIR$/fw/config/config.exs" />
-        <option value="$PROJECT_DIR$/ui/lib/ui_web/templates/layout/app.html.eex" />
-        <option value="$PROJECT_DIR$/ui/lib/ui_web/controllers/scene_controller.ex" />
-        <option value="$PROJECT_DIR$/db/lib/db/model/action.ex" />
-        <option value="$PROJECT_DIR$/ui/lib/ui_web/controllers/light_controller.ex" />
-        <option value="$PROJECT_DIR$/db/lib/db/model/dimmer.ex" />
-        <option value="$PROJECT_DIR$/db/lib/db/model/port.ex" />
-        <option value="$PROJECT_DIR$/db/priv/repo/migrations/20180710132359_init_database.exs" />
-        <option value="$PROJECT_DIR$/fw/mix.exs" />
-        <option value="$PROJECT_DIR$/db/lib/db/model/dao.ex" />
-        <option value="$PROJECT_DIR$/socket_test2/config/test.exs" />
-        <option value="$PROJECT_DIR$/socket_test2/test/socket_test2_test.exs" />
         <option value="$PROJECT_DIR$/socket_test2/test/device/controller_test.exs" />
-        <option value="$PROJECT_DIR$/db/lib/db/application.ex" />
         <option value="$PROJECT_DIR$/socket_test2/config/config.exs" />
         <option value="$PROJECT_DIR$/ui/lib/ui_web/controllers/dimmer_controller.ex" />
         <option value="$PROJECT_DIR$/ui/lib/ui_web/controllers/sunblind_controller.ex" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Data/Dimmer.elm" />
-        <option value="$PROJECT_DIR$/db/lib/db/init.ex" />
-        <option value="$PROJECT_DIR$/ui/config/config.exs" />
         <option value="$PROJECT_DIR$/ui/mix.exs" />
-        <option value="$PROJECT_DIR$/ui/lib/ui_web/router.ex" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Views/SunblindC.elm" />
-        <option value="$PROJECT_DIR$/socket_test2/lib/socket_test2.ex" />
         <option value="$PROJECT_DIR$/socket_test2/lib/device/controller.ex" />
         <option value="$PROJECT_DIR$/socket_test2/lib/device/alarm/satel/satel_protocol.ex" />
         <option value="$PROJECT_DIR$/socket_test2/lib/device/alarm/satel/integra64.ex" />
         <option value="$PROJECT_DIR$/socket_test2/lib/device/actions.ex" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Model.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Model/Room.Model.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Room/Room.elm" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Views/Card.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Views/SunblindC.elm" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Views/DimmerC.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Room.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Room/Views/Card.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Room/Views/DimmerC.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Room/Views/SunblindC.elm" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Request/Request.elm" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Request/Room.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Room/Model.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Request/Actions.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Group.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Statistics.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Data/Port.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Room.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Util.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Request/Action.elm" />
+        <option value="$PROJECT_DIR$/ui/lib/ui_web/router.ex" />
+        <option value="$PROJECT_DIR$/ui/lib/ui_web/controllers/light_controller.ex" />
+        <option value="$PROJECT_DIR$/ui/lib/ui_web/controllers/action_controller.ex" />
+        <option value="$PROJECT_DIR$/socket_test2/lib/socket_test2.ex" />
+        <option value="$PROJECT_DIR$/db/lib/db/model/action.ex" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Data/Action.elm" />
+        <option value="$PROJECT_DIR$/db/lib/db/model/dao.ex" />
+        <option value="$PROJECT_DIR$/fw/config/rpi3.exs" />
+        <option value="$PROJECT_DIR$/fw/config/config.exs" />
+        <option value="$PROJECT_DIR$/ui/config/config.exs" />
+        <option value="$PROJECT_DIR$/fw/config/host.exs" />
+        <option value="$PROJECT_DIR$/ui/assets/js/socket.js" />
+        <option value="$PROJECT_DIR$/ui/priv/static/js/app2.js" />
+        <option value="$PROJECT_DIR$/ui/lib/ui_web/templates/layout/app.html.eex" />
+        <option value="$PROJECT_DIR$/ui/assets/js/app.js" />
+        <option value="$PROJECT_DIR$/db/lib/db/application.ex" />
+        <option value="$PROJECT_DIR$/db/lib/db/init.ex" />
+        <option value="$PROJECT_DIR$/fw/mix.exs" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Request.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Page.elm" />
         <option value="$PROJECT_DIR$/ui/assets/elm/Main.elm" />
+        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Action.elm" />
       </list>
     </option>
   </component>
@@ -272,30 +317,23 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1920" />
     <option name="y" value="21" />
-    <option name="width" value="1920" />
+    <option name="width" value="640" />
     <option name="height" value="1059" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
-            <path>
-              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="db" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="db" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
             <path>
               <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
               <item name="ui" type="462c0819:PsiDirectoryNode" />
@@ -317,20 +355,6 @@
               <item name="assets" type="462c0819:PsiDirectoryNode" />
               <item name="elm" type="462c0819:PsiDirectoryNode" />
               <item name="Page" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="elm" type="462c0819:PsiDirectoryNode" />
-              <item name="Request" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="elm" type="462c0819:PsiDirectoryNode" />
-              <item name="Views" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -361,11 +385,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ui/assets/elm/Page" />
+      <recent name="$PROJECT_DIR$/ui/assets/elm" />
+      <recent name="$PROJECT_DIR$/ui/assets/elm/Page/Room/Views" />
+      <recent name="$PROJECT_DIR$/ui/assets/elm/Model" />
       <recent name="$PROJECT_DIR$/ui/assets/elm/Views" />
-      <recent name="$PROJECT_DIR$/ui/assets/elm/Views/Room" />
-      <recent name="$PROJECT_DIR$/db/lib/db" />
-      <recent name="$PROJECT_DIR$/db/lib" />
-      <recent name="$PROJECT_DIR$/db" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -467,7 +491,13 @@
       <workItem from="1534636260685" duration="16547000" />
       <workItem from="1534757215319" duration="20971000" />
       <workItem from="1534865083745" duration="608000" />
-      <workItem from="1534980141050" duration="617000" />
+      <workItem from="1534980141050" duration="11166000" />
+      <workItem from="1535057198044" duration="496000" />
+      <workItem from="1535070632048" duration="5760000" />
+      <workItem from="1535122931831" duration="2025000" />
+      <workItem from="1535132177239" duration="7680000" />
+      <workItem from="1535156270667" duration="29536000" />
+      <workItem from="1535234441698" duration="6341000" />
     </task>
     <servers />
   </component>
@@ -477,21 +507,21 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="340543000" />
+    <option name="totallyTimeSpent" value="402930000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="21" width="1920" height="1059" extended-state="6" />
+    <frame x="1920" y="21" width="2560" height="1059" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Tool Output" order="13" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.4181818" side_tool="true" visible="true" weight="0.2457265" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.20278884" side_tool="true" visible="true" weight="0.36655948" />
       <window_info anchor="right" id="Maven Projects" order="4" sideWeight="0.49624062" weight="0.3292683" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="right" id="REPL" order="12" sideWeight="0.5037594" side_tool="true" weight="0.3292683" />
       <window_info anchor="right" id="Leiningen" order="5" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="2" />
-      <window_info anchor="right" id="Database" order="7" sideWeight="0.4981203" visible="true" weight="0.13957219" />
+      <window_info anchor="right" id="Database" order="7" sideWeight="0.4981203" visible="true" weight="0.015139442" />
       <window_info anchor="bottom" id="ANTLR Preview" order="12" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -502,10 +532,10 @@
       <window_info id="Image Layers" order="5" />
       <window_info anchor="right" id="Capture Analysis" order="9" />
       <window_info anchor="right" id="PsiViewer" order="6" weight="0.3292683" />
-      <window_info anchor="bottom" id="Version Control" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946523" weight="0.32905984" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.58181816" visible="true" weight="0.2457265" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.142246" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.79721117" visible="true" weight="0.36655948" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12191235" />
       <window_info anchor="right" id="SciView" order="10" />
       <window_info anchor="right" id="Theme Preview" order="11" />
       <window_info id="Favorites" order="4" side_tool="true" />
@@ -515,7 +545,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946523" weight="0.32905984" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49674797" weight="0.3290461" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -530,328 +560,311 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/controllers/light_controller.ex">
+    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/controllers/scene_controller.ex">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page/Room/Views/SunblindC.elm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        <state relative-caret-position="676">
+          <caret line="129" column="21" selection-start-line="129" selection-start-column="21" selection-end-line="129" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/controllers/page_controller.ex">
+    <entry file="file://$PROJECT_DIR$/db/lib/db/model/dimmer.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="288">
+          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/controllers/sunblind_controller.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Data/Scene.elm">
+    <entry file="file://$PROJECT_DIR$/db/lib/db/model/port.ex">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
+          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/controllers/dimmer_controller.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="54" selection-start-line="20" selection-start-column="54" selection-end-line="20" selection-end-column="54" />
+        <state relative-caret-position="198">
+          <caret line="20" column="11" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="das://d745192f-121d-4daf-abb2-c994ab0f06bb/schema/main/table/ports">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Data/Light.elm">
+    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Data/Port.elm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-972">
-          <caret column="34" selection-start-column="34" selection-end-column="34" />
+        <state relative-caret-position="54">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/controllers/scene_controller.ex">
+    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/controllers/light_controller.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
+        <state relative-caret-position="270">
+          <caret line="15" column="39" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="das://d745192f-121d-4daf-abb2-c994ab0f06bb/schema/main/table/dimmers">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
+    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/actions.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/socket_test2/lib/socket_test2.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Data/Action.elm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/controllers/action_controller.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/lib/db/model/dao.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="48" column="35" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/config/config.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-292" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/socket_test2/config/config.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-378" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/priv/static/css/app.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1026" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/config/dev.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/config/test.exs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/channels/user_socket.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/assets/package.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/endpoint.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/templates/page/index.html.eex">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/priv/static/js/app2.js" />
+    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/templates/layout/app.html.eex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/priv/static/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4212">
+          <caret line="225" column="18" selection-start-line="225" selection-start-column="18" selection-end-line="225" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/assets/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/assets/brunch-config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="972">
+          <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/assets/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="13" column="15" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/assets/js/elm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="711" column="30" selection-start-line="711" selection-start-column="24" selection-end-line="711" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/assets/js/socket.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="61" column="20" selection-start-line="61" selection-start-column="20" selection-end-line="61" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/router.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="24" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
+        <state relative-caret-position="342">
+          <caret line="34" column="54" selection-start-line="34" selection-start-column="54" selection-end-line="34" selection-end-column="54" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/mix.exs">
+    <entry file="file://$PROJECT_DIR$/fw/config/config.exs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="37" column="32" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="32" />
+        <state relative-caret-position="248">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/mix.lock">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/fw/config/host.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/config/rpi3.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/lib/db/application.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="33" column="18" selection-start-line="33" selection-start-column="18" selection-end-line="33" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/lib/db/model/action.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/db/lib/db/init.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="45" column="86" selection-start-line="45" selection-start-column="86" selection-end-line="45" selection-end-column="86" />
+        <state relative-caret-position="486">
+          <caret line="27" column="30" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/config/config.exs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        <state relative-caret-position="414">
+          <caret line="23" selection-start-line="23" selection-end-line="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/config/prod.exs">
+    <entry file="file://$PROJECT_DIR$/fw/rel/vm.args">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/config/prod.secret.exs">
+    <entry file="file://$PROJECT_DIR$/fw/mix.lock.host">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/config/dev.exs">
+    <entry file="file://$PROJECT_DIR$/fw/rootfs_overlay/etc/iex.exs">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Views/SunblindC.elm">
+    <entry file="file://$PROJECT_DIR$/fw/rel/config.exs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="50" column="67" selection-start-line="50" selection-start-column="67" selection-end-line="50" selection-end-column="67" />
+        <state relative-caret-position="-9">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/benchmark.ex">
+    <entry file="file://$PROJECT_DIR$/fw/deps/host/distillery/mix.exs">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/socket_test2.ex">
+    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/distillery/mix.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1255" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fw/mix.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="882">
+          <caret line="49" column="16" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Util.elm">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request.elm">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="8" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
-    <entry file="das://bc964963-650c-46d3-abd2-fb3113ce9afe/schema/main/table/ports">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/lib/db/model/dimmer.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/lib/db/model/action.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/lib/db/model/dimmers_lights.ex">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/lib/db/model/port.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/lib/db/model/dao.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="89" column="6" selection-start-line="89" selection-start-column="6" selection-end-line="89" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/supervisor.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/lib/db/application.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="23" column="11" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://d745192f-121d-4daf-abb2-c994ab0f06bb/schema/main/table/actions">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://bc964963-650c-46d3-abd2-fb3113ce9afe/schema/main/table/dimmers">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://bc964963-650c-46d3-abd2-fb3113ce9afe/schema/main/table/actions_arguments">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/controller.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1062">
-          <caret line="59" column="17" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/alarm/satel/integra64.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/alarm/satel/satel_protocol.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/actions.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/config/config.exs">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm-stuff/packages/elm-lang/core/5.1.1/src/Dict.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/src/Material.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="323" column="13" selection-start-line="323" selection-start-column="13" selection-end-line="323" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/src/Material/Layout.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="1088" selection-start-line="1088" selection-end-line="1088" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Model.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="47" selection-start-line="3" selection-start-column="47" selection-end-line="3" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Data/Dimmer.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request/Action.elm">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm-stuff/packages/elm-lang/http/1.0.0/src/Http.elm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2862">
-          <caret line="159" selection-start-line="159" selection-end-line="159" />
+        <state relative-caret-position="270">
+          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Views/Card.elm">
+    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page.elm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request/Request.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request/Room.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="216">
+          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page/Room.elm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1458">
-          <caret line="81" column="31" selection-start-line="81" selection-start-column="31" selection-end-line="81" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/src/Material/Helpers.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2982">
-          <caret line="175" column="32" selection-start-line="175" selection-start-column="32" selection-end-line="175" selection-end-column="32" />
+        <state relative-caret-position="527">
+          <caret line="98" column="42" selection-start-line="98" selection-start-column="42" selection-end-line="98" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/assets/elm/Main.elm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+        <state relative-caret-position="279">
+          <caret line="116" column="14" selection-start-line="116" selection-start-column="14" selection-end-line="116" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Views/DimmerC.elm">
+    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page/Action.elm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="738">
-          <caret line="41" column="15" selection-start-line="41" selection-start-column="15" selection-end-line="41" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/src/Material/Button.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="434" column="45" selection-start-line="434" selection-start-column="45" selection-end-line="434" selection-end-column="45" />
+        <state relative-caret-position="293">
+          <caret line="89" column="41" selection-start-line="89" selection-start-column="41" selection-end-line="89" selection-end-column="41" />
         </state>
       </provider>
     </entry>

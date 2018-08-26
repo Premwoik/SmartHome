@@ -15,21 +15,7 @@ var _user$project$Page_Room$makeSunblind = function (model) {
 	return A5(_user$project$Page_Room_Views_SunblindC$sunblindCard, model.mdl, model.sunblinds, -2, model.raised, model.blindUndrawn);
 };
 var _user$project$Page_Room$view = function (model) {
-	return A2(
-		_debois$elm_mdl$Material_Options$div,
-		{
-			ctor: '::',
-			_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', 'auto'),
-			_1: {
-				ctor: '::',
-				_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-left', '8%'),
-				_1: {
-					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-right', '8%'),
-					_1: {ctor: '[]'}
-				}
-			}
-		},
+	return _user$project$Page$body1(
 		{
 			ctor: '::',
 			_0: A2(
