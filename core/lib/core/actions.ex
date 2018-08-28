@@ -38,63 +38,64 @@ defmodule Core.Actions do
 
   @impl true
   def handle_cast({:up_action, actionList, dname}, s) do
-    ns = handle_action actionList, dname, :on, s
+    ns = handle_action s, actionList, dname, :on
     {:noreply, ns}
   end
 
   @impl true
   def handle_cast({:down_action, actionList, dname}, s) do
-    ns = handle_action actionList, dname, :off, s
+    ns = handle_action s, actionList, dname, :off
     {:noreply, ns}
   end
 
   @impl true
   def handle_cast(:reload_actions, %{amem: amem} = s) do
     actions = Dao.find_actions()
-    actionIds = Keyword.values actions |> Enum.map fn {id, _} -> id end
+    actionIds = Keyword.values actions
+                               |> Enum.map fn {id, _} -> id end
     newAmem = :maps.filter fn id, _ -> Enum.any? actionIds &(&1 == id)  end
     {:noreply, %{s | actions: actions, amem: newAmem}}
   end
 
-
-
-  ## Actions
-
-  def close_sunblinds(onOff, _, s) do
-    Logger.info("CloseSunblinds action is invoked.")
-    state = case onOff,
-                 do: (
-                   :on -> true;
-                   :off -> false)
-    #TODO add sort of filtration e.x. groups?
-    #if there was no need to close all sunblinds
-    # or maybe close all, but open only several e.x special group to open and special group to close
-    data = Dao.get_ports_by_type("sunblind")
-           |> Enum.group_by(&(&1.device_id))
-           |> Map.to_list()
-    for {deviceId, sunblinds} <- data, do:
-      Controller.set_outputs (Dao.get_device_atom deviceId), sunblinds, state
-    s
-  end
-
-
-  def turn_lights_on(onOff, actionId, nil), do:
-    #  init memory
-    turn_lights_on(onOff, actionId, %{lastInvoke: 0, offPid: nil})
-  def turn_lights_on(onOff, actionId, %{lastInvoke: lastInvoke, offPid: offPid} = s) do
-    interval = 15_000
-    currentTime = :os.system_time(:millisecond)
-    if currentTime - lastInvoke > interval do
-      %{s | lastInvoke: currentTime, offPid: (notify_off_task offPid, actionId)}
-    else
-      s
+  #  Privates
+  defp handle_action(s, [], _, _), do: s
+  defp handle_action(%{actions: actions, amem: amem} = s, [h | t], dname, onOff) do
+    try do
+      (case List.keyfind(actions, {(to_string dname), h}, 0)do
+         :nil ->
+           s
+         #        update action memory if action proceeded
+         {_, {actionId, fun}} ->
+           action = %{}
+           newMem = proceed_action onOff, action, amem[actionId]
+           %{s | amem: (Map.put amem, actionId, newMem)}
+       end)
+      |> handle_action(t, dname, onOff)
+    rescue
+      error ->
+        IO.inspect error
+        Logger.error("Handle action error")
+        handle_action t, dname, onOff, s
     end
   end
 
-#  Action components:
-#   - activation delay
-#   - time range activation
-#   + off task
+  @spec proceed_action(Core.Actions.Action.state, map, map) :: map
+  defp proceed_action(onOff, action, nil) do
+    amem = apply get_module(action.function), :init_memory, []
+    proceed_action(onOff, action, amem)
+  end
+  defp proceed_action(onOff, action, amem) do
+    with {:ok, amem_} <- check_activation_delay(action.delay, amem),
+         :ok <- check_activation_time(action.time_start, action.time_end)
+      do
+      apply get_module(action.function), :execute, [onOff, action, amem_]
+    else
+      amem
+    end
+  end
+
+
+  @spec check_activation_delay(integer, map) :: {:ok, map} | :fail
   defp check_activation_delay(0, amem), do: {:ok, amem}
   defp check_activation_delay(_, nil), do:
     {:ok, %{lastInvoke: :os.system_time(:millisecond)}}
@@ -110,6 +111,7 @@ defmodule Core.Actions do
     {:ok, Map.put amem, :lastInvoke, :os.system_time(:millisecond)}
   end
 
+  @spec check_activation_time(Time.t, Time.t) :: :ok | :fail
   defp check_activation_time(nil, nil), do: :ok
   defp check_activation_time(times, timee) do
     now = Time.utc_now()
@@ -120,73 +122,9 @@ defmodule Core.Actions do
     end
   end
 
- defp proceed_action(onOff, action, amem) do
-  with {:ok, amem_} <- check_activation_delay action.delay, amem
-       :ok <- check_activation_time action.time_start, action.time_end
-       do
-         apply __MODULE__, (String.to_atom action.function), [onOff, action, amem]
-       end
+
+  def get_module(function) do
+    String.to_atom "Elixir.Actions." <> function
   end
-
-
-#  Privates
-
-  defp handle_action([], _, _, s), do: s
-  defp handle_action([h | t], dname, onOff, %{actions: actions, amem: actionMems} = s) do
-    try do
-      newActionMem = case List.keyfind(actions, {(to_string dname), h}, 0)do
-        :nil ->
-          s
-        #        update action memory if action proceeded
-        {_, {actionId, fun}} ->
-          newMem = proceed_action
-          %{s | amem: (Map.put actionMems, actionId, newMem)}
-      end
-      handle_action t, dname, onOff, newActionMem
-    rescue
-      error ->
-        #        Logger.error("Wrong function name")
-        IO.inspect error
-        Logger.error("Handle action error")
-        handle_action t, dname, onOff, s
-    end
-  end
-
-  defp notify_off_task(nil, actionId) do
-    action = Dao.find_action(actionId)
-    if isAnyOn? action.args do
-      nil
-    else
-      [timeout|_] = Poison.decode! action.params
-      Controller.set_dim_lights(action.args, true)
-      {ok, pid} = Task.start __MODULE__, :turn_lights_off, [timeout, action.args]
-      pid
-    end
-  end
-  defp notify_off_task(pid, ops) do
-    case Process.alive? pid do
-      true ->
-        send pid, :notified
-        pid
-      false ->
-        notify_off_task nil, ops
-    end
-  end
-
-  defp isAnyOn?(ports), do:
-      Enum.any? ports, &(&1.state == true)
-
-  def turn_lights_off(timeout, lights) do
-    receive do
-      :notified ->
-        Logger.info("Turning lights deleyed")
-        turn_lights_off(timeout, lights)
-    after
-      timeout ->
-        Logger.info("Lights turned off")
-        Controller.set_dim_lights(lights, false)
-    end
-  end
-
 
 end

@@ -5,45 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2598d553-3e9d-452d-ac4f-43c45975f23a" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/core/core.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/lib/core/actions/action.ex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/lib/core/actions/close_sunblinds.ex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/8e6c902a-9ca9-4fde-948a-bb4c900c6226.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bc964963-650c-46d3-abd2-fb3113ce9afe.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bcbb24a3-cda8-4482-84ec-f9d63fcaf369.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d745192f-121d-4daf-abb2-c994ab0f06bb.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpu_monitor/lib/cpu_monitor.ex" beforeDir="false" afterPath="$PROJECT_DIR$/cpu_monitor/lib/cpu_monitor.ex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/.formatter.exs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/config/config.exs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/config/test.exs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/itHome.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/itHome1.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/itHomeDB.mdj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/lib/benchmark.ex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/lib/core.ex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/lib/core/actions.ex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/lib/device/alarm/satel/integra64.ex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/lib/device/alarm/satel/satel_protocol.ex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/lib/device/arduino/client.ex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/lib/device/arduino/code.ex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/lib/device/arduino/command.ex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/lib/device/arduino/message_processor.ex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/lib/device/controller.ex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/lib/device/supervisor.ex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/mix.exs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/mix.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/socket_test2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/test/device/controller_test.exs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/test/socket_test2_test.exs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_test2/test/test_helper.exs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/lib/core/actions.ex" beforeDir="false" afterPath="$PROJECT_DIR$/core/lib/core/actions.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/lib/core/actions/action.ex" beforeDir="false" afterPath="$PROJECT_DIR$/core/lib/core/actions/action.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex" beforeDir="false" afterPath="$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/lib/core/actions/close_sunblinds.ex" beforeDir="false" afterPath="$PROJECT_DIR$/core/lib/core/actions/close_sunblinds.ex" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -92,53 +58,71 @@
     <settings binDirPath="$PROJECT_DIR$/ui/assets/node_modules/.bin" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="cpu_monitor.ex" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cpu_monitor/lib/cpu_monitor.ex">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="936">
-              <caret line="52" column="25" selection-start-line="52" selection-start-column="25" selection-end-line="52" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="actions.ex" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/lib/core/actions.ex">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-486">
-              <caret column="22" selection-start-column="22" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="close_sunblinds.ex" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/lib/core/actions/close_sunblinds.ex">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="auto_lights.ex" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="3" column="15" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="action.ex" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/lib/core/actions/action.ex">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.4622496">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="auto_lights.ex" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1080">
+                  <caret line="60" selection-start-line="60" selection-end-line="60" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="close_sunblinds.ex" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/actions/close_sunblinds.ex">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="288">
+                  <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="supervisor.ex" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/device/supervisor.ex">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-370" />
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="action.ex" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/actions/action.ex">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="180">
+                  <caret line="10" selection-start-line="10" selection-end-line="10" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="actions.ex" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/actions.ex">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-464">
+                  <caret line="73" column="9" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="controller.ex" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/device/controller.ex">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-2160" />
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="tasks.ex" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/tasks.ex">
+              <provider selected="true" editor-type-id="text-editor" />
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -257,10 +241,10 @@
         <option value="$PROJECT_DIR$/socket_test2/mix.exs" />
         <option value="$PROJECT_DIR$/socket_test2/lib/core.ex" />
         <option value="$PROJECT_DIR$/core/lib/device/supervisor.ex" />
-        <option value="$PROJECT_DIR$/core/lib/core/actions.ex" />
         <option value="$PROJECT_DIR$/core/lib/core/actions/action.ex" />
-        <option value="$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex" />
         <option value="$PROJECT_DIR$/core/lib/core/actions/close_sunblinds.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/actions.ex" />
       </list>
     </option>
   </component>
@@ -293,8 +277,9 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1920" />
     <option name="y" value="21" />
-    <option name="width" value="960" />
+    <option name="width" value="1280" />
     <option name="height" value="1059" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -303,25 +288,35 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cpu_monitor" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
               <item name="cpu_monitor" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -636,7 +631,8 @@
       <workItem from="1535234441698" duration="21359000" />
       <workItem from="1535325693705" duration="6896000" />
       <workItem from="1535364664260" duration="6513000" />
-      <workItem from="1535372321137" duration="10807000" />
+      <workItem from="1535372321137" duration="14755000" />
+      <workItem from="1535413155658" duration="2101000" />
     </task>
     <servers />
   </component>
@@ -646,14 +642,14 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="442164000" />
+    <option name="totallyTimeSpent" value="448213000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="21" width="960" height="1059" extended-state="6" />
+    <frame x="1920" y="21" width="2560" height="1059" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Tool Output" order="13" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.20659341" side_tool="true" visible="true" weight="0.35262594" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.20796813" side_tool="true" visible="true" weight="0.2926045" />
       <window_info anchor="right" id="Maven Projects" order="4" sideWeight="0.49624062" weight="0.3292683" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="right" id="REPL" order="12" sideWeight="0.5037594" side_tool="true" weight="0.3292683" />
@@ -673,9 +669,8 @@
       <window_info anchor="right" id="PsiViewer" order="6" weight="0.3292683" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946523" weight="0.32905984" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.7934066" visible="true" weight="0.35262594" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.51648355" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4956044" weight="0.3290461" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.7920319" visible="true" weight="0.2926045" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22430278" />
       <window_info anchor="right" id="SciView" order="10" />
       <window_info anchor="right" id="Theme Preview" order="11" />
       <window_info id="Favorites" order="4" side_tool="true" />
@@ -685,6 +680,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49518716" weight="0.3290461" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -699,16 +695,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/fw/rel/config.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/deps/host/distillery/mix.exs">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/assets/elm/Util.elm">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -868,13 +854,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fw/config/config.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/router.ex">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -892,15 +871,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/benchmark.ex">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/alarm/satel/integra64.ex">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/alarm/satel/satel_protocol.ex">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/socket_test2/lib/benchmark.ex" />
+    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/alarm/satel/integra64.ex" />
+    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/alarm/satel/satel_protocol.ex" />
     <entry file="file://$PROJECT_DIR$/ui/assets/elm/Main.elm">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1181">
@@ -916,73 +889,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/core/actions.ex">
+    <entry file="file://$PROJECT_DIR$/socket_test2/lib/core/actions.ex" />
+    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/supervisor.ex" />
+    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/controller.ex" />
+    <entry file="file://$PROJECT_DIR$/socket_test2/lib/core/tasks.ex" />
+    <entry file="file://$PROJECT_DIR$/socket_test2/mix.exs" />
+    <entry file="file://$PROJECT_DIR$/socket_test2/lib/core.ex" />
+    <entry file="file://$PROJECT_DIR$/core/lib/device/supervisor.ex" />
+    <entry file="file://$PROJECT_DIR$/fw/config/config.exs">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" selection-start-column="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/supervisor.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-450" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/controller.ex">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/core/tasks.ex">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/mix.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="36" lean-forward="true" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/core.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/lib/device/supervisor.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/lib/core/device/controller.ex">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/lib/core/actions.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-486">
-          <caret column="22" selection-start-column="22" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="15" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/lib/core/actions/action.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/lib/core/actions/close_sunblinds.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+        <state relative-caret-position="216">
+          <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -992,6 +909,47 @@
           <caret line="52" column="25" selection-start-line="52" selection-start-column="25" selection-end-line="52" selection-end-column="25" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1080">
+          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/actions/close_sunblinds.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/device/supervisor.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-370" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/actions/action.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/actions.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-464">
+          <caret line="73" column="9" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/device/controller.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2160" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/tasks.ex">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
   <component name="masterDetails">
