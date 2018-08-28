@@ -3,7 +3,7 @@ defmodule SocketTest2.MixProject do
 
   def project do
     [
-      app: :socket_test2,
+      app: :core,
       version: "0.1.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
@@ -14,7 +14,7 @@ defmodule SocketTest2.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      mod: {SocketTest2, []},
+      mod: {Core, []},
       extra_applications: [:logger],
     ]
   end

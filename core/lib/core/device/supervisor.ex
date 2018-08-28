@@ -14,13 +14,13 @@ defmodule Device.Supervisor do
     Dao.get_devices
     |> Enum.map(&(get_specs &1))
     |> Enum.filter(&(&1 != %{})) #remove empty
-    |> add_fixed_childes()
+#    |> add_fixed_childes()
     |> Supervisor.init(strategy: :one_for_one)
   end
 
-  defp add_fixed_childes(childs) do
-    [Alarm.Actions | childs]
-  end
+#  defp add_fixed_childes(childs) do
+#    [Alarm.Actions | childs]
+#  end
 
   defp get_specs(%Device{type: type} = device), do:
     get_specs(device, (get_type_info type))

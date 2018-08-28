@@ -1,4 +1,4 @@
-defmodule Alarm.Actions do
+defmodule Core.Actions do
   @moduledoc false
 
   use GenServer
@@ -48,33 +48,19 @@ defmodule Alarm.Actions do
     {:noreply, ns}
   end
 
-
-
-  ## Privates
-  defp handle_action([], _, _, s), do: s
-  defp handle_action([h | t], dname, onOff, %{actions: actions, amem: actionMems} = s) do
-    try do
-      newActionMem = case List.keyfind(actions, {(to_string dname), h}, 0)do
-        :nil ->
-          s
-        #        update action memory if action proceeded
-        {_, {actionId, fun}} ->
-          newMem = apply __MODULE__, (String.to_atom fun), [onOff, actionId, actionMems[actionId]]
-          %{s | amem: (Map.put actionMems, actionId, newMem)}
-      end
-      handle_action t, dname, onOff, newActionMem
-    rescue
-      error ->
-        #        Logger.error("Wrong function name")
-        IO.inspect error
-        Logger.error("Handle action error")
-        handle_action t, dname, onOff, s
-    end
+  @impl true
+  def handle_cast(:reload_actions, %{amem: amem} = s) do
+    actions = Dao.find_actions()
+    actionIds = Keyword.values actions |> Enum.map fn {id, _} -> id end
+    newAmem = :maps.filter fn id, _ -> Enum.any? actionIds &(&1 == id)  end
+    {:noreply, %{s | actions: actions, amem: newAmem}}
   end
 
-  ## Functions
 
-  def close_sunblinds(onOff, action_id, s) do
+
+  ## Actions
+
+  def close_sunblinds(onOff, _, s) do
     Logger.info("CloseSunblinds action is invoked.")
     state = case onOff,
                  do: (
@@ -102,6 +88,67 @@ defmodule Alarm.Actions do
       %{s | lastInvoke: currentTime, offPid: (notify_off_task offPid, actionId)}
     else
       s
+    end
+  end
+
+#  Action components:
+#   - activation delay
+#   - time range activation
+#   + off task
+  defp check_activation_delay(0, amem), do: {:ok, amem}
+  defp check_activation_delay(_, nil), do:
+    {:ok, %{lastInvoke: :os.system_time(:millisecond)}}
+  defp check_activation_delay(delay, %{lastInvoke} = amem) do
+    currentTime = :os.system_time(:millisecond)
+    if currentTime - lastInvoke > delay do
+      {:ok, %{amem | lastInvoke: currentTime}}
+    else
+      :fail
+    end
+  end
+  defp check_activation_delay(_, amem) do
+    {:ok, Map.put amem, :lastInvoke, :os.system_time(:millisecond)}
+  end
+
+  defp check_activation_time(nil, nil), do: :ok
+  defp check_activation_time(times, timee) do
+    now = Time.utc_now()
+    if Time.compare(now, times) == :gt && Time.compare(now, timee) == :lt do
+      :ok
+    else
+      :fail
+    end
+  end
+
+ defp proceed_action(onOff, action, amem) do
+  with {:ok, amem_} <- check_activation_delay action.delay, amem
+       :ok <- check_activation_time action.time_start, action.time_end
+       do
+         apply __MODULE__, (String.to_atom action.function), [onOff, action, amem]
+       end
+  end
+
+
+#  Privates
+
+  defp handle_action([], _, _, s), do: s
+  defp handle_action([h | t], dname, onOff, %{actions: actions, amem: actionMems} = s) do
+    try do
+      newActionMem = case List.keyfind(actions, {(to_string dname), h}, 0)do
+        :nil ->
+          s
+        #        update action memory if action proceeded
+        {_, {actionId, fun}} ->
+          newMem = proceed_action
+          %{s | amem: (Map.put actionMems, actionId, newMem)}
+      end
+      handle_action t, dname, onOff, newActionMem
+    rescue
+      error ->
+        #        Logger.error("Wrong function name")
+        IO.inspect error
+        Logger.error("Handle action error")
+        handle_action t, dname, onOff, s
     end
   end
 
