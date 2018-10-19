@@ -10,6 +10,7 @@ defmodule DB.InitTest do
   alias DB.Task
   alias DB.TaskType
   alias DB.Light
+  alias DB.Sunblind
   import Ecto.Query
   require Logger
 
@@ -18,7 +19,7 @@ defmodule DB.InitTest do
     {:ok, spawn_link(__MODULE__, :run, [])}
 
   def run do
-    Logger.info("Creating data!")
+    Logger.info("Creating data! - TEST")
     :ok = delete_all()
     if !exist do
       :ok = insert_ard_mega()
@@ -42,6 +43,7 @@ defmodule DB.InitTest do
     Repo.delete_all(Device)
     Repo.delete_all(TaskType)
     Repo.delete_all(Task)
+    Repo.delete_all(Sunblind)
     :ok
   end
 
@@ -60,9 +62,9 @@ defmodule DB.InitTest do
     p35 = %Port{name: "Dzienny", type: "sunblind", number: 35, mode: "output", timeout: 1000, state: false}#12
     p36 = %Port{name: "TarasP", type: "sunblind", number: 36, mode: "output", state: false}#13
     p37 = %Port{name: "BalkonP", type: "sunblind", number: 37, mode: "output", state: false}#14
-    p38 = %Port{name: "Michał", type: "sunblind", number: 38, mode: "output", state: false}#16
-    p39 = %Port{name: "Salon", type: "sunblind", number: 39, mode: "output", state: false}#17
-    p40 = %Port{name: "TarasSalon", type: "sunblind", number: 40, mode: "output", state: false}#18
+    p38 = %Port{name: "Michał", type: "sunblind", number: 38, mode: "output", state: false}#15
+    p39 = %Port{name: "Salon", type: "sunblind", number: 39, mode: "output", state: false}#16
+    p40 = %Port{name: "TarasSalon", type: "sunblind", number: 40, mode: "output", state: false}#17
 
 
     type = if test, do: "Core.DeviceMock", else: "Core.Device.Default"
@@ -76,6 +78,23 @@ defmodule DB.InitTest do
                p21, p22, p23, p24, p25, p26, p34, p35, p36, p37, p38, p39, p40]
            }
            |> Repo.insert!
+
+    %Sunblind{port_id: 11, full_open_time: 10_000, type: "pulse"}
+    |> Repo.insert!
+    %Sunblind{port_id: 12, full_open_time: 10_000, type: "pulse"}
+    |> Repo.insert!
+    %Sunblind{port_id: 13, full_open_time: 10_000}
+    |> Repo.insert!
+    %Sunblind{port_id: 14, full_open_time: 10_000}
+    |> Repo.insert!
+    %Sunblind{port_id: 15, full_open_time: 10_000}
+    |> Repo.insert!
+    %Sunblind{port_id: 16, full_open_time: 10_000}
+    |> Repo.insert!
+    %Sunblind{port_id: 17, full_open_time: 10_000}
+    |> Repo.insert!
+
+
 
 
     l1 = %Light{port_id: 3, dimmer_id: 2} #1
@@ -98,10 +117,10 @@ defmodule DB.InitTest do
 
 
   def insert_integra64(test \\ false) do
-    p8 = %Port{name: "CzujkaSalonSchody", type: "motion_sensor", number: 8, mode: "undef", state: nil}#19
-    p9 = %Port{name: "CzujkaSalonKuchnia", type: "motion_sensor", number: 9, mode: "undef", state: nil}#20
-    p10 = %Port{name: "CzujkaSalon", type: "motion_sensor", number: 10, mode: "undef", state: nil}#21
-    p62 = %Port{name: "SygnalZamknieciaRolet", type: "alarm_input", number: 62, mode: "undef", state: nil}#22
+    p8 = %Port{name: "CzujkaSalonSchody", type: "motion_sensor", number: 8, mode: "undef", state: nil}#18
+    p9 = %Port{name: "CzujkaSalonKuchnia", type: "motion_sensor", number: 9, mode: "undef", state: nil}#19
+    p10 = %Port{name: "CzujkaSalon", type: "motion_sensor", number: 10, mode: "undef", state: nil}#20
+    p62 = %Port{name: "SygnalZamknieciaRolet", type: "alarm_input", number: 62, mode: "undef", state: nil}#21
 
     type = if test, do: "Core.DeviceMock", else: "Core.Device.Satel"
 
@@ -184,10 +203,10 @@ defmodule DB.InitTest do
   end
 
   def insert_mock_device(test \\ false) do
-    p8 = %Port{name: "M1", type: "light", number: 8, mode: "undef", state: nil}#23
-    p9 = %Port{name: "M2", type: "light", number: 9, mode: "undef", state: nil}#24
-    p10 = %Port{name: "M3", type: "light", number: 10, mode: "undef", state: nil}#25
-    p62 = %Port{name: "M4", type: "light", number: 62, mode: "undef", state: nil}#26
+    p8 = %Port{name: "M1", type: "light", number: 8, mode: "undef", state: nil}#22
+    p9 = %Port{name: "M2", type: "light", number: 9, mode: "undef", state: nil}#23
+    p10 = %Port{name: "M3", type: "light", number: 10, mode: "undef", state: nil}#24
+    p62 = %Port{name: "M4", type: "light", number: 62, mode: "undef", state: nil}#25
 
     dev1 = %Device{
              name: "mock_dev",
@@ -202,24 +221,24 @@ defmodule DB.InitTest do
   def insert_tasks(test \\ false) do
     %TaskType{
       name: "Calling action",
-      module: ""
+      module: "Core.Tasks.TaskMock"
     }
     |> Repo.insert!
 
     %TaskType{
       name: "Read device inputs",
-      module: ""
+      module: "Core.Tasks.TaskMock"
     }
     |> Repo.insert!
 
     # read integra inputs
     %Task{
-      type_id: 0,
-      status: "inactive",
-      action: nil,
-      device: nil,
-      frequency: 30_000,
-      limit: 100,
+      type_id: 1,
+      status: "waiting",
+      action_id: nil,
+      device_id: nil,
+      frequency: 1,
+      limit: 3,
       start_date: nil,
       end_date: nil
     }
@@ -227,14 +246,15 @@ defmodule DB.InitTest do
 
     # make sunblinds closed at night
     %Task{
-      type_id: 0,
+      type_id: 1,
       status: "inactive",
       action: nil,
       device: nil,
-      frequency: 30_000,
-      limit: 100,
-      start_date: nil,
-      end_date: nil
+      frequency: 1,
+      limit: 3,
+      start_date: ~N[2018-10-18 18:00:00],
+      end_date:  ~N[2018-10-18 19:00:00]
+
     }
     |> Repo.insert!
 

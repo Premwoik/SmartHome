@@ -1,4 +1,7 @@
-defmodule Dev do
-  @moduledoc false
+use Mix.Config
 
-end
+
+config :db,
+       DB.Repo,
+       adapter: Sqlite.Ecto2,
+       database: "../db/itHome.sqlite3"

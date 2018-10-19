@@ -14,6 +14,7 @@ defmodule Db.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
+      applications: [:timex_ecto],
       extra_applications: [:logger, :sqlite_ecto2, :ecto],
       mod: {DB.Application, []}
     ]
@@ -23,7 +24,9 @@ defmodule Db.MixProject do
   defp deps do
     [
       {:poison, "~> 3.1"},
-      {:sqlite_ecto2, "~> 2.2"}
+      {:sqlite_ecto2, "~> 2.2"},
+      {:timex, "~> 3.1"},
+      {:timex_ecto, "~> 3.1"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
     ]

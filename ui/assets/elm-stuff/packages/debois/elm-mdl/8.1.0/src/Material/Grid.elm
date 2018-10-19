@@ -57,7 +57,7 @@ Example use:
             ]
         , cell [ size Tablet 6, size Desktop 12, size Phone 2 ]
             [ h4 [] [text "Cell 4"]
-            , p [] [text "Size varies with device"]
+            , p [] [text "Size varies with devices"]
             ]
         ]
 

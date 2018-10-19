@@ -6,31 +6,27 @@ defmodule DB.Application do
   use Application
 
   @otp_app Mix.Project.config[:app]
-  def start(_type, _args) do
+  def start(type, _args) do
     # List all child processes to be supervised
-    IO.inspect @otp_app
-    setup_db!
+    setup_db!(type)
     children = [
       DB.Repo,
-#      %{id: InitDb, start: {InitDb, :start_link, []}, restart: :transient},
-      # Starts a worker by calling: Db.Worker.start_link(arg)
-      # {Db.Worker, arg},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: DB.Supervisor]
     res = Supervisor.start_link(children, opts)
-    DB.Init.run()
+    IO.inspect(type)
+    if type != :test, do: DB.Init.run()
     res
   end
 
-  defp setup_db! do
+  defp setup_db!(type) do
     repos = Application.get_env(@otp_app, :ecto_repos)
-    IO.inspect repos
     for repo <- repos do
       if Application.get_env(@otp_app, repo)[:adapter] == Elixir.Sqlite.Ecto2 do
-#        drop_repo!(repo)
+        if type == :test, do: drop_repo!(repo)
         setup_repo!(repo)
         migrate_repo!(repo)
       end

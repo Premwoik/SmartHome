@@ -3,13 +3,19 @@ defmodule DB.Dimmer do
   use Ecto.Schema
   import Ecto.Changeset
 
-#  @primary_key {:port, :id, []}
-  @derive {Poison.Encoder, only: [:id, :name, :fill, :lights]}
+  import Ecto.Query
+
+  alias DB.{Repo, Light, Port, Dimmer}
+
+  #  @primary_key {:port, :id, []}
+#  @derive {Poison.Encoder, only: [:id, :name, :fill, :lights]}
   schema "dimmers" do
+    belongs_to :port, DB.Port
     field :fill, :integer
     field :direction, :integer
     field :time, :integer
-    many_to_many :lights, DB.Port, join_through: "dimmers_lights", on_delete: :delete_all
+    has_many :lights, DB.Light
+#    many_to_many :lights, DB.Port, join_through: "dimmers_lights", on_delete: :delete_all
   end
 
   def changeset(dimmer, params \\ %{}) do
@@ -20,5 +26,69 @@ defmodule DB.Dimmer do
     #    |> validate_inclusion(:age, 18..100)
     #    |> unique_constraint(:email)
   end
+
+  def get(ids) do
+    Repo.all from d in Dimmer, where: d.port_id in ^ids, preload: [:port]
+  end
+
+  def any_light_on?(dimmer) do
+    Repo.all(from l in Light, join: p in Port, on: p.id == l.port_id, where: l.dimmer_id == ^dimmer.id and p.state == true)
+    |> Kernel.length()
+    |> Kernel.>(0)
+  end
+
+  def update_fill(dims) do
+    Enum.each(
+      dims,
+      fn dim ->
+        Ecto.Changeset.change(dim, fill: round(dim.port.timeout / dim.time * 100), direction: -1)
+        |> Repo.update()
+      end
+    )
+  end
+
+  def update_fill(dim, fill) do
+    Ecto.Changeset.change(dim, fill: fill, direction: dim.direction * -1)
+    |> Repo.update()
+  end
+
+  def update_fill(ids, fill, direction) do
+    Repo.update_all (from d in Dimmer, where: d.port_id in ^ids),
+                    set: [
+                      fill: fill,
+                      direction: direction
+                    ]
+  end
+
+  @spec fill_to_time(map, integer) :: integer
+  def fill_to_time(dimmer, new_fill) do
+    res = (new_fill - dimmer.fill) * dimmer.direction
+    cond do
+      res > 0 ->
+        get_time(dimmer.time, res)
+      res == 0 ->
+        0
+      dimmer.direction > 0 ->
+        get_time(dimmer.time, 200 - dimmer.fill - new_fill)
+      true ->
+        get_time(dimmer.time, dimmer.fill + new_fill)
+    end
+  end
+
+  @spec get_time(integer, integer) :: integer
+  defp get_time(max_time, fill) do
+    cond do
+      fill > 150 -> max_time * 1.75
+      fill > 125 -> max_time * 1.50
+      fill > 100 -> max_time * 1.25
+      fill > 75 -> max_time
+      fill > 50 -> max_time * 0.75
+      fill > 25 -> max_time * 0.5
+      fill > 0 -> max_time * 0.25
+      true -> 0
+    end
+    |> round
+  end
+
 
 end

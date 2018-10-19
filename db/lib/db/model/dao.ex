@@ -7,6 +7,8 @@ defmodule DB.Dao do
   alias DB.Dimmer
   alias DB.DimmersLights
   alias DB.Port
+  alias DB.Task
+
   import Ecto.Query
 
   def get_lights do
@@ -97,15 +99,13 @@ defmodule DB.Dao do
 
 
   def match_lights_to_dimmers(ids) do
-    (
       Repo.all from l in DimmersLights, where: l.port_id in ^ids,
                                         join: d in Dimmer,
                                         on: l.dimmer_id == d.id,
                                         where: d.fill == 0,
                                         join: p in Port,
                                         on: p.id == d.id,
-                                        select: {p.device_id, p})
-    |> Enum.group_by(&(elem(&1, 0)), fn {_, p} -> p end)
+                                        select: p
   end
 
   #   return [ids]
@@ -159,4 +159,15 @@ defmodule DB.Dao do
   def get_sunblinds() do
     d = Repo.all from s in Port, where: s.type == "sunblind"
   end
+
+
+  def get_tasks() do
+    Repo.all Task
+  end
+
+  def update_task(task, changes \\ %{}) do
+    Ecto.Changeset.change(task, changes)
+    |> Repo.update!
+  end
+
 end

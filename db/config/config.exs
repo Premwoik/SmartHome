@@ -20,10 +20,7 @@ use Mix.Config
 #     config :logger, level: :info
 #
 
-config :db,
-       DB.Repo,
-       adapter: Sqlite.Ecto2,
-       database: "../db/itHome.sqlite3"
+
 
 config :db,
        ecto_repos: [DB.Repo]
@@ -35,4 +32,4 @@ config :db,
 # Configuration from the imported file will override the ones defined
 # here (which is why it is important to import them last).
 #
-#     import_config "#{Mix.env}.exs"
+import_config "#{Mix.env}.exs"
