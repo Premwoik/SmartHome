@@ -1,10 +1,13 @@
 defmodule Core.Actions do
   @moduledoc false
 
+  @callback activate_up(ids :: list(integer), name :: atom) :: any
+  @callback activate_down(ids :: list(integer), name :: atom) :: any
+
+  @behaviour Core.Actions
+
   use GenServer
-  alias DB.Dao
-  alias Device.Controller
-  alias Device.Command
+  use Timex
   require Logger
 
   def start_link(arg) do
@@ -16,115 +19,123 @@ defmodule Core.Actions do
   def reload, do:
     Process.exit(__MODULE__, :normal)
 
-  def invoke_up_actions(dname, ports, name \\ __MODULE__) do
-    GenServer.cast name, {:up_action, ports, dname}
+  def activate_up(ids, name \\ __MODULE__) do
+    GenServer.call name, {:activate, :up, ids}
   end
 
-  def invoke_down_actions(dname, ports, name \\ __MODULE__) do
-    GenServer.cast name, {:down_action, ports, dname}
+  def activate_down(ids, name \\ __MODULE__) do
+    GenServer.call name, {:activate, :down, ids}
   end
 
+  def get_state(name \\ __MODULE__) do
+    GenServer.call name, :get_state
+  end
 
   def reload_actions(name \\ __MODULE__), do:
-    GenServer.cast name, :reload_actions
+    GenServer.call name, :reload_actions
 
 
   ## Callbacks
 
   @impl true
   def init(_) do
-    {:ok, %{actions: Dao.find_actions(), amem: %{}}}
+    {:ok, %{actions: DB.Action.all_active(), amem: %{}}}
   end
 
   @impl true
-  def handle_cast({:up_action, actionList, dname}, s) do
-    ns = handle_action s, actionList, dname, :on
-    {:noreply, ns}
+  def handle_call({:activate, up_down, ids}, _from, %{amem: amem} = s) do
+    results = invoke_actions(up_down, ids, s)
+    {amem_, errors} = after_invoke(results, amem)
+    {:reply, {:ok, errors}, %{s | amem: amem_}}
   end
 
   @impl true
-  def handle_cast({:down_action, actionList, dname}, s) do
-    ns = handle_action s, actionList, dname, :off
-    {:noreply, ns}
+  def handle_call(:get_state, _from, s) do
+    {:reply, s, s}
   end
 
   @impl true
-  def handle_cast(:reload_actions, %{amem: amem} = s) do
-    actions = Dao.find_actions()
-    actionIds = Keyword.values actions
-                               |> Enum.map fn {id, _} -> id end
-    newAmem = :maps.filter fn id, _ -> Enum.any? actionIds &(&1 == id)  end
-    {:noreply, %{s | actions: actions, amem: newAmem}}
+  def handle_call(:reload_actions, _from, %{amem: amem} = s) do
+    actions = DB.Action.all_active()
+    ids = Enum.map actions, fn {_, {id, _}} -> id end
+    amem_ = :maps.filter fn id, _ -> Enum.any? ids, &(&1 == id) end, amem
+    {:reply, :ok, %{s | actions: actions, amem: amem_}}
   end
 
   #  Privates
-  defp handle_action(s, [], _, _), do: s
-  defp handle_action(%{actions: actions, amem: amem} = s, [h | t], dname, onOff) do
-    try do
-      (case List.keyfind(actions, {(to_string dname), h}, 0)do
-         :nil ->
-           s
-         #        update action memory if action proceeded
-         {_, {actionId, fun}} ->
-           action = %{}
-           newMem = proceed_action onOff, action, amem[actionId]
-           %{s | amem: (Map.put amem, actionId, newMem)}
-       end)
-      |> handle_action(t, dname, onOff)
-    rescue
-      error ->
-        IO.inspect error
-        Logger.error("Handle action error")
-        handle_action t, dname, onOff, s
+
+  defp after_invoke([], amem, errors) do
+    {amem, errors}
+  end
+  defp after_invoke([r | results], amem, errors \\ []) do
+    case r do
+      {:ok, {id, mem}} ->
+        amem_ = Map.put(amem, id, mem)
+        after_invoke(results, amem_, errors)
+      {:error, err} ->
+        after_invoke(results, amem, [err | errors])
+    end
+  end
+
+  @spec invoke_actions(atom, list(integer), map) :: map
+  defp invoke_actions(on_off, ids, %{actions: actions, amem: amem} = s) do
+    match? = fn id, action -> action.id == id end
+    for id <- ids,
+        action <- actions,
+        match?.(id, action) do
+      proceed_action(on_off, action, amem[action.id])
     end
   end
 
   @spec proceed_action(Core.Actions.Action.state, map, map) :: map
-  defp proceed_action(onOff, action, nil) do
-    amem = apply get_module(action.function), :init_memory, []
-    proceed_action(onOff, action, amem)
+  defp proceed_action(on_off, action, nil) do
+    amem = get_module(action.function).init_memory()
+    proceed_action(on_off, action, amem)
   end
-  defp proceed_action(onOff, action, amem) do
-    with {:ok, amem_} <- check_activation_delay(action.delay, amem),
-         :ok <- check_activation_time(action.time_start, action.time_end)
+  defp proceed_action(on_off, action, amem) do
+    with {:ok, amem_} <- check_activation_freq(15_000, amem),
+         :ok <- check_activation_time(action.start_time, action.end_time)
       do
-      apply get_module(action.function), :execute, [onOff, action, amem_]
+      try do
+        result = apply(get_module(action.function), :execute, [on_off, action, amem_])
+        {:ok, {action.id, result}}
+      rescue
+        e in RuntimeError -> {:error, {action.id, e}}
+      end
     else
-      amem
+      {:error, err} -> {:error, {action.id, err}}
     end
   end
 
 
-  @spec check_activation_delay(integer, map) :: {:ok, map} | :fail
-  defp check_activation_delay(0, amem), do: {:ok, amem}
-  defp check_activation_delay(_, nil), do:
-    {:ok, %{lastInvoke: :os.system_time(:millisecond)}}
-  defp check_activation_delay(delay, %{lastInvoke} = amem) do
-    currentTime = :os.system_time(:millisecond)
-    if currentTime - lastInvoke > delay do
-      {:ok, %{amem | lastInvoke: currentTime}}
+  @spec check_activation_freq(integer, map) :: {:ok, map} | :fail
+  defp check_activation_freq(0, amem), do: {:ok, amem}
+  defp check_activation_freq(delay, %{lastInvoke: last_invoke} = amem) do
+    current_time = :os.system_time(:millisecond)
+    if current_time - last_invoke > delay do
+      {:ok, %{amem | lastInvoke: current_time}}
     else
-      :fail
+      {:error, "Its too early to invoke action again"}
     end
   end
-  defp check_activation_delay(_, amem) do
-    {:ok, Map.put amem, :lastInvoke, :os.system_time(:millisecond)}
+  defp check_activation_freq(_, amem) do
+    {:ok, Map.put(amem, :lastInvoke, :os.system_time(:millisecond))}
   end
 
   @spec check_activation_time(Time.t, Time.t) :: :ok | :fail
   defp check_activation_time(nil, nil), do: :ok
   defp check_activation_time(times, timee) do
-    now = Time.utc_now()
-    if Time.compare(now, times) == :gt && Time.compare(now, timee) == :lt do
+    if Core.Utils.Time.in_interval?(times, timee) do
       :ok
     else
-      :fail
+      {:error, "Its too early or too late to invoke this action"}
     end
   end
 
 
+
   def get_module(function) do
-    String.to_atom "Elixir.Actions." <> function
+    String.to_existing_atom "Elixir.Core.Actions." <> function
   end
 
 end

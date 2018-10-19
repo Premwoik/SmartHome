@@ -1,10 +1,12 @@
 use Mix.Config
 
 
-config :db,
-       DB.Repo,
-       adapter: Sqlite.Ecto2,
-       database: "itHome1.sqlite3"
+#config :logger, level: :info
 
-config :db,
-       ecto_repos: [DB.Repo]
+
+# Mocks
+config :core, :one_way_client, Core.Device.ClientMock
+config :core, :two_way_client, Core.Device.ClientMock
+
+config :core, :time_adapter, Core.Utils.Time.Mock
+config :core, :date_time_adapter, Core.Utils.DateTime.Mock
