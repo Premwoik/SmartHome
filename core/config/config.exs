@@ -24,22 +24,33 @@ use Mix.Config
 #
 #config :logger, level: :info
 ##
-#config :db,
-#       DB.Repo,
-#       adapter: Sqlite.Ecto2,
-#       database: "itHome1.sqlite3"
-#
-#config :db,
-#       ecto_repos: [DB.Repo]
+
+config :core, :devices_module, Core.Devices
+
+config :core, :two_way_client, Core.Device.Client.TwoWay
+config :core, :one_way_client, Core.Device.Client.OneWay
+
+config :core, :basic_controller, Core.Controllers.BasicController
+config :core, :light_controller, Core.Controllers.LightController
+
+config :core, :actions_server, Core.Actions
+config :core, :tasks_server, Core.Tasks
+config :core, :device_helper, Core.Device
+
+config :core, :database_module, DB
+
+config :core, :time_adapter, Core.Utils.Time.Real
+config :core, :date_time_adapter, Core.Utils.DateTime.Native
+
 
 #config :socket_test2,
-
+import_config "../../db/config/config.exs"
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
 # by uncommenting the line below and defining dev.exs, test.exs and such.
 # Configuration from the imported file will override the ones defined
 # here (which is why it is important to import them last).
 #
-#     import_config "#{Mix.env}.exs"
+import_config "#{Mix.env}.exs"
 
 

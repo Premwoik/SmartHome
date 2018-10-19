@@ -15,6 +15,7 @@ defmodule SocketTest2.MixProject do
   def application do
     [
       mod: {Core, []},
+      applications: [:timex, :db],
       extra_applications: [:logger],
     ]
   end
@@ -22,8 +23,11 @@ defmodule SocketTest2.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:mock, "~> 0.3.0", only: :test},
+      {:mox, "~> 0.4", only: :test},
       {:poison, "~> 3.1"},
       {:connection, "~> 1.0.4"},
+      {:timex, "~> 3.0"},
       {:db, path: "../db"}
     ]
   end

@@ -1,17 +1,19 @@
-defmodule Device.MessageProcessor do
+defmodule Core.Device.Default.Protocol do
   @length 11
   @body_length 7
   @cmd_i 2
   @sum_i 9
   @control_bit 200
 
-
-
+  @doc """
+  [control, control, num, cmd, arg0, arg1, arg2, arg3, arg4, sum, control]
+  """
 
   def encode(num, cmd, args), do:
     [num, cmd | args]
     |> (&(&1 ++ [compute_control_sum(&1), @control_bit])).()
     |> (&([@control_bit, @control_bit | &1])).()
+
 
   def decode(message) do
     try do
@@ -22,7 +24,7 @@ defmodule Device.MessageProcessor do
              |> get_body
       {:ok, body}
     rescue
-      _ -> {:error, :none}
+      e in RuntimeError -> {:error, e.message}
     end
   end
 
@@ -36,10 +38,6 @@ defmodule Device.MessageProcessor do
     message
     |> Enum.slice(@cmd_i, @body_length)
 
-  def sd([cmd, number | args]) do
-    {}
-  end
-
   defp check_head(message), do:
     message
     |> Enum.at(0)
@@ -48,13 +46,13 @@ defmodule Device.MessageProcessor do
          Enum.at(message, 1)
          |> feq(200)
        )
-    |> check(message)
+    |> check(message, "wrong_header")
 
   defp check_end(message), do:
     message
     |> List.last
     |> feq(200)
-    |> check(message)
+    |> check(message, "wrong_footer")
 
   defp check_control_sum(message) do
     sum = Enum.at(message, @sum_i)
@@ -62,7 +60,7 @@ defmodule Device.MessageProcessor do
     |> Enum.slice(@cmd_i, @body_length)
     |> compute_control_sum
     |> feq(sum)
-    |> check(message)
+    |> check(message, "invalid_control_sum")
   end
 
   defp compute_control_sum(message), do:

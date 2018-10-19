@@ -1,9 +1,11 @@
-defmodule Device.Client do
+defmodule Core.Device.Client.TwoWay do
 
   @moduledoc false
 
   use Connection
   require Logger
+
+  @behaviour Core.Devices.Client
 
   def start_link(host, port, opts, keywords, timeout \\ 5000, length \\ 11) do
     Logger.info("Initializing Device.Client")
@@ -12,17 +14,20 @@ defmodule Device.Client do
 
 
   ## Public
-  def get_info, do:
-    :server
 
-  def confirmed_send(pid, msg) do
-    Connection.call(pid, {:confirm_send, msg})
+  def send_with_resp(device, msg) do
+    device_name(device)
+    |> Connection.call({:confirm_send, msg})
   end
 
-  def send(pid, msg) do
-    Connection.call(pid, {:send, msg})
+  def send_msg(device, msg) do
+    device_name(device)
+    |> Connection.call({:send, msg})
   end
 
+  defp device_name(device) do
+    String.to_atom(device.name)
+  end
 
   ## Callbacks
 
@@ -74,7 +79,7 @@ defmodule Device.Client do
 
     if !:queue.is_empty(obsrvs) do
       {{:value, pid}, obsrvs2} = :queue.out(obsrvs)
-      Kernel.send(pid, {:msg, msg})
+      send(pid, msg)
 
       {:noreply, %{s | observers: obsrvs2}}
     else
