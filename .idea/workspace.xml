@@ -5,11 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2598d553-3e9d-452d-ac4f-43c45975f23a" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/4ec03994-16da-4086-a045-a6ab067f096e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4ec03994-16da-4086-a045-a6ab067f096e.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/prw.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/prw.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/lib/core/actions.ex" beforeDir="false" afterPath="$PROJECT_DIR$/core/lib/core/actions.ex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/lib/core/actions/action.ex" beforeDir="false" afterPath="$PROJECT_DIR$/core/lib/core/actions/action.ex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex" beforeDir="false" afterPath="$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/lib/core/actions/close_sunblinds.ex" beforeDir="false" afterPath="$PROJECT_DIR$/core/lib/core/actions/close_sunblinds.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cpu_monitor/cpu_monitor.iml" beforeDir="false" afterPath="$PROJECT_DIR$/cpu_monitor/cpu_monitor.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/config/config.exs" beforeDir="false" afterPath="$PROJECT_DIR$/db/config/config.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/config/dev.exs" beforeDir="false" afterPath="$PROJECT_DIR$/db/config/dev.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/config/test.exs" beforeDir="false" afterPath="$PROJECT_DIR$/db/config/test.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/application.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/application.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/init.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/init.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/init_test.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/init_test.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/model/action.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/model/action.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/model/dao.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/model/dao.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/model/device.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/model/device.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/model/dimmer.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/model/dimmer.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/model/light.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/model/light.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/model/port.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/model/port.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/model/sunblind.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/model/sunblind.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/model/task.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/model/task.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/lib/db/model/task_type.ex" beforeDir="false" afterPath="$PROJECT_DIR$/db/lib/db/model/task_type.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/mix.exs" beforeDir="false" afterPath="$PROJECT_DIR$/db/mix.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/mix.lock" beforeDir="false" afterPath="$PROJECT_DIR$/db/mix.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/priv/repo/migrations/20180710132359_init_database.exs" beforeDir="false" afterPath="$PROJECT_DIR$/db/priv/repo/migrations/20180710132359_init_database.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/test/test_helper.exs" beforeDir="false" afterPath="$PROJECT_DIR$/db/test/test_helper.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/demo/Demo/Footer.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/demo/Demo/Footer.elm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/src/Material/Footer.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/src/Material/Footer.elm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/src/Material/Grid.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/src/Material/Grid.elm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/src/Material/Spinner.elm" beforeDir="false" afterPath="$PROJECT_DIR$/ui/assets/elm-stuff/packages/debois/elm-mdl/8.1.0/src/Material/Spinner.elm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/lib/ui_web/controllers/dimmer_controller.ex" beforeDir="false" afterPath="$PROJECT_DIR$/ui/lib/ui_web/controllers/dimmer_controller.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/lib/ui_web/controllers/light_controller.ex" beforeDir="false" afterPath="$PROJECT_DIR$/ui/lib/ui_web/controllers/light_controller.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/lib/ui_web/controllers/sunblind_controller.ex" beforeDir="false" afterPath="$PROJECT_DIR$/ui/lib/ui_web/controllers/sunblind_controller.ex" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -48,6 +76,21 @@
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="main: schema" type="90513b60:SqliteImplModel$Schema" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="itHome_test1" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="itHome_test1" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="itHome_test1" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="main: schema" type="90513b60:SqliteImplModel$Schema" />
+      </path>
     </expand>
     <select />
   </component>
@@ -58,39 +101,91 @@
     <settings binDirPath="$PROJECT_DIR$/ui/assets/node_modules/.bin" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.4622496">
+    <splitter split-orientation="horizontal" split-proportion="0.8414055">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="auto_lights.ex" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex">
+          <file leaf-file-name="basic_controller.ex" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/controllers/basic_controller.ex">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1080">
-                  <caret line="60" selection-start-line="60" selection-end-line="60" />
+                <state relative-caret-position="203">
+                  <caret line="32" selection-start-line="32" selection-end-line="32" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="close_sunblinds.ex" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/core/lib/core/actions/close_sunblinds.ex">
+          <file leaf-file-name="time.ex" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/utils/time.ex">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="288">
-                  <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+                <state relative-caret-position="360">
+                  <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="supervisor.ex" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/core/lib/core/device/supervisor.ex">
+          <file leaf-file-name="date_time.ex" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/utils/date_time.ex">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-370" />
+                <state relative-caret-position="270">
+                  <caret line="15" selection-start-line="15" selection-end-line="15" />
+                </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="action.ex" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/core/lib/core/actions/action.ex">
+          <file leaf-file-name="actions.ex" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/actions.ex">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="180">
-                  <caret line="10" selection-start-line="10" selection-end-line="10" />
+                <state relative-caret-position="2016">
+                  <caret line="127" column="31" selection-start-line="127" selection-start-column="31" selection-end-line="127" selection-end-column="31" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="init.ex" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/db/lib/db/init.ex">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-549">
+                  <caret line="161" column="20" selection-start-line="161" selection-start-column="20" selection-end-line="161" selection-end-column="20" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="light.ex" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/db/lib/db/model/light.ex">
+              <provider selected="true" editor-type-id="text-editor" />
+            </entry>
+          </file>
+          <file leaf-file-name="light_controller.ex" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/controllers/light_controller.ex">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="414">
+                  <caret line="89" column="14" lean-forward="true" selection-start-line="89" selection-start-column="14" selection-end-line="89" selection-end-column="14" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="actions" pinned="false" current-in-tab="false">
+            <entry file="das://4ec03994-16da-4086-a045-a6ab067f096e/schema/main/table/actions">
+              <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+                <state>
+                  <filtering enabled="true" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ports" pinned="false" current-in-tab="false">
+            <entry file="das://4ec03994-16da-4086-a045-a6ab067f096e/schema/main/table/ports">
+              <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+                <state>
+                  <filtering enabled="true" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="action.ex" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/db/lib/db/model/action.ex">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="171">
+                  <caret line="34" column="38" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="38" />
                 </state>
               </provider>
             </entry>
@@ -99,25 +194,22 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="actions.ex" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/core/lib/core/actions.ex">
+          <file leaf-file-name="device.ex" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/device.ex">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-464">
-                  <caret line="73" column="9" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
+                <state relative-caret-position="180">
+                  <caret line="10" column="31" lean-forward="true" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="controller.ex" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/core/lib/core/device/controller.ex">
+          <file leaf-file-name="satel.ex" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/core/lib/core/device/satel.ex">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-2160" />
+                <state relative-caret-position="396">
+                  <caret line="34" column="26" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
+                </state>
               </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="tasks.ex" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/core/lib/core/tasks.ex">
-              <provider selected="true" editor-type-id="text-editor" />
             </entry>
           </file>
         </leaf>
@@ -136,36 +228,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>parse_repo</find>
-      <find>ensure_imple</find>
-      <find>Ui1</find>
-      <find>ui1</find>
-      <find>init</find>
-      <find>Mld</find>
-      <find>Mdl</find>
-      <find>get</find>
-      <find>dim</find>
-      <find>json</find>
-      <find>get_</find>
-      <find>DimmersLights</find>
-      <find>sunblind</find>
-      <find>blindUndrawn</find>
-      <find>turn_off</find>
-      <find>urn_off_dimmers</find>
-      <find>turn</find>
-      <find>Dao.</find>
-      <find>fill</find>
-      <find>update_dimmer</find>
-      <find>Dao.update</find>
-      <find>get_dimmer</find>
-      <find>Turning</find>
-      <find>fill_to_time</find>
-      <find>{-</find>
-      <find>mdl</find>
-      <find>Model</find>
-      <find>socket</find>
       <find>socket_test2</find>
       <find>do_release</find>
+      <find>after</find>
+      <find>device</find>
+      <find>module</find>
+      <find>get_down</find>
+      <find>update_dimmers_fill</find>
+      <find>update_dimmer</find>
+      <find>update_port_state</find>
+      <find>fill_to_time</find>
+      <find>set_normal_ports</find>
+      <find>send_wi</find>
+      <find>Device</find>
+      <find>Port</find>
+      <find>postpone_turn</find>
+      <find>BasicController</find>
+      <find>init_memory</find>
+      <find>flatte</find>
+      <find>group_result</find>
+      <find>error start</find>
+      <find>wrap_ok</find>
+      <find>wrap_err</find>
+      <find>put_map</find>
+      <find>get_tasks</find>
+      <find>update_</find>
+      <find>Timex</find>
+      <find>IO</find>
+      <find>IO,in</find>
+      <find>IO.ins</find>
+      <find>IO.inspect</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -174,6 +266,7 @@
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/socket_test2/config</dir>
+      <dir>$PROJECT_DIR$/db/deps</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -194,57 +287,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ui/assets/elm/Views/SunblindC.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Views/DimmerC.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Room/Views/Card.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Room/Views/DimmerC.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Room/Views/SunblindC.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Request/Request.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Request/Room.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Room/Model.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Request/Actions.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Group.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Statistics.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Data/Port.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Room.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Util.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Request/Action.elm" />
-        <option value="$PROJECT_DIR$/ui/lib/ui_web/controllers/light_controller.ex" />
-        <option value="$PROJECT_DIR$/ui/lib/ui_web/controllers/action_controller.ex" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Data/Action.elm" />
-        <option value="$PROJECT_DIR$/db/lib/db/model/dao.ex" />
-        <option value="$PROJECT_DIR$/ui/config/config.exs" />
-        <option value="$PROJECT_DIR$/fw/config/host.exs" />
-        <option value="$PROJECT_DIR$/ui/assets/js/socket.js" />
-        <option value="$PROJECT_DIR$/ui/priv/static/js/app2.js" />
-        <option value="$PROJECT_DIR$/ui/lib/ui_web/templates/layout/app.html.eex" />
-        <option value="$PROJECT_DIR$/ui/assets/js/app.js" />
-        <option value="$PROJECT_DIR$/db/lib/db/application.ex" />
-        <option value="$PROJECT_DIR$/db/lib/db/init.ex" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Page.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Main.elm" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Page/Action.elm" />
-        <option value="$PROJECT_DIR$/db/lib/db/model/action.ex" />
-        <option value="$PROJECT_DIR$/db/priv/repo/migrations/20180826093105_add_action_time.exs" />
-        <option value="$PROJECT_DIR$/db/config/config.exs" />
-        <option value="$PROJECT_DIR$/ui/assets/elm/Request.elm" />
-        <option value="$PROJECT_DIR$/fw/deps/rpi3/shoehorn/mix.exs" />
-        <option value="$PROJECT_DIR$/fw/mix.exs" />
-        <option value="$PROJECT_DIR$/fw/config/rpi3.exs" />
-        <option value="$PROJECT_DIR$/fw/lib/fw/application.ex" />
-        <option value="$PROJECT_DIR$/ui/lib/ui_web/router.ex" />
-        <option value="$PROJECT_DIR$/fw/config/config.exs" />
-        <option value="$PROJECT_DIR$/cpu_monitor/lib/cpu_monitor.ex" />
-        <option value="$PROJECT_DIR$/socket_test2/lib/device/actions.ex" />
-        <option value="$PROJECT_DIR$/socket_test2/lib/core/actions.ex" />
-        <option value="$PROJECT_DIR$/socket_test2/lib/socket_test2.ex" />
-        <option value="$PROJECT_DIR$/socket_test2/mix.exs" />
-        <option value="$PROJECT_DIR$/socket_test2/lib/core.ex" />
-        <option value="$PROJECT_DIR$/core/lib/device/supervisor.ex" />
-        <option value="$PROJECT_DIR$/core/lib/core/actions/action.ex" />
+        <option value="$PROJECT_DIR$/core/test/core/controllers/light_controller_test.exs" />
+        <option value="$PROJECT_DIR$/core/test/core/controllers/basic_controller_test.exs" />
+        <option value="$PROJECT_DIR$/core/test/core/devices_test.exs" />
+        <option value="$PROJECT_DIR$/core/test/core/controllers/sunblind_controller.ex" />
+        <option value="$PROJECT_DIR$/db/test/test_helper.exs" />
+        <option value="$PROJECT_DIR$/core/test/core/controllers/sunblind_controller_test.ex" />
+        <option value="$PROJECT_DIR$/core/test/core/controllers/sunblind_controller_test.exs" />
+        <option value="$PROJECT_DIR$/db/priv/repo/migrations/20181014204937_add_sunblinds.exs" />
+        <option value="$PROJECT_DIR$/core/lib/core/controllers/sunblind_controller.ex" />
         <option value="$PROJECT_DIR$/core/lib/core/actions/close_sunblinds.ex" />
-        <option value="$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex" />
+        <option value="$PROJECT_DIR$/db/lib/db/model/sunblind.ex" />
+        <option value="$PROJECT_DIR$/core/test/core/actions/close_sunblinds_test.exs" />
+        <option value="$PROJECT_DIR$/db/lib/db/model/device.ex" />
+        <option value="$PROJECT_DIR$/db/priv/repo/migrations/20180710132359_init_database.exs" />
+        <option value="$PROJECT_DIR$/core/lib/core/device/satel.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/device/supervisor.ex" />
+        <option value="$PROJECT_DIR$/db/lib/db.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/tasks/task.ex" />
+        <option value="$PROJECT_DIR$/db/config/test.ex" />
+        <option value="$PROJECT_DIR$/db/config/dev.ex" />
+        <option value="$PROJECT_DIR$/db/config/config.exs" />
+        <option value="$PROJECT_DIR$/db/config/dev.exs" />
+        <option value="$PROJECT_DIR$/db/config/test.exs" />
+        <option value="$PROJECT_DIR$/db/lib/db/application.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/utils/time/real.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/utils/datetime/native.ex" />
+        <option value="$PROJECT_DIR$/core/test/test_helper.exs" />
+        <option value="$PROJECT_DIR$/db/priv/repo/migrations/20180830234547_add_tasks.exs" />
+        <option value="$PROJECT_DIR$/db/lib/db/init_test.ex" />
+        <option value="$PROJECT_DIR$/core/test/core/tasks_test.exs" />
+        <option value="$PROJECT_DIR$/core/test/core/tasks/read_inputs_test.ex" />
         <option value="$PROJECT_DIR$/core/lib/core/actions.ex" />
+        <option value="$PROJECT_DIR$/core/mix.exs" />
+        <option value="$PROJECT_DIR$/db/lib/db/model/task.ex" />
+        <option value="$PROJECT_DIR$/core/config/config.exs" />
+        <option value="$PROJECT_DIR$/core/lib/core/device/client/one_way.ex" />
+        <option value="$PROJECT_DIR$/core/config/test.exs" />
+        <option value="$PROJECT_DIR$/core/lib/core/device.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/tasks.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/tasks/read_inputs.ex" />
+        <option value="$PROJECT_DIR$/db/lib/db/model/action.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/device/client/two_way.ex" />
+        <option value="$PROJECT_DIR$/db/lib/db/model/dimmer.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/device/default.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/utils/time.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/controllers/basic_controller.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/utils/date_time.ex" />
+        <option value="$PROJECT_DIR$/core/lib/core/controllers/light_controller.ex" />
+        <option value="$PROJECT_DIR$/db/lib/db/init.ex" />
       </list>
     </option>
   </component>
@@ -279,7 +372,7 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1920" />
     <option name="y" value="21" />
-    <option name="width" value="1280" />
+    <option name="width" value="2560" />
     <option name="height" value="1059" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -288,8 +381,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -300,6 +394,11 @@
             <path>
               <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -310,18 +409,143 @@
             </path>
             <path>
               <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cpu_monitor" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="actions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="device" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="device" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="tasks" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="actions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="tasks" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+              <item name="priv" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+              <item name="priv" type="462c0819:PsiDirectoryNode" />
+              <item name="repo" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+              <item name="priv" type="462c0819:PsiDirectoryNode" />
+              <item name="repo" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="elm" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rpi_nervy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="elm" type="462c0819:PsiDirectoryNode" />
+              <item name="Data" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="plugins&#9;ACTION&#9;WelcomeScreen.Plugins" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/Edit As Language" value="GenericSQL" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/core" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -331,7 +555,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.statistic.project.settings" />
   </component>
   <component name="PsiViewer.ProjectComponent">
     <option name="HIGHLIGHT" value="false" />
@@ -342,12 +566,19 @@
     <option name="AUTOSCROLL_FROM_SOURCE" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="core.devices" />
+      <recent name="core" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/db/lib/db" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/core/lib/core/devices" />
+      <recent name="$PROJECT_DIR$/core/test/core" />
       <recent name="$PROJECT_DIR$/socket_test2/lib/core" />
       <recent name="$PROJECT_DIR$/ui/assets/elm/Page" />
       <recent name="$PROJECT_DIR$/ui/assets/elm" />
-      <recent name="$PROJECT_DIR$/ui/assets/elm/Page/Room/Views" />
-      <recent name="$PROJECT_DIR$/ui/assets/elm/Model" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -633,6 +864,46 @@
       <workItem from="1535364664260" duration="6513000" />
       <workItem from="1535372321137" duration="14755000" />
       <workItem from="1535413155658" duration="2101000" />
+      <workItem from="1535453057530" duration="6435000" />
+      <workItem from="1535465785397" duration="1940000" />
+      <workItem from="1535485231494" duration="7271000" />
+      <workItem from="1535539874617" duration="58690000" />
+      <workItem from="1535884744964" duration="2828000" />
+      <workItem from="1536058252729" duration="3025000" />
+      <workItem from="1536176627933" duration="48616000" />
+      <workItem from="1536999615623" duration="3475000" />
+      <workItem from="1537351469587" duration="1198000" />
+      <workItem from="1537526161665" duration="5506000" />
+      <workItem from="1537575007057" duration="34010000" />
+      <workItem from="1537732081799" duration="5776000" />
+      <workItem from="1537785889348" duration="23523000" />
+      <workItem from="1538030348352" duration="4284000" />
+      <workItem from="1538068847167" duration="3859000" />
+      <workItem from="1538213103078" duration="30692000" />
+      <workItem from="1538312251959" duration="6018000" />
+      <workItem from="1538337347395" duration="10700000" />
+      <workItem from="1538395705128" duration="143000" />
+      <workItem from="1538413845631" duration="9732000" />
+      <workItem from="1538470887555" duration="9568000" />
+      <workItem from="1538506196227" duration="38038000" />
+      <workItem from="1538689245576" duration="23820000" />
+      <workItem from="1538902786182" duration="21497000" />
+      <workItem from="1538990608058" duration="1501000" />
+      <workItem from="1539010281827" duration="1129000" />
+      <workItem from="1539028360941" duration="6602000" />
+      <workItem from="1539080613451" duration="4337000" />
+      <workItem from="1539112008639" duration="9434000" />
+      <workItem from="1539268846443" duration="1758000" />
+      <workItem from="1539377352082" duration="16802000" />
+      <workItem from="1539540789636" duration="13046000" />
+      <workItem from="1539596205905" duration="483000" />
+      <workItem from="1539611347001" duration="5098000" />
+      <workItem from="1539624587291" duration="10540000" />
+      <workItem from="1539713933401" duration="26727000" />
+      <workItem from="1539859479948" duration="161000" />
+      <workItem from="1539859678304" duration="963000" />
+      <workItem from="1539873030987" duration="14191000" />
+      <workItem from="1539940041210" duration="22287000" />
     </task>
     <servers />
   </component>
@@ -642,46 +913,85 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="448213000" />
+    <option name="totallyTimeSpent" value="943916000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="21" width="2560" height="1059" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Tool Output" order="13" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.20796813" side_tool="true" visible="true" weight="0.2926045" />
+      <window_info anchor="bottom" id="Tool Output" order="13" weight="0.3290461" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.21069519" side_tool="true" weight="0.31832796" />
+      <window_info anchor="right" id="Elm" order="5" weight="0.32994652" />
       <window_info anchor="right" id="Maven Projects" order="4" sideWeight="0.49624062" weight="0.3292683" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info anchor="right" id="REPL" order="12" sideWeight="0.5037594" side_tool="true" weight="0.3292683" />
-      <window_info anchor="right" id="Leiningen" order="5" />
+      <window_info anchor="right" id="REPL" order="13" sideWeight="0.11438475" side_tool="true" visible="true" weight="0.1310757" />
+      <window_info anchor="right" id="Leiningen" order="6" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="2" />
-      <window_info anchor="right" id="Database" order="7" sideWeight="0.4981203" weight="0.798374" />
+      <window_info anchor="bottom" id="Statistic" order="14" weight="0.3290461" />
+      <window_info anchor="right" id="Database" order="8" sideWeight="0.8856152" visible="true" weight="0.1310757" />
       <window_info anchor="bottom" id="ANTLR Preview" order="12" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="3" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="right" id="Palette&#9;" order="9" />
       <window_info id="Image Layers" order="5" />
-      <window_info anchor="right" id="Capture Analysis" order="9" />
-      <window_info anchor="right" id="PsiViewer" order="6" weight="0.3292683" />
-      <window_info anchor="bottom" id="Version Control" order="11" />
+      <window_info anchor="right" id="Capture Analysis" order="10" />
+      <window_info anchor="right" id="PsiViewer" order="7" weight="0.3292683" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946523" weight="0.32905984" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.7920319" visible="true" weight="0.2926045" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22430278" />
-      <window_info anchor="right" id="SciView" order="10" />
-      <window_info anchor="right" id="Theme Preview" order="11" />
+      <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.499187" weight="0.3290461" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.7893048" visible="true" weight="0.38156486" />
+      <window_info anchor="bottom" id="Database Console" order="10" sideWeight="0.4996016" weight="0.3290461" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24462152" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49430895" weight="0.19721329" />
+      <window_info anchor="right" id="SciView" order="11" />
+      <window_info anchor="right" id="Theme Preview" order="12" />
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="bottom" id="Database Console" order="10" sideWeight="0.4996016" weight="0.3290461" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49518716" weight="0.3290461" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Designer" order="2" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Database Console" order="10" sideWeight="0.4996016" weight="0.3290461" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946523" weight="0.32905984" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.7893048" visible="true" weight="0.38263667" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info anchor="right" id="Capture Analysis" order="10" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="bottom" id="Tool Output" order="13" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.21069519" side_tool="true" weight="0.31832796" />
+      <window_info anchor="right" id="PsiViewer" order="7" weight="0.3292683" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info id="Image Layers" order="5" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.499187" weight="0.3290461" />
+      <window_info anchor="right" id="Maven Projects" order="4" sideWeight="0.49624062" weight="0.3292683" />
+      <window_info anchor="bottom" id="ANTLR Preview" order="12" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15828878" />
+      <window_info anchor="right" id="SciView" order="11" />
+      <window_info anchor="right" id="Database" order="8" sideWeight="0.89721256" weight="0.1026738" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" id="Leiningen" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="9" />
+      <window_info anchor="right" id="Theme Preview" order="12" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Elm" order="5" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49430895" weight="0.19721329" />
+      <window_info anchor="right" id="REPL" order="13" sideWeight="0.10278746" side_tool="true" weight="0.1026738" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -691,71 +1001,307 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="8" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Util.elm">
+    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page.elm">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request/Action.elm">
+    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request.elm">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Data/Dimmer.elm">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file:///lib/elixir/lib/elixir/ebin/Elixir.NaiveDateTime.beam">
+      <provider editor-type-id="BEAM" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="10" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/test/test_helper.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="13" column="37" lean-forward="true" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/utils/time/real.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/priv/repo/migrations/20180830234547_add_tasks.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://9d055a14-18ff-4230-a25f-bcef7f3f52bb/schema/main/table/tasks">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/lib/db/init_test.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4554">
+          <caret line="253" column="14" selection-start-line="253" selection-start-column="14" selection-end-line="253" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://9d055a14-18ff-4230-a25f-bcef7f3f52bb/schema/main/table/devices">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/mix.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/test/core/tasks/read_inputs_test.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/lib/db/model/task_type.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/lib/db/model/task.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="26" column="78" selection-start-line="26" selection-start-column="78" selection-end-line="26" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/utils/datetime/native.ex">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
-          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page.elm">
+    <entry file="file://$PROJECT_DIR$/core/lib/core/device/client.ex">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/device/client/one_way.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+        <state relative-caret-position="180">
+          <caret line="25" column="52" selection-start-line="25" selection-start-column="52" selection-end-line="25" selection-end-column="52" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page/Room.elm">
+    <entry file="file://$PROJECT_DIR$/db/config/test.exs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="98" column="42" selection-start-line="98" selection-start-column="42" selection-end-line="98" selection-end-column="42" />
+        <state relative-caret-position="90">
+          <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fw/_build/host/test/lib/fw/ebin/fw.app">
+    <entry file="file://$PROJECT_DIR$/db/config/config.exs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
-          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Page/Action.elm">
+    <entry file="file://$PROJECT_DIR$/core/config/dev.exs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/config/test.exs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="72">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/config/dev.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/config/config.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="684">
+          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/device/satel.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="34" column="26" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/tasks.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="112" selection-start-line="112" selection-end-line="112" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/device.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="31" lean-forward="true" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://4ec03994-16da-4086-a045-a6ab067f096e/schema/main/table/actions_arguments">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://9d055a14-18ff-4230-a25f-bcef7f3f52bb/schema/main/table/actions">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/test/core/tasks_test.exs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-645">
+          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/lib/db/model/device.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/device/client/two_way.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="28" column="14" lean-forward="true" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://4ec03994-16da-4086-a045-a6ab067f096e/schema/main/table/lights">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/lib/db/model/dimmer.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-18">
+          <caret line="55" column="55" selection-start-line="55" selection-start-column="55" selection-end-line="55" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/device/default.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-720">
+          <caret line="41" column="24" selection-start-line="41" selection-start-column="24" selection-end-line="41" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://4ec03994-16da-4086-a045-a6ab067f096e/schema/main/table/tasks">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="3" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/actions/action.ex">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/tasks/execute_action.ex">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/controllers/sunblind_controller.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-216" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-81">
+          <caret line="42" column="56" selection-start-line="42" selection-start-column="56" selection-end-line="42" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/tasks/read_inputs.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/utils/time.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/controllers/basic_controller.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/utils/date_time.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/lib/core/actions.ex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2016">
+          <caret line="127" column="31" selection-start-line="127" selection-start-column="31" selection-end-line="127" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/db/lib/db/model/action.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="3" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
+        <state relative-caret-position="171">
+          <caret line="34" column="38" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="das://d745192f-121d-4daf-abb2-c994ab0f06bb/schema/main/table/actions" />
-    <entry file="file://$PROJECT_DIR$/db/priv/repo/migrations/20180710132359_init_database.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://8e6c902a-9ca9-4fde-948a-bb4c900c6226/schema/main/table/actions" />
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/d745192f-121d-4daf-abb2-c994ab0f06bb/console.sql">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/priv/repo/migrations/20180826093105_add_action_time.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+    <entry file="das://4ec03994-16da-4086-a045-a6ab067f096e/schema/main/table/ports">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -766,190 +1312,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/distillery/lib/distillery/tasks/release.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1962">
-          <caret line="109" column="7" selection-start-line="109" selection-start-column="7" selection-end-line="109" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/deps/host/shoehorn/mix.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="29" column="25" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/shoehorn/mix.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/distillery/mix.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-378" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/lib/fw.ex">
+    <entry file="file://$PROJECT_DIR$/db/lib/db/model/light.ex">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/fw/mix.exs">
+    <entry file="file://$PROJECT_DIR$/core/lib/core/controllers/light_controller.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="599">
-          <caret line="62" column="23" selection-start-line="62" selection-start-column="23" selection-end-line="62" selection-end-column="23" />
+        <state relative-caret-position="414">
+          <caret line="89" column="14" lean-forward="true" selection-start-line="89" selection-start-column="14" selection-end-line="89" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fw/config/host.exs">
+    <entry file="file://$PROJECT_DIR$/db/lib/db/init.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+        <state relative-caret-position="-549">
+          <caret line="161" column="20" selection-start-line="161" selection-start-column="20" selection-end-line="161" selection-end-column="20" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/lib/fw/application.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Request.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/config/rpi3.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/nerves_init_gadget/lib/nerves_init_gadget/ssh_console.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/nerves_init_gadget/lib/nerves_init_gadget/options.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fw/deps/rpi3/nerves_init_gadget/lib/nerves_init_gadget/application.ex">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/config/config.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/lib/ui_web/router.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/deps/connection/lib/connection.ex">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/lib/db/model/dao.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="29" column="6" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/benchmark.ex" />
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/alarm/satel/integra64.ex" />
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/alarm/satel/satel_protocol.ex" />
-    <entry file="file://$PROJECT_DIR$/ui/assets/elm/Main.elm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1181">
-          <caret line="116" column="14" selection-start-line="116" selection-start-column="14" selection-end-line="116" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///lib/elixir/lib/elixir/ebin/Elixir.GenServer.beam">
-      <provider editor-type-id="BEAM" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="10" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/core/actions.ex" />
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/supervisor.ex" />
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/device/controller.ex" />
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/core/tasks.ex" />
-    <entry file="file://$PROJECT_DIR$/socket_test2/mix.exs" />
-    <entry file="file://$PROJECT_DIR$/socket_test2/lib/core.ex" />
-    <entry file="file://$PROJECT_DIR$/core/lib/device/supervisor.ex" />
-    <entry file="file://$PROJECT_DIR$/fw/config/config.exs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cpu_monitor/lib/cpu_monitor.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="936">
-          <caret line="52" column="25" selection-start-line="52" selection-start-column="25" selection-end-line="52" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/lib/core/actions/auto_lights.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1080">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/lib/core/actions/close_sunblinds.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/lib/core/device/supervisor.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-370" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/lib/core/actions/action.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/lib/core/actions.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-464">
-          <caret line="73" column="9" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/lib/core/device/controller.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2160" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/lib/core/tasks.ex">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
   <component name="masterDetails">

@@ -24,7 +24,7 @@ module Material.Spinner
 
 > Spinners are a fairly new feature of most user interfaces, and provide users
 > with a consistent visual cue about ongoing activity, regardless of hardware
-> device, operating system, or browser environment. Their design and use is an
+> devices, operating system, or browser environment. Their design and use is an
 > important factor in the overall user experience.
 
 Refer to

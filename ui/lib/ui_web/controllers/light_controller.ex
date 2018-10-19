@@ -2,6 +2,7 @@ defmodule UiWeb.LightController do
   use UiWeb, :controller
   @moduledoc false
 
+
   def index(conn, _params) do
     lights = DB.Dao.get_lights()
     json conn |> put_status(:ok), lights

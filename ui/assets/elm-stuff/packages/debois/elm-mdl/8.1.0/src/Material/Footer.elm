@@ -32,7 +32,7 @@ module Material.Footer
 > The Material Design Lite (MDL) footer component is a comprehensive container
 > intended to present a substantial amount of related content in a visually
 > attractive and logically intuitive area. Although it is called "footer", it
-> may be placed at any appropriate location on a device screen, either before or
+> may be placed at any appropriate location on a devices screen, either before or
 > after other content.
 >
 > An MDL footer component takes two basic forms: mega-footer and mini-footer. As

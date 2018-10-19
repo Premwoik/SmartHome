@@ -2,6 +2,9 @@ defmodule DB.Port do
   @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
+
+  alias DB.{Repo, Port}
 
   @derive {Poison.Encoder, only: [:name, :state, :id]}
   schema "ports" do
@@ -24,4 +27,21 @@ defmodule DB.Port do
 #    |> unique_constraint(:email)
   end
 
+  def get(ids) do
+    Repo.all from p in Port, where: p.id in ^ids, preload: [:device]
+  end
+
+
+
+
+  def pulse?(port) do
+    port.timeout > 0
+  end
+
+  def update_state(ids, state) do
+    Repo.update_all (from p in Port, where: p.id in ^ids),
+                    set: [
+                      state: state
+                    ]
+  end
 end

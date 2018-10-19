@@ -7,9 +7,10 @@ defmodule DB.Repo.Migrations.InitDatabase do
       add :ip, :string
       add :port, :integer
       add :type, :string
+      add :process, :boolean
     end
     create table(:ports) do
-      add :device_id, references("devices")
+      add :device_id, references("devices", on_delete: :nilify_all)
       add :name, :string
       add :type, :string
       add :number, :integer
@@ -18,28 +19,29 @@ defmodule DB.Repo.Migrations.InitDatabase do
       add :state, :boolean
     end
     create table(:watchers) do
-      add :device_id, references("devices")
+      add :device_id, references("devices", on_delete: :nilify_all)
       add :status, :boolean
       add :freq, :integer
     end
+
     create table(:actions) do
       add :active, :boolean
       add :params, :string
       add :function, :string
-      add :port_id, references("ports")
+      add :port_id, references("ports", on_delete: :nilify_all)
     end
     create table(:actions_arguments, primary_key: false) do
-      add :action_id, references("actions")
-      add :port_id, references("ports")
+      add :action_id, references("actions", on_delete: :delete_all)
+      add :port_id, references("ports", on_delete: :delete_all)
     end
 
-    create table(:dimmers_lights, primary_key: false) do
-      add :dimmer_id, references("dimmers")
-      add :port_id, references("ports")
-    end
+#    create table(:dimmers_lights, primary_key: false) do
+#      add :dimmer_id, references("dimmers")
+#      add :port_id, references("ports")
+#    end
 
-    create table(:dimmers, primary_key: false) do
-      add :id, references("ports"), primary_key: true
+    create table(:dimmers) do
+      add :port_id, references("ports", on_delete: :nilify_all)
       add :fill, :integer
       add :direction, :integer, default: 1
       add :time, :integer, default: 4_500
