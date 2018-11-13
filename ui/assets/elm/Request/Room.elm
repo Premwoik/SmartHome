@@ -3,9 +3,9 @@ module Request.Room exposing (..)
 import Json.Decode as Decode exposing (map3, field, int, list, bool, string)
 import Json.Encode as Encode
 import Http
-import Data.Dimmer as Dimmer exposing (DimmerJson)
 import Data.Sunblind as Sunblind exposing (Sunblind)
 import Data.Id as Id
+import Data.Page as Page exposing (PageShort, Page)
 
 import Request exposing (url)
 
@@ -18,13 +18,7 @@ loadSunblinds =
     in
     Http.get url_ decoder
 
-loadDimmers : Http.Request (List DimmerJson)
-loadDimmers =
-    let
-            url_ = url ++ "dimmers"
-            decoder = list Dimmer.decoder
-        in
-        Http.get url_ decoder
+
 
 toggleDimmer : Id.Id -> Http.Request String
 toggleDimmer id=

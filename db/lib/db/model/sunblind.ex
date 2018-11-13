@@ -4,20 +4,62 @@ defmodule DB.Sunblind do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias DB.{Repo, Sunblind}
+  alias DB.{Repo, Sunblind, Port}
 
+
+  @derive {Poison.Encoder, except: [:__meta__]}
   schema "sunblinds" do
     belongs_to :port, DB.Port
     field :position, :integer, default: 0
     field :type, :string, default: "only_close" # :only_close | :pulse | :other
     field :full_open_time, :integer, default: 0
-#    field :direction, :string, default: "up" # :down | :up
+    field :direction, :string, default: "up" # :down | :up
     field :state, :string, default: "open" # :open | :close | :in_move | :position
   end
 
-  def get(ids) do
-   from(s in Sunblind, where: s.port_id in ^ids, preload: [:port])
-   |> Repo.all()
+  def valid_state?(state) do
+    ["open", "close", "in_move", "position"]
+    |> Enum.any?(fn s -> s == state end)
+  end
+
+  def by_port(ids) when is_list ids do
+    from(s in Sunblind, where: s.port_id in ^ids, preload: [:port])
+    |> Repo.all()
+  end
+
+   def get(ids) when is_list ids do
+    from(s in Sunblind, where: s.id in ^ids, preload: [:port])
+    |> Repo.all()
+  end
+  def get(id) do
+    Repo.get(Sunblind, id)
+    |> Repo.preload(:port)
+  end
+
+  def get_view_format(id) do
+    from(
+      s in Sunblind,
+      where: s.id == ^id,
+      join: c in "page_content_sunblinds",
+      on: c.sunblind_id == s.id,
+      join: p in Port,
+      on: p.id == s.port_id,
+      select: %{
+        id: s.id,
+        state: s.state,
+        sunblind_type: s.type,
+        position: s.position,
+        order: c.order,
+        name: p.name,
+        sunblind: ""
+      }
+    )
+    |> Repo.all
+  end
+
+  def get_type(type) do
+    from(s in Sunblind, where: s.type == ^type, preload: [:port])
+    |> Repo.all()
   end
 
   def all() do
@@ -25,22 +67,39 @@ defmodule DB.Sunblind do
     |> Repo.preload(:port)
   end
 
-#  def get_by_port(ids) do
-#
-#  end
+  #  def get_by_port(ids) do
+  #
+  #  end
 
-  def update_state([id|_] = ids, state) when is_integer id do
+  def update(sunblind, changes \\ %{}) do
+    Ecto.Changeset.change(sunblind, changes)
+    |> Repo.update!
+  end
+
+  def update_state([id | _] = ids, state) when is_integer id do
     from(s in Sunblind, where: s.port_id in ^ids)
-    |> Repo.update_all(set: [state: state])
+    |> Repo.update_all(
+         set: [
+           state: state
+         ]
+       )
   end
   def update_state(sunblinds, state) when is_list sunblinds do
     ids = Enum.map(sunblinds, fn x -> x.id end)
     from(s in Sunblind, where: s.id in ^ids)
-    |> Repo.update_all(set: [state: state])
+    |> Repo.update_all(
+         set: [
+           state: state
+         ]
+       )
   end
   def update_state(sunblind, state) do
-    Ecto.Changeset.change(sunblind, state: state)
-    |> Repo.update()
+    if valid_state?(state) do
+      Ecto.Changeset.change(sunblind, state: state)
+      |> Repo.update()
+    else
+      {:error, "incorrect state"}
+    end
   end
 
 

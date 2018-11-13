@@ -1,28 +1,32 @@
-var _user$project$Main$e404 = function (_p0) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{ctor: '[]'},
-		{
-			ctor: '::',
-			_0: A3(
-				_debois$elm_mdl$Material_Options$styled,
-				_elm_lang$html$Html$h1,
-				{
-					ctor: '::',
-					_0: _debois$elm_mdl$Material_Options$cs('mdl-typography--display-4'),
-					_1: {
-						ctor: '::',
-						_0: _debois$elm_mdl$Material_Typography$center,
-						_1: {ctor: '[]'}
-					}
+var _user$project$Main$urlOf = function (model) {
+	var $short = function () {
+		var _p0 = A2(_elm_lang$core$Array$get, model.selectedTab, model.tabs);
+		if (_p0.ctor === 'Nothing') {
+			return '';
+		} else {
+			return _elm_lang$core$String$toLower(_p0._0.name);
+		}
+	}();
+	return A2(_elm_lang$core$Basics_ops['++'], '#', $short);
+};
+var _user$project$Main$delta2url = F2(
+	function (model1, model2) {
+		return (!_elm_lang$core$Native_Utils.eq(model1.selectedTab, model2.selectedTab)) ? _elm_lang$core$Maybe$Just(
+			{
+				entry: _rgrempel$elm_route_url$RouteUrl$NewEntry,
+				url: _user$project$Main$urlOf(model2)
+			}) : _elm_lang$core$Maybe$Nothing;
+	});
+var _user$project$Main$tabTitles = function (model) {
+	return function (_p1) {
+		return _elm_lang$core$Array$toList(
+			A2(
+				_elm_lang$core$Array$map,
+				function (x) {
+					return _elm_lang$html$Html$text(x.name);
 				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text('404'),
-					_1: {ctor: '[]'}
-				}),
-			_1: {ctor: '[]'}
-		});
+				_p1));
+	}(model.tabs);
 };
 var _user$project$Main$header = {
 	ctor: '::',
@@ -56,174 +60,183 @@ var _user$project$Main$header = {
 		}),
 	_1: {ctor: '[]'}
 };
-var _user$project$Main$model = {mdl: _debois$elm_mdl$Material$model, selectedTab: 0, rooms: _user$project$Page_Room_Model$model, actions: _user$project$Page_Action$model};
+var _user$project$Main$nameToNumber = function (name) {
+	return function (_p2) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			-1,
+			A2(
+				_elm_lang$core$Array$get,
+				0,
+				A2(
+					_elm_lang$core$Array$map,
+					function (x) {
+						return x.number;
+					},
+					A2(
+						_elm_lang$core$Array$filter,
+						function (x) {
+							return _elm_lang$core$Native_Utils.eq(x.name, name);
+						},
+						function (_) {
+							return _.tabs;
+						}(_p2)))));
+	};
+};
+var _user$project$Main$model = {
+	mdl: _debois$elm_mdl$Material$model,
+	selectedTab: 1,
+	page: _user$project$Page_Page$model,
+	tabs: _elm_lang$core$Array$fromList(
+		{ctor: '[]'})
+};
 var _user$project$Main$Model = F4(
 	function (a, b, c, d) {
-		return {mdl: a, rooms: b, actions: c, selectedTab: d};
+		return {mdl: a, page: b, selectedTab: c, tabs: d};
 	});
-var _user$project$Main$ActionMsg = function (a) {
-	return {ctor: 'ActionMsg', _0: a};
+var _user$project$Main$PageMsg = function (a) {
+	return {ctor: 'PageMsg', _0: a};
 };
-var _user$project$Main$RoomMsg = function (a) {
-	return {ctor: 'RoomMsg', _0: a};
-};
-var _user$project$Main$tabs = {
-	ctor: '::',
-	_0: {
-		ctor: '_Tuple4',
-		_0: 'Pokoje',
-		_1: 'rooms',
-		_2: function (_p1) {
+var _user$project$Main$switchTab = F2(
+	function (k, just) {
+		return function (_p3) {
 			return A2(
-				_elm_lang$html$Html$map,
-				_user$project$Main$RoomMsg,
-				_user$project$Page_Room$view(
-					function (_) {
-						return _.rooms;
-					}(_p1)));
-		},
-		_3: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$RoomMsg, _user$project$Page_Room$init)
-	},
-	_1: {
-		ctor: '::',
-		_0: {
-			ctor: '_Tuple4',
-			_0: 'Akcje',
-			_1: 'actions',
-			_2: function (_p2) {
-				return A2(
-					_elm_lang$html$Html$map,
-					_user$project$Main$ActionMsg,
-					_user$project$Page_Action$view(
+				_elm_lang$core$Maybe$withDefault,
+				_elm_lang$core$Platform_Cmd$none,
+				A2(
+					_elm_lang$core$Maybe$map,
+					function (_p4) {
+						return A2(
+							_elm_lang$core$Platform_Cmd$map,
+							_user$project$Main$PageMsg,
+							just(_p4));
+					},
+					A2(
+						_elm_lang$core$Array$get,
+						k,
 						function (_) {
-							return _.actions;
-						}(_p2)));
-			},
-			_3: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$ActionMsg, _user$project$Page_Action$init)
-		},
-		_1: {ctor: '[]'}
-	}
-};
-var _user$project$Main$tabInit = _elm_lang$core$Array$fromList(
-	A2(
-		_elm_lang$core$List$map,
-		function (_p3) {
-			var _p4 = _p3;
-			return _p4._3;
-		},
-		_user$project$Main$tabs));
-var _user$project$Main$tabTitles = A2(
-	_elm_lang$core$List$map,
-	function (_p5) {
-		var _p6 = _p5;
-		return _elm_lang$html$Html$text(_p6._0);
-	},
-	_user$project$Main$tabs);
-var _user$project$Main$tabViews = _elm_lang$core$Array$fromList(
-	A2(
-		_elm_lang$core$List$map,
-		function (_p7) {
-			var _p8 = _p7;
-			return _p8._2;
-		},
-		_user$project$Main$tabs));
-var _user$project$Main$tabUrls = _elm_lang$core$Array$fromList(
-	A2(
-		_elm_lang$core$List$map,
-		function (_p9) {
-			var _p10 = _p9;
-			return _p10._1;
-		},
-		_user$project$Main$tabs));
-var _user$project$Main$urlOf = function (model) {
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		'#',
-		A2(
-			_elm_lang$core$Maybe$withDefault,
-			'',
-			A2(_elm_lang$core$Array$get, model.selectedTab, _user$project$Main$tabUrls)));
-};
-var _user$project$Main$delta2url = F2(
-	function (model1, model2) {
-		return (!_elm_lang$core$Native_Utils.eq(model1.selectedTab, model2.selectedTab)) ? _elm_lang$core$Maybe$Just(
-			{
-				entry: _rgrempel$elm_route_url$RouteUrl$NewEntry,
-				url: _user$project$Main$urlOf(model2)
-			}) : _elm_lang$core$Maybe$Nothing;
+							return _.tabs;
+						}(_p3))));
+		};
 	});
-var _user$project$Main$urlTabs = _elm_lang$core$Dict$fromList(
-	A2(
-		_elm_lang$core$List$indexedMap,
-		F2(
-			function (idx, _p11) {
-				var _p12 = _p11;
-				return {ctor: '_Tuple2', _0: _p12._1, _1: idx};
-			}),
-		_user$project$Main$tabs));
 var _user$project$Main$Mdl = function (a) {
 	return {ctor: 'Mdl', _0: a};
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p13 = msg;
-		switch (_p13.ctor) {
+		var _p5 = msg;
+		switch (_p5.ctor) {
+			case 'LoadTabs':
+				if (_p5._0.ctor === 'Ok') {
+					var tabs_ = _elm_lang$core$Array$fromList(
+						A2(
+							_elm_lang$core$List$sortBy,
+							function (_) {
+								return _.number;
+							},
+							_p5._0._0));
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{tabs: tabs_}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								tabs: _elm_lang$core$Array$fromList(
+									{ctor: '[]'})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				}
 			case 'SelectTab':
-				var _p14 = _p13._0;
+				var _p6 = _p5._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{selectedTab: _p14}),
-					_1: A2(
-						_elm_lang$core$Maybe$withDefault,
-						_elm_lang$core$Platform_Cmd$none,
-						A2(_elm_lang$core$Array$get, _p14, _user$project$Main$tabInit))
+						{selectedTab: _p6}),
+					_1: A3(_user$project$Main$switchTab, _p6, _user$project$Page_Page$init, model)
+				};
+			case 'AddressChange':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							selectedTab: A2(_user$project$Main$nameToNumber, _p5._0, model)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Mdl':
-				return A3(_debois$elm_mdl$Material$update, _user$project$Main$Mdl, _p13._0, model);
-			case 'RoomMsg':
-				return A6(
-					_debois$elm_mdl$Material_Helpers$lift,
-					function (_) {
-						return _.rooms;
-					},
-					F2(
-						function (m, x) {
-							return _elm_lang$core$Native_Utils.update(
-								m,
-								{rooms: x});
-						}),
-					_user$project$Main$RoomMsg,
-					_user$project$Page_Room$update,
-					_p13._0,
-					model);
+				return A3(_debois$elm_mdl$Material$update, _user$project$Main$Mdl, _p5._0, model);
 			default:
 				return A6(
 					_debois$elm_mdl$Material_Helpers$lift,
 					function (_) {
-						return _.actions;
+						return _.page;
 					},
 					F2(
 						function (m, x) {
 							return _elm_lang$core$Native_Utils.update(
 								m,
-								{actions: x});
+								{page: x});
 						}),
-					_user$project$Main$ActionMsg,
-					_user$project$Page_Action$update,
-					_p13._0,
+					_user$project$Main$PageMsg,
+					_user$project$Page_Page$update,
+					_p5._0,
 					model);
 		}
 	});
+var _user$project$Main$subs = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material$subscriptions, _user$project$Main$Mdl, model),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$core$Platform_Sub$map,
+					_user$project$Main$PageMsg,
+					_user$project$Page_Page$subs(model.page)),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Main$LoadTabs = function (a) {
+	return {ctor: 'LoadTabs', _0: a};
+};
+var _user$project$Main$init = _elm_lang$core$Platform_Cmd$batch(
+	{
+		ctor: '::',
+		_0: _debois$elm_mdl$Material$init(_user$project$Main$Mdl),
+		_1: {
+			ctor: '::',
+			_0: A2(_user$project$Request$send, _user$project$Main$LoadTabs, _user$project$Page_Page$getTabs),
+			_1: {ctor: '[]'}
+		}
+	});
+var _user$project$Main$AddressChange = function (a) {
+	return {ctor: 'AddressChange', _0: a};
+};
 var _user$project$Main$SelectTab = function (a) {
 	return {ctor: 'SelectTab', _0: a};
 };
 var _user$project$Main$view_ = function (model) {
-	var top = A2(
-		_elm_lang$core$Maybe$withDefault,
-		_user$project$Main$e404,
-		A2(_elm_lang$core$Array$get, model.selectedTab, _user$project$Main$tabViews))(model);
+	var top = function (_p7) {
+		return A2(
+			_elm_lang$html$Html$map,
+			_user$project$Main$PageMsg,
+			_user$project$Page_Page$view(
+				function (_) {
+					return _.page;
+				}(_p7)));
+	}(model);
 	return _debois$elm_mdl$Material_Scheme$top(
 		A4(
 			_debois$elm_mdl$Material_Layout$render,
@@ -256,7 +269,7 @@ var _user$project$Main$view_ = function (model) {
 				},
 				tabs: {
 					ctor: '_Tuple2',
-					_0: _user$project$Main$tabTitles,
+					_0: _user$project$Main$tabTitles(model),
 					_1: {ctor: '[]'}
 				}
 			}));
@@ -266,15 +279,11 @@ var _user$project$Main$location2messages = function (location) {
 	return {
 		ctor: '::',
 		_0: function () {
-			var _p15 = A2(_elm_lang$core$String$dropLeft, 1, location.hash);
-			if (_p15 === '') {
+			var _p8 = A2(_elm_lang$core$String$dropLeft, 1, location.hash);
+			if (_p8 === '') {
 				return _user$project$Main$SelectTab(0);
 			} else {
-				return _user$project$Main$SelectTab(
-					A2(
-						_elm_lang$core$Maybe$withDefault,
-						-1,
-						A2(_elm_lang$core$Dict$get, _p15, _user$project$Main$urlTabs)));
+				return _user$project$Main$AddressChange(_p8);
 			}
 		}(),
 		_1: {ctor: '[]'}
@@ -284,23 +293,10 @@ var _user$project$Main$main = _rgrempel$elm_route_url$RouteUrl$program(
 	{
 		delta2url: _user$project$Main$delta2url,
 		location2messages: _user$project$Main$location2messages,
-		init: {
-			ctor: '_Tuple2',
-			_0: _user$project$Main$model,
-			_1: _debois$elm_mdl$Material$init(_user$project$Main$Mdl)
-		},
+		init: {ctor: '_Tuple2', _0: _user$project$Main$model, _1: _user$project$Main$init},
 		view: _user$project$Main$view,
 		subscriptions: function (model) {
-			return _elm_lang$core$Platform_Sub$batch(
-				{
-					ctor: '::',
-					_0: _elm_lang$core$Platform_Sub$none,
-					_1: {
-						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material$subscriptions, _user$project$Main$Mdl, model),
-						_1: {ctor: '[]'}
-					}
-				});
+			return _user$project$Main$subs(model);
 		},
 		update: _user$project$Main$update
 	})();

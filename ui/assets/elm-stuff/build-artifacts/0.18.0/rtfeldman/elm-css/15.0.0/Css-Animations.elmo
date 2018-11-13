@@ -1,0 +1,135 @@
+var _rtfeldman$elm_css$Css_Animations$property = F2(
+	function (key, value) {
+		return _rtfeldman$elm_css$Css_Internal$Property(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				key,
+				A2(_elm_lang$core$Basics_ops['++'], ':', value)));
+	});
+var _rtfeldman$elm_css$Css_Animations$transform = function (values) {
+	return _rtfeldman$elm_css$Css_Internal$Property(
+		_elm_lang$core$List$isEmpty(values) ? 'transform:none' : A2(
+			_elm_lang$core$Basics_ops['++'],
+			'transform:',
+			A2(
+				_elm_lang$core$String$join,
+				' ',
+				A2(
+					_elm_lang$core$List$map,
+					function (_) {
+						return _.value;
+					},
+					values))));
+};
+var _rtfeldman$elm_css$Css_Animations$opacity = function (_p0) {
+	var _p1 = _p0;
+	return _rtfeldman$elm_css$Css_Internal$Property(
+		A2(_elm_lang$core$Basics_ops['++'], 'opacity:', _p1.value));
+};
+var _rtfeldman$elm_css$Css_Animations$borderBottom3 = F3(
+	function (arg1, arg2, arg3) {
+		return _rtfeldman$elm_css$Css_Internal$Property(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'border-bottom:',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					arg1.value,
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						' ',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							arg2.value,
+							A2(_elm_lang$core$Basics_ops['++'], ' ', arg3.value))))));
+	});
+var _rtfeldman$elm_css$Css_Animations$borderBottom2 = F2(
+	function (arg1, arg2) {
+		return _rtfeldman$elm_css$Css_Internal$Property(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'border-bottom:',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					arg1.value,
+					A2(_elm_lang$core$Basics_ops['++'], ' ', arg2.value))));
+	});
+var _rtfeldman$elm_css$Css_Animations$borderBottom = function (_p2) {
+	var _p3 = _p2;
+	return _rtfeldman$elm_css$Css_Internal$Property(
+		A2(_elm_lang$core$Basics_ops['++'], 'border-bottom:', _p3.value));
+};
+var _rtfeldman$elm_css$Css_Animations$border3 = F3(
+	function (arg1, arg2, arg3) {
+		return _rtfeldman$elm_css$Css_Internal$Property(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'border:',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					arg1.value,
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						' ',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							arg2.value,
+							A2(_elm_lang$core$Basics_ops['++'], ' ', arg3.value))))));
+	});
+var _rtfeldman$elm_css$Css_Animations$border2 = F2(
+	function (arg1, arg2) {
+		return _rtfeldman$elm_css$Css_Internal$Property(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'border:',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					arg1.value,
+					A2(_elm_lang$core$Basics_ops['++'], ' ', arg2.value))));
+	});
+var _rtfeldman$elm_css$Css_Animations$border = function (_p4) {
+	var _p5 = _p4;
+	return _rtfeldman$elm_css$Css_Internal$Property(
+		A2(_elm_lang$core$Basics_ops['++'], 'border:', _p5.value));
+};
+var _rtfeldman$elm_css$Css_Animations$backgroundSize2 = F2(
+	function (arg1, arg2) {
+		return _rtfeldman$elm_css$Css_Internal$Property(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'background-size:',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					arg1.value,
+					A2(_elm_lang$core$Basics_ops['++'], ' ', arg2.value))));
+	});
+var _rtfeldman$elm_css$Css_Animations$backgroundSize = function (_p6) {
+	var _p7 = _p6;
+	return _rtfeldman$elm_css$Css_Internal$Property(
+		A2(_elm_lang$core$Basics_ops['++'], 'background-size:', _p7.value));
+};
+var _rtfeldman$elm_css$Css_Animations$backgroundColor = function (_p8) {
+	var _p9 = _p8;
+	return _rtfeldman$elm_css$Css_Internal$Property(
+		A2(_elm_lang$core$Basics_ops['++'], 'background-color:', _p9.value));
+};
+var _rtfeldman$elm_css$Css_Animations$all = function (_p10) {
+	var _p11 = _p10;
+	return _rtfeldman$elm_css$Css_Internal$Property(
+		A2(_elm_lang$core$Basics_ops['++'], 'all:', _p11.value));
+};
+var _rtfeldman$elm_css$Css_Animations$custom = F2(
+	function (name, value) {
+		return _rtfeldman$elm_css$Css_Internal$Property(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				name,
+				A2(_elm_lang$core$Basics_ops['++'], ':', value)));
+	});
+var _rtfeldman$elm_css$Css_Animations$keyframes = function (tuples) {
+	return _elm_lang$core$List$isEmpty(tuples) ? {value: 'none', none: _rtfeldman$elm_css$Css_Structure$Compatible, keyframes: _rtfeldman$elm_css$Css_Structure$Compatible} : {
+		value: _rtfeldman$elm_css$Css_Internal$compileKeyframes(tuples),
+		none: _rtfeldman$elm_css$Css_Structure$Compatible,
+		keyframes: _rtfeldman$elm_css$Css_Structure$Compatible
+	};
+};

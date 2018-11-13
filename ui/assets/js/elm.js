@@ -16282,6 +16282,39 @@ var _debois$elm_mdl$Material_Typography$display3 = _debois$elm_mdl$Material_Opti
 var _debois$elm_mdl$Material_Typography$display2 = _debois$elm_mdl$Material_Options$cs('mdl-typography--display-2-color-contrast');
 var _debois$elm_mdl$Material_Typography$display1 = _debois$elm_mdl$Material_Options$cs('mdl-typography--display-1-color-contrast');
 
+var _elm_community$list_split$List_Split$chunksOfLeft = F2(
+	function (k, xs) {
+		return _elm_lang$core$Native_Utils.eq(k, 0) ? {
+			ctor: '::',
+			_0: {ctor: '[]'},
+			_1: {ctor: '[]'}
+		} : ((_elm_lang$core$Native_Utils.cmp(k, 0) < 0) ? {ctor: '[]'} : ((_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$List$length(xs),
+			k) > 0) ? {
+			ctor: '::',
+			_0: A2(_elm_lang$core$List$take, k, xs),
+			_1: A2(
+				_elm_community$list_split$List_Split$chunksOfLeft,
+				k,
+				A2(_elm_lang$core$List$drop, k, xs))
+		} : {
+			ctor: '::',
+			_0: xs,
+			_1: {ctor: '[]'}
+		}));
+	});
+var _elm_community$list_split$List_Split$chunksOfRight = function (k) {
+	return function (_p0) {
+		return A2(
+			_elm_lang$core$List$map,
+			_elm_lang$core$List$reverse,
+			A2(
+				_elm_community$list_split$List_Split$chunksOfLeft,
+				k,
+				_elm_lang$core$List$reverse(_p0)));
+	};
+};
+
 var _elm_lang$html$Html_Lazy$lazy3 = _elm_lang$virtual_dom$VirtualDom$lazy3;
 var _elm_lang$html$Html_Lazy$lazy2 = _elm_lang$virtual_dom$VirtualDom$lazy2;
 var _elm_lang$html$Html_Lazy$lazy = _elm_lang$virtual_dom$VirtualDom$lazy;
@@ -17887,10 +17920,29 @@ var _user$project$Data_Id$Id = function (a) {
 };
 var _user$project$Data_Id$decoder = A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Id$Id, _elm_lang$core$Json_Decode$int);
 
-var _user$project$Data_Port$Port = F7(
-	function (a, b, c, d, e, f, g) {
-		return {id: a, device_id: b, name: c, type_: d, number: e, timeout: f, state: g};
+var _user$project$Data_Port$typeDecoder = A2(
+	_elm_lang$core$Json_Decode$andThen,
+	function (type_) {
+		var _p0 = type_;
+		if (_p0 === 'port') {
+			return _elm_lang$core$Json_Decode$succeed('port');
+		} else {
+			return _elm_lang$core$Json_Decode$fail('');
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _user$project$Data_Port$Port = F5(
+	function (a, b, c, d, e) {
+		return {id: a, name: b, type_: c, state: d, portType: e};
 	});
+var _user$project$Data_Port$decoder = A6(
+	_elm_lang$core$Json_Decode$map5,
+	_user$project$Data_Port$Port,
+	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'type', _user$project$Data_Port$typeDecoder),
+	A2(_elm_lang$core$Json_Decode$field, 'state', _elm_lang$core$Json_Decode$bool),
+	A2(_elm_lang$core$Json_Decode$field, 'port_type', _elm_lang$core$Json_Decode$string));
 var _user$project$Data_Port$Unknown = function (a) {
 	return {ctor: 'Unknown', _0: a};
 };
@@ -17898,35 +17950,6 @@ var _user$project$Data_Port$Sunblind = {ctor: 'Sunblind'};
 var _user$project$Data_Port$Light = {ctor: 'Light'};
 var _user$project$Data_Port$DimLight = {ctor: 'DimLight'};
 var _user$project$Data_Port$Dimmer = {ctor: 'Dimmer'};
-var _user$project$Data_Port$typeDecoder = A2(
-	_elm_lang$core$Json_Decode$andThen,
-	function (type_) {
-		var _p0 = type_;
-		switch (_p0) {
-			case 'dimmer':
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Port$Dimmer);
-			case 'dimLight':
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Port$Light);
-			case 'light':
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Port$Light);
-			case 'sunblind':
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Port$Sunblind);
-			default:
-				return _elm_lang$core$Json_Decode$succeed(
-					_user$project$Data_Port$Unknown(_p0));
-		}
-	},
-	_elm_lang$core$Json_Decode$string);
-var _user$project$Data_Port$decoder = A8(
-	_elm_lang$core$Json_Decode$map7,
-	_user$project$Data_Port$Port,
-	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
-	A2(_elm_lang$core$Json_Decode$field, 'device_id', _user$project$Data_Id$decoder),
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
-	A2(_elm_lang$core$Json_Decode$field, 'type', _user$project$Data_Port$typeDecoder),
-	A2(_elm_lang$core$Json_Decode$field, 'number', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'timeout', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'state', _elm_lang$core$Json_Decode$bool));
 
 var _user$project$Data_Action$fnToString = function (_p0) {
 	var _p1 = _p0;
@@ -17986,9 +18009,20 @@ var _user$project$Data_Light$setList = F2(
 var _user$project$Data_Light$getId = function (sun) {
 	return _user$project$Data_Id$toInt(sun.id);
 };
-var _user$project$Data_Light$Light = F3(
-	function (a, b, c) {
-		return {id: a, state: b, name: c};
+var _user$project$Data_Light$typeDecoder = A2(
+	_elm_lang$core$Json_Decode$andThen,
+	function (type_) {
+		var _p0 = type_;
+		if (_p0 === 'port') {
+			return _elm_lang$core$Json_Decode$succeed('port');
+		} else {
+			return _elm_lang$core$Json_Decode$fail('');
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _user$project$Data_Light$Light = F4(
+	function (a, b, c, d) {
+		return {id: a, state: b, name: c, type_: d};
 	});
 var _user$project$Data_Light$Off = {ctor: 'Off'};
 var _user$project$Data_Light$setOffList = function (lights) {
@@ -17996,8 +18030,8 @@ var _user$project$Data_Light$setOffList = function (lights) {
 };
 var _user$project$Data_Light$On = {ctor: 'On'};
 var _user$project$Data_Light$notState = function (state) {
-	var _p0 = state;
-	if (_p0.ctor === 'On') {
+	var _p1 = state;
+	if (_p1.ctor === 'On') {
 		return _user$project$Data_Light$Off;
 	} else {
 		return _user$project$Data_Light$On;
@@ -18006,9 +18040,9 @@ var _user$project$Data_Light$notState = function (state) {
 var _user$project$Data_Light$toggleList = function (lights) {
 	var state = _user$project$Data_Light$notState(
 		function (x) {
-			var _p1 = x;
-			if (_p1.ctor === 'Just') {
-				return _p1._0.state;
+			var _p2 = x;
+			if (_p2.ctor === 'Just') {
+				return _p2._0.state;
 			} else {
 				return _user$project$Data_Light$Off;
 			}
@@ -18025,20 +18059,21 @@ var _user$project$Data_Light$toggle = function (light) {
 var _user$project$Data_Light$stateDecoder = A2(
 	_elm_lang$core$Json_Decode$andThen,
 	function (state) {
-		var _p2 = state;
-		if (_p2 === true) {
+		var _p3 = state;
+		if (_p3 === true) {
 			return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Light$On);
 		} else {
 			return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Light$Off);
 		}
 	},
 	_elm_lang$core$Json_Decode$bool);
-var _user$project$Data_Light$decoder = A4(
-	_elm_lang$core$Json_Decode$map3,
+var _user$project$Data_Light$decoder = A5(
+	_elm_lang$core$Json_Decode$map4,
 	_user$project$Data_Light$Light,
 	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
 	A2(_elm_lang$core$Json_Decode$field, 'state', _user$project$Data_Light$stateDecoder),
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string));
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'type', _user$project$Data_Light$typeDecoder));
 var _user$project$Data_Light$isOn = function (light) {
 	return _elm_lang$core$Native_Utils.eq(light.state, _user$project$Data_Light$On);
 };
@@ -18097,24 +18132,24 @@ var _user$project$Data_Dimmer$setFill = F2(
 var _user$project$Data_Dimmer$getId = function (sun) {
 	return _user$project$Data_Id$toInt(sun.id);
 };
-var _user$project$Data_Dimmer$updateFromJson = F2(
-	function (dim, ext) {
-		return _elm_lang$core$Native_Utils.update(
-			ext,
-			{id: dim.id, name: dim.name, fill: dim.fill, lights: dim.lights});
-	});
+var _user$project$Data_Dimmer$typeDecoder = A2(
+	_elm_lang$core$Json_Decode$andThen,
+	function (type_) {
+		var _p1 = type_;
+		if (_p1 === 'dimmer') {
+			return _elm_lang$core$Json_Decode$succeed('dimmer');
+		} else {
+			return _elm_lang$core$Json_Decode$fail('');
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
 var _user$project$Data_Dimmer$Dimmer = F5(
 	function (a, b, c, d, e) {
 		return {id: a, name: b, fill: c, lights: d, undrawn: e};
 	});
-var _user$project$Data_Dimmer$fromJson = function (dim) {
-	var defaultUndrawn = false;
-	var cast = A4(_user$project$Data_Dimmer$Dimmer, dim.id, dim.name, dim.fill, dim.lights);
-	return cast(defaultUndrawn);
-};
 var _user$project$Data_Dimmer$DimmerJson = F4(
 	function (a, b, c, d) {
-		return {id: a, name: b, fill: c, lights: d};
+		return {id: a, name: b, fill: c, type_: d};
 	});
 var _user$project$Data_Dimmer$decoder = A5(
 	_elm_lang$core$Json_Decode$map4,
@@ -18122,17 +18157,14 @@ var _user$project$Data_Dimmer$decoder = A5(
 	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
 	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'fill', _elm_lang$core$Json_Decode$float),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'lights',
-		_elm_lang$core$Json_Decode$list(_user$project$Data_Light$decoder)));
+	A2(_elm_lang$core$Json_Decode$field, 'type', _user$project$Data_Dimmer$typeDecoder));
 var _user$project$Data_Dimmer$Down = {ctor: 'Down'};
 var _user$project$Data_Dimmer$Up = {ctor: 'Up'};
 var _user$project$Data_Dimmer$directionDecoder = A2(
 	_elm_lang$core$Json_Decode$andThen,
 	function (dir) {
-		var _p1 = dir;
-		if (_p1 === true) {
+		var _p2 = dir;
+		if (_p2 === true) {
 			return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Dimmer$Up);
 		} else {
 			return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Dimmer$Down);
@@ -18226,741 +18258,159 @@ var _user$project$Data_Sunblind$setOpen = function (s) {
 	return A2(_user$project$Data_Sunblind$set, s, _user$project$Data_Sunblind$Open);
 };
 
-var _user$project$Page_Room_Model$model = {
-	dimmers: {ctor: '[]'},
-	sunblinds: {ctor: '[]'},
-	blindUndrawn: false,
-	raised: -1,
-	mdl: _debois$elm_mdl$Material$model
+var _user$project$Data_Page$PageShortChildless = F3(
+	function (a, b, c) {
+		return {id: a, number: b, name: c};
+	});
+var _user$project$Data_Page$decoderShortChildless = A4(
+	_elm_lang$core$Json_Decode$map3,
+	_user$project$Data_Page$PageShortChildless,
+	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'number', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string));
+var _user$project$Data_Page$PageShort = F4(
+	function (a, b, c, d) {
+		return {id: a, number: b, name: c, subpages: d};
+	});
+var _user$project$Data_Page$decoderShort = A5(
+	_elm_lang$core$Json_Decode$map4,
+	_user$project$Data_Page$PageShort,
+	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'number', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'subpages',
+		_elm_lang$core$Json_Decode$list(_user$project$Data_Page$decoderShortChildless)));
+var _user$project$Data_Page$Page = F7(
+	function (a, b, c, d, e, f, g) {
+		return {id: a, number: b, name: c, title: d, description: e, subpages: f, content: g};
+	});
+var _user$project$Data_Page$Sunblind = function (a) {
+	return {ctor: 'Sunblind', _0: a};
 };
-var _user$project$Page_Room_Model$Model = F5(
-	function (a, b, c, d, e) {
-		return {dimmers: a, sunblinds: b, blindUndrawn: c, raised: d, mdl: e};
-	});
-var _user$project$Page_Room_Model$Mdl = function (a) {
-	return {ctor: 'Mdl', _0: a};
+var _user$project$Data_Page$Action = function (a) {
+	return {ctor: 'Action', _0: a};
 };
-var _user$project$Page_Room_Model$ToggleSunblind = function (a) {
-	return {ctor: 'ToggleSunblind', _0: a};
+var _user$project$Data_Page$Port = function (a) {
+	return {ctor: 'Port', _0: a};
 };
-var _user$project$Page_Room_Model$SetAllSunblinds = {ctor: 'SetAllSunblinds'};
-var _user$project$Page_Room_Model$UndrawSunblinds = {ctor: 'UndrawSunblinds'};
-var _user$project$Page_Room_Model$UndrawDimmer = function (a) {
-	return {ctor: 'UndrawDimmer', _0: a};
+var _user$project$Data_Page$Light = function (a) {
+	return {ctor: 'Light', _0: a};
 };
-var _user$project$Page_Room_Model$ToggleLight = F2(
-	function (a, b) {
-		return {ctor: 'ToggleLight', _0: a, _1: b};
-	});
-var _user$project$Page_Room_Model$DimToggle = function (a) {
-	return {ctor: 'DimToggle', _0: a};
+var _user$project$Data_Page$Dimmer = function (a) {
+	return {ctor: 'Dimmer', _0: a};
 };
-var _user$project$Page_Room_Model$DimSlide = F2(
-	function (a, b) {
-		return {ctor: 'DimSlide', _0: a, _1: b};
-	});
-var _user$project$Page_Room_Model$Response = function (a) {
-	return {ctor: 'Response', _0: a};
-};
-var _user$project$Page_Room_Model$InitRoom = function (a) {
-	return {ctor: 'InitRoom', _0: a};
-};
-var _user$project$Page_Room_Model$Raise = function (a) {
-	return {ctor: 'Raise', _0: a};
-};
-
-var _user$project$Page_Room_Views_Card$dynamic = F2(
-	function (k, raised) {
-		return _debois$elm_mdl$Material_Options$many(
-			{
-				ctor: '::',
-				_0: _elm_lang$core$Native_Utils.eq(k, raised) ? _debois$elm_mdl$Material_Elevation$e8 : _debois$elm_mdl$Material_Elevation$e2,
-				_1: {
-					ctor: '::',
-					_0: _debois$elm_mdl$Material_Elevation$transition(250),
-					_1: {
-						ctor: '::',
-						_0: _debois$elm_mdl$Material_Options$onMouseEnter(
-							_user$project$Page_Room_Model$Raise(k)),
-						_1: {
-							ctor: '::',
-							_0: _debois$elm_mdl$Material_Options$onMouseLeave(
-								_user$project$Page_Room_Model$Raise(-1)),
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			});
-	});
-var _user$project$Page_Room_Views_Card$card = F5(
-	function (type_, name, k, raised, action) {
-		return A2(
-			_debois$elm_mdl$Material_Card$view,
-			{
-				ctor: '::',
-				_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '256px'),
-				_1: {
-					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '.5rem'),
-					_1: {
-						ctor: '::',
-						_0: A2(_user$project$Page_Room_Views_Card$dynamic, k, raised),
-						_1: {ctor: '[]'}
-					}
-				}
-			},
-			{
-				ctor: '::',
-				_0: A2(
-					_debois$elm_mdl$Material_Card$title,
-					{
-						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '1rem 1rem 0 1rem'),
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: A2(
-							_debois$elm_mdl$Material_Card$head,
-							{ctor: '[]'},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text(type_),
-								_1: {ctor: '[]'}
-							}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_debois$elm_mdl$Material_Options$div,
-								{
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '0rem 2rem 0 2rem'),
-									_1: {ctor: '[]'}
-								},
-								{
-									ctor: '::',
-									_0: A2(
-										_debois$elm_mdl$Material_Options$span,
-										{
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Typography$display2,
-											_1: {
-												ctor: '::',
-												_0: _debois$elm_mdl$Material_Color$text(_debois$elm_mdl$Material_Color$primary),
-												_1: {ctor: '[]'}
-											}
-										},
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html$text(name),
-											_1: {ctor: '[]'}
-										}),
-									_1: {ctor: '[]'}
-								}),
-							_1: {ctor: '[]'}
-						}
-					}),
-				_1: {
-					ctor: '::',
-					_0: action,
-					_1: {ctor: '[]'}
-				}
-			});
-	});
-
-var _user$project$Page_Room_Views_DimmerC$toggleBtn = F2(
-	function (mdl, dimmer) {
-		var state = dimmer.undrawn ? _debois$elm_mdl$Material_Button$colored : _debois$elm_mdl$Material_Options$nop;
-		return A5(
-			_debois$elm_mdl$Material_Button$render,
-			_user$project$Page_Room_Model$Mdl,
-			{
-				ctor: '::',
-				_0: 0,
-				_1: {
-					ctor: '::',
-					_0: _user$project$Data_Dimmer$getId(dimmer),
-					_1: {ctor: '[]'}
-				}
-			},
-			mdl,
-			{
-				ctor: '::',
-				_0: _debois$elm_mdl$Material_Options$onClick(
-					_user$project$Page_Room_Model$UndrawDimmer(dimmer)),
-				_1: {
-					ctor: '::',
-					_0: state,
-					_1: {ctor: '[]'}
-				}
-			},
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html$text('Pokaż lampy'),
-				_1: {ctor: '[]'}
-			});
-	});
-var _user$project$Page_Room_Views_DimmerC$toggleLightBtn = F3(
-	function (mdl, dimmer, light) {
-		var state = _user$project$Data_Light$isOn(light) ? _debois$elm_mdl$Material_Button$colored : _debois$elm_mdl$Material_Options$nop;
-		return A5(
-			_debois$elm_mdl$Material_Button$render,
-			_user$project$Page_Room_Model$Mdl,
-			{
-				ctor: '::',
-				_0: 1,
-				_1: {
-					ctor: '::',
-					_0: _user$project$Data_Light$getId(light),
-					_1: {ctor: '[]'}
-				}
-			},
-			mdl,
-			{
-				ctor: '::',
-				_0: _debois$elm_mdl$Material_Button$fab,
-				_1: {
-					ctor: '::',
-					_0: _debois$elm_mdl$Material_Options$onClick(
-						A2(_user$project$Page_Room_Model$ToggleLight, dimmer, light)),
-					_1: {
-						ctor: '::',
-						_0: _debois$elm_mdl$Material_Button$icon,
-						_1: {
-							ctor: '::',
-							_0: state,
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			},
-			{
-				ctor: '::',
-				_0: _debois$elm_mdl$Material_Icon$i('highlight'),
-				_1: {ctor: '[]'}
-			});
-	});
-var _user$project$Page_Room_Views_DimmerC$icon = 'wb_sunny';
-var _user$project$Page_Room_Views_DimmerC$color = A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Amber, _debois$elm_mdl$Material_Color$S500);
-var _user$project$Page_Room_Views_DimmerC$cell = A2(_debois$elm_mdl$Material_Options$css, 'width', '64px');
-var _user$project$Page_Room_Views_DimmerC$lightRow = F3(
-	function (mdl, dimmer, light) {
-		return A2(
-			_debois$elm_mdl$Material_Card$subhead,
-			{
-				ctor: '::',
-				_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
-				_1: {
-					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'justify-content', 'space-between'),
-					_1: {
-						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
-						_1: {
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 2rem'),
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			},
-			{
-				ctor: '::',
-				_0: A2(
-					_debois$elm_mdl$Material_Options$span,
-					{
-						ctor: '::',
-						_0: _user$project$Page_Room_Views_DimmerC$cell,
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text(light.name),
-						_1: {ctor: '[]'}
-					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_debois$elm_mdl$Material_Options$span,
-						{
-							ctor: '::',
-							_0: _user$project$Page_Room_Views_DimmerC$cell,
-							_1: {
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
-								_1: {ctor: '[]'}
-							}
-						},
-						{
-							ctor: '::',
-							_0: A2(
-								_debois$elm_mdl$Material_Icon$view,
-								_user$project$Page_Room_Views_DimmerC$icon,
-								{
-									ctor: '::',
-									_0: _debois$elm_mdl$Material_Color$text(_user$project$Page_Room_Views_DimmerC$color),
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Icon$size18,
-										_1: {ctor: '[]'}
-									}
-								}),
-							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_debois$elm_mdl$Material_Options$span,
-							{
-								ctor: '::',
-								_0: _user$project$Page_Room_Views_DimmerC$cell,
-								_1: {
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'right'),
-									_1: {ctor: '[]'}
-								}
-							},
-							{
-								ctor: '::',
-								_0: A3(_user$project$Page_Room_Views_DimmerC$toggleLightBtn, mdl, dimmer, light),
-								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	});
-var _user$project$Page_Room_Views_DimmerC$renderLights = F2(
-	function (mdl, dimmer) {
-		var render = A2(
-			_elm_lang$core$List$map,
-			function (x) {
-				return A3(_user$project$Page_Room_Views_DimmerC$lightRow, mdl, dimmer, x);
-			},
-			dimmer.lights);
-		return dimmer.undrawn ? render : {ctor: '[]'};
-	});
-var _user$project$Page_Room_Views_DimmerC$slider = function (dim) {
-	var isDisabled = (_elm_lang$core$Native_Utils.cmp(dim.fill, 0) > 0) ? _debois$elm_mdl$Material_Options$nop : _debois$elm_mdl$Material_Slider$disabled;
-	return _debois$elm_mdl$Material_Slider$view(
-		{
+var _user$project$Data_Page$decoderContent = _elm_lang$core$Json_Decode$oneOf(
+	{
+		ctor: '::',
+		_0: A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Page$Dimmer, _user$project$Data_Dimmer$decoder),
+		_1: {
 			ctor: '::',
-			_0: _debois$elm_mdl$Material_Slider$step(25),
+			_0: A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Page$Light, _user$project$Data_Light$decoder),
 			_1: {
 				ctor: '::',
-				_0: _debois$elm_mdl$Material_Slider$value(dim.fill),
+				_0: A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Page$Sunblind, _user$project$Data_Sunblind$decoder),
 				_1: {
 					ctor: '::',
-					_0: _debois$elm_mdl$Material_Slider$min(25),
+					_0: A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Page$Port, _user$project$Data_Port$decoder),
 					_1: {
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Slider$max(100),
+						_0: A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Page$Action, _user$project$Data_Action$decoder),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		}
+	});
+var _user$project$Data_Page$decoder = A8(
+	_elm_lang$core$Json_Decode$map7,
+	_user$project$Data_Page$Page,
+	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'number', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'title', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'description', _elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'subpages',
+		_elm_lang$core$Json_Decode$list(_user$project$Data_Page$decoderShortChildless)),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'content',
+		_elm_lang$core$Json_Decode$list(_user$project$Data_Page$decoderContent)));
+
+var _user$project$Page$body1 = _debois$elm_mdl$Material_Options$div(
+	{
+		ctor: '::',
+		_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', 'auto'),
+		_1: {
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Options$css, 'max-width', '1000px'),
+			_1: {
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-left', '1%'),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-right', '1%'),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-top', '1%'),
 						_1: {
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Slider$onChange(
-								_user$project$Page_Room_Model$DimSlide(dim)),
-							_1: {
-								ctor: '::',
-								_0: isDisabled,
-								_1: {ctor: '[]'}
-							}
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'overflow-x', 'auto'),
+							_1: {ctor: '[]'}
 						}
 					}
 				}
 			}
-		});
-};
-var _user$project$Page_Room_Views_DimmerC$turningBtn = F2(
-	function (mdl, dimmer) {
-		var state = _user$project$Data_Dimmer$isOn(dimmer) ? _debois$elm_mdl$Material_Button$colored : _debois$elm_mdl$Material_Options$nop;
-		return A5(
-			_debois$elm_mdl$Material_Button$render,
-			_user$project$Page_Room_Model$Mdl,
-			{
-				ctor: '::',
-				_0: 0,
-				_1: {ctor: '[]'}
-			},
-			mdl,
-			{
-				ctor: '::',
-				_0: _debois$elm_mdl$Material_Button$fab,
-				_1: {
-					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'align', 'center'),
-					_1: {
-						ctor: '::',
-						_0: _debois$elm_mdl$Material_Options$onClick(
-							_user$project$Page_Room_Model$DimToggle(dimmer)),
-						_1: {
-							ctor: '::',
-							_0: state,
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			},
-			{
-				ctor: '::',
-				_0: _debois$elm_mdl$Material_Icon$i('highlight'),
-				_1: {ctor: '[]'}
-			});
-	});
-var _user$project$Page_Room_Views_DimmerC$dimmerCard = F4(
-	function (mdl, dimmer, k, raised) {
-		var action = A2(
-			_debois$elm_mdl$Material_Card$actions,
-			{ctor: '[]'},
-			{
-				ctor: '::',
-				_0: A2(
-					_debois$elm_mdl$Material_Options$div,
-					{
-						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
-						_1: {
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-direction', 'column'),
-							_1: {ctor: '[]'}
-						}
-					},
-					{
-						ctor: '::',
-						_0: A2(
-							_debois$elm_mdl$Material_Card$subhead,
-							{
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
-								_1: {
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
-									_1: {
-										ctor: '::',
-										_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 2.5rem'),
-										_1: {ctor: '[]'}
-									}
-								}
-							},
-							{
-								ctor: '::',
-								_0: A2(_user$project$Page_Room_Views_DimmerC$turningBtn, mdl, dimmer),
-								_1: {ctor: '[]'}
-							}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_debois$elm_mdl$Material_Card$subhead,
-								{ctor: '[]'},
-								{
-									ctor: '::',
-									_0: _user$project$Page_Room_Views_DimmerC$slider(dimmer),
-									_1: {ctor: '[]'}
-								}),
-							_1: {
-								ctor: '::',
-								_0: A2(
-									_debois$elm_mdl$Material_Card$subhead,
-									{
-										ctor: '::',
-										_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
-										_1: {
-											ctor: '::',
-											_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
-											_1: {
-												ctor: '::',
-												_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 3.5rem'),
-												_1: {ctor: '[]'}
-											}
-										}
-									},
-									{
-										ctor: '::',
-										_0: A2(_user$project$Page_Room_Views_DimmerC$toggleBtn, mdl, dimmer),
-										_1: {ctor: '[]'}
-									}),
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_debois$elm_mdl$Material_Options$div,
-										{ctor: '[]'},
-										A2(_user$project$Page_Room_Views_DimmerC$renderLights, mdl, dimmer)),
-									_1: {ctor: '[]'}
-								}
-							}
-						}
-					}),
-				_1: {ctor: '[]'}
-			});
-		return A5(_user$project$Page_Room_Views_Card$card, 'ściemniacz', dimmer.name, k, raised, action);
+		}
 	});
 
-var _user$project$Page_Room_Views_SunblindC$icon = function (sunblind) {
-	return _user$project$Data_Sunblind$isOpen(sunblind) ? 'bookmark' : 'bookmark_border';
-};
-var _user$project$Page_Room_Views_SunblindC$icon_ = function (state) {
-	return state ? 'bookmark' : 'bookmark_border';
-};
-var _user$project$Page_Room_Views_SunblindC$state = function (sunblind) {
-	return _user$project$Data_Sunblind$isOpen(sunblind) ? _debois$elm_mdl$Material_Button$colored : _debois$elm_mdl$Material_Options$nop;
-};
-var _user$project$Page_Room_Views_SunblindC$toggleSunblind = F2(
-	function (mdl, sunblind) {
-		return A5(
-			_debois$elm_mdl$Material_Button$render,
-			_user$project$Page_Room_Model$Mdl,
-			{
-				ctor: '::',
-				_0: 2,
-				_1: {
-					ctor: '::',
-					_0: _user$project$Data_Sunblind$getId(sunblind),
-					_1: {ctor: '[]'}
-				}
-			},
-			mdl,
-			{
-				ctor: '::',
-				_0: _debois$elm_mdl$Material_Button$fab,
-				_1: {
-					ctor: '::',
-					_0: _debois$elm_mdl$Material_Options$onClick(
-						_user$project$Page_Room_Model$ToggleSunblind(sunblind)),
-					_1: {
-						ctor: '::',
-						_0: _debois$elm_mdl$Material_Button$icon,
-						_1: {
-							ctor: '::',
-							_0: _user$project$Page_Room_Views_SunblindC$state(sunblind),
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			},
-			{
-				ctor: '::',
-				_0: _debois$elm_mdl$Material_Icon$i(
-					_user$project$Page_Room_Views_SunblindC$icon(sunblind)),
-				_1: {ctor: '[]'}
-			});
-	});
-var _user$project$Page_Room_Views_SunblindC$row = F2(
-	function (mdl, sunblind) {
-		var color = A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Amber, _debois$elm_mdl$Material_Color$S500);
-		var cell = A2(_debois$elm_mdl$Material_Options$css, 'width', '64px');
+var _user$project$Request$send2 = F3(
+	function (msg, request1, request2) {
 		return A2(
-			_debois$elm_mdl$Material_Card$subhead,
-			{
-				ctor: '::',
-				_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
-				_1: {
-					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'justify-content', 'space-between'),
-					_1: {
-						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
-						_1: {
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 3rem'),
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			},
-			{
-				ctor: '::',
-				_0: A2(
-					_debois$elm_mdl$Material_Options$span,
-					{
-						ctor: '::',
-						_0: cell,
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text(sunblind.name),
-						_1: {ctor: '[]'}
+			_elm_lang$core$Task$attempt,
+			msg,
+			A3(
+				_elm_lang$core$Task$map2,
+				F2(
+					function (resp1, resp2) {
+						return {ctor: '_Tuple2', _0: resp1, _1: resp2};
 					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_debois$elm_mdl$Material_Options$span,
-						{
-							ctor: '::',
-							_0: cell,
-							_1: {
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'right'),
-								_1: {ctor: '[]'}
-							}
-						},
-						{
-							ctor: '::',
-							_0: A2(_user$project$Page_Room_Views_SunblindC$toggleSunblind, mdl, sunblind),
-							_1: {ctor: '[]'}
-						}),
-					_1: {ctor: '[]'}
-				}
-			});
+				_elm_lang$http$Http$toTask(request1),
+				_elm_lang$http$Http$toTask(request2)));
 	});
-var _user$project$Page_Room_Views_SunblindC$renderSunblinds = F3(
-	function (mdl, list, toggled) {
-		var render = A2(
-			_elm_lang$core$List$map,
-			function (x) {
-				return A2(_user$project$Page_Room_Views_SunblindC$row, mdl, x);
-			},
-			list);
-		return toggled ? render : {ctor: '[]'};
+var _user$project$Request$send = F2(
+	function (msg, request) {
+		return A2(_elm_lang$http$Http$send, msg, request);
 	});
-var _user$project$Page_Room_Views_SunblindC$toggleMoreBtn = F2(
-	function (mdl, toggled) {
-		var state = toggled ? _debois$elm_mdl$Material_Button$colored : _debois$elm_mdl$Material_Options$nop;
-		return A5(
-			_debois$elm_mdl$Material_Button$render,
-			_user$project$Page_Room_Model$Mdl,
-			{
-				ctor: '::',
-				_0: 2,
-				_1: {
-					ctor: '::',
-					_0: 0,
-					_1: {ctor: '[]'}
-				}
+var _user$project$Request$url = 'http://0.0.0.0:4000/api/';
+
+var _user$project$Request_Action$toggleAction = function (id) {
+	var data = _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(
+					_user$project$Data_Id$toInt(id))
 			},
-			mdl,
-			{
-				ctor: '::',
-				_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Page_Room_Model$UndrawSunblinds),
-				_1: {
-					ctor: '::',
-					_0: state,
-					_1: {ctor: '[]'}
-				}
-			},
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html$text('Pokaż rolety'),
-				_1: {ctor: '[]'}
-			});
-	});
-var _user$project$Page_Room_Views_SunblindC$turningBtn = F2(
-	function (mdl, state) {
-		var state_ = state ? _debois$elm_mdl$Material_Button$colored : _debois$elm_mdl$Material_Options$nop;
-		return A5(
-			_debois$elm_mdl$Material_Button$render,
-			_user$project$Page_Room_Model$Mdl,
-			{
-				ctor: '::',
-				_0: 0,
-				_1: {ctor: '[]'}
-			},
-			mdl,
-			{
-				ctor: '::',
-				_0: _debois$elm_mdl$Material_Button$fab,
-				_1: {
-					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'align', 'center'),
-					_1: {
-						ctor: '::',
-						_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Page_Room_Model$SetAllSunblinds),
-						_1: {
-							ctor: '::',
-							_0: state_,
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			},
-			{
-				ctor: '::',
-				_0: _debois$elm_mdl$Material_Icon$i(
-					_user$project$Page_Room_Views_SunblindC$icon_(state)),
-				_1: {ctor: '[]'}
-			});
-	});
-var _user$project$Page_Room_Views_SunblindC$sunblindCard = F5(
-	function (mdl, sunblinds, k, raised, toggled) {
-		var state = A2(
-			_elm_lang$core$List$any,
-			function (x) {
-				return _user$project$Data_Sunblind$isOpen(x);
-			},
-			sunblinds);
-		var action = A2(
-			_debois$elm_mdl$Material_Card$actions,
-			{ctor: '[]'},
-			{
-				ctor: '::',
-				_0: A2(
-					_debois$elm_mdl$Material_Options$div,
-					{
-						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
-						_1: {
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-direction', 'column'),
-							_1: {ctor: '[]'}
-						}
-					},
-					{
-						ctor: '::',
-						_0: A2(
-							_debois$elm_mdl$Material_Card$subhead,
-							{
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
-								_1: {
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
-									_1: {
-										ctor: '::',
-										_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 2.5rem'),
-										_1: {ctor: '[]'}
-									}
-								}
-							},
-							{
-								ctor: '::',
-								_0: A2(_user$project$Page_Room_Views_SunblindC$turningBtn, mdl, state),
-								_1: {ctor: '[]'}
-							}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_debois$elm_mdl$Material_Card$subhead,
-								{
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
-									_1: {
-										ctor: '::',
-										_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
-										_1: {
-											ctor: '::',
-											_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 3.5rem'),
-											_1: {ctor: '[]'}
-										}
-									}
-								},
-								{
-									ctor: '::',
-									_0: A2(_user$project$Page_Room_Views_SunblindC$toggleMoreBtn, mdl, toggled),
-									_1: {ctor: '[]'}
-								}),
-							_1: {
-								ctor: '::',
-								_0: A2(
-									_debois$elm_mdl$Material_Options$div,
-									{ctor: '[]'},
-									A3(_user$project$Page_Room_Views_SunblindC$renderSunblinds, mdl, sunblinds, toggled)),
-								_1: {ctor: '[]'}
-							}
-						}
-					}),
-				_1: {ctor: '[]'}
-			});
-		return A5(_user$project$Page_Room_Views_Card$card, 'rolety', 'All', k, raised, action);
-	});
+			_1: {ctor: '[]'}
+		});
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'actions/toggle');
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$jsonBody(data),
+		_elm_lang$core$Json_Decode$string);
+};
+var _user$project$Request_Action$getActions = function () {
+	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Action$decoder);
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'actions');
+	return A2(_elm_lang$http$Http$get, url_, decoder);
+}();
 
 var _user$project$Util$updateListElem = F2(
 	function (list, fn) {
@@ -19003,366 +18453,6 @@ var _user$project$Util$pair = F2(
 	function (first, second) {
 		return A2(_user$project$Util_ops['=>'], first, second);
 	});
-
-var _user$project$Request$send2 = F3(
-	function (msg, request1, request2) {
-		return A2(
-			_elm_lang$core$Task$attempt,
-			msg,
-			A3(
-				_elm_lang$core$Task$map2,
-				F2(
-					function (resp1, resp2) {
-						return {ctor: '_Tuple2', _0: resp1, _1: resp2};
-					}),
-				_elm_lang$http$Http$toTask(request1),
-				_elm_lang$http$Http$toTask(request2)));
-	});
-var _user$project$Request$send = F2(
-	function (msg, request) {
-		return A2(_elm_lang$http$Http$send, msg, request);
-	});
-var _user$project$Request$url = 'http://192.168.2.100/api/';
-
-var _user$project$Request_Room$setDimFill = F2(
-	function (id, fill) {
-		var data = _elm_lang$core$Json_Encode$object(
-			{
-				ctor: '::',
-				_0: {
-					ctor: '_Tuple2',
-					_0: 'id',
-					_1: _elm_lang$core$Json_Encode$int(
-						_user$project$Data_Id$toInt(id))
-				},
-				_1: {
-					ctor: '::',
-					_0: {
-						ctor: '_Tuple2',
-						_0: 'fill',
-						_1: _elm_lang$core$Json_Encode$int(fill)
-					},
-					_1: {ctor: '[]'}
-				}
-			});
-		var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/set_fill');
-		return A3(
-			_elm_lang$http$Http$post,
-			url_,
-			_elm_lang$http$Http$jsonBody(data),
-			_elm_lang$core$Json_Decode$string);
-	});
-var _user$project$Request_Room$toggleSunblind = function (id) {
-	var data = _elm_lang$core$Json_Encode$object(
-		{
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(
-					_user$project$Data_Id$toInt(id))
-			},
-			_1: {ctor: '[]'}
-		});
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'sunblinds/toggle_one');
-	return A3(
-		_elm_lang$http$Http$post,
-		url_,
-		_elm_lang$http$Http$jsonBody(data),
-		_elm_lang$core$Json_Decode$string);
-};
-var _user$project$Request_Room$toggleDimLight = function (id) {
-	var data = _elm_lang$core$Json_Encode$object(
-		{
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(0)
-			},
-			_1: {
-				ctor: '::',
-				_0: {
-					ctor: '_Tuple2',
-					_0: 'lightId',
-					_1: _elm_lang$core$Json_Encode$int(
-						_user$project$Data_Id$toInt(id))
-				},
-				_1: {ctor: '[]'}
-			}
-		});
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/toggle_light');
-	return A3(
-		_elm_lang$http$Http$post,
-		url_,
-		_elm_lang$http$Http$jsonBody(data),
-		_elm_lang$core$Json_Decode$string);
-};
-var _user$project$Request_Room$toggleDimmer = function (id) {
-	var data = _elm_lang$core$Json_Encode$object(
-		{
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(
-					_user$project$Data_Id$toInt(id))
-			},
-			_1: {ctor: '[]'}
-		});
-	var decoder = _elm_lang$core$Json_Decode$string;
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/toggle');
-	return A3(
-		_elm_lang$http$Http$post,
-		url_,
-		_elm_lang$http$Http$jsonBody(data),
-		decoder);
-};
-var _user$project$Request_Room$loadDimmers = function () {
-	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Dimmer$decoder);
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers');
-	return A2(_elm_lang$http$Http$get, url_, decoder);
-}();
-var _user$project$Request_Room$loadSunblinds = function () {
-	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Sunblind$decoder);
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'sunblinds');
-	return A2(_elm_lang$http$Http$get, url_, decoder);
-}();
-
-var _user$project$Page$body1 = _debois$elm_mdl$Material_Options$div(
-	{
-		ctor: '::',
-		_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', 'auto'),
-		_1: {
-			ctor: '::',
-			_0: A2(_debois$elm_mdl$Material_Options$css, 'max-width', '1000px'),
-			_1: {
-				ctor: '::',
-				_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-left', '1%'),
-				_1: {
-					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-right', '1%'),
-					_1: {
-						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-top', '1%'),
-						_1: {
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'overflow-x', 'auto'),
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			}
-		}
-	});
-
-var _user$project$Page_Room$makeDimList = function (model) {
-	return A2(
-		_elm_lang$core$List$map,
-		function (x) {
-			return A4(
-				_user$project$Page_Room_Views_DimmerC$dimmerCard,
-				model.mdl,
-				x,
-				_user$project$Data_Dimmer$getId(x),
-				model.raised);
-		},
-		model.dimmers);
-};
-var _user$project$Page_Room$makeSunblind = function (model) {
-	return A5(_user$project$Page_Room_Views_SunblindC$sunblindCard, model.mdl, model.sunblinds, -2, model.raised, model.blindUndrawn);
-};
-var _user$project$Page_Room$view = function (model) {
-	return _user$project$Page$body1(
-		{
-			ctor: '::',
-			_0: A2(
-				_debois$elm_mdl$Material_Options$div,
-				{
-					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
-					_1: {
-						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-flow', 'row wrap'),
-						_1: {
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'stretch'),
-							_1: {
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '95%'),
-								_1: {
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '1rem'),
-									_1: {ctor: '[]'}
-								}
-							}
-						}
-					}
-				},
-				{
-					ctor: '::',
-					_0: _user$project$Page_Room$makeSunblind(model),
-					_1: _user$project$Page_Room$makeDimList(model)
-				}),
-			_1: {ctor: '[]'}
-		});
-};
-var _user$project$Page_Room$update = F2(
-	function (msg, model) {
-		var skip = {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-		var _p0 = msg;
-		switch (_p0.ctor) {
-			case 'Response':
-				return skip;
-			case 'InitRoom':
-				if (_p0._0.ctor === 'Ok') {
-					var newDimmers = A2(_elm_lang$core$List$map, _user$project$Data_Dimmer$fromJson, _p0._0._0._1);
-					return _debois$elm_mdl$Material_Helpers$pure(
-						_elm_lang$core$Native_Utils.update(
-							model,
-							{sunblinds: _p0._0._0._0, dimmers: newDimmers}));
-				} else {
-					return skip;
-				}
-			case 'Raise':
-				return _debois$elm_mdl$Material_Helpers$pure(
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{raised: _p0._0}));
-			case 'DimSlide':
-				var _p2 = _p0._1;
-				var _p1 = _p0._0;
-				return A2(
-					_debois$elm_mdl$Material_Helpers$effect,
-					A2(
-						_user$project$Request$send,
-						_user$project$Page_Room_Model$Response,
-						A2(
-							_user$project$Request_Room$setDimFill,
-							_p1.id,
-							_elm_lang$core$Basics$round(_p2))),
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{
-							dimmers: A2(
-								_user$project$Util$replaceListElem,
-								model.dimmers,
-								A2(_user$project$Data_Dimmer$setFill, _p1, _p2))
-						}));
-			case 'DimToggle':
-				var _p3 = _p0._0;
-				return A2(
-					_debois$elm_mdl$Material_Helpers$effect,
-					A2(
-						_user$project$Request$send,
-						_user$project$Page_Room_Model$Response,
-						_user$project$Request_Room$toggleDimmer(_p3.id)),
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{
-							dimmers: A2(
-								_user$project$Util$replaceListElem,
-								model.dimmers,
-								_user$project$Data_Dimmer$toggle(_p3))
-						}));
-			case 'ToggleLight':
-				var _p5 = _p0._1;
-				var _p4 = _p0._0;
-				var newLights = A2(
-					_user$project$Util$replaceListElem,
-					_p4.lights,
-					_user$project$Data_Light$toggle(_p5));
-				var newDim = _elm_lang$core$Native_Utils.update(
-					_p4,
-					{lights: newLights});
-				var isOn = _user$project$Data_Dimmer$isOn(newDim);
-				var newFill = (_elm_lang$core$Native_Utils.eq(_p4.fill, 0) && isOn) ? 100 : (isOn ? _p4.fill : 0);
-				var newDim2 = _elm_lang$core$Native_Utils.update(
-					newDim,
-					{fill: newFill});
-				var newModel = _elm_lang$core$Native_Utils.update(
-					model,
-					{
-						dimmers: A2(_user$project$Util$replaceListElem, model.dimmers, newDim2)
-					});
-				return A2(
-					_debois$elm_mdl$Material_Helpers$effect,
-					A2(
-						_user$project$Request$send,
-						_user$project$Page_Room_Model$Response,
-						_user$project$Request_Room$toggleDimLight(_p5.id)),
-					newModel);
-			case 'UndrawDimmer':
-				return _debois$elm_mdl$Material_Helpers$pure(
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{
-							dimmers: A2(
-								_user$project$Util$replaceListElem,
-								model.dimmers,
-								_user$project$Data_Dimmer$toggleUndrawn(_p0._0))
-						}));
-			case 'UndrawSunblinds':
-				return _debois$elm_mdl$Material_Helpers$pure(
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{blindUndrawn: !model.blindUndrawn}));
-			case 'SetAllSunblinds':
-				return _debois$elm_mdl$Material_Helpers$pure(
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{
-							sunblinds: _user$project$Data_Sunblind$toggleList(model.sunblinds)
-						}));
-			case 'ToggleSunblind':
-				var _p6 = _p0._0;
-				return A2(
-					_debois$elm_mdl$Material_Helpers$effect,
-					A2(
-						_user$project$Request$send,
-						_user$project$Page_Room_Model$Response,
-						_user$project$Request_Room$toggleSunblind(_p6.id)),
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{
-							sunblinds: A2(
-								_user$project$Util$replaceListElem,
-								model.sunblinds,
-								_user$project$Data_Sunblind$toggle(_p6))
-						}));
-			default:
-				return A3(_debois$elm_mdl$Material$update, _user$project$Page_Room_Model$Mdl, _p0._0, model);
-		}
-	});
-var _user$project$Page_Room$subscriptions = function (model) {
-	return _elm_lang$core$Platform_Sub$none;
-};
-var _user$project$Page_Room$init = A3(_user$project$Request$send2, _user$project$Page_Room_Model$InitRoom, _user$project$Request_Room$loadSunblinds, _user$project$Request_Room$loadDimmers);
-
-var _user$project$Request_Action$toggleAction = function (id) {
-	var data = _elm_lang$core$Json_Encode$object(
-		{
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(
-					_user$project$Data_Id$toInt(id))
-			},
-			_1: {ctor: '[]'}
-		});
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'actions/toggle');
-	return A3(
-		_elm_lang$http$Http$post,
-		url_,
-		_elm_lang$http$Http$jsonBody(data),
-		_elm_lang$core$Json_Decode$string);
-};
-var _user$project$Request_Action$getActions = function () {
-	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Action$decoder);
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'actions');
-	return A2(_elm_lang$http$Http$get, url_, decoder);
-}();
 
 var _user$project$Page_Action$model = {
 	mdl: _debois$elm_mdl$Material$model,
@@ -19698,7 +18788,443 @@ var _user$project$Page_Action$view = function (model) {
 		});
 };
 
-var _user$project$Main$e404 = function (_p0) {
+var _user$project$Page_Page$getPage = function (id) {
+	var decoder = _user$project$Data_Page$decoder;
+	var url_ = A2(
+		_elm_lang$core$Basics_ops['++'],
+		_user$project$Request$url,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'pages/view/',
+			_elm_lang$core$Basics$toString(id)));
+	return A2(_elm_lang$http$Http$get, url_, decoder);
+};
+var _user$project$Page_Page$getTabs = function () {
+	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Page$decoderShort);
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'pages/short');
+	return A2(_elm_lang$http$Http$get, url_, decoder);
+}();
+var _user$project$Page_Page$unwrapPage = F3(
+	function (model, prop, $default) {
+		return function (_p0) {
+			return A2(
+				_elm_lang$core$Maybe$withDefault,
+				$default,
+				A2(
+					_elm_lang$core$Maybe$map,
+					prop,
+					function (_) {
+						return _.data;
+					}(_p0)));
+		}(model);
+	});
+var _user$project$Page_Page$cardA = F2(
+	function (content, raised) {
+		var _p1 = '';
+		var _p2 = content;
+		switch (_p2.ctor) {
+			case 'Dimmer':
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+			case 'Sunblind':
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+			case 'Light':
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+			case 'Action':
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+			default:
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+		}
+	});
+var _user$project$Page_Page$col = function (content) {
+	return A2(
+		_debois$elm_mdl$Material_Options$div,
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Options$css, 'class', 'col'),
+			_1: {
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'inline-block'),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'vertical-align', 'top'),
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		{ctor: '[]'});
+};
+var _user$project$Page_Page$colNumber = function (window) {
+	var colSize = 315;
+	return (window.width / colSize) | 0;
+};
+var _user$project$Page_Page$genCols = function (model) {
+	var cards = function (_p3) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			{ctor: '[]'},
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (_) {
+					return _.content;
+				},
+				function (_) {
+					return _.data;
+				}(_p3)));
+	}(model);
+	var list_ = A2(_elm_community$list_split$List_Split$chunksOfLeft, model.colNumber, cards);
+	return A2(_elm_lang$core$List$map, _user$project$Page_Page$col, list_);
+};
+var _user$project$Page_Page$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$align('center'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A3(
+				_elm_lang$html$Html$node,
+				'meta',
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$name('viewport'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$content('width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'),
+						_1: {ctor: '[]'}
+					}
+				},
+				{ctor: '[]'}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Page_Page$model = {data: _elm_lang$core$Maybe$Nothing, raise: -1, mdl: _debois$elm_mdl$Material$model, colNumber: 1};
+var _user$project$Page_Page$Model = F4(
+	function (a, b, c, d) {
+		return {data: a, raise: b, mdl: c, colNumber: d};
+	});
+var _user$project$Page_Page$Raise = function (a) {
+	return {ctor: 'Raise', _0: a};
+};
+var _user$project$Page_Page$dynamic = F2(
+	function (k, raised) {
+		return _debois$elm_mdl$Material_Options$many(
+			{
+				ctor: '::',
+				_0: _elm_lang$core$Native_Utils.eq(k, raised) ? _debois$elm_mdl$Material_Elevation$e8 : _debois$elm_mdl$Material_Elevation$e2,
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Elevation$transition(250),
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$onMouseEnter(
+							_user$project$Page_Page$Raise(k)),
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$onMouseLeave(
+								_user$project$Page_Page$Raise(-1)),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Page_Page$card = F5(
+	function (type_, name, k, raised, action) {
+		return A2(
+			_debois$elm_mdl$Material_Card$view,
+			{
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '300px'),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-left', '1rem'),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-bottom', '1rem'),
+						_1: {
+							ctor: '::',
+							_0: A2(_user$project$Page_Page$dynamic, k, raised),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Card$title,
+					{
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '1rem 1rem 0 1rem'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Card$head,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(type_),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Options$div,
+								{
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '0rem 2rem 0 2rem'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_debois$elm_mdl$Material_Options$span,
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Typography$display2,
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Color$text(_debois$elm_mdl$Material_Color$primary),
+												_1: {ctor: '[]'}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(name),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {
+					ctor: '::',
+					_0: action,
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Page_Page$LoadPage = function (a) {
+	return {ctor: 'LoadPage', _0: a};
+};
+var _user$project$Page_Page$init = function ($short) {
+	return A2(
+		_user$project$Request$send,
+		_user$project$Page_Page$LoadPage,
+		_user$project$Page_Page$getPage(
+			_user$project$Data_Id$toInt($short.id)));
+};
+var _user$project$Page_Page$WindowResized = function (a) {
+	return {ctor: 'WindowResized', _0: a};
+};
+var _user$project$Page_Page$subs = _elm_lang$window$Window$resizes(_user$project$Page_Page$WindowResized);
+var _user$project$Page_Page$Mdl = function (a) {
+	return {ctor: 'Mdl', _0: a};
+};
+var _user$project$Page_Page$update = F2(
+	function (msg, model) {
+		var _p4 = A2(
+			_elm_lang$core$Debug$log,
+			'Page - update - msg - log',
+			_elm_lang$core$Basics$toString(msg));
+		var skip = {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		var _p5 = msg;
+		switch (_p5.ctor) {
+			case 'LoadPage':
+				if (_p5._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								data: _elm_lang$core$Maybe$Just(_p5._0._0)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{data: _elm_lang$core$Maybe$Nothing}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				}
+			case 'Raise':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{raise: _p5._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'WindowResized':
+				var _p7 = _p5._0;
+				var _p6 = A2(
+					_elm_lang$core$Debug$log,
+					'WindowResized',
+					_elm_lang$core$Basics$toString(
+						_user$project$Page_Page$colNumber(_p7)));
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							colNumber: _user$project$Page_Page$colNumber(_p7)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				return A3(_debois$elm_mdl$Material$update, _user$project$Page_Page$Mdl, _p5._0, model);
+		}
+	});
+
+var _user$project$Request_Room$setDimFill = F2(
+	function (id, fill) {
+		var data = _elm_lang$core$Json_Encode$object(
+			{
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'id',
+					_1: _elm_lang$core$Json_Encode$int(
+						_user$project$Data_Id$toInt(id))
+				},
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: 'fill',
+						_1: _elm_lang$core$Json_Encode$int(fill)
+					},
+					_1: {ctor: '[]'}
+				}
+			});
+		var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/set_fill');
+		return A3(
+			_elm_lang$http$Http$post,
+			url_,
+			_elm_lang$http$Http$jsonBody(data),
+			_elm_lang$core$Json_Decode$string);
+	});
+var _user$project$Request_Room$toggleSunblind = function (id) {
+	var data = _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(
+					_user$project$Data_Id$toInt(id))
+			},
+			_1: {ctor: '[]'}
+		});
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'sunblinds/toggle_one');
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$jsonBody(data),
+		_elm_lang$core$Json_Decode$string);
+};
+var _user$project$Request_Room$toggleDimLight = function (id) {
+	var data = _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(0)
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'lightId',
+					_1: _elm_lang$core$Json_Encode$int(
+						_user$project$Data_Id$toInt(id))
+				},
+				_1: {ctor: '[]'}
+			}
+		});
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/toggle_light');
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$jsonBody(data),
+		_elm_lang$core$Json_Decode$string);
+};
+var _user$project$Request_Room$toggleDimmer = function (id) {
+	var data = _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(
+					_user$project$Data_Id$toInt(id))
+			},
+			_1: {ctor: '[]'}
+		});
+	var decoder = _elm_lang$core$Json_Decode$string;
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/toggle');
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$jsonBody(data),
+		decoder);
+};
+var _user$project$Request_Room$loadDimmers = function () {
+	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Dimmer$decoder);
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers');
+	return A2(_elm_lang$http$Http$get, url_, decoder);
+}();
+var _user$project$Request_Room$loadSunblinds = function () {
+	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Sunblind$decoder);
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'sunblinds');
+	return A2(_elm_lang$http$Http$get, url_, decoder);
+}();
+
+var _user$project$Main$urlOf = function (model) {
+	var $short = function () {
+		var _p0 = A2(_elm_lang$core$Array$get, model.selectedTab, model.tabs);
+		if (_p0.ctor === 'Nothing') {
+			return '';
+		} else {
+			return _elm_lang$core$String$toLower(_p0._0.name);
+		}
+	}();
+	return A2(_elm_lang$core$Basics_ops['++'], '#', $short);
+};
+var _user$project$Main$delta2url = F2(
+	function (model1, model2) {
+		return (!_elm_lang$core$Native_Utils.eq(model1.selectedTab, model2.selectedTab)) ? _elm_lang$core$Maybe$Just(
+			{
+				entry: _rgrempel$elm_route_url$RouteUrl$NewEntry,
+				url: _user$project$Main$urlOf(model2)
+			}) : _elm_lang$core$Maybe$Nothing;
+	});
+var _user$project$Main$e404 = function (_p1) {
 	return A2(
 		_elm_lang$html$Html$div,
 		{ctor: '[]'},
@@ -19723,6 +19249,17 @@ var _user$project$Main$e404 = function (_p0) {
 				}),
 			_1: {ctor: '[]'}
 		});
+};
+var _user$project$Main$tabTitles = function (model) {
+	return function (_p2) {
+		return _elm_lang$core$Array$toList(
+			A2(
+				_elm_lang$core$Array$map,
+				function (x) {
+					return _elm_lang$html$Html$text(x.name);
+				},
+				_p2));
+	}(model.tabs);
 };
 var _user$project$Main$header = {
 	ctor: '::',
@@ -19756,174 +19293,189 @@ var _user$project$Main$header = {
 		}),
 	_1: {ctor: '[]'}
 };
-var _user$project$Main$model = {mdl: _debois$elm_mdl$Material$model, selectedTab: 0, rooms: _user$project$Page_Room_Model$model, actions: _user$project$Page_Action$model};
+var _user$project$Main$nameToNumber = function (name) {
+	return function (_p3) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			-1,
+			A2(
+				_elm_lang$core$Array$get,
+				0,
+				A2(
+					_elm_lang$core$Array$map,
+					function (x) {
+						return x.number;
+					},
+					A2(
+						_elm_lang$core$Array$filter,
+						function (x) {
+							return _elm_lang$core$Native_Utils.eq(x.name, name);
+						},
+						function (_) {
+							return _.tabs;
+						}(_p3)))));
+	};
+};
+var _user$project$Main$model = {
+	mdl: _debois$elm_mdl$Material$model,
+	selectedTab: 1,
+	page: _user$project$Page_Page$model,
+	tabs: _elm_lang$core$Array$fromList(
+		{
+			ctor: '::',
+			_0: A4(
+				_user$project$Data_Page$PageShort,
+				_user$project$Data_Id$Id(1),
+				1,
+				'A',
+				{ctor: '[]'}),
+			_1: {ctor: '[]'}
+		})
+};
 var _user$project$Main$Model = F4(
 	function (a, b, c, d) {
-		return {mdl: a, rooms: b, actions: c, selectedTab: d};
+		return {mdl: a, page: b, selectedTab: c, tabs: d};
 	});
-var _user$project$Main$ActionMsg = function (a) {
-	return {ctor: 'ActionMsg', _0: a};
+var _user$project$Main$PageMsg = function (a) {
+	return {ctor: 'PageMsg', _0: a};
 };
-var _user$project$Main$RoomMsg = function (a) {
-	return {ctor: 'RoomMsg', _0: a};
-};
-var _user$project$Main$tabs = {
-	ctor: '::',
-	_0: {
-		ctor: '_Tuple4',
-		_0: 'Pokoje',
-		_1: 'rooms',
-		_2: function (_p1) {
+var _user$project$Main$switchTab = F2(
+	function (k, just) {
+		return function (_p4) {
 			return A2(
-				_elm_lang$html$Html$map,
-				_user$project$Main$RoomMsg,
-				_user$project$Page_Room$view(
-					function (_) {
-						return _.rooms;
-					}(_p1)));
-		},
-		_3: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$RoomMsg, _user$project$Page_Room$init)
-	},
-	_1: {
-		ctor: '::',
-		_0: {
-			ctor: '_Tuple4',
-			_0: 'Akcje',
-			_1: 'actions',
-			_2: function (_p2) {
-				return A2(
-					_elm_lang$html$Html$map,
-					_user$project$Main$ActionMsg,
-					_user$project$Page_Action$view(
+				_elm_lang$core$Maybe$withDefault,
+				_elm_lang$core$Platform_Cmd$none,
+				A2(
+					_elm_lang$core$Maybe$map,
+					function (_p5) {
+						return A2(
+							_elm_lang$core$Platform_Cmd$map,
+							_user$project$Main$PageMsg,
+							just(_p5));
+					},
+					A2(
+						_elm_lang$core$Array$get,
+						k,
 						function (_) {
-							return _.actions;
-						}(_p2)));
-			},
-			_3: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$ActionMsg, _user$project$Page_Action$init)
-		},
-		_1: {ctor: '[]'}
-	}
-};
-var _user$project$Main$tabInit = _elm_lang$core$Array$fromList(
-	A2(
-		_elm_lang$core$List$map,
-		function (_p3) {
-			var _p4 = _p3;
-			return _p4._3;
-		},
-		_user$project$Main$tabs));
-var _user$project$Main$tabTitles = A2(
-	_elm_lang$core$List$map,
-	function (_p5) {
-		var _p6 = _p5;
-		return _elm_lang$html$Html$text(_p6._0);
-	},
-	_user$project$Main$tabs);
-var _user$project$Main$tabViews = _elm_lang$core$Array$fromList(
-	A2(
-		_elm_lang$core$List$map,
-		function (_p7) {
-			var _p8 = _p7;
-			return _p8._2;
-		},
-		_user$project$Main$tabs));
-var _user$project$Main$tabUrls = _elm_lang$core$Array$fromList(
-	A2(
-		_elm_lang$core$List$map,
-		function (_p9) {
-			var _p10 = _p9;
-			return _p10._1;
-		},
-		_user$project$Main$tabs));
-var _user$project$Main$urlOf = function (model) {
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		'#',
-		A2(
-			_elm_lang$core$Maybe$withDefault,
-			'',
-			A2(_elm_lang$core$Array$get, model.selectedTab, _user$project$Main$tabUrls)));
-};
-var _user$project$Main$delta2url = F2(
-	function (model1, model2) {
-		return (!_elm_lang$core$Native_Utils.eq(model1.selectedTab, model2.selectedTab)) ? _elm_lang$core$Maybe$Just(
-			{
-				entry: _rgrempel$elm_route_url$RouteUrl$NewEntry,
-				url: _user$project$Main$urlOf(model2)
-			}) : _elm_lang$core$Maybe$Nothing;
+							return _.tabs;
+						}(_p4))));
+		};
 	});
-var _user$project$Main$urlTabs = _elm_lang$core$Dict$fromList(
-	A2(
-		_elm_lang$core$List$indexedMap,
-		F2(
-			function (idx, _p11) {
-				var _p12 = _p11;
-				return {ctor: '_Tuple2', _0: _p12._1, _1: idx};
-			}),
-		_user$project$Main$tabs));
 var _user$project$Main$Mdl = function (a) {
 	return {ctor: 'Mdl', _0: a};
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p13 = msg;
-		switch (_p13.ctor) {
+		var _p6 = msg;
+		switch (_p6.ctor) {
+			case 'LoadTabs':
+				if (_p6._0.ctor === 'Ok') {
+					var tabs_ = _elm_lang$core$Array$fromList(
+						A2(
+							_elm_lang$core$List$sortBy,
+							function (_) {
+								return _.number;
+							},
+							_p6._0._0));
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{tabs: tabs_}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								tabs: _elm_lang$core$Array$fromList(
+									{ctor: '[]'})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				}
 			case 'SelectTab':
-				var _p14 = _p13._0;
+				var _p7 = _p6._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{selectedTab: _p14}),
-					_1: A2(
-						_elm_lang$core$Maybe$withDefault,
-						_elm_lang$core$Platform_Cmd$none,
-						A2(_elm_lang$core$Array$get, _p14, _user$project$Main$tabInit))
+						{selectedTab: _p7}),
+					_1: A3(_user$project$Main$switchTab, _p7, _user$project$Page_Page$init, model)
+				};
+			case 'AddressChange':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							selectedTab: A2(_user$project$Main$nameToNumber, _p6._0, model)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Mdl':
-				return A3(_debois$elm_mdl$Material$update, _user$project$Main$Mdl, _p13._0, model);
-			case 'RoomMsg':
-				return A6(
-					_debois$elm_mdl$Material_Helpers$lift,
-					function (_) {
-						return _.rooms;
-					},
-					F2(
-						function (m, x) {
-							return _elm_lang$core$Native_Utils.update(
-								m,
-								{rooms: x});
-						}),
-					_user$project$Main$RoomMsg,
-					_user$project$Page_Room$update,
-					_p13._0,
-					model);
+				return A3(_debois$elm_mdl$Material$update, _user$project$Main$Mdl, _p6._0, model);
 			default:
 				return A6(
 					_debois$elm_mdl$Material_Helpers$lift,
 					function (_) {
-						return _.actions;
+						return _.page;
 					},
 					F2(
 						function (m, x) {
 							return _elm_lang$core$Native_Utils.update(
 								m,
-								{actions: x});
+								{page: x});
 						}),
-					_user$project$Main$ActionMsg,
-					_user$project$Page_Action$update,
-					_p13._0,
+					_user$project$Main$PageMsg,
+					_user$project$Page_Page$update,
+					_p6._0,
 					model);
 		}
 	});
+var _user$project$Main$subs = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material$subscriptions, _user$project$Main$Mdl, model),
+			_1: {
+				ctor: '::',
+				_0: A2(_elm_lang$core$Platform_Sub$map, _user$project$Main$PageMsg, _user$project$Page_Page$subs),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Main$LoadTabs = function (a) {
+	return {ctor: 'LoadTabs', _0: a};
+};
+var _user$project$Main$init = _elm_lang$core$Platform_Cmd$batch(
+	{
+		ctor: '::',
+		_0: _debois$elm_mdl$Material$init(_user$project$Main$Mdl),
+		_1: {
+			ctor: '::',
+			_0: A2(_user$project$Request$send, _user$project$Main$LoadTabs, _user$project$Page_Page$getTabs),
+			_1: {ctor: '[]'}
+		}
+	});
+var _user$project$Main$AddressChange = function (a) {
+	return {ctor: 'AddressChange', _0: a};
+};
 var _user$project$Main$SelectTab = function (a) {
 	return {ctor: 'SelectTab', _0: a};
 };
 var _user$project$Main$view_ = function (model) {
-	var top = A2(
-		_elm_lang$core$Maybe$withDefault,
-		_user$project$Main$e404,
-		A2(_elm_lang$core$Array$get, model.selectedTab, _user$project$Main$tabViews))(model);
+	var top = function (_p8) {
+		return A2(
+			_elm_lang$html$Html$map,
+			_user$project$Main$PageMsg,
+			_user$project$Page_Page$view(
+				function (_) {
+					return _.page;
+				}(_p8)));
+	}(model);
 	return _debois$elm_mdl$Material_Scheme$top(
 		A4(
 			_debois$elm_mdl$Material_Layout$render,
@@ -19956,7 +19508,7 @@ var _user$project$Main$view_ = function (model) {
 				},
 				tabs: {
 					ctor: '_Tuple2',
-					_0: _user$project$Main$tabTitles,
+					_0: _user$project$Main$tabTitles(model),
 					_1: {ctor: '[]'}
 				}
 			}));
@@ -19966,15 +19518,11 @@ var _user$project$Main$location2messages = function (location) {
 	return {
 		ctor: '::',
 		_0: function () {
-			var _p15 = A2(_elm_lang$core$String$dropLeft, 1, location.hash);
-			if (_p15 === '') {
+			var _p9 = A2(_elm_lang$core$String$dropLeft, 1, location.hash);
+			if (_p9 === '') {
 				return _user$project$Main$SelectTab(0);
 			} else {
-				return _user$project$Main$SelectTab(
-					A2(
-						_elm_lang$core$Maybe$withDefault,
-						-1,
-						A2(_elm_lang$core$Dict$get, _p15, _user$project$Main$urlTabs)));
+				return _user$project$Main$AddressChange(_p9);
 			}
 		}(),
 		_1: {ctor: '[]'}
@@ -19984,23 +19532,10 @@ var _user$project$Main$main = _rgrempel$elm_route_url$RouteUrl$program(
 	{
 		delta2url: _user$project$Main$delta2url,
 		location2messages: _user$project$Main$location2messages,
-		init: {
-			ctor: '_Tuple2',
-			_0: _user$project$Main$model,
-			_1: _debois$elm_mdl$Material$init(_user$project$Main$Mdl)
-		},
+		init: {ctor: '_Tuple2', _0: _user$project$Main$model, _1: _user$project$Main$init},
 		view: _user$project$Main$view,
 		subscriptions: function (model) {
-			return _elm_lang$core$Platform_Sub$batch(
-				{
-					ctor: '::',
-					_0: _elm_lang$core$Platform_Sub$none,
-					_1: {
-						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material$subscriptions, _user$project$Main$Mdl, model),
-						_1: {ctor: '[]'}
-					}
-				});
+			return _user$project$Main$subs(model);
 		},
 		update: _user$project$Main$update
 	})();

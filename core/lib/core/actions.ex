@@ -20,19 +20,34 @@ defmodule Core.Actions do
     Process.exit(__MODULE__, :normal)
 
   def activate_up(ids, name \\ __MODULE__) do
-    GenServer.call name, {:activate, :up, ids}
+    try do
+      GenServer.call name, {:activate, :up, ids}
+    catch
+      :exit, _ -> :ok
+    end
   end
 
   def activate_down(ids, name \\ __MODULE__) do
-    GenServer.call name, {:activate, :down, ids}
+    try do
+      GenServer.call name, {:activate, :down, ids}
+    catch
+      :exit, _ -> :ok
+    end
   end
-
   def get_state(name \\ __MODULE__) do
-    GenServer.call name, :get_state
+    try do
+      GenServer.call name, :get_state
+    catch
+      :exit, _ -> :ok
+    end
   end
-
-  def reload_actions(name \\ __MODULE__), do:
-    GenServer.call name, :reload_actions
+  def reload_actions(name \\ __MODULE__) do
+    try do
+      GenServer.call name, :reload_actions
+    catch
+      :exit, _ -> :ok
+    end
+  end
 
 
   ## Callbacks

@@ -1,31 +1,50 @@
 defmodule UiWeb.LightController do
-  use UiWeb, :controller
   @moduledoc false
 
+  use UiWeb, :controller
+  @device Application.get_env(:core, :devices_module)
+
+  alias DB.{Light, Dimmer}
+  alias Core.Controllers.LightController
 
   def index(conn, _params) do
-    lights = DB.Dao.get_lights()
-    json conn |> put_status(:ok), lights
+    lights = Light.all()
+    IO.inspect(lights)
+    json conn
+         |> put_status(:ok), lights
   end
 
-  def update(conn, %{"id" => id} = params) do
-    light = DB.Repo.get(DB.Port, id)
-    if light do
-      perform_update(conn, light, params)
-    else
-      json conn |> put_status(:not_found),
-           %{errors: ["invalid light"]}
-    end
+  def set_brightness(conn, %{"id" => id, "fill" => fill}) do
+    res =
+      Dimmer.get(id)
+      |> LightController.set_brightness(String.to_integer(fill))
+    json conn
+         |> put_status(:ok), "#{inspect res}"
   end
 
-  defp perform_update(conn, light, params) do
-    changeset = DB.Port.changeset(light, params)
-    case DB.Repo.update(changeset) do
-      {:ok, light} ->
-        json conn |> put_status(:ok), light
-      {:error, _result} ->
-        json conn |> put_status(:bad_request),
-             %{errors: ["unable to update light"]}
-    end
+  def toggle(conn, %{"id" => id}) do
+    res = Light.get([id])
+          |> LightController.toggle()
+
+    [data] = Light.get_view_format(id)
+    json conn
+         |> put_status(:ok), data
   end
+
+  def set_on(conn, %{"id" => id}) do
+    res = Light.get([id])
+      |> LightController.turn_on()
+
+    [data] = Light.get_view_format id
+    json conn, data
+  end
+
+  def set_off(conn, %{"id" => id}) do
+    res = Light.get([id])
+      |> LightController.turn_off()
+
+    [data] = Light.get_view_format id
+    json conn, data
+  end
+
 end

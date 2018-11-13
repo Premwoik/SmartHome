@@ -9,19 +9,19 @@ defmodule Core.Tasks.ReadInputs do
   @actions Application.get_env(:core, :actions_server)
 
   @impl true
-  def execute(nil, device, %{last_read: last_read} = state) do
-    case @device.read_active_outputs_helper(device) do
+  def execute(task, %{last_read: last_read} = state) do
+    case @device.read_active_outputs_helper(task.device) do
       {:ok, read} ->
         new_up = read -- last_read
         new_down = last_read -- read
 
-        proceed_up device.id, new_up
-        proceed_down device.id, new_down
+        proceed_up task.device.id, new_up
+        proceed_down task.device.id, new_down
         log new_up, new_down
 
         {:ok, %{state | last_read: read}}
       error ->
-        Logger.error("#{device.name} read error: #{inspect error}")
+        Logger.error("#{task.device.name} read error: #{inspect error}")
         :error
     end
   end

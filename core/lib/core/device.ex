@@ -16,9 +16,13 @@ defmodule Core.Device do
     |> Enum.group_by(&(&1.device))
     |> Enum.map(
          fn {d, p} ->
-           case module(d).set_outputs d, ports_to_num(p), state do
-             :ok -> :ok
-             {:error, err} -> {:error, p, err}
+           try do
+             case module(d).set_outputs d, ports_to_num(p), state do
+               :ok -> :ok
+               {:error, err} -> {:error, p, err}
+             end
+           catch
+             :exit, _ -> :ok
            end
          end
        )

@@ -37,6 +37,8 @@ defmodule UiWeb.Endpoint do
     key: "_ui_key",
     signing_salt: "QncmJyyj"
 
+  plug CORSPlug
+
   plug UiWeb.Router
 
   @doc """

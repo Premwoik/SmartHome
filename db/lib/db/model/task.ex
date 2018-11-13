@@ -13,6 +13,7 @@ defmodule DB.Task do
     belongs_to :action, DB.Action
     belongs_to :device, DB.Device
     field :frequency, :integer
+    field :execution_time, :time
     field :limit, :integer
     field :start_date, :naive_datetime
     field :end_date, :naive_datetime

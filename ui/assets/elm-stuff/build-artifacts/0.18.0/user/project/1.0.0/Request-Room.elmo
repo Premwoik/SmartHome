@@ -92,11 +92,6 @@ var _user$project$Request_Room$toggleDimmer = function (id) {
 		_elm_lang$http$Http$jsonBody(data),
 		decoder);
 };
-var _user$project$Request_Room$loadDimmers = function () {
-	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Dimmer$decoder);
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers');
-	return A2(_elm_lang$http$Http$get, url_, decoder);
-}();
 var _user$project$Request_Room$loadSunblinds = function () {
 	var decoder = _elm_lang$core$Json_Decode$list(_user$project$Data_Sunblind$decoder);
 	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'sunblinds');

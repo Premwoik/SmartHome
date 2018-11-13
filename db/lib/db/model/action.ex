@@ -29,8 +29,30 @@ defmodule DB.Action do
 
 
   def get(ids) do
-    :todo
+    from(a in Action, where: a.id in ^ids)
+    |> Repo.all()
+    |> Repo.preload(:port)
   end
+
+  def get_view_format(id) do
+    from(
+      a in Action,
+      where: a.id == ^id,
+      join: c in "page_content_actions",
+      on: c.action_id == a.id,
+      select: %{
+        id: a.id,
+        name: "TODO",
+        order: c.order,
+        function: a.function,
+        state: a.active,
+        action: ""
+      }
+    )
+    |> Repo.all()
+  end
+
+
 
   def get_by_activator(device_id, numbs) do
     Repo.all from a in Action, join: p in Port,
@@ -51,6 +73,14 @@ defmodule DB.Action do
     Repo.all from a in Action, where: a.active == true
   end
 
-
+  def change_state(ids, state) do
+    IO.inspect(ids)
+    from(a in Action, where: a.id in ^ids)
+    |> Repo.update_all(
+         set: [
+           active: state
+         ]
+       )
+  end
 
 end

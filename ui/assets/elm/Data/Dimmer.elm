@@ -1,31 +1,41 @@
 module Data.Dimmer exposing (..)
-import Data.Light as Light
 import Data.Id as Id
-import Json.Decode as Decode exposing (nullable, map4, field, string, float, list, bool, Decoder)
+import Json.Decode as Decode exposing (nullable, map5, field, string, float, list, bool, Decoder)
 
+
+import Http
+import Request
+import Json.Encode as Encode
+
+type alias Light =
+    { id : Id.Id
+    , name : String
+    , state : Bool
+    }
 
 type alias Dimmer =
-    { id : Id.Id
-    , name : String
-    , fill : Float
-    , lights : List Light.Light
-    , undrawn : Bool
-    }
+   { id : Id.Id
+      , name : String
+      , fill : Float
+      , order : Int
+      , lights : List Light
+      , dimmer_ : String
+   }
 
-type alias DimmerJson =
-    { id : Id.Id
-    , name : String
-    , fill : Float
-    , lights : List Light.Light
-    }
+lightDecoder : Decoder Light
+lightDecoder =
+    Decode.map3 Light (field "id" Id.decoder)
+        (field "name" string)
+        (field "state" bool)
 
-decoder : Decoder DimmerJson
+decoder : Decoder Dimmer
 decoder =
-    map4 DimmerJson (field "id" Id.decoder)
+    Decode.map6 Dimmer (field "id" Id.decoder)
         (field "name" string)
         (field "fill" float)
-        (field "lights" (list Light.decoder))
-
+        (field "order" Decode.int)
+        (field "lights" (list lightDecoder))
+        (field "dimmer" string)
 
 -- DIRECTION
 
@@ -43,49 +53,75 @@ directionDecoder =
 
 -- FUNCTIONS
 
-fromJson : DimmerJson -> Dimmer
-fromJson dim =
-    let
-        cast = Dimmer dim.id dim.name dim.fill dim.lights
-        defaultUndrawn = False
-    in
-    cast defaultUndrawn
-
-updateFromJson : DimmerJson -> Dimmer -> Dimmer
-updateFromJson dim ext =
-    {ext | id = dim.id, name = dim.name, fill = dim.fill, lights = dim.lights}
-
 getId : Dimmer -> Int
 getId sun =
     Id.toInt sun.id
 
-setFill : Dimmer -> Float -> Dimmer
-setFill dim fill =
-    {dim | fill = fill}
 
-setOn : Dimmer -> Dimmer
-setOn dim =
-    {dim | lights = Light.setOnList dim.lights}
-
-setOff : Dimmer -> Dimmer
-setOff dim =
-    {dim | lights = Light.setOffList dim.lights}
 
 isOn : Dimmer -> Bool
 isOn dim =
-    List.any Light.isOn dim.lights
+    .lights >> List.any .state <| dim
 
-toggle : Dimmer -> Dimmer
-toggle dim =
+
+-- API
+
+
+setFill : Float -> Dimmer -> Http.Request Dimmer
+setFill fill d=
     let
-        maxFill = {dim | fill = 100}
-        minFIll = {dim | fill = 0}
+        url_ = Request.url ++ "dimmers/setFill"
+        data = Encode.object
+            [ ("id", Encode.int (Id.toInt d.id))
+            , ("fill", Encode.int (round fill))
+            ]
     in
-    case isOn dim of
-        True -> setOff minFIll
-        _ -> setOn maxFill
+    Http.post url_ (Http.jsonBody data) decoder
 
-toggleUndrawn : Dimmer -> Dimmer
-toggleUndrawn dim =
-    {dim | undrawn = not dim.undrawn}
+setOn : Dimmer -> Http.Request Dimmer
+setOn d =
+   let
+        url_ = Request.url ++ "dimmers/setOn"
+        data = Encode.object
+            [ ("id", Encode.int (Id.toInt d.id))
+            ]
+    in
+    Http.post url_ (Http.jsonBody data) decoder
 
+setOff : Dimmer -> Http.Request Dimmer
+setOff d =
+   let
+        url_ = Request.url ++ "dimmers/setOff"
+        data = Encode.object
+            [ ("id", Encode.int (Id.toInt d.id))
+            ]
+    in
+    Http.post url_ (Http.jsonBody data) decoder
+
+toggle : Dimmer -> Http.Request Dimmer
+toggle d =
+    if isOn d then setOff d else setOn d
+
+setLightOn : Light -> Http.Request Dimmer
+setLightOn l =
+    let
+         url_ = Request.url ++ "dimmers/setLightOn"
+         data = Encode.object
+             [ ("id", Encode.int (Id.toInt l.id))
+             ]
+     in
+     Http.post url_ (Http.jsonBody data) decoder
+
+setLightOff : Light -> Http.Request Dimmer
+setLightOff l =
+  let
+       url_ = Request.url ++ "dimmers/setLightOff"
+       data = Encode.object
+           [ ("id", Encode.int (Id.toInt l.id))
+           ]
+   in
+   Http.post url_ (Http.jsonBody data) decoder
+
+toggleLight : Light -> Http.Request Dimmer
+toggleLight l =
+    if l.state then setLightOff l else setLightOn l

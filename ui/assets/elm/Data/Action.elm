@@ -3,34 +3,55 @@ import Data.Id as Id exposing (Id)
 import Data.Port as Port exposing (Port)
 import Json.Decode as Decode exposing (field, bool, string, list, Decoder, int, at)
 
+import Http
+import Request
+import Json.Encode as Encode
+
+
+
 type alias Action =
     { id : Id
+    , name : String
     , state : Bool
-    , function : Function
-    , activator : String
---    , args : List Port
-    , params : String
+    , function : String
+    , order: Int
+    , action_ : String
     }
 
 decoder : Decode.Decoder Action
 decoder =
-    Decode.map5 Action
+    Decode.map6 Action
         (field "id" Id.decoder)
-        (field "active" bool)
-        (field "function" functionDecoder)
-        (at ["port", "name"] string)
---        (field "args" (list Port.decoder))
-        (field "params" string)
+        (field "name" string)
+        (field "state" bool)
+        (field "function" string)
+        (field "order" int)
+        (field "action" string)
 
 
-type Function
-     = Function String
+-- API
 
-functionDecoder : Decoder Function
-functionDecoder =
-    string
-        |> Decode.andThen (\func -> Decode.succeed (Function func))
+setOn : Action -> Http.Request Action
+setOn a =
+    let
+        url_ = Request.url ++ "actions/setOn"
+        data = Encode.object
+            [ ("id", Encode.int (Id.toInt a.id))
+            ]
+    in
+    Http.post url_ (Http.jsonBody data) decoder
 
-fnToString : Function -> String
-fnToString (Function str) =
-    str
+setOff : Action -> Http.Request Action
+setOff a =
+    let
+        url_ = Request.url ++ "actions/setOff"
+        data = Encode.object
+            [ ("id", Encode.int (Id.toInt a.id))
+            ]
+    in
+    Http.post url_ (Http.jsonBody data) decoder
+
+
+toggle : Action -> Http.Request Action
+toggle a =
+   if a.state then setOff a else setOn a

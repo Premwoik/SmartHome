@@ -179,4 +179,4 @@ var _user$project$Page_Room$update = F2(
 var _user$project$Page_Room$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
-var _user$project$Page_Room$init = A3(_user$project$Request$send2, _user$project$Page_Room_Model$InitRoom, _user$project$Request_Room$loadSunblinds, _user$project$Request_Room$loadDimmers);
+var _user$project$Page_Room$init = _elm_lang$core$Platform_Cmd$none;

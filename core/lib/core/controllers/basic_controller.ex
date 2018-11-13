@@ -12,21 +12,29 @@ defmodule Core.Controllers.BasicController do
 
   @behaviour Core.Controllers.Controller
 
-  def turn_on(ports) do
+  def turn_on(ports, pid \\ nil) do
     ports
-    |> set_ports(true)
+    |> set_ports(true, pid)
   end
 
-  def turn_off(ports) do
+  def turn_off(ports, pid \\ nil) do
     ports
-    |> set_ports(false)
+    |> set_ports(false, pid)
   end
 
-  def toggle(ports) do
+  def toggle(ports, pid \\ nil) do
     ports
     |> Enum.split_with(fn port -> port.state end)
-    |> fn {t, f} -> [set_ports(t, false), set_ports(f, true)] end.()
+    |> fn {t, f} -> [set_ports(t, false, pid), set_ports(f, true, pid)] end.()
     |> flatten_result()
+  end
+
+  def impulse(ports, pid \\ nil) do
+    with :ok <- set_pulse_ports(ports, nil, pid) do
+      ports
+      |> Enum.map(&(&1.id))
+      |> Port.update_state(nil)
+    end
   end
 
   def flatten_result(list) do
@@ -46,6 +54,13 @@ defmodule Core.Controllers.BasicController do
   end
 
 
+  def recv_postpone_resp(timeout \\ 10_000) do
+    receive do
+      {:pulse_result, msg} -> msg
+    after timeout -> {:error, "Waiting for postpone timeout"}
+    end
+  end
+
   @spec postpone_turn_off(list(integer), integer()) :: any()
   def postpone_turn_off(ports, timeouts, resp_pid \\ nil)
   def postpone_turn_off(ports, timeout, resp_pid) do
@@ -55,20 +70,20 @@ defmodule Core.Controllers.BasicController do
         resp_msg = Core.Device.set_outputs_helper(ports, false)
         case resp_pid do
           nil -> :ok
-          pid -> send pid, resp_pid
+          pid -> send pid, {:pulse_result, resp_msg}
         end
     end
   end
 
   # Privates
 
-  defp set_ports(ports, state) do
+  defp set_ports(ports, state, pid) do
     ports
-# TODO decide what to do with bottom line
-#    |> Enum.filter(&(&1.state != state))
+    # TODO decide what to do with bottom line
+    #    |> Enum.filter(&(&1.state != state))
     |> Enum.split_with(&(&1.timeout > 0))
     |> fn {pulse, normal} ->
-      [set_normal_ports(normal, state), set_pulse_ports(pulse, state)]
+      [set_normal_ports(normal, state), set_pulse_ports(pulse, state, pid)]
        end.()
     |> flatten_result()
     |> case do
@@ -95,9 +110,9 @@ defmodule Core.Controllers.BasicController do
 
 
 
-  @spec set_pulse_ports(list(map()), boolean()) :: any
-  defp set_pulse_ports([], _), do: :ok
-  defp set_pulse_ports(ports, _) do
+  @spec set_pulse_ports(list(map()), boolean(), pid()) :: any
+  defp set_pulse_ports([], _, pid), do: :ok
+  defp set_pulse_ports(ports, _, pid) do
     res = set_normal_ports ports, true
 
     case res do
@@ -107,7 +122,7 @@ defmodule Core.Controllers.BasicController do
     end
     |> Enum.group_by(&(&1.timeout))
     |> Map.to_list()
-    |> (Enum.each fn {k, v} -> Task.start fn -> postpone_turn_off v, k end end)
+    |> (Enum.each fn {k, v} -> Task.start fn -> postpone_turn_off v, k, pid end end)
 
     res
   end

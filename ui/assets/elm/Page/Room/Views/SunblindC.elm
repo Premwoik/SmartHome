@@ -68,7 +68,7 @@ turningBtn mdl state =
       [ Button.fab
       , Options.css "align" "center"
       , Options.onClick SetAllSunblinds
-      , state_
+      , Options.maybe
       ]
       [ Icon.i (icon_ state)]
 
