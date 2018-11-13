@@ -3,6 +3,7 @@ module Page.Room.Model exposing (..)
 import Data.Dimmer exposing (Dimmer, DimmerJson)
 import Data.Sunblind exposing (Sunblind)
 import Data.Light exposing (Light)
+import Data.Page as Page exposing (Page, PageShort)
 import Material
 import Http
 
@@ -26,6 +27,8 @@ model =
 
 type Msg =
     Raise Int
+--    | PageShortData (Result Http.Error (List PageShort))
+--    | PageData (Result Http.Error )
     | InitRoom (Result Http.Error (List Sunblind, List DimmerJson))
     | Response (Result Http.Error String)
     | DimSlide Dimmer Float

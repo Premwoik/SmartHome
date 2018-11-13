@@ -13,12 +13,12 @@ defmodule Core.Actions.CloseSunblinds do
 
   @impl true
   def execute(:up, _action, amem) do
-    Sunblind.all()
+    Sunblind.get_type("only_close")
     |> SunblindController.close()
     amem
   end
   def execute(:down, _action, amem) do
-    Sunblind.all()
+    Sunblind.get_type("only_close")
     |> SunblindController.open()
     amem
   end

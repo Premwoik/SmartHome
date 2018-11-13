@@ -21,8 +21,9 @@ defmodule Core.Tasks.Task do
   -
 
 """
+  alias DB.Task
 
-  @callback execute(action_id :: (integer | nil), device :: (atom | nil), state :: map) :: {:ok, state :: map} | :error
+  @callback execute(task :: %Task{}, state :: map) :: {:ok, state :: map} | :error
   @callback init_state() :: map
 
 #  @callback reload() :: :succ | :fail

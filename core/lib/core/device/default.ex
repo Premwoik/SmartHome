@@ -38,6 +38,7 @@ defmodule Core.Device.Default do
 
   @impl true
   def set_outputs(device, pins, state) do
+    Logger.info("#{device.name} - set_outputs - #{inspect pins}")
     cmd = Code.write
     args = [bool_to_bin(!state) | pins_to_bytes(pins)]
     noreply_send(device, cmd, args)

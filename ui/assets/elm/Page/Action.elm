@@ -111,11 +111,12 @@ tableView model =
 row : Action -> Material.Model -> Html Msg
 row action mdl =
     Table.tr []
-        [ Table.td [] [text << toString << Id.toInt <| action.id]
-        , Table.td [] [text action.activator]
-        , Table.td [] [text << Action.fnToString <| action.function]
-        , Table.td [] [toggleButton action mdl]
-        , Table.td [] [text << toString <| action.params]
+    [
+--        [ Table.td [] [text << toString << Id.toInt <| action.id]
+--        , Table.td [] [text action.activator]
+--        , Table.td [] [text << Action.fnToString <| action.function]
+--        , Table.td [] [toggleButton action mdl]
+--        , Table.td [] [text << toString <| action.params]
         ]
 
 toggleButton : Action -> Material.Model-> Html Msg

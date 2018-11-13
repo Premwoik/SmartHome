@@ -21,53 +21,76 @@ import RouteUrl as Routing
 import Navigation
 import Array exposing (Array)
 import Dict exposing (Dict)
-import Page.Room
-import Page.Room.Model
 import Page.Action
-
+import Http
+import Data.Page exposing (PageShort, Page)
+import Page.Page as Page
+import Request
+import Request.Room
+import Data.Id exposing (Id)
 import Material.Helpers exposing (lift)
+import Array
 
 -- MODEL
 
 type alias Model =
     { mdl : Material.Model
-    , rooms : Page.Room.Model.Model
-    , actions : Page.Action.Model
+    , page : Page.Model
     , selectedTab : Int
+    , tabs : Array PageShort
     }
 
 model : Model
 model =
     { mdl = Material.model
-    , selectedTab = 0
-    , rooms = Page.Room.Model.model
-    , actions = Page.Action.model
+    , selectedTab = 1
+    , page = Page.model
+    , tabs = [] |> Array.fromList
     }
 
 -- UPDATE
 
 type Msg
     = SelectTab Int
+    | AddressChange String
+    | LoadTabs (Result Http.Error (List PageShort))
     | Mdl (Material.Msg Msg)
-    | RoomMsg Page.Room.Model.Msg
-    | ActionMsg Page.Action.Msg
+    | PageMsg Page.Msg
 
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+
+        LoadTabs (Ok data) ->
+            let
+                tabs_ = Array.fromList <| List.sortBy .number data
+            in
+            ({model | tabs = tabs_}, Cmd.none)
+        LoadTabs (Err err) ->
+            ({model | tabs = Array.fromList []}, Cmd.none)
+
         SelectTab k ->
-            ( { model | selectedTab = k }, Array.get k tabInit |> Maybe.withDefault Cmd.none)
+            ( { model | selectedTab = k }, switchTab k (Page.init) model)
+
+        AddressChange tab ->
+            ({model | selectedTab = nameToNumber tab model}, Cmd.none)
 
         Mdl action_ ->
             Material.update Mdl action_ model
 
-        RoomMsg a ->
-            lift .rooms (\m x -> { m | rooms = x }) RoomMsg Page.Room.update a model
+        PageMsg a ->
+            lift .page (\m x -> {m | page = x}) PageMsg Page.update a model
 
-        ActionMsg a ->
-            lift .actions (\m x -> { m | actions = x }) ActionMsg Page.Action.update a model
+
+switchTab : Int -> (PageShort -> Cmd Page.Msg) -> Model -> Cmd Msg
+switchTab k just =
+    .tabs >> Array.get k >> Maybe.map (Cmd.map PageMsg << just) >> Maybe.withDefault (Cmd.none)
+
+nameToNumber : String -> Model -> Int
+nameToNumber name =
+    .tabs >> Array.filter (\x -> x.name == name) >> Array.map (\x -> x.number) >> Array.get 0 >> Maybe.withDefault -1
 
 
 -- VIEW
@@ -80,8 +103,8 @@ view =
 view_ : Model -> Html Msg
 view_ model =
     let
-        top =
-            (Array.get model.selectedTab tabViews |> Maybe.withDefault e404) model
+        top = .page >> Page.view >> Html.map PageMsg <| model
+--            (Array.get model.selectedTab tabViews |> Maybe.withDefault e404) model
     in
       Scheme.top <|  Layout.render Mdl
             model.mdl
@@ -94,7 +117,8 @@ view_ model =
             , header = header
             , main = [top]
             , tabs =
-                    ( tabTitles, [] )
+                    (  tabTitles model, [] )
+
             }
 
 
@@ -110,47 +134,21 @@ header =
             [ text "easyHome" ]
         ]]
 
-
-tabs : List ( String, String, Model -> Html Msg, Cmd Msg )
-tabs =
-    [ ( "Pokoje", "rooms", .rooms >> Page.Room.view >> Html.map RoomMsg, Page.Room.init |> Cmd.map RoomMsg)
-    , ( "Akcje", "actions", .actions >> Page.Action.view >> Html.map ActionMsg, Page.Action.init |> Cmd.map ActionMsg)
-    ]
-
-tabInit : Array (Cmd Msg)
-tabInit =
-    List.map (\(_, _, _, x) -> x) tabs |> Array.fromList
-
-tabTitles : List (Html a)
-tabTitles =
-    List.map (\( x, _, _, _ ) -> text x) tabs
+tabTitles : Model -> List (Html a)
+tabTitles model =
+      Array.map (\x -> text x.name) >> Array.toList <| model.tabs
 
 
-tabViews : Array (Model -> Html Msg)
-tabViews =
-    List.map (\( _, _, v, _ ) -> v) tabs |> Array.fromList
-
-
-tabUrls : Array String
-tabUrls =
-    List.map (\( _, x, _, _) -> x) tabs |> Array.fromList
-
-
-urlTabs : Dict String Int
-urlTabs =
-    List.indexedMap (\idx ( _, x, _, _ ) -> ( x, idx )) tabs |> Dict.fromList
-
-
-e404 : Model -> Html Msg
-e404 _ =
-    div
-        []
-        [ Options.styled Html.h1
-            [ Options.cs "mdl-typography--display-4"
-            , Typography.center
-            ]
-            [ text "404" ]
-        ]
+--e404 : Model -> Html Msg
+--e404 _ =
+--    div
+--        []
+--        [ Options.styled Html.h1
+--            [ Options.cs "mdl-typography--display-4"
+--            , Typography.center
+--            ]
+--            [ text "404" ]
+--        ]
 
 
 -- ROUTING
@@ -160,7 +158,12 @@ e404 _ =
 
 urlOf : Model -> String
 urlOf model =
-    "#" ++ (Array.get model.selectedTab tabUrls |> Maybe.withDefault "")
+    let
+        short = case Array.get model.selectedTab model.tabs of
+                    Nothing -> ""
+                    Just val -> val.name |> String.toLower
+    in
+    "#" ++ short
 
 delta2url : Model -> Model -> Maybe Routing.UrlChange
 delta2url model1 model2 =
@@ -178,12 +181,18 @@ location2messages location =
     [ case String.dropLeft 1 location.hash of
         "" ->
             SelectTab 0
-
-        x ->
-            Dict.get x urlTabs
-                |> Maybe.withDefault -1
-                |> SelectTab
+        x -> AddressChange x
     ]
+
+
+init : Cmd Msg
+init =
+    Cmd.batch [Material.init Mdl, Request.send LoadTabs Page.getTabs]
+
+subs : Model -> Sub Msg
+subs model =
+    Sub.batch [Material.subscriptions Mdl model, Sub.map PageMsg (Page.subs model.page)]
+
 
 main : Routing.RouteUrlProgram Never Model Msg
 main =
@@ -200,14 +209,10 @@ main =
                        document.getElementsByClassName("mdl-layout__tab-bar")[0].scrollWidth
                     -}
 --              }
-            , Material.init Mdl
+            , init
             )
         , view = view
         , subscriptions =
-            \model ->
-                Sub.batch
-                    [ Sub.none
-                    , Material.subscriptions Mdl model
-                    ]
+            \model -> subs model
         , update = update
         }

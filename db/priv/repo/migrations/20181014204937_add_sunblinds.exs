@@ -7,7 +7,7 @@ defmodule DB.Repo.Migrations.AddSunblinds do
       add :position, :integer
       add :type, :string
       add :full_open_time, :integer
-#      add :direction, :string
+      add :direction, :string
 #      add :mode
       add :state, :string
     end

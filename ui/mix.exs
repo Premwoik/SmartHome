@@ -40,7 +40,7 @@ defmodule Ui.Mixfile do
       {:cowboy, "~> 1.0"},
       {:cors_plug, "~> 1.5"},
       {:db, path: "../db"},
-      {:socket_test2, path: "../socket_test2"}
+      {:core, path: "../core"}
     ]
   end
 end

@@ -7,15 +7,14 @@ defmodule DB.Dimmer do
 
   alias DB.{Repo, Light, Port, Dimmer}
 
-  #  @primary_key {:port, :id, []}
-#  @derive {Poison.Encoder, only: [:id, :name, :fill, :lights]}
+  @derive {Poison.Encoder, except: [:__meta__]}
   schema "dimmers" do
     belongs_to :port, DB.Port
     field :fill, :integer
     field :direction, :integer
     field :time, :integer
     has_many :lights, DB.Light
-#    many_to_many :lights, DB.Port, join_through: "dimmers_lights", on_delete: :delete_all
+    #    many_to_many :lights, DB.Port, join_through: "dimmers_lights", on_delete: :delete_all
   end
 
   def changeset(dimmer, params \\ %{}) do
@@ -27,12 +26,63 @@ defmodule DB.Dimmer do
     #    |> unique_constraint(:email)
   end
 
-  def get(ids) do
-    Repo.all from d in Dimmer, where: d.port_id in ^ids, preload: [:port]
+  def all() do
+    Repo.all(Dimmer)
+    |> Repo.preload([:port, lights: [:port]])
   end
 
+  def get(ids) when is_list ids do
+    Repo.all from d in Dimmer, where: d.port_id in ^ids, preload: [:port]
+  end
+  def get(id) do
+    [res] = get([id])
+    res
+  end
+
+  def get_view_format(id) do
+
+    load_lights =
+      fn id ->
+        from(
+          l in Light,
+          join: p in Port,
+          on: p.id == l.port_id,
+          where: l.dimmer_id == ^id,
+          select: %{
+            id: l.id,
+            state: p.state,
+            name: p.name,
+          }
+        )
+        |> Repo.all()
+      end
+
+    from(
+      d in Dimmer,
+      where: d.id == ^id,
+      join: c in "page_content_dimmers",
+      on: c.dimmer_id == d.id,
+      join: p in Port,
+      on: p.id == d.port_id,
+      select: %{
+        id: d.id,
+        fill: d.fill,
+        order: c.order,
+        name: p.name,
+        dimmer: ""
+      }
+    )
+    |> Repo.all
+    |> Enum.map(&(Map.put(&1, :lights, load_lights.(&1.id))))
+  end
+
+
+
+
   def any_light_on?(dimmer) do
-    Repo.all(from l in Light, join: p in Port, on: p.id == l.port_id, where: l.dimmer_id == ^dimmer.id and p.state == true)
+    Repo.all(
+      from l in Light, join: p in Port, on: p.id == l.port_id, where: l.dimmer_id == ^dimmer.id and p.state == true
+    )
     |> Kernel.length()
     |> Kernel.>(0)
   end

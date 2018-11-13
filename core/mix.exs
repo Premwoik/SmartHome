@@ -28,7 +28,8 @@ defmodule SocketTest2.MixProject do
       {:poison, "~> 3.1"},
       {:connection, "~> 1.0.4"},
       {:timex, "~> 3.0"},
-      {:db, path: "../db"}
+      {:db, path: "../db"},
+#      {:ui, path: "../ui"}
     ]
   end
 end

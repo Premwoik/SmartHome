@@ -24,18 +24,6 @@ config :logger, backends: [RingLogger]
 config :logger, RingLogger, max_size: 100
 
 
-config :nerves_firmware_ssh,
-       authorized_keys: [
-         File.read!(Path.join(System.user_home!, ".ssh/id_rsa.pub"))
-       ]
-
-config :nerves_init_gadget,
-       ifname: "eth0",
-       address_method: :dhcp,
-       mdns_domain: "home.local",
-       node_name: "rpi3",
-       ssh_console_port: 22
-
 
 #import_config "../../ui/config/config.exs"
 

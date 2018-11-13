@@ -1,28 +1,32 @@
 module Data.Port exposing (..)
 
 import Data.Id as Id exposing (Id)
-import Json.Decode as Decode exposing (Decoder, map7, field, string, int, bool, andThen)
+import Json.Decode as Decode exposing (Decoder, map6, field, string, int, bool, andThen)
+
+
+import Http
+import Request
+import Json.Encode as Encode
+
 
 type alias Port =
     { id : Id
-    , device_id : Id
     , name : String
-    , type_ : Type
-    , number : Int
-    , timeout : Int
     , state : Bool
+--    , portType: String
+    , order : Int
+    , port_ : String
     }
 
 decoder : Decoder Port
 decoder =
-    map7 Port
+    Decode.map5 Port
         (field "id" Id.decoder)
-        (field "device_id" Id.decoder)
         (field "name" string)
-        (field "type" typeDecoder)
-        (field "number" int)
-        (field "timeout" int)
         (field "state" bool)
+--        (field "port_type" string)
+        (field "order" int)
+        (field "port" string)
 
 type Type
     = Dimmer
@@ -31,13 +35,30 @@ type Type
     | Sunblind
     | Unknown String
 
-typeDecoder : Decoder Type
-typeDecoder =
-    string |> andThen (\type_ ->
-        case type_ of
-            "dimmer" -> Decode.succeed Dimmer
-            "dimLight" -> Decode.succeed Light
-            "light" -> Decode.succeed Light
-            "sunblind" -> Decode.succeed Sunblind
-            other -> Decode.succeed (Unknown other)
-        )
+
+-- API
+
+setOn : Port -> Http.Request Port
+setOn p =
+    let
+        url_ = Request.url ++ "ports/setOn"
+        data = Encode.object
+            [ ("id", Encode.int (Id.toInt p.id))
+            ]
+    in
+    Http.post url_ (Http.jsonBody data) decoder
+
+setOff : Port -> Http.Request Port
+setOff p =
+    let
+        url_ = Request.url ++ "ports/setOff"
+        data = Encode.object
+            [ ("id", Encode.int (Id.toInt p.id))
+            ]
+    in
+    Http.post url_ (Http.jsonBody data) decoder
+
+
+toggle : Port -> Http.Request Port
+toggle p =
+   if p.state then setOff p else setOn p

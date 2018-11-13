@@ -1,0 +1,510 @@
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$last = function (list) {
+	last:
+	while (true) {
+		var _p0 = list;
+		if (_p0.ctor === '[]') {
+			return _elm_lang$core$Maybe$Nothing;
+		} else {
+			if (_p0._1.ctor === '[]') {
+				return _elm_lang$core$Maybe$Just(_p0._0);
+			} else {
+				var _v1 = _p0._1;
+				list = _v1;
+				continue last;
+			}
+		}
+	}
+};
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$oneOf = function (maybes) {
+	oneOf:
+	while (true) {
+		var _p1 = maybes;
+		if (_p1.ctor === '[]') {
+			return _elm_lang$core$Maybe$Nothing;
+		} else {
+			var _p3 = _p1._0;
+			var _p2 = _p3;
+			if (_p2.ctor === 'Nothing') {
+				var _v4 = _p1._1;
+				maybes = _v4;
+				continue oneOf;
+			} else {
+				return _p3;
+			}
+		}
+	}
+};
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$collectSelectors = function (declarations) {
+	collectSelectors:
+	while (true) {
+		var _p4 = declarations;
+		if (_p4.ctor === '[]') {
+			return {ctor: '[]'};
+		} else {
+			if (_p4._0.ctor === 'StyleBlockDeclaration') {
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					{ctor: '::', _0: _p4._0._0._0, _1: _p4._0._0._1},
+					_rtfeldman$elm_css$Css_Preprocess_Resolve$collectSelectors(_p4._1));
+			} else {
+				var _v6 = _p4._1;
+				declarations = _v6;
+				continue collectSelectors;
+			}
+		}
+	}
+};
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$toDocumentRule = F5(
+	function (str1, str2, str3, str4, declaration) {
+		var _p5 = declaration;
+		if (_p5.ctor === 'StyleBlockDeclaration') {
+			return A5(_rtfeldman$elm_css$Css_Structure$DocumentRule, str1, str2, str3, str4, _p5._0);
+		} else {
+			return declaration;
+		}
+	});
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$lastDeclaration = function (declarations) {
+	lastDeclaration:
+	while (true) {
+		var _p6 = declarations;
+		if (_p6.ctor === '[]') {
+			return _elm_lang$core$Maybe$Nothing;
+		} else {
+			if (_p6._1.ctor === '[]') {
+				return _elm_lang$core$Maybe$Just(
+					{
+						ctor: '::',
+						_0: _p6._0,
+						_1: {ctor: '[]'}
+					});
+			} else {
+				var _v9 = _p6._1;
+				declarations = _v9;
+				continue lastDeclaration;
+			}
+		}
+	}
+};
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$resolveFontFeatureValues = function (tuples) {
+	var expandTuples = function (tuplesToExpand) {
+		var _p7 = tuplesToExpand;
+		if (_p7.ctor === '[]') {
+			return {ctor: '[]'};
+		} else {
+			return {
+				ctor: '::',
+				_0: _p7._0,
+				_1: expandTuples(_p7._1)
+			};
+		}
+	};
+	var newTuples = expandTuples(tuples);
+	return {
+		ctor: '::',
+		_0: _rtfeldman$elm_css$Css_Structure$FontFeatureValues(newTuples),
+		_1: {ctor: '[]'}
+	};
+};
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$toMediaRule = F2(
+	function (mediaQueries, declaration) {
+		var _p8 = declaration;
+		switch (_p8.ctor) {
+			case 'StyleBlockDeclaration':
+				return A2(
+					_rtfeldman$elm_css$Css_Structure$MediaRule,
+					mediaQueries,
+					{
+						ctor: '::',
+						_0: _p8._0,
+						_1: {ctor: '[]'}
+					});
+			case 'MediaRule':
+				return A2(
+					_rtfeldman$elm_css$Css_Structure$MediaRule,
+					A2(_elm_lang$core$Basics_ops['++'], mediaQueries, _p8._0),
+					_p8._1);
+			case 'SupportsRule':
+				return A2(
+					_rtfeldman$elm_css$Css_Structure$SupportsRule,
+					_p8._0,
+					A2(
+						_elm_lang$core$List$map,
+						_rtfeldman$elm_css$Css_Preprocess_Resolve$toMediaRule(mediaQueries),
+						_p8._1));
+			case 'DocumentRule':
+				return A5(_rtfeldman$elm_css$Css_Structure$DocumentRule, _p8._0, _p8._1, _p8._2, _p8._3, _p8._4);
+			case 'PageRule':
+				return declaration;
+			case 'FontFace':
+				return declaration;
+			case 'Keyframes':
+				return declaration;
+			case 'Viewport':
+				return declaration;
+			case 'CounterStyle':
+				return declaration;
+			default:
+				return declaration;
+		}
+	});
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$resolveMediaRule = F2(
+	function (mediaQueries, styleBlocks) {
+		var handleStyleBlock = function (styleBlock) {
+			return A2(
+				_elm_lang$core$List$map,
+				_rtfeldman$elm_css$Css_Preprocess_Resolve$toMediaRule(mediaQueries),
+				_rtfeldman$elm_css$Css_Preprocess_Resolve$expandStyleBlock(styleBlock));
+		};
+		return A2(_elm_lang$core$List$concatMap, handleStyleBlock, styleBlocks);
+	});
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$expandStyleBlock = function (_p9) {
+	var _p10 = _p9;
+	return A2(
+		_rtfeldman$elm_css$Css_Preprocess_Resolve$applyStyles,
+		_p10._2,
+		{
+			ctor: '::',
+			_0: _rtfeldman$elm_css$Css_Structure$StyleBlockDeclaration(
+				A3(
+					_rtfeldman$elm_css$Css_Structure$StyleBlock,
+					_p10._0,
+					_p10._1,
+					{ctor: '[]'})),
+			_1: {ctor: '[]'}
+		});
+};
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$applyStyles = F2(
+	function (styles, declarations) {
+		applyStyles:
+		while (true) {
+			var _p11 = styles;
+			if (_p11.ctor === '[]') {
+				return declarations;
+			} else {
+				switch (_p11._0.ctor) {
+					case 'AppendProperty':
+						var _v14 = _p11._1,
+							_v15 = A2(_rtfeldman$elm_css$Css_Structure$appendProperty, _p11._0._0, declarations);
+						styles = _v14;
+						declarations = _v15;
+						continue applyStyles;
+					case 'ExtendSelector':
+						return A4(
+							_rtfeldman$elm_css$Css_Preprocess_Resolve$applyNestedStylesToLast,
+							_p11._0._1,
+							_p11._1,
+							_rtfeldman$elm_css$Css_Structure$appendRepeatableToLastSelector(_p11._0._0),
+							declarations);
+					case 'NestSnippet':
+						var chain = F2(
+							function (_p13, _p12) {
+								var _p14 = _p13;
+								var _p15 = _p12;
+								return A3(
+									_rtfeldman$elm_css$Css_Structure$Selector,
+									_p14._0,
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_p14._1,
+										{
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: _p11._0._0, _1: _p15._0},
+											_1: _p15._1
+										}),
+									_rtfeldman$elm_css$Css_Preprocess_Resolve$oneOf(
+										{
+											ctor: '::',
+											_0: _p15._2,
+											_1: {
+												ctor: '::',
+												_0: _p14._2,
+												_1: {ctor: '[]'}
+											}
+										}));
+							});
+						var expandDeclaration = function (declaration) {
+							var _p16 = declaration;
+							switch (_p16.ctor) {
+								case 'StyleBlockDeclaration':
+									var newSelectors = A2(
+										_elm_lang$core$List$concatMap,
+										function (originalSelector) {
+											return A2(
+												_elm_lang$core$List$map,
+												chain(originalSelector),
+												{ctor: '::', _0: _p16._0._0, _1: _p16._0._1});
+										},
+										_rtfeldman$elm_css$Css_Preprocess_Resolve$collectSelectors(declarations));
+									var newDeclarations = function () {
+										var _p17 = newSelectors;
+										if (_p17.ctor === '[]') {
+											return {ctor: '[]'};
+										} else {
+											return {
+												ctor: '::',
+												_0: _rtfeldman$elm_css$Css_Structure$StyleBlockDeclaration(
+													A3(
+														_rtfeldman$elm_css$Css_Structure$StyleBlock,
+														_p17._0,
+														_p17._1,
+														{ctor: '[]'})),
+												_1: {ctor: '[]'}
+											};
+										}
+									}();
+									return A2(_rtfeldman$elm_css$Css_Preprocess_Resolve$applyStyles, _p16._0._2, newDeclarations);
+								case 'MediaRule':
+									return A2(_rtfeldman$elm_css$Css_Preprocess_Resolve$resolveMediaRule, _p16._0, _p16._1);
+								case 'SupportsRule':
+									return A2(_rtfeldman$elm_css$Css_Preprocess_Resolve$resolveSupportsRule, _p16._0, _p16._1);
+								case 'DocumentRule':
+									return A2(
+										_elm_lang$core$List$map,
+										A4(_rtfeldman$elm_css$Css_Preprocess_Resolve$toDocumentRule, _p16._0, _p16._1, _p16._2, _p16._3),
+										_rtfeldman$elm_css$Css_Preprocess_Resolve$expandStyleBlock(_p16._4));
+								case 'PageRule':
+									return {
+										ctor: '::',
+										_0: A2(_rtfeldman$elm_css$Css_Structure$PageRule, _p16._0, _p16._1),
+										_1: {ctor: '[]'}
+									};
+								case 'FontFace':
+									return {
+										ctor: '::',
+										_0: _rtfeldman$elm_css$Css_Structure$FontFace(_p16._0),
+										_1: {ctor: '[]'}
+									};
+								case 'Viewport':
+									return {
+										ctor: '::',
+										_0: _rtfeldman$elm_css$Css_Structure$Viewport(_p16._0),
+										_1: {ctor: '[]'}
+									};
+								case 'CounterStyle':
+									return {
+										ctor: '::',
+										_0: _rtfeldman$elm_css$Css_Structure$CounterStyle(_p16._0),
+										_1: {ctor: '[]'}
+									};
+								default:
+									return _rtfeldman$elm_css$Css_Preprocess_Resolve$resolveFontFeatureValues(_p16._0);
+							}
+						};
+						return _elm_lang$core$List$concat(
+							A2(
+								F2(
+									function (x, y) {
+										return A2(_elm_lang$core$Basics_ops['++'], x, y);
+									}),
+								{
+									ctor: '::',
+									_0: A2(_rtfeldman$elm_css$Css_Preprocess_Resolve$applyStyles, _p11._1, declarations),
+									_1: {ctor: '[]'}
+								},
+								A2(
+									_elm_lang$core$List$map,
+									expandDeclaration,
+									A2(_elm_lang$core$List$concatMap, _rtfeldman$elm_css$Css_Preprocess$unwrapSnippet, _p11._0._1))));
+					case 'WithPseudoElement':
+						return A4(
+							_rtfeldman$elm_css$Css_Preprocess_Resolve$applyNestedStylesToLast,
+							_p11._0._1,
+							_p11._1,
+							_rtfeldman$elm_css$Css_Structure$appendPseudoElementToLastSelector(_p11._0._0),
+							declarations);
+					case 'WithKeyframes':
+						var _p18 = _p11._0._0;
+						var name = _rtfeldman$elm_css$Hash$fromString(_p18);
+						var newProperty = A2(_elm_lang$core$Basics_ops['++'], 'animation-name:', name);
+						var newDeclarations = A2(
+							_rtfeldman$elm_css$Css_Preprocess_Resolve$applyStyles,
+							_p11._1,
+							A2(_rtfeldman$elm_css$Css_Structure$appendProperty, newProperty, declarations));
+						return A2(
+							_elm_lang$core$List$append,
+							newDeclarations,
+							{
+								ctor: '::',
+								_0: _rtfeldman$elm_css$Css_Structure$Keyframes(
+									{name: name, declaration: _p18}),
+								_1: {ctor: '[]'}
+							});
+					case 'WithMedia':
+						var extraDeclarations = function () {
+							var _p19 = _rtfeldman$elm_css$Css_Preprocess_Resolve$collectSelectors(declarations);
+							if (_p19.ctor === '[]') {
+								return {ctor: '[]'};
+							} else {
+								return A2(
+									_elm_lang$core$List$map,
+									_rtfeldman$elm_css$Css_Structure$styleBlockToMediaRule(_p11._0._0),
+									A2(
+										_rtfeldman$elm_css$Css_Preprocess_Resolve$applyStyles,
+										_p11._0._1,
+										_elm_lang$core$List$singleton(
+											_rtfeldman$elm_css$Css_Structure$StyleBlockDeclaration(
+												A3(
+													_rtfeldman$elm_css$Css_Structure$StyleBlock,
+													_p19._0,
+													_p19._1,
+													{ctor: '[]'})))));
+							}
+						}();
+						return A2(
+							_elm_lang$core$Basics_ops['++'],
+							A2(_rtfeldman$elm_css$Css_Preprocess_Resolve$applyStyles, _p11._1, declarations),
+							extraDeclarations);
+					default:
+						var _v21 = A2(_elm_lang$core$Basics_ops['++'], _p11._0._0, _p11._1),
+							_v22 = declarations;
+						styles = _v21;
+						declarations = _v22;
+						continue applyStyles;
+				}
+			}
+		}
+	});
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$applyNestedStylesToLast = F4(
+	function (nestedStyles, rest, f, declarations) {
+		var withoutParent = function (decls) {
+			return A2(
+				_elm_lang$core$Maybe$withDefault,
+				{ctor: '[]'},
+				_elm_lang$core$List$tail(decls));
+		};
+		var nextResult = A2(
+			_rtfeldman$elm_css$Css_Preprocess_Resolve$applyStyles,
+			rest,
+			A2(
+				_elm_lang$core$Maybe$withDefault,
+				{ctor: '[]'},
+				_rtfeldman$elm_css$Css_Preprocess_Resolve$lastDeclaration(declarations)));
+		var newDeclarations = function () {
+			var _p20 = {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$List$head(nextResult),
+				_1: _rtfeldman$elm_css$Css_Preprocess_Resolve$last(declarations)
+			};
+			if (((_p20.ctor === '_Tuple2') && (_p20._0.ctor === 'Just')) && (_p20._1.ctor === 'Just')) {
+				var _p22 = _p20._1._0;
+				var _p21 = _p20._0._0;
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					A2(
+						_elm_lang$core$List$take,
+						_elm_lang$core$List$length(declarations) - 1,
+						declarations),
+					{
+						ctor: '::',
+						_0: (!_elm_lang$core$Native_Utils.eq(_p22, _p21)) ? _p21 : _p22,
+						_1: {ctor: '[]'}
+					});
+			} else {
+				return declarations;
+			}
+		}();
+		var insertStylesToNestedDecl = function (lastDecl) {
+			return _elm_lang$core$List$concat(
+				A2(
+					_rtfeldman$elm_css$Css_Structure$mapLast,
+					_rtfeldman$elm_css$Css_Preprocess_Resolve$applyStyles(nestedStyles),
+					A2(
+						_elm_lang$core$List$map,
+						_elm_lang$core$List$singleton,
+						A2(_rtfeldman$elm_css$Css_Structure$concatMapLastStyleBlock, f, lastDecl))));
+		};
+		var initialResult = A2(
+			_elm_lang$core$Maybe$withDefault,
+			{ctor: '[]'},
+			A2(
+				_elm_lang$core$Maybe$map,
+				insertStylesToNestedDecl,
+				_rtfeldman$elm_css$Css_Preprocess_Resolve$lastDeclaration(declarations)));
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			newDeclarations,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				withoutParent(initialResult),
+				withoutParent(nextResult)));
+	});
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$resolveSupportsRule = F2(
+	function (str, snippets) {
+		var declarations = _rtfeldman$elm_css$Css_Preprocess_Resolve$extract(
+			A2(_elm_lang$core$List$concatMap, _rtfeldman$elm_css$Css_Preprocess$unwrapSnippet, snippets));
+		return {
+			ctor: '::',
+			_0: A2(_rtfeldman$elm_css$Css_Structure$SupportsRule, str, declarations),
+			_1: {ctor: '[]'}
+		};
+	});
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$extract = function (snippetDeclarations) {
+	var _p23 = snippetDeclarations;
+	if (_p23.ctor === '[]') {
+		return {ctor: '[]'};
+	} else {
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			_rtfeldman$elm_css$Css_Preprocess_Resolve$toDeclarations(_p23._0),
+			_rtfeldman$elm_css$Css_Preprocess_Resolve$extract(_p23._1));
+	}
+};
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$toDeclarations = function (snippetDeclaration) {
+	var _p24 = snippetDeclaration;
+	switch (_p24.ctor) {
+		case 'StyleBlockDeclaration':
+			return _rtfeldman$elm_css$Css_Preprocess_Resolve$expandStyleBlock(_p24._0);
+		case 'MediaRule':
+			return A2(_rtfeldman$elm_css$Css_Preprocess_Resolve$resolveMediaRule, _p24._0, _p24._1);
+		case 'SupportsRule':
+			return A2(_rtfeldman$elm_css$Css_Preprocess_Resolve$resolveSupportsRule, _p24._0, _p24._1);
+		case 'DocumentRule':
+			return A2(
+				_elm_lang$core$List$map,
+				A4(_rtfeldman$elm_css$Css_Preprocess_Resolve$toDocumentRule, _p24._0, _p24._1, _p24._2, _p24._3),
+				_rtfeldman$elm_css$Css_Preprocess_Resolve$expandStyleBlock(_p24._4));
+		case 'PageRule':
+			return {
+				ctor: '::',
+				_0: A2(_rtfeldman$elm_css$Css_Structure$PageRule, _p24._0, _p24._1),
+				_1: {ctor: '[]'}
+			};
+		case 'FontFace':
+			return {
+				ctor: '::',
+				_0: _rtfeldman$elm_css$Css_Structure$FontFace(_p24._0),
+				_1: {ctor: '[]'}
+			};
+		case 'Viewport':
+			return {
+				ctor: '::',
+				_0: _rtfeldman$elm_css$Css_Structure$Viewport(_p24._0),
+				_1: {ctor: '[]'}
+			};
+		case 'CounterStyle':
+			return {
+				ctor: '::',
+				_0: _rtfeldman$elm_css$Css_Structure$CounterStyle(_p24._0),
+				_1: {ctor: '[]'}
+			};
+		default:
+			return _rtfeldman$elm_css$Css_Preprocess_Resolve$resolveFontFeatureValues(_p24._0);
+	}
+};
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$toStructure = function (_p25) {
+	var _p26 = _p25;
+	var declarations = _rtfeldman$elm_css$Css_Preprocess_Resolve$extract(
+		A2(_elm_lang$core$List$concatMap, _rtfeldman$elm_css$Css_Preprocess$unwrapSnippet, _p26.snippets));
+	return {charset: _p26.charset, imports: _p26.imports, namespaces: _p26.namespaces, declarations: declarations};
+};
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$compileHelp = function (sheet) {
+	return _rtfeldman$elm_css$Css_Structure_Output$prettyPrint(
+		_rtfeldman$elm_css$Css_Structure$compactStylesheet(
+			_rtfeldman$elm_css$Css_Preprocess_Resolve$toStructure(sheet)));
+};
+var _rtfeldman$elm_css$Css_Preprocess_Resolve$compile = function (styles) {
+	return A2(
+		_elm_lang$core$String$join,
+		'\n\n',
+		A2(_elm_lang$core$List$map, _rtfeldman$elm_css$Css_Preprocess_Resolve$compileHelp, styles));
+};

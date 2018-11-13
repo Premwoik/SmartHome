@@ -1,15 +1,7 @@
 defmodule DB.Init do
   @moduledoc nil
 
-  alias DB.Repo
-  alias DB.Action
-  alias DB.Device
-  alias DB.Port
-  alias DB.Dimmer
-  alias DB.Watcher
-  alias DB.Task
-  alias DB.TaskType
-  alias DB.Light
+  alias DB.{Light, Task, TaskType, Watcher, Dimmer, Port, Device, Action, Repo, Sunblind, Page, PageContent}
   import Ecto.Query
   require Logger
 
@@ -24,6 +16,7 @@ defmodule DB.Init do
       :ok = insert_ard_mega()
       :ok = insert_integra64()
       :ok = insert_tasks()
+      :ok = init_pages
       :ok
     end
     Logger.info("Data created!")
@@ -60,9 +53,9 @@ defmodule DB.Init do
     p35 = %Port{name: "Dzienny", type: "sunblind", number: 35, mode: "output", timeout: 1000, state: false}#12
     p36 = %Port{name: "TarasP", type: "sunblind", number: 36, mode: "output", state: false}#13
     p37 = %Port{name: "BalkonP", type: "sunblind", number: 37, mode: "output", state: false}#14
-    p38 = %Port{name: "Michał", type: "sunblind", number: 38, mode: "output", state: false}#16
-    p39 = %Port{name: "Salon", type: "sunblind", number: 39, mode: "output", state: false}#17
-    p40 = %Port{name: "TarasSalon", type: "sunblind", number: 40, mode: "output", state: false}#18
+    p38 = %Port{name: "Michał", type: "sunblind", number: 38, mode: "output", state: false}#15
+    p39 = %Port{name: "Salon", type: "sunblind", number: 39, mode: "output", state: false}#16
+    p40 = %Port{name: "TarasSalon", type: "sunblind", number: 40, mode: "output", state: false}#17
 
 
     dev1 = %Device{
@@ -74,6 +67,28 @@ defmodule DB.Init do
                p21, p22, p23, p24, p25, p26, p34, p35, p36, p37, p38, p39, p40]
            }
            |> Repo.insert!
+
+
+    %Sunblind{port_id: 11, type: "pulse", full_open_time: 16_000}
+    |> Repo.insert!
+    %Sunblind{port_id: 12, type: "pulse", full_open_time: 16_000}
+    |> Repo.insert!
+
+    %Sunblind{port_id: 13, full_open_time: 30_000}
+    |> Repo.insert!
+
+    %Sunblind{port_id: 14, full_open_time: 30_000}
+    |> Repo.insert!
+
+    %Sunblind{port_id: 15, full_open_time: 30_000}
+    |> Repo.insert!
+
+    %Sunblind{port_id: 16, full_open_time: 30_000}
+    |> Repo.insert!
+
+    %Sunblind{port_id: 17, full_open_time: 30_000}
+    |> Repo.insert!
+
 
 
     l1 = %Light{port_id: 3, dimmer_id: 2} #1
@@ -120,9 +135,9 @@ defmodule DB.Init do
     #CałyDom - RoletyZamykanie
     %Action{
       function: type1,
-      active: false,
+      active: true,
       params: "{}",
-      port_id: 21,
+      port: nil,
       args: sunblinds
     }
     |> Repo.insert!
@@ -173,8 +188,14 @@ defmodule DB.Init do
 
   def insert_tasks() do
     %TaskType{
-      name: "Calling action",
-      module: ""
+      name: "Calling action up",
+      module: "Core.Tasks.ExecuteActionUp"
+    }
+    |> Repo.insert!
+
+    %TaskType{
+      name: "Calling action down",
+      module: "Core.Tasks.ExecuteActionDown"
     }
     |> Repo.insert!
 
@@ -184,12 +205,17 @@ defmodule DB.Init do
     }
     |> Repo.insert!
 
+
+
+
+
     # read integra inputs
     %Task{
-      type_id: 2,
+      type_id: 3,
       status: "waiting",
       action: nil,
       device_id: 2,
+      execution_time: nil,
       frequency: 1_000,
       limit: -1,
       start_date: nil,
@@ -197,20 +223,65 @@ defmodule DB.Init do
     }
     |> Repo.insert!
 
-    #    # make sunblinds closed at night
-    #    %Task{
-    #      type_id: 0,
-    #      status: "inactive",
-    #      action: nil,
-    #      device: nil,
-    #      frequency: 30_000,
-    #      limit: 100,
-    #      start_date: nil,
-    #      end_date: nil
-    #    }
-    #    |> Repo.insert!
-    #
-        :ok
+    # make sunblinds closed at night
+    %Task{
+      type_id: 1,
+      status: "waiting",
+      action_id: 1,
+      device: nil,
+      frequency: 0,
+      execution_time: ~T[16:02:00],
+      limit: -1,
+      start_date: nil,
+      end_date: nil
+    }
+    |> Repo.insert!
+
+    # make sunblinds opened at morning
+    %Task{
+      type_id: 2,
+      status: "waiting",
+      action_id: 1,
+      device: nil,
+      frequency: 0,
+      execution_time: ~T[06:00:00],
+      limit: -1,
+      start_date: nil,
+      end_date: nil
+    }
+    |> Repo.insert!
+
+    :ok
+  end
+
+
+  def init_pages() do
+   page = %Page{
+      name: "Rooms",
+      number: 1,
+      title: "Przemek",
+      description: "Page about Przemek's Room",
+      parent: nil,
+#      subgroups: nil,
+#      content: cont
+    }
+
+    %PageContent{
+      number: 1,
+      page: page,
+      lights: [Repo.get(Light, 1), Repo.get(Light, 3)],
+      ports: [Repo.get(Port, 2), Repo.get(Port, 5)],
+      dimmers: [Repo.get(Dimmer, 2), Repo.get(Dimmer, 3)],
+      sunblinds: [],
+      actions: [],
+      tasks: []
+    }
+    |> Repo.insert!
+
+
+
+    :ok
+
   end
 
 end

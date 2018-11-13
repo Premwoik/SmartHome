@@ -2,8 +2,8 @@ defmodule UiWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", UiWeb.RoomChannel
-
+   channel "dashboard:*", UiWeb.DashboardChannel
+   channel "dashboard1:lobby", UiWeb.Dashboard1Channel
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
   # transport :longpoll, Phoenix.Transports.LongPoll

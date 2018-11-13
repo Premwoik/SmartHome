@@ -1,18 +1,30 @@
 module Data.Light exposing (..) --(setOnList, setOffList, isOn, Light, setOff, setOn, toggle, decoder)
 import Data.Id as Id
-import Json.Decode as Decode exposing (field, bool, string, map3, Decoder)
+import Json.Decode as Decode exposing (field, bool, string, map5, Decoder, andThen)
+
+import Http
+import Request
+import Json.Encode as Encode
+
+
 type alias Light =
     {
         id : Id.Id,
-        state : State,
-        name : String
+        fill : Maybe Int,
+        order: Int,
+        state : Bool,
+        name : String,
+        light_ : String
     }
 
 decoder : Decoder Light
 decoder =
-    map3 Light (field "id" Id.decoder)
-        (field "state" stateDecoder)
+    Decode.map6 Light (field "id" Id.decoder)
+        (field "fill" (Decode.nullable Decode.int))
+        (field "order" Decode.int)
+        (field "state" bool)
         (field "name" string)
+        (field "light" string)
 
 -- STATE
 
@@ -36,52 +48,43 @@ stateDecoder =
 
 -- FUNCTIONS
 
-getId : Light -> Int
-getId sun =
-    Id.toInt sun.id
+unpackFill : Light -> Float
+unpackFill =
+    .fill >> Maybe.withDefault 0 >> toFloat
 
-isOn : Light -> Bool
-isOn light =
-    light.state == On
+-- Api
 
-setOnList : List Light -> List Light
-setOnList lights =
-    setList lights On
-
-setOn : Light -> Light
-setOn light =
-    set light On
-
-
-setOffList : List Light -> List Light
-setOffList lights =
-    setList lights Off
-
-setOff : Light -> Light
-setOff light =
-    set light On
-
-toggleList : List Light -> List Light
-toggleList lights =
+setOn : Light -> Http.Request Light
+setOn l =
     let
-        state = List.head lights |> (\x ->
-            case x of
-                Just light -> light.state
-                Nothing -> Off
-            ) |> notState
+        url_ = Request.url ++ "lights/setOn"
+        data = Encode.object
+            [ ("id", Encode.int (Id.toInt l.id))
+            ]
     in
-    setList lights state
+    Http.post url_ (Http.jsonBody data) decoder
 
-toggle : Light -> Light
-toggle light =
-    set light (notState light.state)
+setOff : Light -> Http.Request Light
+setOff l =
+    let
+        url_ = Request.url ++ "lights/setOff"
+        data = Encode.object
+            [ ("id", Encode.int (Id.toInt l.id))
+            ]
+    in
+    Http.post url_ (Http.jsonBody data) decoder
 
+setFill : Float -> Light -> Http.Request Light
+setFill fill l =
+    let
+        url_ = Request.url ++ "lights/setFill"
+        data = Encode.object
+            [ ("id", Encode.int (Id.toInt l.id))
+            , ("fill", Encode.int (round fill))
+            ]
+    in
+    Http.post url_ (Http.jsonBody data) decoder
 
-setList : List Light -> State -> List Light
-setList lights state =
-    List.map (\x -> {x | state = state}) lights
-
-set : Light -> State-> Light
-set light state =
-    {light | state = state}
-
+toggle : Light -> Http.Request Light
+toggle l =
+   if l.state then setOff l else setOn l

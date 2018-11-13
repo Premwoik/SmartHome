@@ -1,0 +1,71 @@
+var _user$project$Data_Page$PageShort = F3(
+	function (a, b, c) {
+		return {id: a, number: b, name: c};
+	});
+var _user$project$Data_Page$decoderShort = A4(
+	_elm_lang$core$Json_Decode$map3,
+	_user$project$Data_Page$PageShort,
+	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'number', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string));
+var _user$project$Data_Page$Page = F6(
+	function (a, b, c, d, e, f) {
+		return {id: a, number: b, name: c, title: d, description: e, content: f};
+	});
+var _user$project$Data_Page$empty = A6(
+	_user$project$Data_Page$Page,
+	_user$project$Data_Id$Id(-1),
+	-1,
+	'',
+	'',
+	'',
+	_elm_lang$core$Array$empty);
+var _user$project$Data_Page$Sunblind = function (a) {
+	return {ctor: 'Sunblind', _0: a};
+};
+var _user$project$Data_Page$Action = function (a) {
+	return {ctor: 'Action', _0: a};
+};
+var _user$project$Data_Page$Port = function (a) {
+	return {ctor: 'Port', _0: a};
+};
+var _user$project$Data_Page$Light = function (a) {
+	return {ctor: 'Light', _0: a};
+};
+var _user$project$Data_Page$Dimmer = function (a) {
+	return {ctor: 'Dimmer', _0: a};
+};
+var _user$project$Data_Page$decoderContent = _elm_lang$core$Json_Decode$oneOf(
+	{
+		ctor: '::',
+		_0: A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Page$Dimmer, _user$project$Data_Dimmer$decoder),
+		_1: {
+			ctor: '::',
+			_0: A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Page$Light, _user$project$Data_Light$decoder),
+			_1: {
+				ctor: '::',
+				_0: A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Page$Sunblind, _user$project$Data_Sunblind$decoder),
+				_1: {
+					ctor: '::',
+					_0: A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Page$Port, _user$project$Data_Port$decoder),
+					_1: {
+						ctor: '::',
+						_0: A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Page$Action, _user$project$Data_Action$decoder),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		}
+	});
+var _user$project$Data_Page$decoder = A7(
+	_elm_lang$core$Json_Decode$map6,
+	_user$project$Data_Page$Page,
+	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'number', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'title', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'description', _elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'content',
+		_elm_lang$core$Json_Decode$array(_user$project$Data_Page$decoderContent)));

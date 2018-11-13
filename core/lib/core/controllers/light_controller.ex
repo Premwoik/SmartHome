@@ -31,7 +31,7 @@ defmodule Core.Controllers.LightController do
   def toggle(lights) do
     lights
     |> Enum.split_with(fn light -> light.port.state end)
-    |> fn {on, off} -> [turn_off(on), turn_off(on)] end.()
+    |> fn {off, on} -> [turn_off(off), turn_on(on)] end.()
     |> flatten_result()
   end
 
@@ -47,7 +47,7 @@ defmodule Core.Controllers.LightController do
     if dimmer.fill > 0 do
       time = Dimmer.fill_to_time(dimmer, brightness)
       if time > 0 do
-        new_dimmer_port = %Port{dimmer.port | timeout: time}
+        new_dimmer_port = %Port{DB.Repo.preload(dimmer.port, :device) | timeout: time}
         case BasicController.turn_on([new_dimmer_port]) do
           :ok ->
             Dimmer.update_fill(dimmer, brightness)
@@ -63,9 +63,13 @@ defmodule Core.Controllers.LightController do
 
 
   # Privates
-  defp prepare_for_basic(any) do
+  defp prepare_for_basic(any) when is_list any do
     any
     |> Enum.map(&(&1.port))
+    |> DB.Repo.preload(:device)
+  end
+  defp prepare_for_basic(any) do
+    any
     |> DB.Repo.preload(:device)
   end
 

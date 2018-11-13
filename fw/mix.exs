@@ -45,7 +45,7 @@ defmodule Fw.MixProject do
       {:nerves, "~> 1.3", runtime: false},
       {:shoehorn, "~> 0.4"},
       {:db, path: "../db"},
-      {:socket_test2, path: "../socket_test2"},
+      {:core, path: "../core"},
       {:ui, path: "../ui"}
     ] ++ deps(@target)
   end

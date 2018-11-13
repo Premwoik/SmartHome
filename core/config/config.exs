@@ -22,7 +22,7 @@ use Mix.Config
 #
 # You can also configure a 3rd-party app:
 #
-#config :logger, level: :info
+config :logger, level: :info
 ##
 
 config :core, :devices_module, Core.Devices

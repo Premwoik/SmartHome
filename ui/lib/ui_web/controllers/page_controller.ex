@@ -1,6 +1,9 @@
 defmodule UiWeb.PageController do
   use UiWeb, :controller
 
+
+  alias DB.{Repo, Page, PageContent}
+
   def index(conn, _params) do
     render conn, "index.html"
   end
@@ -10,18 +13,27 @@ defmodule UiWeb.PageController do
 
   """
   def all(conn, _params) do
-    data = %{dimmers: DB.Dao.json_dimmers, sunblinds: DB.Dao.json_sunblind}
+    data = Page.all()
     json conn, data
   end
 
-  def sunblinds(conn, _params) do
-    data = DB.Dao.json_sunblind
+  def short(conn, _params) do
+    data = Page.all_short_info()
     json conn, data
   end
 
-  def dimmers(conn, _params) do
-    data = DB.Dao.json_dimmers
-    json conn, data
+  def page_content(conn, %{"id" => id}) do
+    id
+    |> PageContent.get_content_id()
+    |> PageContent.get_cont_list()
+    |> fn data -> json conn, data end.()
+  end
+
+  def page(conn, %{"id" => id}) do
+    id
+    |> Page.page_view()
+    |> fn data -> json conn, data end.()
+
   end
 
 end

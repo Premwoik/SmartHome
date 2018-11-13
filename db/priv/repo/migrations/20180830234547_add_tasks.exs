@@ -14,6 +14,7 @@ defmodule DB.Repo.Migrations.AddTasks do
       add :action_id, references("actions", on_delete: :nilify_all)
       add :device_id, references("devices", on_delete: :nilify_all)
       add :frequency, :integer
+      add :execution_time, :time
       add :limit, :integer
       add :start_date, :naive_datetime
       add :end_date, :naive_datetime

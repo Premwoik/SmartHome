@@ -22,9 +22,9 @@ defmodule DB.Port do
     port
     |> cast(params, [:state, :number, :name, :type])
     |> validate_required([:state])
-#    |> validate_format(:email, ~r/@/)
-#    |> validate_inclusion(:age, 18..100)
-#    |> unique_constraint(:email)
+    #    |> validate_format(:email, ~r/@/)
+    #    |> validate_inclusion(:age, 18..100)
+    #    |> unique_constraint(:email)
   end
 
   def get(ids) do
@@ -44,4 +44,13 @@ defmodule DB.Port do
                       state: state
                     ]
   end
+
+  def update_state2(ports, state) do
+    for port <- ports do
+      Ecto.Changeset.change(port, state: state)
+      |> Repo.update()
+    end
+  end
+
+
 end

@@ -24,6 +24,7 @@ defmodule Core.Controllers.SunblindController do
     |> proceed_result(sunblinds, "open")
   end
 
+
   @impl true
   def toggle(sunblinds) do
     for {state, sunblinds_} <- Enum.group_by(sunblinds, &(&1.state)) do
@@ -34,43 +35,95 @@ defmodule Core.Controllers.SunblindController do
       end
     end
     |> flatten_result()
-
   end
 
-#
-#  def set_position(sunblinds, position, check_type \\ true)
-#  def set_position(sunblinds, position, true) do
-#    for {state, sunblinds_} <- Enum.group_by(sunblinds, &(&1.type)) do
-#      case state do
-#        "pulse" -> set_position(sunblinds_, position, false)
-#        _other -> {:error, sunblinds_, "Wrong sunblind type"}
-#      end
-#    end
-#    |> flatten_result()
-#  end
-#  def set_position(sunblinds, position, false) do
-#    for s <- sunblinds do
-#      Task.start fn ->
-#
-#      end
-#    end
-#    |> flatten_result()
-#  end
-#
-#
-#  defp prepare(s, position) do
-#    dir_up? = s_.direction == "up"
-#    pos_gt? = s.position < p
-#
-#    cond do
-#      dir_up? && pos_gt? -> :ok
-#      dir_up? && !pos_gt? -> :stop_and_go
-#      !dir_up? && pos_gt? -> :stop_and_go
-#      true -> :ok
-#    end
-#  end
+  def click(sunblind) do
+    case sunblind.state do
+      "close" -> open([sunblind])
+      "open" -> close([sunblind])
+      "position" -> change_position(sunblind)
+      "in_move" -> {:error, "still is moving"}
+    end
+  end
+
+  def calibrate(sunblind, state) do
+    Sunblind.update_state(sunblind, state)
+  end
+
+  def change_position(sunblind) do
+    [sunblind]
+    |> prepare_for_basic()
+    |> BasicController.impulse()
+  end
 
 
+  #
+  #  def set_position(sunblinds, position) do
+  #    for s <- sunblinds do
+  #      Task.start fn ->
+  #
+  #      end
+  #    end
+  #    |> flatten_result()
+  #  end
+
+
+
+
+  #  defp proceed_position(sunblind, position) do
+  #    abs_pos = abs(s.position - position)
+  #    time_to_sleep = sunblind.full_open_time * abs_pos / 100
+  #    ports = prepare_for_basic([sunblind])
+  #
+  #    with sun <- to_position_mode(sunblind),
+  #         {:ok, sun_} <- prepare_direction(sun, position),
+  #         :ok <- BasicController.turn_on(ports),
+  #         :ok <- BasicController.recv_postpone_resp(1000),
+  #         :ok <- Process.sleep(time_to_sleep),
+  #         :ok <- BasicController.turn_on(ports),
+  #         :ok <- BasicController.recv_postpone_resp(1000)
+  #      do
+  #      %{toggle_direction(sun_) | position: position}
+  #      :ok
+  #    end
+  #
+  #  end
+  #
+  #  defp to_position_mode(sunblind) do
+  #    case sunblind.position do
+  #      "position" -> sunblind
+  #      "open" -> %{sunblind | state: "position", position: 0, direction: "down"}
+  #      "close" -> %{sunblind | state: "position", position: 100, direction: "up"}
+  #    end
+  #  end
+  #
+  #  defp prepare_direction(sun, pos) do
+  #    if (sun.direction == "up") == (sun.position < pos) do
+  #      {:ok, sun}
+  #    else
+  #      revert_direction(sun)
+  #    end
+  #  end
+  #
+  #  @spec revert_direction(s :: %DB.Sunblind{}) :: %DB.Sunblind{}
+  #  defp revert_direction(s) do
+  #    ports = prepare_for_basic [s]
+  #
+  #    with :ok <- BasicController.turn_on(ports),
+  #         :ok <- BasicController.recv_postpone_resp(1000),
+  #         :ok <- BasicController.turn_off(ports),
+  #         :ok <- BasicController.recv_postpone_resp(1000)
+  #      do
+  #      toggle_direction(s)
+  #    end
+  #  end
+  #
+  #  defp toggle_direction(sunblind) do
+  #    case sunblind.direction do
+  #      "up" -> {:ok, %{sunblind | direction: "down"}}
+  #      "down" -> {:ok, %{sunblind | direction: "up"}}
+  #    end
+  #  end
 
   #Privates
 

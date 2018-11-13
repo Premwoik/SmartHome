@@ -106,9 +106,9 @@ defmodule Core.Tasks do
   defp execution_loop(task, state, num \\ 0) do
     receive do
     after
-      task.frequency ->
+      get_wait_time(task) ->
         new_state =
-          module(task).execute(task.action, task.device, state)
+          module(task).execute(task, state)
           |> case do
                {:ok, state_} -> state_
                :error -> state
@@ -120,6 +120,17 @@ defmodule Core.Tasks do
         end
     end
   end
+
+  defp get_wait_time(%{execution_time: nil, frequency: freq}), do: freq
+  defp get_wait_time(%{execution_time: time}) do
+    Time.diff(time, Time.utc_now(), :milliseconds)
+    |> fn
+         t when t < 0 -> 86399000 + t
+         t -> t
+       end.()
+    |> IO.inspect()
+  end
+
 
 
   defp next_execution?(%{end_date: end_date, limit: limit}, num)
