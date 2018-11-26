@@ -3,26 +3,24 @@ import Json.Decode as Decode exposing (string, map, field, Decoder, bool, map4, 
 import Data.Id as Id
 
 import Http
-import Request
+import Request exposing (data)
 import Json.Encode as Encode
 
 
 type alias Sunblind =
     {
-        id : Id.Id,
+        id : Int,
         name : String,
         state : State,
-        order : Int,
         sunblind_ : String
     }
 
 
 decoder : Decoder Sunblind
 decoder =
-    Decode.map5 Sunblind (field "id" Id.decoder)
+    Decode.map4 Sunblind (field "id" Decode.int)
             (field "name" string)
             (field "state" stateDecoder)
-            (field "order" Decode.int)
             (field "sunblind"  string)
 
 
@@ -66,11 +64,6 @@ isManual s =
     s.state == Position
 
 
-getId : Sunblind -> Int
-getId sun =
-    Id.toInt sun.id
-
-
 isOpen : Sunblind -> Bool
 isOpen sun =
     sun.state == Open
@@ -106,65 +99,24 @@ set s state =
 -- API
 
 
-
-setOn : Sunblind -> Http.Request Sunblind
-setOn s =
-    let
-        url_ = Request.url ++ "sunblinds/setOn"
-        data = Encode.object
-            [ ("id", Encode.int (Id.toInt s.id))
-            ]
-    in
-    Http.post url_ (Http.jsonBody data) decoder
-
-setOff : Sunblind -> Http.Request Sunblind
-setOff s =
-    let
-        url_ = Request.url ++ "sunblinds/setOff"
-        data = Encode.object
-            [ ("id", Encode.int (Id.toInt s.id))
-            ]
-    in
-    Http.post url_ (Http.jsonBody data) decoder
-
-changePosition : Sunblind -> Http.Request Sunblind
-changePosition s =
-     let
-        url_ = Request.url ++ "sunblinds/changePosition"
-        data = Encode.object
-            [ ("id", Encode.int (Id.toInt s.id))
-            ]
-     in
-     Http.post url_ (Http.jsonBody data) decoder
-
-
 click : Sunblind -> Http.Request Sunblind
 click  s =
       let
-         url_ = Request.url ++ "sunblinds/click"
-         data = Encode.object
-             [ ("id", Encode.int (Id.toInt s.id))
-             ]
+         url_ = Request.url ++ "sunblinds/click/" ++ toString(s.id)
       in
-     Request.post url_ (Http.jsonBody data) decoder
+     Request.post url_ Http.emptyBody (data decoder)
 
-toggle : Sunblind -> Http.Request Sunblind
-toggle s =
-    case s.state of
-       Open -> setOff s
-       Close -> setOn s
-       _ -> changePosition s
 
 setState : Sunblind -> State -> Http.Request Sunblind
 setState s state =
     let
         url_ = Request.url ++ "sunblinds/calibrate"
-        data = Encode.object
-            [ ("id", Encode.int (Id.toInt s.id))
+        data_ = Encode.object
+            [ ("id", Encode.int s.id)
             , ("state", stateEncoder state)
             ]
     in
-    Http.post url_ (Http.jsonBody data) decoder
+    Http.post url_ (Http.jsonBody data_) (data decoder)
 
 
 toggleManual : Sunblind -> Http.Request Sunblind

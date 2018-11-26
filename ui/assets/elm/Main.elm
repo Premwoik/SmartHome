@@ -16,81 +16,149 @@ import Material.Color as Color
 import Material.Options as Options exposing (css)
 import Material.Typography as Typography
 import Material.Elevation as Elevation
+import Task
 
 import RouteUrl as Routing
 import Navigation
 import Array exposing (Array)
 import Dict exposing (Dict)
-import Page.Action
 import Http
-import Data.Page exposing (PageShort, Page)
-import Page.Page as Page
+import Data.Dashboard exposing (DashboardShort, Dashboard)
+import Page.Dashboard as Dashboard
 import Request
-import Request.Room
 import Data.Id exposing (Id)
 import Material.Helpers exposing (lift)
 import Array
+import Admin as Admin
 
--- MODEL
+import Phoenix.Socket
+import Phoenix.Channel
+
+
+-- MODE
+
+type TabsType
+    = DashboardType
+    | AdminType
+    | DefaultType
+
 
 type alias Model =
     { mdl : Material.Model
-    , page : Page.Model
+    , dashboard : Dashboard.Model
+    , admin : Admin.Model
+    , tabsType : TabsType
     , selectedTab : Int
-    , tabs : Array PageShort
+    , phxSocket : Phoenix.Socket.Socket Msg
     }
 
 model : Model
 model =
     { mdl = Material.model
-    , selectedTab = 1
-    , page = Page.model
-    , tabs = [] |> Array.fromList
+    , dashboard = Dashboard.model
+    , admin = Admin.model
+    , tabsType = DefaultType
+    , selectedTab = 0
+    , phxSocket = Phoenix.Socket.init "ws://localhost:4000/socket/websocket"
+          |> Phoenix.Socket.withDebug
+          |> Phoenix.Socket.on "gierczak" "dashboard:lobby" (Dashboard.ReceiveDashboardMessage >> DashboardMsg)
     }
 
 -- UPDATE
 
 type Msg
     = SelectTab Int
+    | BackHome
     | AddressChange String
-    | LoadTabs (Result Http.Error (List PageShort))
     | Mdl (Material.Msg Msg)
-    | PageMsg Page.Msg
+    | DashboardMsg Dashboard.Msg
+    | AdminMsg Admin.Msg
+    | PhoenixMsg (Phoenix.Socket.Msg Msg)
+    | JoinChannel
 
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
+    let
+        _ = Debug.log "MAIN_LOG: " msg
+    in
     case msg of
 
-        LoadTabs (Ok data) ->
-            let
-                tabs_ = Array.fromList <| List.sortBy .number data
-            in
-            ({model | tabs = tabs_}, Cmd.none)
-        LoadTabs (Err err) ->
-            ({model | tabs = Array.fromList []}, Cmd.none)
+        PhoenixMsg msg ->
+           let
+             ( phxSocket, phxCmd ) = Phoenix.Socket.update msg model.phxSocket
+           in
+             ( { model | phxSocket = phxSocket }
+             , Cmd.map PhoenixMsg phxCmd
+             )
 
-        SelectTab k ->
-            ( { model | selectedTab = k }, switchTab k (Page.init) model)
+        BackHome ->
+            update (SelectTab 0) {model | tabsType = DefaultType}
+
+        SelectTab k -> --TODO make this more beautiful
+            case Array.get k (Array.fromList tabs) of
+                Just (_, _, _, _, cmd_, type_, ch) ->
+                    let
+                       (phxSocLeave, phxCmdLeave) =
+                           case Array.get model.selectedTab tabsChannel of
+                               Just (Just ch_) ->
+                                   Phoenix.Socket.leave ch_ model.phxSocket
+                               _ ->
+                                   (model.phxSocket, Cmd.none)
+
+                       (phxSocJoin, phxCmdJoin) =
+                           ch |> Maybe.map (\x -> join x) >> Maybe.withDefault (phxSocLeave, phxCmdLeave)
+
+                       join ch_ = Phoenix.Socket.join (Phoenix.Channel.init ch_) phxSocLeave
+                       phxMap x = Cmd.map PhoenixMsg x
+                    in
+                    case k == model.selectedTab of
+                        True ->
+                            ( model , Cmd.none)
+                        False ->
+                            ( { model | selectedTab = k, tabsType = type_, phxSocket = phxSocJoin}
+                            , Cmd.batch [phxMap phxCmdLeave, phxMap phxCmdJoin, cmd_ model]
+                            )
+                Nothing ->
+                    ( model, Cmd.none )
+
+        JoinChannel ->
+            let
+                channel =
+                    Phoenix.Channel.init "dashboard:lobby"
+
+                ( phxSocket, phxCmd ) =
+                    Phoenix.Socket.join channel model.phxSocket
+            in
+                ( { model | phxSocket = phxSocket }
+                , Cmd.map PhoenixMsg phxCmd
+                )
 
         AddressChange tab ->
-            ({model | selectedTab = nameToNumber tab model}, Cmd.none)
+            let
+                k = 0
+            in
+            update (SelectTab k) model
 
         Mdl action_ ->
             Material.update Mdl action_ model
 
-        PageMsg a ->
-            lift .page (\m x -> {m | page = x}) PageMsg Page.update a model
+        DashboardMsg a ->
+            lift .dashboard (\m x -> {m | dashboard = x}) DashboardMsg Dashboard.update a model
+
+        AdminMsg a ->
+            lift .admin (\m x -> {m | admin = x}) AdminMsg Admin.update a model
 
 
-switchTab : Int -> (PageShort -> Cmd Page.Msg) -> Model -> Cmd Msg
-switchTab k just =
-    .tabs >> Array.get k >> Maybe.map (Cmd.map PageMsg << just) >> Maybe.withDefault (Cmd.none)
 
-nameToNumber : String -> Model -> Int
-nameToNumber name =
-    .tabs >> Array.filter (\x -> x.name == name) >> Array.map (\x -> x.number) >> Array.get 0 >> Maybe.withDefault -1
+--nameToNumber : String -> Model -> Int
+--nameToNumber name =
+--    let
+--        _ = Debug.log "nameToNumber" name
+--    in
+--    .tabs >> Array.filter (\x -> (String.toLower x.name) == name) >> Array.map (\x -> x.number) >> Array.get 0 >> Maybe.withDefault -1
+
 
 
 -- VIEW
@@ -103,52 +171,141 @@ view =
 view_ : Model -> Html Msg
 view_ model =
     let
-        top = .page >> Page.view >> Html.map PageMsg <| model
---            (Array.get model.selectedTab tabViews |> Maybe.withDefault e404) model
+        top = (Array.get model.selectedTab tabsViews |> Maybe.withDefault e404) model
+        selectedTab =
+            case model.tabsType of
+                DefaultType -> model.selectedTab
+                DashboardType -> model.dashboard.selectedTab
+                AdminType -> model.admin.selectedTab
+        onSelectTab =
+            case model.tabsType of
+                DefaultType -> SelectTab
+                DashboardType -> (\x ->DashboardMsg (Dashboard.SelectTab x))
+                AdminType -> (\x -> AdminMsg (Admin.SelectTab x))
+
     in
       Scheme.top <|  Layout.render Mdl
             model.mdl
-            [ Layout.selectedTab model.selectedTab
-            , Layout.onSelectTab SelectTab
+            [ Layout.selectedTab selectedTab
+            , Layout.onSelectTab onSelectTab
             , Layout.fixedHeader
-            , Layout.scrolling
+            , Layout.fixedDrawer
+            , Layout.waterfall True
             ]
-            { drawer = []
+            { drawer = drawer model
             , header = header
-            , main = [top]
+            , main =
+                [ (node "meta" [ name "viewport", content "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" ] [])
+                , top
+                ]
             , tabs =
                     (  tabTitles model, [] )
 
             }
 
+drawer : Model -> List (Html Msg)
+drawer model =
+    let
+        weather =
+            Options.div
+                [ css "background-color" "red"
+                , css  "height" "100px"
+                , css  "width" "100px"
+                ] []
+        liColor k = if model.selectedTab == k then css "color" "red" else Options.nop
+    in
+    [ Options.div
+        [ css "margin" "5px"
+        ]
+        [ weather
+        , Lists.ul []
+            (List.map (\(k, x) -> Lists.li [Options.onClick (SelectTab k), liColor k] [Lists.content [] [x]]) mIndTabsTitles)
+        ]
+    ]
 
 header : List (Html Msg)
 header =
-    [div []
+    [div [style
+                          [ ( "float", "left" )
+                          , ( "cursor", "default")
+                          , ( "padding-left", "50px" )
+                          ]
+                          ]
         [ h5
-            [ style
-                [ ( "float", "left" )
-                , ( "padding-left", "40px" )
-                ]
+            [ onClick BackHome
             ]
             [ text "easyHome" ]
         ]]
 
+
+
+tabs : List (String, String, (Model -> Html Msg), (Model -> Sub Msg), (Model -> Cmd Msg), TabsType, Maybe String)
+tabs =
+    [ ("Home", "home", (\_ -> div [] [text "HOME"]), (\_ -> Sub.none), (\_ -> Cmd.none), DefaultType, Nothing)
+    , ( "Dashboard", "dashboard", .dashboard >> Dashboard.view >> Html.map DashboardMsg
+      , .dashboard >> Dashboard.subs >> Sub.map DashboardMsg, .dashboard >> Dashboard.init >> Cmd.map DashboardMsg
+      , DashboardType, Just "dashboard:lobby"
+      )
+    , ( "Management", "admin", .admin >> Admin.view >> Html.map AdminMsg
+      , .admin >> Admin.subs >> Sub.map AdminMsg, .admin >> Admin.init >> Cmd.map AdminMsg, AdminType
+      , Nothing
+      )
+--    , ("___ ", "", (\_ -> div [] []), (\_ -> Sub.none), (\_ -> Cmd.none), DefaultType)
+    ]
+
 tabTitles : Model -> List (Html a)
 tabTitles model =
-      Array.map (\x -> text x.name) >> Array.toList <| model.tabs
+    case model.tabsType of
+      DefaultType ->
+          mTabsTitles
+      AdminType ->
+          Admin.tabsTitles |>  List.map (\x -> text x)
+      DashboardType ->
+          model |> .dashboard >> Dashboard.tabsTitles >> List.map (\x -> text x)
+
+mTabsTitles : List (Html a)
+mTabsTitles =
+    tabs |> List.map (\(x, _, _, _, _, _, _) -> text x)
+
+mIndTabsTitles : List (Int, Html a)
+mIndTabsTitles =
+    tabs |> List.indexedMap (\y (x, _, _, _, _, _, _) -> (y, text x))
 
 
---e404 : Model -> Html Msg
---e404 _ =
---    div
---        []
---        [ Options.styled Html.h1
---            [ Options.cs "mdl-typography--display-4"
---            , Typography.center
---            ]
---            [ text "404" ]
---        ]
+tabsViews : Array (Model -> Html Msg)
+tabsViews =
+    tabs |> List.map (\(_, _, v, _, _, _, _) -> v) >> Array.fromList
+
+tabsSubs : Array (Model -> Sub Msg)
+tabsSubs =
+    tabs |> List.map (\(_, _, _, s, _, _, _) -> s) >> Array.fromList
+
+tabsUrls : Array String
+tabsUrls =
+    tabs |> List.map (\(_, u, _, _, _, _, _) -> u) >> Array.fromList
+
+--tabsInit : Array (Model -> Cmd Msg)
+--tabsInit =
+--    tabs |> List.map (\(_, _, _, _, i, _) -> i) >> Array.fromList
+
+--tabsType : Array TabsType
+--tabsType =
+--    tabs |> List.map (\(_, _, _, _, _, t) -> t) >> Array.fromList
+
+tabsChannel : Array (Maybe String)
+tabsChannel =
+    tabs |> List.map (\(_,_,_,_,_,_,c) -> c) >> Array.fromList
+
+
+e404 : Model -> Html Msg
+e404 _ =
+  div []
+    [ Options.styled Html.h1
+        [ Options.cs "mdl-typography--display-4"
+        , Typography.center
+        ]
+        [ text "404" ]
+    ]
 
 
 -- ROUTING
@@ -158,15 +315,13 @@ tabTitles model =
 
 urlOf : Model -> String
 urlOf model =
-    let
-        short = case Array.get model.selectedTab model.tabs of
-                    Nothing -> ""
-                    Just val -> val.name |> String.toLower
-    in
-    "#" ++ short
+    "#" ++ (Array.get model.selectedTab tabsUrls |> Maybe.withDefault "")
 
 delta2url : Model -> Model -> Maybe Routing.UrlChange
 delta2url model1 model2 =
+    let
+        _ = Debug.log "m1"
+    in
     if model1.selectedTab /= model2.selectedTab then
         { entry = Routing.NewEntry
         , url = urlOf model2
@@ -178,6 +333,9 @@ delta2url model1 model2 =
 
 location2messages : Navigation.Location -> List Msg
 location2messages location =
+    let
+        _ = Debug.log "Location" location.hash
+    in
     [ case String.dropLeft 1 location.hash of
         "" ->
             SelectTab 0
@@ -187,11 +345,23 @@ location2messages location =
 
 init : Cmd Msg
 init =
-    Cmd.batch [Material.init Mdl, Request.send LoadTabs Page.getTabs]
+    Cmd.batch [Material.init Mdl] --, Task.succeed JoinChannel |> Task.perform identity]
 
 subs : Model -> Sub Msg
 subs model =
-    Sub.batch [Material.subscriptions Mdl model, Sub.map PageMsg (Page.subs model.page)]
+    Sub.batch
+        [ Material.subscriptions Mdl model
+        , Sub.map DashboardMsg (Dashboard.subs model.dashboard)
+        , Phoenix.Socket.listen model.phxSocket PhoenixMsg
+        ]
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.batch
+        [ model |> .selectedTab >> (\x -> Array.get x tabsSubs) >> Maybe.map (\x -> x model) >> Maybe.withDefault Sub.none
+        , Material.subscriptions Mdl model
+        ]
 
 
 main : Routing.RouteUrlProgram Never Model Msg
@@ -200,15 +370,15 @@ main =
         { delta2url = delta2url
         , location2messages = location2messages
         , init =
-            ( model
---                | mdl =
---                    Layout.setTabsWidth 250 model.mdl
-                    {- elm gives us no way to measure the actual width of tabs. We
+            ( {model
+                | mdl =
+                    Layout.setTabsWidth 2124 model.mdl
+                    {- elm gives us no wzy to measure the actual width of tabs. We
                        hardwire it. If you add a tab, remember to update this. Find the
                        new value using:
                        document.getElementsByClassName("mdl-layout__tab-bar")[0].scrollWidth
                     -}
---              }
+              }
             , init
             )
         , view = view

@@ -14,18 +14,18 @@ type alias Port =
     , name : String
     , state : Bool
 --    , portType: String
-    , order : Int
+--    , order : Int
     , port_ : String
     }
 
 decoder : Decoder Port
 decoder =
-    Decode.map5 Port
+    Decode.map4 Port
         (field "id" Id.decoder)
         (field "name" string)
         (field "state" bool)
 --        (field "port_type" string)
-        (field "order" int)
+--        (field "order" int)
         (field "port" string)
 
 type Type
@@ -41,22 +41,20 @@ type Type
 setOn : Port -> Http.Request Port
 setOn p =
     let
-        url_ = Request.url ++ "ports/setOn"
-        data = Encode.object
-            [ ("id", Encode.int (Id.toInt p.id))
-            ]
+        url_ = Request.url ++ "ports/setOn/" ++ (toString (Id.toInt p.id))
+        dec = Decode.at ["data"] decoder
+
     in
-    Http.post url_ (Http.jsonBody data) decoder
+    Http.post url_ Http.emptyBody dec
 
 setOff : Port -> Http.Request Port
 setOff p =
     let
-        url_ = Request.url ++ "ports/setOff"
-        data = Encode.object
-            [ ("id", Encode.int (Id.toInt p.id))
-            ]
+        url_ = Request.url ++ "ports/setOff/" ++ (toString (Id.toInt p.id))
+        dec = Decode.at ["data"] decoder
+
     in
-    Http.post url_ (Http.jsonBody data) decoder
+    Http.post url_ Http.emptyBody dec
 
 
 toggle : Port -> Http.Request Port

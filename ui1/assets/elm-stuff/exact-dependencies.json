@@ -1,0 +1,22 @@
+{
+    "debois/elm-mdl": "8.1.0",
+    "elm-lang/navigation": "2.1.0",
+    "Fresheyeball/elm-guards": "1.0.1",
+    "elm-lang/virtual-dom": "2.0.4",
+    "elm-lang/mouse": "1.0.1",
+    "elm-lang/dom": "1.1.1",
+    "elm-lang/websocket": "1.0.2",
+    "elm-lang/html": "2.0.0",
+    "rgrempel/elm-route-url": "4.0.0",
+    "rtfeldman/elm-css": "15.1.0",
+    "fbonetti/elm-phoenix-socket": "2.2.0",
+    "elm-lang/http": "1.0.0",
+    "rtfeldman/hex": "1.0.0",
+    "elm-community/list-split": "1.0.2",
+    "debois/elm-dom": "1.2.3",
+    "elm-lang/window": "1.0.1",
+    "Skinney/murmur3": "2.0.6",
+    "sporto/erl": "13.0.2",
+    "ccapndave/elm-update-extra": "3.0.0",
+    "elm-lang/core": "5.1.1"
+}

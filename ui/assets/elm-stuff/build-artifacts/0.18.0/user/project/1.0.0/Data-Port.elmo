@@ -1,52 +1,51 @@
-var _user$project$Data_Port$Port = F5(
-	function (a, b, c, d, e) {
-		return {id: a, name: b, state: c, order: d, port_: e};
+var _user$project$Data_Port$Port = F4(
+	function (a, b, c, d) {
+		return {id: a, name: b, state: c, port_: d};
 	});
-var _user$project$Data_Port$decoder = A6(
-	_elm_lang$core$Json_Decode$map5,
+var _user$project$Data_Port$decoder = A5(
+	_elm_lang$core$Json_Decode$map4,
 	_user$project$Data_Port$Port,
 	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
 	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'state', _elm_lang$core$Json_Decode$bool),
-	A2(_elm_lang$core$Json_Decode$field, 'order', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'port', _elm_lang$core$Json_Decode$string));
 var _user$project$Data_Port$setOn = function (p) {
-	var data = _elm_lang$core$Json_Encode$object(
+	var dec = A2(
+		_elm_lang$core$Json_Decode$at,
 		{
 			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(
-					_user$project$Data_Id$toInt(p.id))
-			},
+			_0: 'data',
 			_1: {ctor: '[]'}
-		});
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'ports/setOn');
-	return A3(
-		_elm_lang$http$Http$post,
-		url_,
-		_elm_lang$http$Http$jsonBody(data),
+		},
 		_user$project$Data_Port$decoder);
+	var url_ = A2(
+		_elm_lang$core$Basics_ops['++'],
+		_user$project$Request$url,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'ports/setOn/',
+			_elm_lang$core$Basics$toString(
+				_user$project$Data_Id$toInt(p.id))));
+	return A3(_elm_lang$http$Http$post, url_, _elm_lang$http$Http$emptyBody, dec);
 };
 var _user$project$Data_Port$setOff = function (p) {
-	var data = _elm_lang$core$Json_Encode$object(
+	var dec = A2(
+		_elm_lang$core$Json_Decode$at,
 		{
 			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(
-					_user$project$Data_Id$toInt(p.id))
-			},
+			_0: 'data',
 			_1: {ctor: '[]'}
-		});
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'ports/setOff');
-	return A3(
-		_elm_lang$http$Http$post,
-		url_,
-		_elm_lang$http$Http$jsonBody(data),
+		},
 		_user$project$Data_Port$decoder);
+	var url_ = A2(
+		_elm_lang$core$Basics_ops['++'],
+		_user$project$Request$url,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'ports/setOff/',
+			_elm_lang$core$Basics$toString(
+				_user$project$Data_Id$toInt(p.id))));
+	return A3(_elm_lang$http$Http$post, url_, _elm_lang$http$Http$emptyBody, dec);
 };
 var _user$project$Data_Port$toggle = function (p) {
 	return p.state ? _user$project$Data_Port$setOff(p) : _user$project$Data_Port$setOn(p);

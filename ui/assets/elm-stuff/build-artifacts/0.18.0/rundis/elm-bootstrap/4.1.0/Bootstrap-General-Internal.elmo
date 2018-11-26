@@ -1,0 +1,63 @@
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$screenSizeOption = function (size) {
+	var _p0 = size;
+	switch (_p0.ctor) {
+		case 'XS':
+			return _elm_lang$core$Maybe$Nothing;
+		case 'SM':
+			return _elm_lang$core$Maybe$Just('sm');
+		case 'MD':
+			return _elm_lang$core$Maybe$Just('md');
+		case 'LG':
+			return _elm_lang$core$Maybe$Just('lg');
+		default:
+			return _elm_lang$core$Maybe$Just('xl');
+	}
+};
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$horizontalAlignOption = function (align) {
+	var _p1 = align;
+	switch (_p1.ctor) {
+		case 'Left':
+			return 'start';
+		case 'Center':
+			return 'center';
+		case 'Right':
+			return 'end';
+		case 'Around':
+			return 'around';
+		default:
+			return 'between';
+	}
+};
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$hAlignClass = function (_p2) {
+	var _p3 = _p2;
+	return _elm_lang$html$Html_Attributes$class(
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'justify-content-',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				A2(
+					_elm_lang$core$Maybe$withDefault,
+					'',
+					A2(
+						_elm_lang$core$Maybe$map,
+						function (v) {
+							return A2(_elm_lang$core$Basics_ops['++'], v, '-');
+						},
+						_rundis$elm_bootstrap$Bootstrap_General_Internal$screenSizeOption(_p3.screenSize))),
+				_rundis$elm_bootstrap$Bootstrap_General_Internal$horizontalAlignOption(_p3.align))));
+};
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$HAlign = F2(
+	function (a, b) {
+		return {screenSize: a, align: b};
+	});
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$Between = {ctor: 'Between'};
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$Around = {ctor: 'Around'};
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$Right = {ctor: 'Right'};
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$Center = {ctor: 'Center'};
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$Left = {ctor: 'Left'};
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$XL = {ctor: 'XL'};
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$LG = {ctor: 'LG'};
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$MD = {ctor: 'MD'};
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$SM = {ctor: 'SM'};
+var _rundis$elm_bootstrap$Bootstrap_General_Internal$XS = {ctor: 'XS'};

@@ -60,7 +60,7 @@ var _user$project$Page_Page$model = {
 	phxSocket: A4(
 		_fbonetti$elm_phoenix_socket$Phoenix_Socket$on,
 		'new:msg',
-		'dashboard1:lobby',
+		'dashboard:lobby',
 		_user$project$Page_Page$ReceiveChatMessage,
 		_fbonetti$elm_phoenix_socket$Phoenix_Socket$withDebug(
 			_fbonetti$elm_phoenix_socket$Phoenix_Socket$init('ws://localhost:4000/socket/websocket')))
@@ -514,7 +514,7 @@ var _user$project$Page_Page$update = F2(
 					return skip;
 				}
 			case 'JoinChannel':
-				var channel = _fbonetti$elm_phoenix_socket$Phoenix_Channel$init('dashboard1:lobby');
+				var channel = _fbonetti$elm_phoenix_socket$Phoenix_Channel$init('dashboard:lobby');
 				var _p20 = A2(_fbonetti$elm_phoenix_socket$Phoenix_Socket$join, channel, model.phxSocket);
 				var phxSocket = _p20._0;
 				var phxCmd = _p20._1;
@@ -526,7 +526,7 @@ var _user$project$Page_Page$update = F2(
 					_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Page_Page$PhoenixMsg, phxCmd)
 				};
 			case 'LeaveChannel':
-				var _p21 = A2(_fbonetti$elm_phoenix_socket$Phoenix_Socket$leave, 'dashboard1:lobby', model.phxSocket);
+				var _p21 = A2(_fbonetti$elm_phoenix_socket$Phoenix_Socket$leave, 'dashboard:lobby', model.phxSocket);
 				var phxSocket = _p21._0;
 				var phxCmd = _p21._1;
 				return {

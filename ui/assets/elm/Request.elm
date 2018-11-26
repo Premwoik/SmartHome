@@ -1,6 +1,6 @@
 module Request exposing (..)
 
-import Http exposing (Body, Request)
+import Http exposing (Body, Request, expectJson, request)
 import Json.Decode as Decode
 import Task
 
@@ -23,20 +23,41 @@ send2 msg request1 request2 =
 
 post : String -> Body -> Decode.Decoder a -> Request a
 post url body decoder =
-    let
-        headers =
---            [ Http.header "Access-Control-Request-Method" "POST, GET"
---            , Http.header "Access-Control-Request-Headers" "Content-Type"
---            , Http.header "Access-Control-Request-Origin" "http://localhost:8000"
-            []
-    in
-    Http.request
+    request
         { method = "POST"
-                , headers = headers
+                , headers = []
                 , url = url
                 , body = body
-                , expect = Http.expectJson decoder
+                , expect = expectJson decoder
                 , timeout = Nothing
                 , withCredentials = False
                 }
 
+
+data : Decode.Decoder a -> Decode.Decoder a
+data d =
+    Decode.at ["data"] d
+
+put : String -> Body -> Decode.Decoder a -> Request a
+put url body decoder =
+  request
+    { method = "PUT"
+    , headers = []
+    , url = url
+    , body = body
+    , expect = expectJson decoder
+    , timeout = Nothing
+    , withCredentials = False
+    }
+
+delete : String -> Request ()
+delete url =
+  request
+    { method = "DELETE"
+    , headers = []
+    , url = url
+    , body = Http.emptyBody
+    , expect = Http.expectStringResponse << always <| Ok ()
+    , timeout = Nothing
+    , withCredentials = False
+    }

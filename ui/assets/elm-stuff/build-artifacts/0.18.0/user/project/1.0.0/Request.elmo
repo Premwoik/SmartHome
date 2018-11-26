@@ -1,10 +1,49 @@
+var _user$project$Request$delete = function (url) {
+	return _elm_lang$http$Http$request(
+		{
+			method: 'DELETE',
+			headers: {ctor: '[]'},
+			url: url,
+			body: _elm_lang$http$Http$emptyBody,
+			expect: function (_p0) {
+				return _elm_lang$http$Http$expectStringResponse(
+					_elm_lang$core$Basics$always(_p0));
+			}(
+				_elm_lang$core$Result$Ok(
+					{ctor: '_Tuple0'})),
+			timeout: _elm_lang$core$Maybe$Nothing,
+			withCredentials: false
+		});
+};
+var _user$project$Request$put = F3(
+	function (url, body, decoder) {
+		return _elm_lang$http$Http$request(
+			{
+				method: 'PUT',
+				headers: {ctor: '[]'},
+				url: url,
+				body: body,
+				expect: _elm_lang$http$Http$expectJson(decoder),
+				timeout: _elm_lang$core$Maybe$Nothing,
+				withCredentials: false
+			});
+	});
+var _user$project$Request$data = function (d) {
+	return A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'data',
+			_1: {ctor: '[]'}
+		},
+		d);
+};
 var _user$project$Request$post = F3(
 	function (url, body, decoder) {
-		var headers = {ctor: '[]'};
 		return _elm_lang$http$Http$request(
 			{
 				method: 'POST',
-				headers: headers,
+				headers: {ctor: '[]'},
 				url: url,
 				body: body,
 				expect: _elm_lang$http$Http$expectJson(decoder),

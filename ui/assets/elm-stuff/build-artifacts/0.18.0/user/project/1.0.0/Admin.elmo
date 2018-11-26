@@ -1,0 +1,2217 @@
+var _user$project$Admin$editItemCss = A2(_debois$elm_mdl$Material_Options$css, 'margin-right', '1rem');
+var _user$project$Admin$listCellMdlId = 1;
+var _user$project$Admin$editCellMdlId = 2;
+var _user$project$Admin$dataToItems = function (model) {
+	var _p0 = model.tab;
+	switch (_p0.ctor) {
+		case 'TabActions':
+			return A2(
+				_elm_lang$core$List$map,
+				function (x) {
+					return {
+						ctor: '_Tuple4',
+						_0: x.id,
+						_1: x.$function,
+						_2: '-',
+						_3: _elm_lang$core$Basics$toString(x.active)
+					};
+				},
+				model.actions);
+		case 'TabDevices':
+			return A2(
+				_elm_lang$core$List$map,
+				function (x) {
+					return {ctor: '_Tuple4', _0: x.id, _1: x.name, _2: x.type_, _3: '-'};
+				},
+				model.devices);
+		case 'TabDimmers':
+			return A2(
+				_elm_lang$core$List$map,
+				function (x) {
+					return {
+						ctor: '_Tuple4',
+						_0: x.id,
+						_1: x.port_.name,
+						_2: '-',
+						_3: _elm_lang$core$Basics$toString(x.port_.state)
+					};
+				},
+				model.dimmers);
+		case 'TabPorts':
+			return A2(
+				_elm_lang$core$List$map,
+				function (x) {
+					return {
+						ctor: '_Tuple4',
+						_0: x.id,
+						_1: x.name,
+						_2: A2(
+							_elm_lang$core$Basics_ops['++'],
+							'type: ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								x.type_,
+								A2(_elm_lang$core$Basics_ops['++'], ';; mode: ', x.mode))),
+						_3: _elm_lang$core$Basics$toString(x.state)
+					};
+				},
+				model.ports);
+		default:
+			return A2(
+				_elm_lang$core$List$map,
+				function (x) {
+					return {ctor: '_Tuple4', _0: x.id, _1: x.name, _2: '', _3: '-'};
+				},
+				model.dashboards);
+	}
+};
+var _user$project$Admin$listedItemsView = function (_p1) {
+	var _p2 = _p1;
+	return A2(
+		_debois$elm_mdl$Material_Grid$cell,
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Phone, 4),
+			_1: {
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Tablet, 6),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Grid$offset, _debois$elm_mdl$Material_Grid$Tablet, 1),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Desktop, 8),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Grid$offset, _debois$elm_mdl$Material_Grid$Desktop, 2),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$h4,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(_p2._0),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$div,
+					{
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$center,
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _p2._1,
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Admin$subs = function (_p3) {
+	return _elm_lang$core$Platform_Sub$none;
+};
+var _user$project$Admin$Model = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return function (k) {
+											return {selectedTab: a, mdl: b, tab: c, creator: d, devices: e, ports: f, dimmers: g, actions: h, dashboards: i, editIndex: j, editData: k};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+var _user$project$Admin$TabDashboards = {ctor: 'TabDashboards'};
+var _user$project$Admin$TabDimmers = {ctor: 'TabDimmers'};
+var _user$project$Admin$TabPorts = {ctor: 'TabPorts'};
+var _user$project$Admin$TabDevices = {ctor: 'TabDevices'};
+var _user$project$Admin$TabActions = {ctor: 'TabActions'};
+var _user$project$Admin$None = {ctor: 'None'};
+var _user$project$Admin$model = {
+	selectedTab: -1,
+	mdl: _debois$elm_mdl$Material$model,
+	tab: _user$project$Admin$TabActions,
+	creator: _elm_lang$core$Maybe$Nothing,
+	devices: {ctor: '[]'},
+	ports: {ctor: '[]'},
+	dimmers: {ctor: '[]'},
+	actions: {ctor: '[]'},
+	dashboards: {ctor: '[]'},
+	editIndex: -1,
+	editData: _user$project$Admin$None
+};
+var _user$project$Admin$EditDashboardData = function (a) {
+	return {ctor: 'EditDashboardData', _0: a};
+};
+var _user$project$Admin$EditPortData = function (a) {
+	return {ctor: 'EditPortData', _0: a};
+};
+var _user$project$Admin$EditDimmerData = function (a) {
+	return {ctor: 'EditDimmerData', _0: a};
+};
+var _user$project$Admin$EditDeviceData = function (a) {
+	return {ctor: 'EditDeviceData', _0: a};
+};
+var _user$project$Admin$EditActionData = function (a) {
+	return {ctor: 'EditActionData', _0: a};
+};
+var _user$project$Admin$EditPort = function (a) {
+	return {ctor: 'EditPort', _0: a};
+};
+var _user$project$Admin$EditDashboard = function (a) {
+	return {ctor: 'EditDashboard', _0: a};
+};
+var _user$project$Admin$EditDevice = function (a) {
+	return {ctor: 'EditDevice', _0: a};
+};
+var _user$project$Admin$EditDimmer = function (a) {
+	return {ctor: 'EditDimmer', _0: a};
+};
+var _user$project$Admin$EditAction = function (a) {
+	return {ctor: 'EditAction', _0: a};
+};
+var _user$project$Admin$EditActionEndTime = function (a) {
+	return {ctor: 'EditActionEndTime', _0: a};
+};
+var _user$project$Admin$EditActionStartTime = function (a) {
+	return {ctor: 'EditActionStartTime', _0: a};
+};
+var _user$project$Admin$EditActionFrequency = function (a) {
+	return {ctor: 'EditActionFrequency', _0: a};
+};
+var _user$project$Admin$EditActionParams = function (a) {
+	return {ctor: 'EditActionParams', _0: a};
+};
+var _user$project$Admin$EditActionActive = function (a) {
+	return {ctor: 'EditActionActive', _0: a};
+};
+var _user$project$Admin$EditActionFunction = function (a) {
+	return {ctor: 'EditActionFunction', _0: a};
+};
+var _user$project$Admin$EditActionName = function (a) {
+	return {ctor: 'EditActionName', _0: a};
+};
+var _user$project$Admin$EditPortTimeout = function (a) {
+	return {ctor: 'EditPortTimeout', _0: a};
+};
+var _user$project$Admin$EditPortType = function (a) {
+	return {ctor: 'EditPortType', _0: a};
+};
+var _user$project$Admin$EditPortState = function (a) {
+	return {ctor: 'EditPortState', _0: a};
+};
+var _user$project$Admin$EditPortMode = function (a) {
+	return {ctor: 'EditPortMode', _0: a};
+};
+var _user$project$Admin$EditPortName = function (a) {
+	return {ctor: 'EditPortName', _0: a};
+};
+var _user$project$Admin$EditDeviceType = function (a) {
+	return {ctor: 'EditDeviceType', _0: a};
+};
+var _user$project$Admin$EditDevicePort = function (a) {
+	return {ctor: 'EditDevicePort', _0: a};
+};
+var _user$project$Admin$EditDeviceIp = function (a) {
+	return {ctor: 'EditDeviceIp', _0: a};
+};
+var _user$project$Admin$EditDeviceName = function (a) {
+	return {ctor: 'EditDeviceName', _0: a};
+};
+var _user$project$Admin$EditDimmerFill = function (a) {
+	return {ctor: 'EditDimmerFill', _0: a};
+};
+var _user$project$Admin$EditDimmerFullTime = function (a) {
+	return {ctor: 'EditDimmerFullTime', _0: a};
+};
+var _user$project$Admin$EditDimmerTime = function (a) {
+	return {ctor: 'EditDimmerTime', _0: a};
+};
+var _user$project$Admin$EditDimmerType = function (a) {
+	return {ctor: 'EditDimmerType', _0: a};
+};
+var _user$project$Admin$EditDimmerName = function (a) {
+	return {ctor: 'EditDimmerName', _0: a};
+};
+var _user$project$Admin$EditDashboardSunblinds = function (a) {
+	return {ctor: 'EditDashboardSunblinds', _0: a};
+};
+var _user$project$Admin$EditDashboardPorts = function (a) {
+	return {ctor: 'EditDashboardPorts', _0: a};
+};
+var _user$project$Admin$EditDashboardTasks = function (a) {
+	return {ctor: 'EditDashboardTasks', _0: a};
+};
+var _user$project$Admin$EditDashboardActions = function (a) {
+	return {ctor: 'EditDashboardActions', _0: a};
+};
+var _user$project$Admin$EditDashboardDevices = function (a) {
+	return {ctor: 'EditDashboardDevices', _0: a};
+};
+var _user$project$Admin$EditDashboardLights = function (a) {
+	return {ctor: 'EditDashboardLights', _0: a};
+};
+var _user$project$Admin$EditDashboardDimmers = function (a) {
+	return {ctor: 'EditDashboardDimmers', _0: a};
+};
+var _user$project$Admin$EditDashboardOrder = function (a) {
+	return {ctor: 'EditDashboardOrder', _0: a};
+};
+var _user$project$Admin$EditDashboardDesc = function (a) {
+	return {ctor: 'EditDashboardDesc', _0: a};
+};
+var _user$project$Admin$EditDashboardTitle = function (a) {
+	return {ctor: 'EditDashboardTitle', _0: a};
+};
+var _user$project$Admin$EditDashboardName = function (a) {
+	return {ctor: 'EditDashboardName', _0: a};
+};
+var _user$project$Admin$Nop = {ctor: 'Nop'};
+var _user$project$Admin$editTfNop = function (_p4) {
+	return _user$project$Admin$Nop;
+};
+var _user$project$Admin$Mdl = function (a) {
+	return {ctor: 'Mdl', _0: a};
+};
+var _user$project$Admin$editSwitch = F5(
+	function (mdl, id, label, value, onToggle) {
+		return A5(
+			_debois$elm_mdl$Material_Toggles$switch,
+			_user$project$Admin$Mdl,
+			{
+				ctor: '::',
+				_0: _user$project$Admin$editCellMdlId,
+				_1: {
+					ctor: '::',
+					_0: id,
+					_1: {ctor: '[]'}
+				}
+			},
+			mdl,
+			{
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Options$onToggle(
+					onToggle(!value)),
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Toggles$ripple,
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Toggles$value(value),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Admin$editItemCss,
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(label),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Admin$editTextfield = F5(
+	function (mdl, id, label, value, onInput) {
+		return A5(
+			_debois$elm_mdl$Material_Textfield$render,
+			_user$project$Admin$Mdl,
+			{
+				ctor: '::',
+				_0: _user$project$Admin$editCellMdlId,
+				_1: {
+					ctor: '::',
+					_0: id,
+					_1: {ctor: '[]'}
+				}
+			},
+			mdl,
+			{
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Textfield$label(label),
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Textfield$floatingLabel,
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Textfield$text_,
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Textfield$value(value),
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$onInput(onInput),
+								_1: {
+									ctor: '::',
+									_0: _user$project$Admin$editItemCss,
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			},
+			{ctor: '[]'});
+	});
+var _user$project$Admin$editButton = F4(
+	function (mdl, id, txt, msg) {
+		return A5(
+			_debois$elm_mdl$Material_Button$render,
+			_user$project$Admin$Mdl,
+			{
+				ctor: '::',
+				_0: _user$project$Admin$editCellMdlId,
+				_1: {
+					ctor: '::',
+					_0: id,
+					_1: {ctor: '[]'}
+				}
+			},
+			mdl,
+			{
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Button$primary,
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Options$onClick(msg),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Admin$editItemCss,
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(txt),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Admin$UpdatePort = function (a) {
+	return {ctor: 'UpdatePort', _0: a};
+};
+var _user$project$Admin$UpdateDimmer = function (a) {
+	return {ctor: 'UpdateDimmer', _0: a};
+};
+var _user$project$Admin$UpdateDevice = function (a) {
+	return {ctor: 'UpdateDevice', _0: a};
+};
+var _user$project$Admin$UpdateAction = function (a) {
+	return {ctor: 'UpdateAction', _0: a};
+};
+var _user$project$Admin$UpdateDashboard = function (a) {
+	return {ctor: 'UpdateDashboard', _0: a};
+};
+var _user$project$Admin$LoadPorts = function (a) {
+	return {ctor: 'LoadPorts', _0: a};
+};
+var _user$project$Admin$LoadDimmers = function (a) {
+	return {ctor: 'LoadDimmers', _0: a};
+};
+var _user$project$Admin$LoadDevices = function (a) {
+	return {ctor: 'LoadDevices', _0: a};
+};
+var _user$project$Admin$LoadActions = function (a) {
+	return {ctor: 'LoadActions', _0: a};
+};
+var _user$project$Admin$LoadDashboards = function (a) {
+	return {ctor: 'LoadDashboards', _0: a};
+};
+var _user$project$Admin$tabs = {
+	ctor: '::',
+	_0: {
+		ctor: '_Tuple3',
+		_0: 'Panele',
+		_1: 'dashboards',
+		_2: A2(_user$project$Request$send, _user$project$Admin$LoadDashboards, _user$project$Admin_Dashboard$getDashboards)
+	},
+	_1: {
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple3',
+			_0: 'Urządzenia',
+			_1: 'devices',
+			_2: A2(_user$project$Request$send, _user$project$Admin$LoadDevices, _user$project$Admin_Device$getDevices)
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple3',
+				_0: 'Ściemniacze',
+				_1: 'dimmers',
+				_2: A2(_user$project$Request$send, _user$project$Admin$LoadDimmers, _user$project$Admin_Dimmer$getDimmers)
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple3',
+					_0: 'Akcje',
+					_1: 'actions',
+					_2: A2(_user$project$Request$send, _user$project$Admin$LoadActions, _user$project$Admin_Action$getActions)
+				},
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple3',
+						_0: 'Inne',
+						_1: 'others',
+						_2: A2(_user$project$Request$send, _user$project$Admin$LoadPorts, _user$project$Admin_Port$getPorts)
+					},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple3', _0: '_____', _1: '____', _2: _elm_lang$core$Platform_Cmd$none},
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		}
+	}
+};
+var _user$project$Admin$tabsTitles = A2(
+	_elm_lang$core$List$map,
+	function (_p5) {
+		var _p6 = _p5;
+		return _p6._0;
+	},
+	_user$project$Admin$tabs);
+var _user$project$Admin$tabsUrls = function (_p7) {
+	return _elm_lang$core$Array$fromList(
+		A2(
+			_elm_lang$core$List$map,
+			function (_p8) {
+				var _p9 = _p8;
+				return _p9._1;
+			},
+			_p7));
+}(_user$project$Admin$tabs);
+var _user$project$Admin$tabsInit = function (_p10) {
+	return _elm_lang$core$Array$fromList(
+		A2(
+			_elm_lang$core$List$map,
+			function (_p11) {
+				var _p12 = _p11;
+				return _p12._2;
+			},
+			_p10));
+}(_user$project$Admin$tabs);
+var _user$project$Admin$DeleteResp = function (a) {
+	return {ctor: 'DeleteResp', _0: a};
+};
+var _user$project$Admin$update = F2(
+	function (msg, model) {
+		var _p13 = A2(_elm_lang$core$Debug$log, 'Msg: ', msg);
+		var update = F2(
+			function (d, l) {
+				var _p14 = model.editIndex;
+				if (_p14 === -1) {
+					return {ctor: '::', _0: d, _1: l};
+				} else {
+					return A2(
+						_elm_lang$core$List$map,
+						function (x) {
+							return _elm_lang$core$Native_Utils.eq(x.id, d.id) ? d : x;
+						},
+						l);
+				}
+			});
+		var packData = function (x) {
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{editData: x}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		};
+		var cmd = function (c) {
+			return {ctor: '_Tuple2', _0: model, _1: c};
+		};
+		var skip = {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		var _p15 = msg;
+		switch (_p15.ctor) {
+			case 'SelectTab':
+				var _p17 = _p15._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{selectedTab: _p17, editIndex: -1, editData: _user$project$Admin$None}),
+					_1: function (_p16) {
+						return A2(
+							_elm_lang$core$Maybe$withDefault,
+							_elm_lang$core$Platform_Cmd$none,
+							A2(_elm_lang$core$Array$get, _p17, _p16));
+					}(_user$project$Admin$tabsInit)
+				};
+			case 'EditIndex':
+				var _p20 = _p15._0;
+				var getNMap = F2(
+					function (x, y) {
+						return function (_p18) {
+							return A2(
+								_elm_lang$core$Maybe$withDefault,
+								_user$project$Admin$None,
+								A2(
+									_elm_lang$core$Maybe$map,
+									y,
+									A2(
+										_elm_lang$core$Array$get,
+										_p20,
+										_elm_lang$core$Array$fromList(
+											x(_p18)))));
+						}(model);
+					});
+				var data = function () {
+					var _p19 = model.tab;
+					switch (_p19.ctor) {
+						case 'TabActions':
+							return A2(
+								getNMap,
+								function (_) {
+									return _.actions;
+								},
+								_user$project$Admin$EditActionData);
+						case 'TabDevices':
+							return A2(
+								getNMap,
+								function (_) {
+									return _.devices;
+								},
+								_user$project$Admin$EditDeviceData);
+						case 'TabPorts':
+							return A2(
+								getNMap,
+								function (_) {
+									return _.ports;
+								},
+								_user$project$Admin$EditPortData);
+						case 'TabDimmers':
+							return A2(
+								getNMap,
+								function (_) {
+									return _.dimmers;
+								},
+								_user$project$Admin$EditDimmerData);
+						default:
+							return A2(
+								getNMap,
+								function (_) {
+									return _.dashboards;
+								},
+								_user$project$Admin$EditDashboardData);
+					}
+				}();
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editIndex: _p20, editData: data}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Create':
+				var data = function () {
+					var _p21 = model.tab;
+					switch (_p21.ctor) {
+						case 'TabActions':
+							return _user$project$Admin$EditActionData(_user$project$Admin_Action$empty);
+						case 'TabDevices':
+							return _user$project$Admin$EditDeviceData(_user$project$Admin_Device$empty);
+						case 'TabDimmers':
+							return _user$project$Admin$EditDimmerData(_user$project$Admin_Dimmer$empty);
+						case 'TabPorts':
+							return _user$project$Admin$EditPortData(_user$project$Admin_Port$empty);
+						default:
+							return _user$project$Admin$EditDashboardData(_user$project$Admin_Dashboard$empty);
+					}
+				}();
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editData: data, editIndex: -1}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'DeleteMark':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editIndex: _p15._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'DeleteUnmark':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editIndex: -1}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Delete':
+				var k = model.editIndex;
+				var cmd = function () {
+					var _p22 = model.tab;
+					switch (_p22.ctor) {
+						case 'TabActions':
+							return A2(
+								_user$project$Request$send,
+								_user$project$Admin$DeleteResp,
+								_user$project$Admin_Action$deleteAction(k));
+						case 'TabPorts':
+							return A2(
+								_user$project$Request$send,
+								_user$project$Admin$DeleteResp,
+								_user$project$Admin_Port$deletePort(k));
+						case 'TabDimmers':
+							return A2(
+								_user$project$Request$send,
+								_user$project$Admin$DeleteResp,
+								_user$project$Admin_Dimmer$deleteDimmer(k));
+						case 'TabDevices':
+							return A2(
+								_user$project$Request$send,
+								_user$project$Admin$DeleteResp,
+								_user$project$Admin_Device$deleteDevice(k));
+						default:
+							return A2(
+								_user$project$Request$send,
+								_user$project$Admin$DeleteResp,
+								_user$project$Admin_Dashboard$deleteDashboard(k));
+					}
+				}();
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editIndex: k}),
+					_1: cmd
+				};
+			case 'DeleteResp':
+				if (_p15._0.ctor === 'Ok') {
+					var $delete = function (l) {
+						return A2(
+							_elm_lang$core$List$filter,
+							function (x) {
+								return !_elm_lang$core$Native_Utils.eq(x.id, model.editIndex);
+							},
+							l);
+					};
+					var data = function () {
+						var _p23 = model.tab;
+						switch (_p23.ctor) {
+							case 'TabActions':
+								return _elm_lang$core$Native_Utils.update(
+									model,
+									{
+										actions: $delete(model.actions)
+									});
+							case 'TabDevices':
+								return _elm_lang$core$Native_Utils.update(
+									model,
+									{
+										devices: $delete(model.devices)
+									});
+							case 'TabDimmers':
+								return _elm_lang$core$Native_Utils.update(
+									model,
+									{
+										dimmers: $delete(model.dimmers)
+									});
+							case 'TabPorts':
+								return _elm_lang$core$Native_Utils.update(
+									model,
+									{
+										ports: $delete(model.ports)
+									});
+							default:
+								return _elm_lang$core$Native_Utils.update(
+									model,
+									{
+										dashboards: $delete(model.dashboards)
+									});
+						}
+					}();
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							data,
+							{editIndex: -1}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return skip;
+				}
+			case 'EditMsg':
+				var _p24 = {ctor: '_Tuple2', _0: _p15._0, _1: model.editData};
+				_v11_5:
+				do {
+					if (_p24.ctor === '_Tuple2') {
+						switch (_p24._0.ctor) {
+							case 'EditAction':
+								if (_p24._1.ctor === 'EditActionData') {
+									var _p26 = _p24._1._0;
+									var pack = function (x) {
+										return packData(
+											_user$project$Admin$EditActionData(x));
+									};
+									var _p25 = _p24._0._0;
+									switch (_p25.ctor) {
+										case 'EditActionName':
+											return pack(_p26);
+										case 'EditActionFunction':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p26,
+													{$function: _p25._0}));
+										case 'EditActionActive':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p26,
+													{active: _p25._0}));
+										case 'EditActionParams':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p26,
+													{params: _p25._0}));
+										case 'EditActionFrequency':
+											if (_p25._0.ctor === 'Ok') {
+												return pack(
+													_elm_lang$core$Native_Utils.update(
+														_p26,
+														{frequency: _p25._0._0}));
+											} else {
+												return skip;
+											}
+										case 'EditActionStartTime':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p26,
+													{
+														startTime: _elm_lang$core$Maybe$Just(_p25._0)
+													}));
+										default:
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p26,
+													{
+														endTime: _elm_lang$core$Maybe$Just(_p25._0)
+													}));
+									}
+								} else {
+									break _v11_5;
+								}
+							case 'EditPort':
+								if (_p24._1.ctor === 'EditPortData') {
+									var _p28 = _p24._1._0;
+									var pack = function (x) {
+										return packData(
+											_user$project$Admin$EditPortData(x));
+									};
+									var _p27 = _p24._0._0;
+									switch (_p27.ctor) {
+										case 'EditPortName':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p28,
+													{name: _p27._0}));
+										case 'EditPortMode':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p28,
+													{mode: _p27._0}));
+										case 'EditPortType':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p28,
+													{type_: _p27._0}));
+										case 'EditPortState':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p28,
+													{state: _p27._0}));
+										default:
+											if (_p27._0.ctor === 'Ok') {
+												return pack(
+													_elm_lang$core$Native_Utils.update(
+														_p28,
+														{timeout: _p27._0._0}));
+											} else {
+												return skip;
+											}
+									}
+								} else {
+									break _v11_5;
+								}
+							case 'EditDimmer':
+								if (_p24._1.ctor === 'EditDimmerData') {
+									var _p33 = _p24._0._0;
+									var _p32 = _p24._1._0;
+									var _p29 = A2(_elm_lang$core$Debug$log, 'Data:', _p32);
+									var _p30 = A2(_elm_lang$core$Debug$log, 'Field:', _p33);
+									var port1_ = _p32.port_;
+									var pack = function (x) {
+										return packData(
+											_user$project$Admin$EditDimmerData(x));
+									};
+									var _p31 = _p33;
+									switch (_p31.ctor) {
+										case 'EditDimmerName':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p32,
+													{
+														port_: _elm_lang$core$Native_Utils.update(
+															port1_,
+															{name: _p31._0})
+													}));
+										case 'EditDimmerType':
+											return skip;
+										case 'EditDimmerTime':
+											if (_p31._0.ctor === 'Ok') {
+												return pack(
+													_elm_lang$core$Native_Utils.update(
+														_p32,
+														{
+															port_: _elm_lang$core$Native_Utils.update(
+																port1_,
+																{timeout: _p31._0._0})
+														}));
+											} else {
+												return skip;
+											}
+										case 'EditDimmerFullTime':
+											if (_p31._0.ctor === 'Ok') {
+												return pack(
+													_elm_lang$core$Native_Utils.update(
+														_p32,
+														{fullTime: _p31._0._0}));
+											} else {
+												return skip;
+											}
+										default:
+											if (_p31._0.ctor === 'Ok') {
+												return pack(
+													_elm_lang$core$Native_Utils.update(
+														_p32,
+														{fill: _p31._0._0}));
+											} else {
+												return skip;
+											}
+									}
+								} else {
+									break _v11_5;
+								}
+							case 'EditDevice':
+								if (_p24._1.ctor === 'EditDeviceData') {
+									var _p35 = _p24._1._0;
+									var pack = function (x) {
+										return packData(
+											_user$project$Admin$EditDeviceData(x));
+									};
+									var _p34 = _p24._0._0;
+									switch (_p34.ctor) {
+										case 'EditDeviceName':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p35,
+													{name: _p34._0}));
+										case 'EditDeviceIp':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p35,
+													{ip: _p34._0}));
+										case 'EditDevicePort':
+											if (_p34._0.ctor === 'Ok') {
+												return pack(
+													_elm_lang$core$Native_Utils.update(
+														_p35,
+														{port_: _p34._0._0}));
+											} else {
+												return skip;
+											}
+										default:
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p35,
+													{type_: _p34._0}));
+									}
+								} else {
+									break _v11_5;
+								}
+							default:
+								if (_p24._1.ctor === 'EditDashboardData') {
+									var _p37 = _p24._1._0;
+									var pack = function (x) {
+										return packData(
+											_user$project$Admin$EditDashboardData(x));
+									};
+									var _p36 = _p24._0._0;
+									switch (_p36.ctor) {
+										case 'EditDashboardName':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p37,
+													{name: _p36._0}));
+										case 'EditDashboardTitle':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p37,
+													{title: _p36._0}));
+										case 'EditDashboardDesc':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p37,
+													{description: _p36._0}));
+										case 'EditDashboardOrder':
+											if (_p36._0.ctor === 'Ok') {
+												return pack(
+													_elm_lang$core$Native_Utils.update(
+														_p37,
+														{order: _p36._0._0}));
+											} else {
+												return skip;
+											}
+										case 'EditDashboardSunblinds':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p37,
+													{sunblinds: _p36._0}));
+										case 'EditDashboardDimmers':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p37,
+													{dimmers: _p36._0}));
+										case 'EditDashboardLights':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p37,
+													{lights: _p36._0}));
+										case 'EditDashboardDevices':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p37,
+													{devices: _p36._0}));
+										case 'EditDashboardActions':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p37,
+													{actions: _p36._0}));
+										case 'EditDashboardTasks':
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p37,
+													{tasks: _p36._0}));
+										default:
+											return pack(
+												_elm_lang$core$Native_Utils.update(
+													_p37,
+													{ports: _p36._0}));
+									}
+								} else {
+									break _v11_5;
+								}
+						}
+					} else {
+						break _v11_5;
+					}
+				} while(false);
+				return skip;
+			case 'EditSubmit':
+				var or = F3(
+					function (a, b, c) {
+						return _elm_lang$core$Native_Utils.eq(model.editIndex, -1) ? a(c) : b(c);
+					});
+				var action = function (a) {
+					return A3(or, _user$project$Admin_Action$createAction, _user$project$Admin_Action$updateAction, a);
+				};
+				var dimmer = function (a) {
+					return A3(or, _user$project$Admin_Dimmer$createDimmer, _user$project$Admin_Dimmer$updateDimmer, a);
+				};
+				var device = function (a) {
+					return A3(or, _user$project$Admin_Device$createDevice, _user$project$Admin_Device$updateDevice, a);
+				};
+				var port_ = function (a) {
+					return A3(or, _user$project$Admin_Port$createPort, _user$project$Admin_Port$updatePort, a);
+				};
+				var dashboard = function (a) {
+					return A3(or, _user$project$Admin_Dashboard$createDashboard, _user$project$Admin_Dashboard$updateDashboard, a);
+				};
+				var _p38 = model.editData;
+				switch (_p38.ctor) {
+					case 'EditActionData':
+						return {
+							ctor: '_Tuple2',
+							_0: model,
+							_1: A2(
+								_user$project$Request$send,
+								_user$project$Admin$UpdateAction,
+								action(_p38._0))
+						};
+					case 'EditDimmerData':
+						return {
+							ctor: '_Tuple2',
+							_0: model,
+							_1: A2(
+								_user$project$Request$send,
+								_user$project$Admin$UpdateDimmer,
+								dimmer(_p38._0))
+						};
+					case 'EditDeviceData':
+						return {
+							ctor: '_Tuple2',
+							_0: model,
+							_1: A2(
+								_user$project$Request$send,
+								_user$project$Admin$UpdateDevice,
+								device(_p38._0))
+						};
+					case 'EditPortData':
+						return {
+							ctor: '_Tuple2',
+							_0: model,
+							_1: A2(
+								_user$project$Request$send,
+								_user$project$Admin$UpdatePort,
+								port_(_p38._0))
+						};
+					case 'EditDashboardData':
+						return {
+							ctor: '_Tuple2',
+							_0: model,
+							_1: A2(
+								_user$project$Request$send,
+								_user$project$Admin$UpdateDashboard,
+								dashboard(_p38._0))
+						};
+					default:
+						return skip;
+				}
+			case 'EditCancel':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editData: _user$project$Admin$None, editIndex: -1}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'LoadDashboards':
+				if (_p15._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{dashboards: _p15._0._0, tab: _user$project$Admin$TabDashboards}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return skip;
+				}
+			case 'LoadActions':
+				if (_p15._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{actions: _p15._0._0, tab: _user$project$Admin$TabActions}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return skip;
+				}
+			case 'LoadDevices':
+				if (_p15._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{devices: _p15._0._0, tab: _user$project$Admin$TabDevices}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return skip;
+				}
+			case 'LoadDimmers':
+				if (_p15._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{dimmers: _p15._0._0, tab: _user$project$Admin$TabDimmers}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return skip;
+				}
+			case 'LoadPorts':
+				if (_p15._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{ports: _p15._0._0, tab: _user$project$Admin$TabPorts}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return skip;
+				}
+			case 'UpdateDashboard':
+				if (_p15._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								dashboards: A2(update, _p15._0._0, model.dashboards)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return skip;
+				}
+			case 'UpdateAction':
+				if (_p15._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								actions: A2(update, _p15._0._0, model.actions)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return skip;
+				}
+			case 'UpdateDevice':
+				if (_p15._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								devices: A2(update, _p15._0._0, model.devices)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return skip;
+				}
+			case 'UpdateDimmer':
+				if (_p15._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								dimmers: A2(update, _p15._0._0, model.dimmers)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return skip;
+				}
+			case 'UpdatePort':
+				if (_p15._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								ports: A2(update, _p15._0._0, model.ports)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return skip;
+				}
+			case 'Mdl':
+				return A3(_debois$elm_mdl$Material$update, _user$project$Admin$Mdl, _p15._0, model);
+			default:
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$Admin$Delete = {ctor: 'Delete'};
+var _user$project$Admin$DeleteUnmark = {ctor: 'DeleteUnmark'};
+var _user$project$Admin$DeleteMark = function (a) {
+	return {ctor: 'DeleteMark', _0: a};
+};
+var _user$project$Admin$Create = {ctor: 'Create'};
+var _user$project$Admin$EditCancel = {ctor: 'EditCancel'};
+var _user$project$Admin$EditSubmit = {ctor: 'EditSubmit'};
+var _user$project$Admin$EditMsg = function (a) {
+	return {ctor: 'EditMsg', _0: a};
+};
+var _user$project$Admin$editPortView = F2(
+	function (p, mdl) {
+		var msg = function (x) {
+			return _user$project$Admin$EditMsg(
+				_user$project$Admin$EditPort(x));
+		};
+		var $default = F2(
+			function (t, x) {
+				return msg(
+					t(x));
+			});
+		var $int = F2(
+			function (t, x) {
+				return msg(
+					t(
+						_elm_lang$core$String$toInt(x)));
+			});
+		return A2(
+			_debois$elm_mdl$Material_Options$div,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A5(
+					_user$project$Admin$editTextfield,
+					mdl,
+					5,
+					'Nazwa',
+					p.name,
+					$default(_user$project$Admin$EditPortName)),
+				_1: {
+					ctor: '::',
+					_0: A5(
+						_user$project$Admin$editTextfield,
+						mdl,
+						4,
+						'Tryb',
+						p.mode,
+						$default(_user$project$Admin$EditPortMode)),
+					_1: {
+						ctor: '::',
+						_0: A5(
+							_user$project$Admin$editSwitch,
+							mdl,
+							1,
+							'State',
+							p.state,
+							$default(_user$project$Admin$EditPortState)),
+						_1: {
+							ctor: '::',
+							_0: A5(
+								_user$project$Admin$editTextfield,
+								mdl,
+								3,
+								'Typ',
+								p.type_,
+								$default(_user$project$Admin$EditPortType)),
+							_1: {
+								ctor: '::',
+								_0: A5(
+									_user$project$Admin$editTextfield,
+									mdl,
+									2,
+									'Czas',
+									_elm_lang$core$Basics$toString(p.timeout),
+									$int(_user$project$Admin$EditPortTimeout)),
+								_1: {
+									ctor: '::',
+									_0: A5(_user$project$Admin$editTextfield, mdl, 1, 'Urządzenie', '', _user$project$Admin$editTfNop),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Admin$editDimmerView = F2(
+	function (d, mdl) {
+		var msg = function (x) {
+			return _user$project$Admin$EditMsg(
+				_user$project$Admin$EditDimmer(x));
+		};
+		var $default = F2(
+			function (t, x) {
+				return msg(
+					t(x));
+			});
+		var $int = F2(
+			function (t, x) {
+				return msg(
+					t(
+						_elm_lang$core$String$toInt(x)));
+			});
+		return A2(
+			_debois$elm_mdl$Material_Options$div,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A5(
+					_user$project$Admin$editTextfield,
+					mdl,
+					5,
+					'Nazwa',
+					d.port_.name,
+					$default(_user$project$Admin$EditDimmerName)),
+				_1: {
+					ctor: '::',
+					_0: A5(
+						_user$project$Admin$editTextfield,
+						mdl,
+						4,
+						'Typ (solo, dependent, group',
+						'',
+						$default(_user$project$Admin$EditDimmerType)),
+					_1: {
+						ctor: '::',
+						_0: A5(
+							_user$project$Admin$editTextfield,
+							mdl,
+							3,
+							'Czas włączania (ms)',
+							_elm_lang$core$Basics$toString(d.port_.timeout),
+							$int(_user$project$Admin$EditDimmerTime)),
+						_1: {
+							ctor: '::',
+							_0: A5(
+								_user$project$Admin$editTextfield,
+								mdl,
+								2,
+								'Czas pełnego rozjaśnienia (ms)',
+								_elm_lang$core$Basics$toString(d.fullTime),
+								$int(_user$project$Admin$EditDimmerFullTime)),
+							_1: {
+								ctor: '::',
+								_0: A5(
+									_user$project$Admin$editTextfield,
+									mdl,
+									1,
+									'Aktualna jasność (0-100)',
+									_elm_lang$core$Basics$toString(d.fill),
+									$int(_user$project$Admin$EditDimmerFill)),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Admin$editDeviceView = F2(
+	function (d, mdl) {
+		var msg = function (x) {
+			return _user$project$Admin$EditMsg(
+				_user$project$Admin$EditDevice(x));
+		};
+		var $default = F2(
+			function (t, x) {
+				return msg(
+					t(x));
+			});
+		var $int = F2(
+			function (t, x) {
+				return msg(
+					t(
+						_elm_lang$core$String$toInt(x)));
+			});
+		return A2(
+			_debois$elm_mdl$Material_Options$div,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A5(
+					_user$project$Admin$editTextfield,
+					mdl,
+					4,
+					'Nazwa',
+					d.name,
+					$default(_user$project$Admin$EditDeviceName)),
+				_1: {
+					ctor: '::',
+					_0: A5(
+						_user$project$Admin$editTextfield,
+						mdl,
+						3,
+						'ip',
+						d.ip,
+						$default(_user$project$Admin$EditDeviceIp)),
+					_1: {
+						ctor: '::',
+						_0: A5(
+							_user$project$Admin$editTextfield,
+							mdl,
+							2,
+							'port',
+							_elm_lang$core$Basics$toString(d.port_),
+							$int(_user$project$Admin$EditDevicePort)),
+						_1: {
+							ctor: '::',
+							_0: A5(
+								_user$project$Admin$editTextfield,
+								mdl,
+								1,
+								'Type',
+								d.type_,
+								$default(_user$project$Admin$EditDeviceType)),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Admin$editActionView = F2(
+	function (a, mdl) {
+		var msg = function (x) {
+			return _user$project$Admin$EditMsg(
+				_user$project$Admin$EditAction(x));
+		};
+		var $default = F2(
+			function (t, x) {
+				return msg(
+					t(x));
+			});
+		var $int = F2(
+			function (t, x) {
+				return msg(
+					t(
+						_elm_lang$core$String$toInt(x)));
+			});
+		return A2(
+			_debois$elm_mdl$Material_Options$div,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A5(
+					_user$project$Admin$editTextfield,
+					mdl,
+					6,
+					'Nazwa',
+					'',
+					$default(_user$project$Admin$EditActionName)),
+				_1: {
+					ctor: '::',
+					_0: A5(
+						_user$project$Admin$editTextfield,
+						mdl,
+						5,
+						'Funkcja',
+						a.$function,
+						$default(_user$project$Admin$EditActionFunction)),
+					_1: {
+						ctor: '::',
+						_0: A5(
+							_user$project$Admin$editTextfield,
+							mdl,
+							4,
+							'Parametry',
+							a.params,
+							$default(_user$project$Admin$EditActionParams)),
+						_1: {
+							ctor: '::',
+							_0: A5(
+								_user$project$Admin$editTextfield,
+								mdl,
+								3,
+								'Częstotliwość wywołania (ms)',
+								_elm_lang$core$Basics$toString(a.frequency),
+								$int(_user$project$Admin$EditActionFrequency)),
+							_1: {
+								ctor: '::',
+								_0: A5(
+									_user$project$Admin$editSwitch,
+									mdl,
+									1,
+									'Active',
+									a.active,
+									$default(_user$project$Admin$EditActionActive)),
+								_1: {
+									ctor: '::',
+									_0: A5(
+										_user$project$Admin$editTextfield,
+										mdl,
+										2,
+										'Aktywne od (hh:mm:ss:000000)',
+										A2(_elm_lang$core$Maybe$withDefault, '', a.startTime),
+										$default(_user$project$Admin$EditActionStartTime)),
+									_1: {
+										ctor: '::',
+										_0: A5(
+											_user$project$Admin$editTextfield,
+											mdl,
+											1,
+											'Aktywne do (hh:mm:ss:000000)',
+											A2(_elm_lang$core$Maybe$withDefault, '', a.endTime),
+											$default(_user$project$Admin$EditActionEndTime)),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Admin$editDashboardView = F2(
+	function (d, mdl) {
+		var content = function (x) {
+			return x;
+		};
+		var msg = function (x) {
+			return _user$project$Admin$EditMsg(
+				_user$project$Admin$EditDashboard(x));
+		};
+		var $default = F2(
+			function (t, x) {
+				return msg(
+					t(x));
+			});
+		var $int = F2(
+			function (t, x) {
+				return msg(
+					t(
+						_elm_lang$core$String$toInt(x)));
+			});
+		return A2(
+			_debois$elm_mdl$Material_Options$div,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A5(
+					_user$project$Admin$editTextfield,
+					mdl,
+					11,
+					'Nazwa',
+					d.name,
+					$default(_user$project$Admin$EditDashboardName)),
+				_1: {
+					ctor: '::',
+					_0: A5(
+						_user$project$Admin$editTextfield,
+						mdl,
+						10,
+						'Tytuł',
+						d.title,
+						$default(_user$project$Admin$EditDashboardTitle)),
+					_1: {
+						ctor: '::',
+						_0: A5(
+							_user$project$Admin$editTextfield,
+							mdl,
+							9,
+							'Opis',
+							d.description,
+							$default(_user$project$Admin$EditDashboardDesc)),
+						_1: {
+							ctor: '::',
+							_0: A5(
+								_user$project$Admin$editTextfield,
+								mdl,
+								8,
+								'Kolejność',
+								_elm_lang$core$Basics$toString(d.order),
+								$int(_user$project$Admin$EditDashboardOrder)),
+							_1: {
+								ctor: '::',
+								_0: A5(
+									_user$project$Admin$editTextfield,
+									mdl,
+									7,
+									'Światła (id,order)',
+									content(d.lights),
+									$default(_user$project$Admin$EditDashboardLights)),
+								_1: {
+									ctor: '::',
+									_0: A5(
+										_user$project$Admin$editTextfield,
+										mdl,
+										6,
+										'Ściemniacze (id,order)',
+										content(d.dimmers),
+										$default(_user$project$Admin$EditDashboardDimmers)),
+									_1: {
+										ctor: '::',
+										_0: A5(
+											_user$project$Admin$editTextfield,
+											mdl,
+											5,
+											'Rolety (id,order)',
+											content(d.sunblinds),
+											$default(_user$project$Admin$EditDashboardSunblinds)),
+										_1: {
+											ctor: '::',
+											_0: A5(
+												_user$project$Admin$editTextfield,
+												mdl,
+												4,
+												'Urządzenia (id,order)',
+												content(d.devices),
+												$default(_user$project$Admin$EditDashboardDevices)),
+											_1: {
+												ctor: '::',
+												_0: A5(
+													_user$project$Admin$editTextfield,
+													mdl,
+													3,
+													'Akcje (id,order)',
+													content(d.actions),
+													$default(_user$project$Admin$EditDashboardActions)),
+												_1: {
+													ctor: '::',
+													_0: A5(
+														_user$project$Admin$editTextfield,
+														mdl,
+														2,
+														'Zadania (id,order)',
+														content(d.tasks),
+														$default(_user$project$Admin$EditDashboardTasks)),
+													_1: {
+														ctor: '::',
+														_0: A5(
+															_user$project$Admin$editTextfield,
+															mdl,
+															1,
+															'Inne (id,order)',
+															content(d.ports),
+															$default(_user$project$Admin$EditDashboardPorts)),
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Admin$editCellView = F2(
+	function (data, mdl) {
+		var cell = function (h) {
+			return A2(
+				_debois$elm_mdl$Material_Grid$cell,
+				{
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Desktop, 8),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Grid$offset, _debois$elm_mdl$Material_Grid$Desktop, 2),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Tablet, 2),
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				{
+					ctor: '::',
+					_0: h,
+					_1: {ctor: '[]'}
+				});
+		};
+		var view_ = function (body) {
+			return A2(
+				_debois$elm_mdl$Material_Options$div,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$h4,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Edycja'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: body,
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Options$div,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A4(_user$project$Admin$editButton, mdl, 2, 'Zatwierdź', _user$project$Admin$EditSubmit),
+									_1: {
+										ctor: '::',
+										_0: A4(_user$project$Admin$editButton, mdl, 1, 'Zapomnij', _user$project$Admin$EditCancel),
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}
+				});
+		};
+		var editBody = function () {
+			var _p39 = data;
+			switch (_p39.ctor) {
+				case 'EditActionData':
+					return A2(_user$project$Admin$editActionView, _p39._0, mdl);
+				case 'EditDeviceData':
+					return A2(_user$project$Admin$editDeviceView, _p39._0, mdl);
+				case 'EditDimmerData':
+					return A2(_user$project$Admin$editDimmerView, _p39._0, mdl);
+				case 'EditPortData':
+					return A2(_user$project$Admin$editPortView, _p39._0, mdl);
+				case 'EditDashboardData':
+					return A2(_user$project$Admin$editDashboardView, _p39._0, mdl);
+				default:
+					return A2(
+						_elm_lang$html$Html$div,
+						{ctor: '[]'},
+						{ctor: '[]'});
+			}
+		}();
+		return function (_p40) {
+			return cell(
+				view_(_p40));
+		}(editBody);
+	});
+var _user$project$Admin$EditIndex = function (a) {
+	return {ctor: 'EditIndex', _0: a};
+};
+var _user$project$Admin$shortenItemList = F2(
+	function (mdl, items) {
+		var textAlign = A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'left');
+		var tdCss = _debois$elm_mdl$Material_Options$many(
+			{
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'white-space', 'nowrap'),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'overflow', 'hidden'),
+					_1: {
+						ctor: '::',
+						_0: textAlign,
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'text-overflow', 'ellipsis'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'max-width', '300px'),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}
+			});
+		return A2(
+			_debois$elm_mdl$Material_Options$div,
+			{
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'overflow', 'auto'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Table$table,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Table$thead,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Table$tr,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_Table$th,
+											{
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Table$numeric,
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('Id'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_debois$elm_mdl$Material_Table$th,
+												{
+													ctor: '::',
+													_0: textAlign,
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('Nazwa'),
+													_1: {ctor: '[]'}
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_debois$elm_mdl$Material_Table$th,
+													{
+														ctor: '::',
+														_0: textAlign,
+														_1: {ctor: '[]'}
+													},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('Status'),
+														_1: {ctor: '[]'}
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_debois$elm_mdl$Material_Table$th,
+														{
+															ctor: '::',
+															_0: textAlign,
+															_1: {ctor: '[]'}
+														},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html$text('Więcej'),
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_debois$elm_mdl$Material_Table$th,
+															{
+																ctor: '::',
+																_0: textAlign,
+																_1: {ctor: '[]'}
+															},
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html$text('Edycja'),
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Table$tbody,
+								{ctor: '[]'},
+								A2(
+									_elm_lang$core$List$indexedMap,
+									F2(
+										function (i, _p41) {
+											var _p42 = _p41;
+											var _p43 = _p42._0;
+											return A2(
+												_debois$elm_mdl$Material_Table$tr,
+												{ctor: '[]'},
+												{
+													ctor: '::',
+													_0: A2(
+														_debois$elm_mdl$Material_Table$td,
+														{ctor: '[]'},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html$text(
+																_elm_lang$core$Basics$toString(_p43)),
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_debois$elm_mdl$Material_Table$td,
+															{
+																ctor: '::',
+																_0: A2(_debois$elm_mdl$Material_Options$css, 'max-width', '100px'),
+																_1: {ctor: '[]'}
+															},
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html$text(_p42._1),
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_debois$elm_mdl$Material_Table$td,
+																{ctor: '[]'},
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html$text(_p42._3),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_debois$elm_mdl$Material_Table$td,
+																	{
+																		ctor: '::',
+																		_0: tdCss,
+																		_1: {ctor: '[]'}
+																	},
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html$text(_p42._2),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_debois$elm_mdl$Material_Table$td,
+																		{ctor: '[]'},
+																		{
+																			ctor: '::',
+																			_0: A5(
+																				_debois$elm_mdl$Material_Button$render,
+																				_user$project$Admin$Mdl,
+																				{
+																					ctor: '::',
+																					_0: 0,
+																					_1: {ctor: '[]'}
+																				},
+																				mdl,
+																				{
+																					ctor: '::',
+																					_0: _debois$elm_mdl$Material_Options$onClick(
+																						_user$project$Admin$EditIndex(i)),
+																					_1: {ctor: '[]'}
+																				},
+																				{
+																					ctor: '::',
+																					_0: _elm_lang$html$Html$text('Edytuj'),
+																					_1: {ctor: '[]'}
+																				}),
+																			_1: {
+																				ctor: '::',
+																				_0: A5(
+																					_debois$elm_mdl$Material_Button$render,
+																					_user$project$Admin$Mdl,
+																					{
+																						ctor: '::',
+																						_0: 1,
+																						_1: {ctor: '[]'}
+																					},
+																					mdl,
+																					{
+																						ctor: '::',
+																						_0: _debois$elm_mdl$Material_Dialog$openOn('click'),
+																						_1: {
+																							ctor: '::',
+																							_0: _debois$elm_mdl$Material_Options$onClick(
+																								_user$project$Admin$DeleteMark(_p43)),
+																							_1: {ctor: '[]'}
+																						}
+																					},
+																					{
+																						ctor: '::',
+																						_0: _elm_lang$html$Html$text('Usuń'),
+																						_1: {ctor: '[]'}
+																					}),
+																				_1: {ctor: '[]'}
+																			}
+																		}),
+																	_1: {ctor: '[]'}
+																}
+															}
+														}
+													}
+												});
+										}),
+									items)),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Admin$othersView = function (model) {
+	var addBtn = A4(_user$project$Admin$editButton, model.mdl, 1, 'New', _user$project$Admin$Create);
+	var allList = _user$project$Admin$listedItemsView(
+		{
+			ctor: '_Tuple2',
+			_0: 'List',
+			_1: A2(
+				_user$project$Admin$shortenItemList,
+				model.mdl,
+				_user$project$Admin$dataToItems(model))
+		});
+	var editCell = (!_elm_lang$core$Native_Utils.eq(model.editData, _user$project$Admin$None)) ? A2(_user$project$Admin$editCellView, model.editData, model.mdl) : A2(
+		_debois$elm_mdl$Material_Grid$cell,
+		{ctor: '[]'},
+		{ctor: '[]'});
+	var deleteDialog = A2(
+		_debois$elm_mdl$Material_Dialog$view,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_debois$elm_mdl$Material_Dialog$title,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Usuwanie'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Dialog$content,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$p,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Jesteś pewien, że chcesz to usunąć?'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Dialog$actions,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: A5(
+								_debois$elm_mdl$Material_Button$render,
+								_user$project$Admin$Mdl,
+								{
+									ctor: '::',
+									_0: 3,
+									_1: {
+										ctor: '::',
+										_0: 1,
+										_1: {ctor: '[]'}
+									}
+								},
+								model.mdl,
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Dialog$closeOn('click'),
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Admin$Delete),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Usuń'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A5(
+									_debois$elm_mdl$Material_Button$render,
+									_user$project$Admin$Mdl,
+									{
+										ctor: '::',
+										_0: 3,
+										_1: {
+											ctor: '::',
+											_0: 2,
+											_1: {ctor: '[]'}
+										}
+									},
+									model.mdl,
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Dialog$closeOn('click'),
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Admin$DeleteUnmark),
+											_1: {ctor: '[]'}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Anuluj'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+	return {
+		ctor: '::',
+		_0: addBtn,
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_debois$elm_mdl$Material_Grid$grid,
+				{
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Options$id('main-grid'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: editCell,
+					_1: {
+						ctor: '::',
+						_0: allList,
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: deleteDialog,
+				_1: {ctor: '[]'}
+			}
+		}
+	};
+};
+var _user$project$Admin$view = function (model) {
+	var content = _user$project$Admin$othersView(model);
+	return A5(
+		_user$project$Page$body1,
+		'Panel zarządzania',
+		'asdasf',
+		A2(
+			_elm_lang$html$Html$div,
+			{ctor: '[]'},
+			{ctor: '[]'}),
+		{ctor: '[]'},
+		content);
+};
+var _user$project$Admin$SelectTab = function (a) {
+	return {ctor: 'SelectTab', _0: a};
+};
+var _user$project$Admin$init = function (model) {
+	return _elm_lang$core$Native_Utils.eq(model.selectedTab, -1) ? A2(
+		_elm_lang$core$Task$perform,
+		_elm_lang$core$Basics$identity,
+		_elm_lang$core$Task$succeed(
+			_user$project$Admin$SelectTab(1))) : _elm_lang$core$Platform_Cmd$none;
+};

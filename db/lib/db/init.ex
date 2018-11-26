@@ -256,30 +256,19 @@ defmodule DB.Init do
 
 
   def init_pages() do
-   page = %Page{
+   %Page{
       name: "Rooms",
-      number: 1,
+      order: 1,
       title: "Przemek",
       description: "Page about Przemek's Room",
-      parent: nil,
-#      subgroups: nil,
-#      content: cont
-    }
-
-    %PageContent{
-      number: 1,
-      page: page,
       lights: [Repo.get(Light, 1), Repo.get(Light, 3)],
       ports: [Repo.get(Port, 2), Repo.get(Port, 5)],
       dimmers: [Repo.get(Dimmer, 2), Repo.get(Dimmer, 3)],
-      sunblinds: [],
-      actions: [],
+      sunblinds: [Repo.get(Sunblind, 1)],
+      actions: [Repo.get(Action, 1), Repo.get(Action, 2)],
       tasks: []
     }
     |> Repo.insert!
-
-
-
     :ok
 
   end

@@ -1,0 +1,45 @@
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Item$span = F3(
+	function (attributes, children, config) {
+		return _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$Item(
+			{
+				config: config,
+				link: A3(_rundis$elm_bootstrap$Bootstrap_Pagination_Internal$Link, _elm_lang$html$Html$span, attributes, children)
+			});
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Item$link = F3(
+	function (attributes, children, config) {
+		return _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$Item(
+			{
+				config: config,
+				link: A3(_rundis$elm_bootstrap$Bootstrap_Pagination_Internal$Link, _elm_lang$html$Html$a, attributes, children)
+			});
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Item$disabled = F2(
+	function (isDisabled, _p0) {
+		var _p1 = _p0;
+		return isDisabled ? _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$ItemConfig(
+			_elm_lang$core$Native_Utils.update(
+				_p1._0,
+				{status: _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$Disabled})) : _p1;
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Item$active = F2(
+	function (isActive, _p2) {
+		var _p3 = _p2;
+		return isActive ? _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$ItemConfig(
+			_elm_lang$core$Native_Utils.update(
+				_p3._0,
+				{status: _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$Active})) : _p3;
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Item$attrs = F2(
+	function (attributes, _p4) {
+		var _p5 = _p4;
+		return _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$ItemConfig(
+			_elm_lang$core$Native_Utils.update(
+				_p5._0,
+				{attrs: attributes}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Item$item = _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$ItemConfig(
+	{
+		status: _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$Default,
+		attrs: {ctor: '[]'}
+	});

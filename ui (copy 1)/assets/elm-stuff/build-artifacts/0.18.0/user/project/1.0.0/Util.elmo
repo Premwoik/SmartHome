@@ -1,0 +1,41 @@
+var _user$project$Util$updateListElem = F2(
+	function (list, fn) {
+		return A2(_elm_lang$core$List$map, fn, list);
+	});
+var _user$project$Util$replaceListElem = F2(
+	function (list, record) {
+		var f = function (x) {
+			return _elm_lang$core$Native_Utils.eq(x.id, record.id) ? record : x;
+		};
+		return A2(_elm_lang$core$List$map, f, list);
+	});
+var _user$project$Util$appendErrors = F2(
+	function (model, errors) {
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{
+				errors: A2(_elm_lang$core$Basics_ops['++'], model.errors, errors)
+			});
+	});
+var _user$project$Util$onClickStopPropagation = function (msg) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'click',
+		_elm_lang$core$Native_Utils.update(
+			_elm_lang$html$Html_Events$defaultOptions,
+			{stopPropagation: true}),
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _user$project$Util$viewIf = F2(
+	function (condition, content) {
+		return condition ? content : _elm_lang$html$Html$text('');
+	});
+var _user$project$Util_ops = _user$project$Util_ops || {};
+_user$project$Util_ops['=>'] = F2(
+	function (v0, v1) {
+		return {ctor: '_Tuple2', _0: v0, _1: v1};
+	});
+var _user$project$Util$pair = F2(
+	function (first, second) {
+		return A2(_user$project$Util_ops['=>'], first, second);
+	});

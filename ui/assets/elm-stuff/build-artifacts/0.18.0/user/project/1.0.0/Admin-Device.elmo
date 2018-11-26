@@ -1,0 +1,144 @@
+var _user$project$Admin_Device$deleteDevice = function (d) {
+	var url_ = A2(
+		_elm_lang$core$Basics_ops['++'],
+		_user$project$Request$url,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'devices/',
+			_elm_lang$core$Basics$toString(d)));
+	return _user$project$Request$delete(url_);
+};
+var _user$project$Admin_Device$encode = function (d) {
+	return _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(d.id)
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'name',
+					_1: _elm_lang$core$Json_Encode$string(d.name)
+				},
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: 'ip',
+						_1: _elm_lang$core$Json_Encode$string(d.ip)
+					},
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'port',
+							_1: _elm_lang$core$Json_Encode$int(d.port_)
+						},
+						_1: {
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: 'type',
+								_1: _elm_lang$core$Json_Encode$string(d.type_)
+							},
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		});
+};
+var _user$project$Admin_Device$Device = F5(
+	function (a, b, c, d, e) {
+		return {id: a, name: b, ip: c, port_: d, type_: e};
+	});
+var _user$project$Admin_Device$empty = A5(_user$project$Admin_Device$Device, 0, '', '', 5000, '');
+var _user$project$Admin_Device$decoder = A3(
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+	'type',
+	_elm_lang$core$Json_Decode$string,
+	A3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+		'port',
+		_elm_lang$core$Json_Decode$int,
+		A3(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+			'ip',
+			_elm_lang$core$Json_Decode$string,
+			A3(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+				'name',
+				_elm_lang$core$Json_Decode$string,
+				A3(
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+					'id',
+					_elm_lang$core$Json_Decode$int,
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Admin_Device$Device))))));
+var _user$project$Admin_Device$getDevices = function () {
+	var decode = A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'data',
+			_1: {ctor: '[]'}
+		},
+		_elm_lang$core$Json_Decode$list(_user$project$Admin_Device$decoder));
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'devices');
+	return A2(_elm_lang$http$Http$get, url_, decode);
+}();
+var _user$project$Admin_Device$updateDevice = function (d) {
+	var body = _elm_lang$http$Http$jsonBody(
+		_elm_lang$core$Json_Encode$object(
+			{
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'device',
+					_1: _user$project$Admin_Device$encode(d)
+				},
+				_1: {ctor: '[]'}
+			}));
+	var decode = A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'data',
+			_1: {ctor: '[]'}
+		},
+		_user$project$Admin_Device$decoder);
+	var url_ = A2(
+		_elm_lang$core$Basics_ops['++'],
+		_user$project$Request$url,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'devices/',
+			_elm_lang$core$Basics$toString(d.id)));
+	return A3(_user$project$Request$put, url_, body, decode);
+};
+var _user$project$Admin_Device$createDevice = function (d) {
+	var body = _elm_lang$http$Http$jsonBody(
+		_elm_lang$core$Json_Encode$object(
+			{
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'device',
+					_1: _user$project$Admin_Device$encode(d)
+				},
+				_1: {ctor: '[]'}
+			}));
+	var decode = A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'data',
+			_1: {ctor: '[]'}
+		},
+		_user$project$Admin_Device$decoder);
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'devices/');
+	return A3(_user$project$Request$post, url_, body, decode);
+};

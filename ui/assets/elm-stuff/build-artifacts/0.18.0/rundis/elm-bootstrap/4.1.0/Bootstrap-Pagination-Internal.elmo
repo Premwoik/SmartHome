@@ -1,0 +1,79 @@
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$itemAttributes = function (_p0) {
+	var _p1 = _p0;
+	return {
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$class(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'page-item',
+				function () {
+					var _p2 = _p1._0.status;
+					switch (_p2.ctor) {
+						case 'Default':
+							return '';
+						case 'Active':
+							return ' active';
+						default:
+							return ' disabled';
+					}
+				}())),
+		_1: {ctor: '[]'}
+	};
+};
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$Link = F3(
+	function (a, b, c) {
+		return {htmlFn: a, attrs: b, children: c};
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$ItemConfig = function (a) {
+	return {ctor: 'ItemConfig', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$Item = function (a) {
+	return {ctor: 'Item', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$Disabled = {ctor: 'Disabled'};
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$linkAttributes = F2(
+	function (_p4, _p3) {
+		var _p5 = _p4;
+		var _p6 = _p3;
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('page-link'),
+				_1: {ctor: '[]'}
+			},
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_p6.attrs,
+				_elm_lang$core$Native_Utils.eq(_p5._0.status, _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$Disabled) ? {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$tabindex(-1),
+					_1: {
+						ctor: '::',
+						_0: A3(
+							_elm_lang$html$Html_Events$onWithOptions,
+							'click',
+							{preventDefault: true, stopPropagation: true},
+							_elm_lang$core$Json_Decode$fail('ignore')),
+						_1: {ctor: '[]'}
+					}
+				} : {ctor: '[]'}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$viewItem = function (_p7) {
+	var _p8 = _p7;
+	var _p10 = _p8._0.link;
+	var _p9 = _p8._0.config;
+	return A2(
+		_elm_lang$html$Html$li,
+		_rundis$elm_bootstrap$Bootstrap_Pagination_Internal$itemAttributes(_p9),
+		{
+			ctor: '::',
+			_0: A2(
+				_p10.htmlFn,
+				A2(_rundis$elm_bootstrap$Bootstrap_Pagination_Internal$linkAttributes, _p9, _p10),
+				_p10.children),
+			_1: {ctor: '[]'}
+		});
+};
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$Active = {ctor: 'Active'};
+var _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$Default = {ctor: 'Default'};

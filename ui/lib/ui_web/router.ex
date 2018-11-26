@@ -14,42 +14,44 @@ defmodule UiWeb.Router do
   end
 
   scope "/", UiWeb do
-    pipe_through :browser # Use the default browser stack
-
+    pipe_through :browser
     get "/", PageController, :index
   end
 
-  #   Other scopes may use custom stacks.
+  # Other scopes may use custom stacks.
   scope "/api", UiWeb do
     pipe_through :api
 
-    get "/pages/short", PageController, :short
-    get "/pages/content/:id", PageController, :page_content
-    get "/pages/view/:id", PageController, :page
+    resources "/dimmers", DimmerController, except: [:new, :edit]
+#    resources "/lights", LightController, except: [:new, :edit]
+    resources "/ports", PortController, except: [:new, :edit]
+    resources "/actions", ActionController, except: [:new, :edit]
+    resources "/devices", DeviceController, except: [:new, :edit]
+    resources "/dashboards", DashboardController, except: [:new, :edit]
 
-    post "/dimmers/toggle", DimmerController, :toggle
-    post "/dimmers/setOn", DimmerController, :set_on
-    post "/dimmers/setOff", DimmerController, :set_off
+
+    get "/dashboards/view/short", DashboardController, :short
+    get "/dashboards/view/:id", DashboardController, :view
+
+    post "/dimmers/setOn/:id", DimmerController, :set_on
+    post "/dimmers/setOff/:id", DimmerController, :set_off
+    post "/dimmers/setLightOff/:id", DimmerController, :set_light_off
+    post "/dimmers/setLightOn/:id", DimmerController, :set_light_on
     post "/dimmers/setBrightness", DimmerController, :set_brightness
-    post "/dimmers/setLightOff", DimmerController, :set_light_off
-    post "/dimmers/setLightOn", DimmerController, :set_light_on
 
-    post "/lights/set_brightness", LightController, :set_brightness
-    post "/lights/toggle", LightController, :toggle
-    post "/lights/setOn", LightController, :set_on
-    post "/lights/setOff", LightController, :set_off
+    post "/lights/setOn/:id", LightController, :set_on
+    post "/lights/setOff/:id", LightController, :set_off
 
-    post "/sunblinds/click", SunblindController, :click
+    post "/sunblinds/click/:id", SunblindController, :click
     post "/sunblinds/calibrate", SunblindController, :calibrate
 
-    post "/actions/toggle", ActionController, :toggle
-    post "/actions/setOn", ActionController, :set_on
-    post "/actions/setOff", ActionController, :set_off
+    post "/actions/setOn/:id", ActionController, :set_on
+    post "/actions/setOff/:id", ActionController, :set_off
 
-    resources "/lights", LightController
-    resources "/dimmers", DimmerController
-    resources "/sunblinds", SunblindController
-    resources "/scenes", SceneController
-    resources "/actions", ActionController
+    post "/ports/setOn/:id", PortController, :set_on
+    post "/ports/setOff/:id", PortController, :set_off
+
   end
+
+
 end

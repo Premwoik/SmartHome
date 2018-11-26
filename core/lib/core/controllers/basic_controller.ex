@@ -11,7 +11,7 @@ defmodule Core.Controllers.BasicController do
   alias DB.{Device, Port}
 
   @behaviour Core.Controllers.Controller
-
+  @doc "ports "
   def turn_on(ports, pid \\ nil) do
     ports
     |> set_ports(true, pid)

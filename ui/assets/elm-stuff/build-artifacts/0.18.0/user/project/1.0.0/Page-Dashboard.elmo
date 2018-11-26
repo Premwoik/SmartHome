@@ -1,0 +1,1423 @@
+var _user$project$Page_Dashboard$cardActionCss = {
+	ctor: '::',
+	_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+	_1: {
+		ctor: '::',
+		_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-direction', 'column'),
+		_1: {ctor: '[]'}
+	}
+};
+var _user$project$Page_Dashboard$split = F3(
+	function (i, r, list) {
+		var n = (_elm_lang$core$Native_Utils.cmp(r, 0) > 0) ? (i + 1) : i;
+		var _p0 = A2(_elm_lang$core$List$take, n, list);
+		if (_p0.ctor === '[]') {
+			return {ctor: '[]'};
+		} else {
+			return {
+				ctor: '::',
+				_0: _p0,
+				_1: A3(
+					_user$project$Page_Dashboard$split,
+					i,
+					r - 1,
+					A2(_elm_lang$core$List$drop, n, list))
+			};
+		}
+	});
+var _user$project$Page_Dashboard$model = {
+	data: _user$project$Data_Dashboard$empty,
+	inProgress: _elm_lang$core$Maybe$Nothing,
+	loaded: false,
+	tabs: _elm_lang$core$Array$fromList(
+		{ctor: '[]'}),
+	selectedTab: 0,
+	raise: -1,
+	mdl: _debois$elm_mdl$Material$model,
+	snackbar: _debois$elm_mdl$Material_Snackbar$model,
+	usedIndex: -1
+};
+var _user$project$Page_Dashboard$tabsUrls = function (_p1) {
+	return A2(
+		_elm_lang$core$Array$map,
+		function (x) {
+			return _elm_lang$core$String$toLower(x.name);
+		},
+		function (_) {
+			return _.tabs;
+		}(_p1));
+};
+var _user$project$Page_Dashboard$tabsTitles = function (_p2) {
+	return _elm_lang$core$Array$toList(
+		A2(
+			_elm_lang$core$Array$map,
+			function (x) {
+				return x.name;
+			},
+			function (_) {
+				return _.tabs;
+			}(_p2)));
+};
+var _user$project$Page_Dashboard$Model = F9(
+	function (a, b, c, d, e, f, g, h, i) {
+		return {data: a, inProgress: b, loaded: c, tabs: d, selectedTab: e, raise: f, mdl: g, snackbar: h, usedIndex: i};
+	});
+var _user$project$Page_Dashboard$ReceiveDashboardMessage = function (a) {
+	return {ctor: 'ReceiveDashboardMessage', _0: a};
+};
+var _user$project$Page_Dashboard$SunblindManualToggle = function (a) {
+	return {ctor: 'SunblindManualToggle', _0: a};
+};
+var _user$project$Page_Dashboard$ResponseAction = function (a) {
+	return {ctor: 'ResponseAction', _0: a};
+};
+var _user$project$Page_Dashboard$ResponsePort = function (a) {
+	return {ctor: 'ResponsePort', _0: a};
+};
+var _user$project$Page_Dashboard$ResponseSunblind = function (a) {
+	return {ctor: 'ResponseSunblind', _0: a};
+};
+var _user$project$Page_Dashboard$ResponseLight = function (a) {
+	return {ctor: 'ResponseLight', _0: a};
+};
+var _user$project$Page_Dashboard$ResponseDimmer = function (a) {
+	return {ctor: 'ResponseDimmer', _0: a};
+};
+var _user$project$Page_Dashboard$Skip = {ctor: 'Skip'};
+var _user$project$Page_Dashboard$LightEdit = function (a) {
+	return {ctor: 'LightEdit', _0: a};
+};
+var _user$project$Page_Dashboard$ActionEdit = function (a) {
+	return {ctor: 'ActionEdit', _0: a};
+};
+var _user$project$Page_Dashboard$SunblindEdit = function (a) {
+	return {ctor: 'SunblindEdit', _0: a};
+};
+var _user$project$Page_Dashboard$DimmerEdit = function (a) {
+	return {ctor: 'DimmerEdit', _0: a};
+};
+var _user$project$Page_Dashboard$PortEdit = function (a) {
+	return {ctor: 'PortEdit', _0: a};
+};
+var _user$project$Page_Dashboard$ActionToggle = function (a) {
+	return {ctor: 'ActionToggle', _0: a};
+};
+var _user$project$Page_Dashboard$DimmerToggle = function (a) {
+	return {ctor: 'DimmerToggle', _0: a};
+};
+var _user$project$Page_Dashboard$DimLightToggle = F2(
+	function (a, b) {
+		return {ctor: 'DimLightToggle', _0: a, _1: b};
+	});
+var _user$project$Page_Dashboard$SetDimmerFill = F2(
+	function (a, b) {
+		return {ctor: 'SetDimmerFill', _0: a, _1: b};
+	});
+var _user$project$Page_Dashboard$SunblindToggle = function (a) {
+	return {ctor: 'SunblindToggle', _0: a};
+};
+var _user$project$Page_Dashboard$LightToggle = function (a) {
+	return {ctor: 'LightToggle', _0: a};
+};
+var _user$project$Page_Dashboard$PortToggle = function (a) {
+	return {ctor: 'PortToggle', _0: a};
+};
+var _user$project$Page_Dashboard$Raise = function (a) {
+	return {ctor: 'Raise', _0: a};
+};
+var _user$project$Page_Dashboard$dynamic = F2(
+	function (k, raised) {
+		return _debois$elm_mdl$Material_Options$many(
+			{
+				ctor: '::',
+				_0: _elm_lang$core$Native_Utils.eq(k, raised) ? _debois$elm_mdl$Material_Elevation$e8 : _debois$elm_mdl$Material_Elevation$e2,
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Elevation$transition(250),
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$onMouseEnter(
+							_user$project$Page_Dashboard$Raise(k)),
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$onMouseLeave(
+								_user$project$Page_Dashboard$Raise(-1)),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Page_Dashboard$LoadDashboard = function (a) {
+	return {ctor: 'LoadDashboard', _0: a};
+};
+var _user$project$Page_Dashboard$LoadTabs = function (a) {
+	return {ctor: 'LoadTabs', _0: a};
+};
+var _user$project$Page_Dashboard$init = function (model) {
+	return model.loaded ? _elm_lang$core$Platform_Cmd$none : _elm_lang$core$Platform_Cmd$batch(
+		{
+			ctor: '::',
+			_0: A2(_user$project$Request$send, _user$project$Page_Dashboard$LoadTabs, _user$project$Data_Dashboard$getTabs),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Page_Dashboard$SelectTab = function (a) {
+	return {ctor: 'SelectTab', _0: a};
+};
+var _user$project$Page_Dashboard$Snackbar = function (a) {
+	return {ctor: 'Snackbar', _0: a};
+};
+var _user$project$Page_Dashboard$Mdl = function (a) {
+	return {ctor: 'Mdl', _0: a};
+};
+var _user$project$Page_Dashboard$subs = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Menu$subs, _user$project$Page_Dashboard$Mdl, model.mdl),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Page_Dashboard$update = F2(
+	function (msg, model) {
+		update:
+		while (true) {
+			var updateDashboard = function (p) {
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{data: p});
+			};
+			var dash = model.data;
+			var updateContent = F2(
+				function (i, x) {
+					return updateDashboard(
+						_elm_lang$core$Native_Utils.update(
+							dash,
+							{
+								content: A3(_elm_lang$core$Array$set, i, x, dash.content)
+							}));
+				});
+			var nomodel = function (x) {
+				return {ctor: '_Tuple2', _0: model, _1: x};
+			};
+			var skip = {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+			var _p3 = msg;
+			switch (_p3.ctor) {
+				case 'SelectTab':
+					var _p6 = _p3._0;
+					var send = function (_p4) {
+						return A2(
+							_user$project$Request$send,
+							_user$project$Page_Dashboard$LoadDashboard,
+							_user$project$Data_Dashboard$getDashboard(
+								_user$project$Data_Id$toInt(
+									function (_) {
+										return _.id;
+									}(_p4))));
+					};
+					var loadDashboard = function (_p5) {
+						return A2(
+							_elm_lang$core$Maybe$withDefault,
+							_elm_lang$core$Platform_Cmd$none,
+							A2(
+								_elm_lang$core$Maybe$map,
+								send,
+								A2(
+									_elm_lang$core$Array$get,
+									_p6,
+									function (_) {
+										return _.tabs;
+									}(_p5))));
+					};
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{selectedTab: _p6}),
+						_1: loadDashboard(model)
+					};
+				case 'LoadTabs':
+					if (_p3._0.ctor === 'Ok') {
+						var tabs_ = _elm_lang$core$Array$fromList(
+							A2(
+								_elm_lang$core$List$sortBy,
+								function (_) {
+									return _.number;
+								},
+								_p3._0._0));
+						var newModel = _elm_lang$core$Native_Utils.update(
+							model,
+							{tabs: tabs_, loaded: true});
+						var _v2 = _user$project$Page_Dashboard$SelectTab(0),
+							_v3 = newModel;
+						msg = _v2;
+						model = _v3;
+						continue update;
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									tabs: _elm_lang$core$Array$fromList(
+										{ctor: '[]'})
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
+				case 'LoadDashboard':
+					if (_p3._0.ctor === 'Ok') {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{data: _p3._0._0}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{data: _user$project$Data_Dashboard$empty}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
+				case 'Raise':
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{raise: _p3._0}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'PortToggle':
+					return function (_p7) {
+						return nomodel(
+							A2(
+								_user$project$Request$send,
+								_user$project$Page_Dashboard$ResponsePort,
+								_user$project$Data_Port$toggle(_p7)));
+					}(_p3._0);
+				case 'LightToggle':
+					return function (_p8) {
+						return nomodel(
+							A2(
+								_user$project$Request$send,
+								_user$project$Page_Dashboard$ResponseLight,
+								_user$project$Data_Light$toggle(_p8)));
+					}(_p3._0);
+				case 'SunblindToggle':
+					return function (_p9) {
+						return nomodel(
+							A2(
+								_user$project$Request$send,
+								_user$project$Page_Dashboard$ResponseSunblind,
+								_user$project$Data_Sunblind$click(_p9)));
+					}(_p3._0);
+				case 'DimmerToggle':
+					return function (_p10) {
+						return nomodel(
+							A2(
+								_user$project$Request$send,
+								_user$project$Page_Dashboard$ResponseDimmer,
+								_user$project$Data_Dimmer$toggle(_p10)));
+					}(_p3._0);
+				case 'SetDimmerFill':
+					return function (_p11) {
+						return nomodel(
+							A2(
+								_user$project$Request$send,
+								_user$project$Page_Dashboard$ResponseDimmer,
+								A2(_user$project$Data_Dimmer$setFill, _p3._1, _p11)));
+					}(_p3._0);
+				case 'DimLightToggle':
+					return function (_p12) {
+						return nomodel(
+							A2(
+								_user$project$Request$send,
+								_user$project$Page_Dashboard$ResponseDimmer,
+								_user$project$Data_Dimmer$toggleLight(_p12)));
+					}(_p3._1);
+				case 'SunblindManualToggle':
+					return function (_p13) {
+						return nomodel(
+							A2(
+								_user$project$Request$send,
+								_user$project$Page_Dashboard$ResponseSunblind,
+								_user$project$Data_Sunblind$toggleManual(_p13)));
+					}(_p3._0);
+				case 'ActionToggle':
+					return function (_p14) {
+						return nomodel(
+							A2(
+								_user$project$Request$send,
+								_user$project$Page_Dashboard$ResponseAction,
+								_user$project$Data_Action$toggle(_p14)));
+					}(_p3._0);
+				case 'ResponseDimmer':
+					if (_p3._0.ctor === 'Ok') {
+						return {
+							ctor: '_Tuple2',
+							_0: A2(
+								updateContent,
+								model.raise,
+								_user$project$Data_Dashboard$Dimmer(_p3._0._0)),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{data: _user$project$Data_Dashboard$empty}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
+				case 'ResponseLight':
+					if (_p3._0.ctor === 'Ok') {
+						return {
+							ctor: '_Tuple2',
+							_0: A2(
+								updateContent,
+								model.raise,
+								_user$project$Data_Dashboard$Light(_p3._0._0)),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{data: _user$project$Data_Dashboard$empty}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
+				case 'ResponsePort':
+					if (_p3._0.ctor === 'Ok') {
+						return {
+							ctor: '_Tuple2',
+							_0: A2(
+								updateContent,
+								model.raise,
+								_user$project$Data_Dashboard$Port(_p3._0._0)),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{data: _user$project$Data_Dashboard$empty}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
+				case 'ResponseSunblind':
+					if (_p3._0.ctor === 'Ok') {
+						return {
+							ctor: '_Tuple2',
+							_0: A2(
+								updateContent,
+								model.raise,
+								_user$project$Data_Dashboard$Sunblind(_p3._0._0)),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{data: _user$project$Data_Dashboard$empty}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
+				case 'ResponseAction':
+					if (_p3._0.ctor === 'Ok') {
+						return {
+							ctor: '_Tuple2',
+							_0: A2(
+								updateContent,
+								model.raise,
+								_user$project$Data_Dashboard$Action(_p3._0._0)),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{data: _user$project$Data_Dashboard$empty}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
+				case 'LightEdit':
+					return skip;
+				case 'DimmerEdit':
+					return skip;
+				case 'ActionEdit':
+					return skip;
+				case 'SunblindEdit':
+					return skip;
+				case 'PortEdit':
+					return skip;
+				case 'ReceiveDashboardMessage':
+					var _p15 = A2(_elm_lang$core$Debug$log, 'Reveive', _p3._0);
+					return A2(
+						_debois$elm_mdl$Material_Helpers$map2nd,
+						_elm_lang$core$Platform_Cmd$map(_user$project$Page_Dashboard$Snackbar),
+						A2(
+							_debois$elm_mdl$Material_Helpers$map1st,
+							function (s) {
+								return _elm_lang$core$Native_Utils.update(
+									model,
+									{snackbar: s});
+							},
+							A2(
+								_debois$elm_mdl$Material_Snackbar$add,
+								A2(_debois$elm_mdl$Material_Snackbar$toast, 1, 'Toast message #'),
+								model.snackbar)));
+				case 'Skip':
+					return skip;
+				case 'Snackbar':
+					return A2(
+						_debois$elm_mdl$Material_Helpers$map2nd,
+						_elm_lang$core$Platform_Cmd$map(_user$project$Page_Dashboard$Snackbar),
+						A2(
+							_debois$elm_mdl$Material_Helpers$map1st,
+							function (s) {
+								return _elm_lang$core$Native_Utils.update(
+									model,
+									{snackbar: s});
+							},
+							A2(_debois$elm_mdl$Material_Snackbar$update, _p3._0, model.snackbar)));
+				default:
+					return A3(_debois$elm_mdl$Material$update, _user$project$Page_Dashboard$Mdl, _p3._0, model);
+			}
+		}
+	});
+var _user$project$Page_Dashboard$actionCard = F2(
+	function (mdl, action) {
+		var _p16 = '';
+		return A2(
+			_debois$elm_mdl$Material_Card$actions,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$div,
+					_user$project$Page_Dashboard$cardActionCss,
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Options$span,
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Typography$title,
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Funkcja: '),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Options$span,
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Typography$body2,
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-left', '1rem'),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(action.$function),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Card$subhead,
+									{
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+										_1: {
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
+											_1: {
+												ctor: '::',
+												_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 2.5rem'),
+												_1: {ctor: '[]'}
+											}
+										}
+									},
+									{
+										ctor: '::',
+										_0: A5(
+											_debois$elm_mdl$Material_Button$render,
+											_user$project$Page_Dashboard$Mdl,
+											{
+												ctor: '::',
+												_0: 0,
+												_1: {ctor: '[]'}
+											},
+											mdl,
+											{
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Button$fab,
+												_1: {
+													ctor: '::',
+													_0: A2(_debois$elm_mdl$Material_Options$css, 'align', 'center'),
+													_1: {
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Options$onClick(
+															_user$project$Page_Dashboard$ActionToggle(action)),
+														_1: {
+															ctor: '::',
+															_0: A2(_debois$elm_mdl$Material_Options$when, action.state, _debois$elm_mdl$Material_Button$colored),
+															_1: {ctor: '[]'}
+														}
+													}
+												}
+											},
+											{
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Icon$i('star'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Page_Dashboard$dimmerCard = F4(
+	function (mdl, dimmer, i, raise) {
+		var icon = 'wb_sunny';
+		var color = A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Amber, _debois$elm_mdl$Material_Color$S500);
+		var cell = A2(_debois$elm_mdl$Material_Options$css, 'width', '64px');
+		var lightRow = function (light) {
+			return A2(
+				_debois$elm_mdl$Material_Card$subhead,
+				{
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 2rem'),
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Options$span,
+						{
+							ctor: '::',
+							_0: cell,
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(light.name),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Options$span,
+							{
+								ctor: '::',
+								_0: cell,
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
+									_1: {ctor: '[]'}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Icon$view,
+									icon,
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Color$text(color),
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Icon$size18,
+											_1: {ctor: '[]'}
+										}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Options$span,
+								{
+									ctor: '::',
+									_0: cell,
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'right'),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: A5(
+										_debois$elm_mdl$Material_Button$render,
+										_user$project$Page_Dashboard$Mdl,
+										{
+											ctor: '::',
+											_0: 0,
+											_1: {ctor: '[]'}
+										},
+										mdl,
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Button$fab,
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onClick(
+													A2(_user$project$Page_Dashboard$DimLightToggle, dimmer, light)),
+												_1: {
+													ctor: '::',
+													_0: A2(_debois$elm_mdl$Material_Options$when, light.state, _debois$elm_mdl$Material_Button$colored),
+													_1: {
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Button$icon,
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Icon$i('highlight'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}
+				});
+		};
+		var renderLights = A2(
+			_debois$elm_mdl$Material_Options$div,
+			{
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-top', '2rem'),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', 'auto'),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$span,
+					{
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Typography$title,
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Color$text(_debois$elm_mdl$Material_Color$primary),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-bottom', '3rem'),
+								_1: {ctor: '[]'}
+							}
+						}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Światła:'),
+						_1: {ctor: '[]'}
+					}),
+				_1: A2(_elm_lang$core$List$map, lightRow, dimmer.lights)
+			});
+		return A2(
+			_debois$elm_mdl$Material_Card$actions,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$div,
+					_user$project$Page_Dashboard$cardActionCss,
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Card$subhead,
+							{
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 2.5rem'),
+										_1: {ctor: '[]'}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A5(
+									_debois$elm_mdl$Material_Button$render,
+									_user$project$Page_Dashboard$Mdl,
+									{
+										ctor: '::',
+										_0: 0,
+										_1: {ctor: '[]'}
+									},
+									mdl,
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Button$fab,
+										_1: {
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'align', 'center'),
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onClick(
+													_user$project$Page_Dashboard$DimmerToggle(dimmer)),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_debois$elm_mdl$Material_Options$when,
+														_elm_lang$core$Native_Utils.cmp(dimmer.fill, 0) > 0,
+														_debois$elm_mdl$Material_Button$colored),
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Icon$i('highlight'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Slider$view(
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Slider$step(25),
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Slider$value(dimmer.fill),
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Slider$min(25),
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Slider$max(100),
+												_1: {
+													ctor: '::',
+													_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-top', '2rem'),
+													_1: {
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Slider$onChange(
+															_user$project$Page_Dashboard$SetDimmerFill(dimmer)),
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
+									}
+								}),
+							_1: {
+								ctor: '::',
+								_0: renderLights,
+								_1: {ctor: '[]'}
+							}
+						}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Page_Dashboard$lightCard = F2(
+	function (mdl, light) {
+		return A2(
+			_debois$elm_mdl$Material_Card$actions,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$div,
+					_user$project$Page_Dashboard$cardActionCss,
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Card$subhead,
+							{
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 2.5rem'),
+										_1: {ctor: '[]'}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A5(
+									_debois$elm_mdl$Material_Button$render,
+									_user$project$Page_Dashboard$Mdl,
+									{
+										ctor: '::',
+										_0: 0,
+										_1: {ctor: '[]'}
+									},
+									mdl,
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Page_Dashboard$LightToggle(light)),
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Button$fab,
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_debois$elm_mdl$Material_Options$when,
+													_elm_lang$core$Native_Utils.eq(light.state, true),
+													_debois$elm_mdl$Material_Button$colored),
+												_1: {ctor: '[]'}
+											}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Icon$i('highlight'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Page_Dashboard$sunblindCard = F2(
+	function (mdl, sunblind) {
+		var icon = function () {
+			var _p17 = sunblind.state;
+			switch (_p17.ctor) {
+				case 'Position':
+					return 'loop';
+				case 'InMove':
+					return 'block';
+				case 'Open':
+					return 'bookmark_border';
+				default:
+					return 'bookmark';
+			}
+		}();
+		var manual = _elm_lang$core$Native_Utils.eq(sunblind.state, _user$project$Data_Sunblind$Position);
+		return A2(
+			_debois$elm_mdl$Material_Card$actions,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$div,
+					_user$project$Page_Dashboard$cardActionCss,
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Card$subhead,
+							{
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'justify-content', 'space-between'),
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
+										_1: {
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 2.5rem'),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A5(
+									_debois$elm_mdl$Material_Button$render,
+									_user$project$Page_Dashboard$Mdl,
+									{
+										ctor: '::',
+										_0: 0,
+										_1: {ctor: '[]'}
+									},
+									mdl,
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Page_Dashboard$SunblindToggle(sunblind)),
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Button$fab,
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Color$background(
+													A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Yellow, _debois$elm_mdl$Material_Color$S300)),
+												_1: {ctor: '[]'}
+											}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Icon$i(icon),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A5(
+								_debois$elm_mdl$Material_Toggles$switch,
+								_user$project$Page_Dashboard$Mdl,
+								{
+									ctor: '::',
+									_0: 0,
+									_1: {ctor: '[]'}
+								},
+								_user$project$Page_Dashboard$model.mdl,
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$onToggle(
+										_user$project$Page_Dashboard$SunblindManualToggle(sunblind)),
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Toggles$ripple,
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Toggles$value(manual),
+											_1: {ctor: '[]'}
+										}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Manual'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Page_Dashboard$portCard = F2(
+	function (mdl, port_) {
+		var icon = _elm_lang$core$Native_Utils.eq(port_.state, true) ? 'power' : 'power_off';
+		var _p18 = '';
+		return A2(
+			_debois$elm_mdl$Material_Card$actions,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$div,
+					_user$project$Page_Dashboard$cardActionCss,
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Card$subhead,
+							{
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'justify-content', 'space-between'),
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
+										_1: {
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 2.5rem'),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A5(
+									_debois$elm_mdl$Material_Button$render,
+									_user$project$Page_Dashboard$Mdl,
+									{
+										ctor: '::',
+										_0: 0,
+										_1: {ctor: '[]'}
+									},
+									mdl,
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Page_Dashboard$PortToggle(port_)),
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Button$fab,
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_debois$elm_mdl$Material_Options$when,
+													_elm_lang$core$Native_Utils.eq(port_.state, true),
+													_debois$elm_mdl$Material_Button$colored),
+												_1: {ctor: '[]'}
+											}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Icon$i(icon),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Page_Dashboard$card = F7(
+	function (props, type_, name, k, raised, action, menuMsg) {
+		return A2(
+			_debois$elm_mdl$Material_Card$view,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '100%'),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-bottom', '1rem'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'object-fit', 'contain'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-bottom', '1rem'),
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$Page_Dashboard$dynamic, k, raised),
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Page_Dashboard$Skip),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}
+				},
+				props),
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Card$menu,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: A5(
+							_debois$elm_mdl$Material_Button$render,
+							_user$project$Page_Dashboard$Mdl,
+							{
+								ctor: '::',
+								_0: 0,
+								_1: {
+									ctor: '::',
+									_0: k,
+									_1: {ctor: '[]'}
+								}
+							},
+							_user$project$Page_Dashboard$model.mdl,
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Button$icon,
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$onClick(menuMsg),
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Button$ripple,
+										_1: {ctor: '[]'}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Icon$i('edit'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Card$title,
+						{
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '1rem 1rem 0 1rem'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Card$head,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(type_),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Options$div,
+									{
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '0rem 2rem 0 2rem'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_Options$span,
+											{
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Typography$display2,
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Color$text(_debois$elm_mdl$Material_Color$primary),
+													_1: {ctor: '[]'}
+												}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text(name),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: action,
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	});
+var _user$project$Page_Dashboard$genCard = F4(
+	function (mdl, i, content, raise) {
+		var checkmark = function (x) {
+			return x ? A2(
+				_debois$elm_mdl$Material_Icon$view,
+				'check',
+				{
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '40px'),
+					_1: {ctor: '[]'}
+				}) : A2(
+				_debois$elm_mdl$Material_Options$span,
+				{
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '40px'),
+					_1: {ctor: '[]'}
+				},
+				{ctor: '[]'});
+		};
+		var _p19 = '';
+		var _p20 = content;
+		switch (_p20.ctor) {
+			case 'Dimmer':
+				var _p21 = _p20._0;
+				return A7(
+					_user$project$Page_Dashboard$card,
+					{ctor: '[]'},
+					'sciemniacz',
+					_p21.name,
+					i,
+					raise,
+					A4(_user$project$Page_Dashboard$dimmerCard, mdl, _p21, i, raise),
+					_user$project$Page_Dashboard$DimmerEdit(_p21));
+			case 'Sunblind':
+				var _p22 = _p20._0;
+				return A7(
+					_user$project$Page_Dashboard$card,
+					{ctor: '[]'},
+					'roleta',
+					_p22.name,
+					i,
+					raise,
+					A2(_user$project$Page_Dashboard$sunblindCard, mdl, _p22),
+					_user$project$Page_Dashboard$SunblindEdit(_p22));
+			case 'Light':
+				var _p23 = _p20._0;
+				return A7(
+					_user$project$Page_Dashboard$card,
+					{ctor: '[]'},
+					'światło',
+					_p23.name,
+					i,
+					raise,
+					A2(_user$project$Page_Dashboard$lightCard, mdl, _p23),
+					_user$project$Page_Dashboard$LightEdit(_p23));
+			case 'Action':
+				var _p24 = _p20._0;
+				return A7(
+					_user$project$Page_Dashboard$card,
+					{ctor: '[]'},
+					'akcja',
+					_p24.name,
+					i,
+					raise,
+					A2(_user$project$Page_Dashboard$actionCard, mdl, _p24),
+					_user$project$Page_Dashboard$ActionEdit(_p24));
+			default:
+				var _p25 = _p20._0;
+				return A7(
+					_user$project$Page_Dashboard$card,
+					{ctor: '[]'},
+					'port',
+					_p25.name,
+					i,
+					raise,
+					A2(_user$project$Page_Dashboard$portCard, mdl, _p25),
+					_user$project$Page_Dashboard$PortEdit(_p25));
+		}
+	});
+var _user$project$Page_Dashboard$genCells = function (model) {
+	var cellBody = function (d) {
+		return A2(
+			_elm_lang$core$List$map,
+			function (_p26) {
+				var _p27 = _p26;
+				return A4(_user$project$Page_Dashboard$genCard, model.mdl, _p27._0, _p27._1, model.raise);
+			},
+			d);
+	};
+	var l_ = function (_p28) {
+		return _elm_lang$core$Array$toIndexedList(
+			function (_) {
+				return _.content;
+			}(
+				function (_) {
+					return _.data;
+				}(_p28)));
+	}(model);
+	var rest = A2(
+		_elm_lang$core$Basics_ops['%'],
+		_elm_lang$core$List$length(l_),
+		4);
+	var elems = (_elm_lang$core$List$length(l_) / 4) | 0;
+	var cards = A3(_user$project$Page_Dashboard$split, elems, rest, l_);
+	return A2(
+		_elm_lang$core$List$map,
+		function (x) {
+			return A2(
+				_debois$elm_mdl$Material_Grid$cell,
+				{
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Phone, 4),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Tablet, 4),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Desktop, 3),
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				cellBody(x));
+		},
+		cards);
+};
+var _user$project$Page_Dashboard$view = function (model) {
+	var content = A2(
+		_elm_lang$html$Html$main_,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$align('center'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$style(
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'margin', _1: 'auto'},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'padding', _1: '20px'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'max-width', _1: '1300px'},
+								_1: {ctor: '[]'}
+							}
+						}
+					}),
+				_1: {ctor: '[]'}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_debois$elm_mdl$Material_Grid$grid,
+				{ctor: '[]'},
+				_user$project$Page_Dashboard$genCells(model)),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$map,
+					_user$project$Page_Dashboard$Snackbar,
+					_debois$elm_mdl$Material_Snackbar$view(model.snackbar)),
+				_1: {ctor: '[]'}
+			}
+		});
+	return A5(
+		_user$project$Page$body1,
+		'Panel sterowania',
+		'',
+		A2(
+			_elm_lang$html$Html$div,
+			{ctor: '[]'},
+			{ctor: '[]'}),
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: content,
+			_1: {ctor: '[]'}
+		});
+};

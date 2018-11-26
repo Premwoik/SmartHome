@@ -1,0 +1,8 @@
+var _user$project$Data_Id$toInt = function (_p0) {
+	var _p1 = _p0;
+	return _p1._0;
+};
+var _user$project$Data_Id$Id = function (a) {
+	return {ctor: 'Id', _0: a};
+};
+var _user$project$Data_Id$decoder = A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Id$Id, _elm_lang$core$Json_Decode$int);
