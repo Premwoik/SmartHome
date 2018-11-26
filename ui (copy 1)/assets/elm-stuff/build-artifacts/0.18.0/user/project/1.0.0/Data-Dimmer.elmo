@@ -1,0 +1,165 @@
+var _user$project$Data_Dimmer$isOn = function (dim) {
+	return function (_p0) {
+		return A2(
+			_elm_lang$core$List$any,
+			function (_) {
+				return _.state;
+			},
+			function (_) {
+				return _.lights;
+			}(_p0));
+	}(dim);
+};
+var _user$project$Data_Dimmer$getId = function (sun) {
+	return _user$project$Data_Id$toInt(sun.id);
+};
+var _user$project$Data_Dimmer$Light = F3(
+	function (a, b, c) {
+		return {id: a, name: b, state: c};
+	});
+var _user$project$Data_Dimmer$lightDecoder = A4(
+	_elm_lang$core$Json_Decode$map3,
+	_user$project$Data_Dimmer$Light,
+	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'state', _elm_lang$core$Json_Decode$bool));
+var _user$project$Data_Dimmer$Dimmer = F6(
+	function (a, b, c, d, e, f) {
+		return {id: a, name: b, fill: c, order: d, lights: e, dimmer_: f};
+	});
+var _user$project$Data_Dimmer$decoder = A7(
+	_elm_lang$core$Json_Decode$map6,
+	_user$project$Data_Dimmer$Dimmer,
+	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'fill', _elm_lang$core$Json_Decode$float),
+	A2(_elm_lang$core$Json_Decode$field, 'order', _elm_lang$core$Json_Decode$int),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'lights',
+		_elm_lang$core$Json_Decode$list(_user$project$Data_Dimmer$lightDecoder)),
+	A2(_elm_lang$core$Json_Decode$field, 'dimmer', _elm_lang$core$Json_Decode$string));
+var _user$project$Data_Dimmer$setFill = F2(
+	function (fill, d) {
+		var data = _elm_lang$core$Json_Encode$object(
+			{
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'id',
+					_1: _elm_lang$core$Json_Encode$int(
+						_user$project$Data_Id$toInt(d.id))
+				},
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: 'fill',
+						_1: _elm_lang$core$Json_Encode$int(
+							_elm_lang$core$Basics$round(fill))
+					},
+					_1: {ctor: '[]'}
+				}
+			});
+		var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/setFill');
+		return A3(
+			_elm_lang$http$Http$post,
+			url_,
+			_elm_lang$http$Http$jsonBody(data),
+			_user$project$Data_Dimmer$decoder);
+	});
+var _user$project$Data_Dimmer$setOn = function (d) {
+	var data = _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(
+					_user$project$Data_Id$toInt(d.id))
+			},
+			_1: {ctor: '[]'}
+		});
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/setOn');
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$jsonBody(data),
+		_user$project$Data_Dimmer$decoder);
+};
+var _user$project$Data_Dimmer$setOff = function (d) {
+	var data = _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(
+					_user$project$Data_Id$toInt(d.id))
+			},
+			_1: {ctor: '[]'}
+		});
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/setOff');
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$jsonBody(data),
+		_user$project$Data_Dimmer$decoder);
+};
+var _user$project$Data_Dimmer$toggle = function (d) {
+	return _user$project$Data_Dimmer$isOn(d) ? _user$project$Data_Dimmer$setOff(d) : _user$project$Data_Dimmer$setOn(d);
+};
+var _user$project$Data_Dimmer$setLightOn = function (l) {
+	var data = _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(
+					_user$project$Data_Id$toInt(l.id))
+			},
+			_1: {ctor: '[]'}
+		});
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/setLightOn');
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$jsonBody(data),
+		_user$project$Data_Dimmer$decoder);
+};
+var _user$project$Data_Dimmer$setLightOff = function (l) {
+	var data = _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(
+					_user$project$Data_Id$toInt(l.id))
+			},
+			_1: {ctor: '[]'}
+		});
+	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'dimmers/setLightOff');
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$jsonBody(data),
+		_user$project$Data_Dimmer$decoder);
+};
+var _user$project$Data_Dimmer$toggleLight = function (l) {
+	return l.state ? _user$project$Data_Dimmer$setLightOff(l) : _user$project$Data_Dimmer$setLightOn(l);
+};
+var _user$project$Data_Dimmer$Down = {ctor: 'Down'};
+var _user$project$Data_Dimmer$Up = {ctor: 'Up'};
+var _user$project$Data_Dimmer$directionDecoder = A2(
+	_elm_lang$core$Json_Decode$andThen,
+	function (dir) {
+		var _p1 = dir;
+		if (_p1 === true) {
+			return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Dimmer$Up);
+		} else {
+			return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Dimmer$Down);
+		}
+	},
+	_elm_lang$core$Json_Decode$bool);

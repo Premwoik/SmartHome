@@ -22,12 +22,6 @@ defmodule UiWeb.PageController do
     json conn, data
   end
 
-  def page_content(conn, %{"id" => id}) do
-    id
-    |> PageContent.get_content_id()
-    |> PageContent.get_cont_list()
-    |> fn data -> json conn, data end.()
-  end
 
   def page(conn, %{"id" => id}) do
     id

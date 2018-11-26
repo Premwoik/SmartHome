@@ -206,7 +206,7 @@ var _user$project$Page_Action$modifyBarView = function (model) {
 		});
 };
 var _user$project$Page_Action$view = function (model) {
-	return _user$project$Page$body1(
+	return _user$project$Page$body2(
 		{
 			ctor: '::',
 			_0: A2(

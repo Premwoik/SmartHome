@@ -19,12 +19,9 @@ defmodule DB.Port do
 
 
   def changeset(port, params \\ %{}) do
+    IO.inspect(params)
     port
-    |> cast(params, [:state, :number, :name, :type])
-    |> validate_required([:state])
-    #    |> validate_format(:email, ~r/@/)
-    #    |> validate_inclusion(:age, 18..100)
-    #    |> unique_constraint(:email)
+    |> cast(params, [:state, :number, :name, :type, :mode, :timeout])
   end
 
   def get(ids) do

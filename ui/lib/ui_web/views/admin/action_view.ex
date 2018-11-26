@@ -1,0 +1,37 @@
+defmodule UiWeb.ActionView do
+  use UiWeb, :view
+  alias UiWeb.ActionView
+
+  def render("index.json", %{actions: actions}) do
+    %{data: render_many(actions, ActionView, "action.json")}
+  end
+
+  def render("show.json", %{action: action}) do
+    %{data: render_one(action, ActionView, "action.json")}
+  end
+
+  def render("action.json", %{action: action}) do
+    %{id: action.id,
+      function: action.function,
+      active: action.active,
+      params: action.params,
+      frequency: action.frequency,
+      start_time: action.start_time,
+      end_time: action.end_time,
+      port_id: action.port_id}
+  end
+
+  def render("show.json", %{dash_action: action}) do
+    %{data: render_one(action, ActionView, "dash_action.json")}
+  end
+
+  def render("dash_action.json", %{action: action}) do
+    %{id: action.id,
+      name: "Name",
+      function: action.function,
+      state: action.active,
+      action: ""
+    }
+  end
+
+end

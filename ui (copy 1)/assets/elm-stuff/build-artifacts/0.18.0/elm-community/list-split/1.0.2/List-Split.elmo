@@ -1,0 +1,32 @@
+var _elm_community$list_split$List_Split$chunksOfLeft = F2(
+	function (k, xs) {
+		return _elm_lang$core$Native_Utils.eq(k, 0) ? {
+			ctor: '::',
+			_0: {ctor: '[]'},
+			_1: {ctor: '[]'}
+		} : ((_elm_lang$core$Native_Utils.cmp(k, 0) < 0) ? {ctor: '[]'} : ((_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$List$length(xs),
+			k) > 0) ? {
+			ctor: '::',
+			_0: A2(_elm_lang$core$List$take, k, xs),
+			_1: A2(
+				_elm_community$list_split$List_Split$chunksOfLeft,
+				k,
+				A2(_elm_lang$core$List$drop, k, xs))
+		} : {
+			ctor: '::',
+			_0: xs,
+			_1: {ctor: '[]'}
+		}));
+	});
+var _elm_community$list_split$List_Split$chunksOfRight = function (k) {
+	return function (_p0) {
+		return A2(
+			_elm_lang$core$List$map,
+			_elm_lang$core$List$reverse,
+			A2(
+				_elm_community$list_split$List_Split$chunksOfLeft,
+				k,
+				_elm_lang$core$List$reverse(_p0)));
+	};
+};

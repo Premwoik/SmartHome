@@ -13,6 +13,11 @@ defmodule DB.Light do
     belongs_to :dimmer, DB.Dimmer
   end
 
+
+  def changeset(light, attrs) do
+
+  end
+
   def all() do
     DB.Repo.all(DB.Light)
     |> DB.Repo.preload(:port)

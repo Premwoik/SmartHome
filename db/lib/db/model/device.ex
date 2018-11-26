@@ -1,6 +1,8 @@
 defmodule DB.Device do
   use Ecto.Schema
   @moduledoc false
+  import Ecto.Changeset
+  import Ecto.Query
 
   schema "devices" do
   field :name, :string
@@ -10,6 +12,15 @@ defmodule DB.Device do
   field :process, :boolean, default: true
   has_many :ports, DB.Port
   has_one :watcher, DB.Watcher
+  end
+
+  def changeset(dimmer, params \\ %{}) do
+    dimmer
+    |> cast(params, [:name, :ip, :port, :type])
+#    |> validate_required([:fill])
+    #    |> validate_format(:email, ~r/@/)
+    #    |> validate_inclusion(:age, 18..100)
+    #    |> unique_constraint(:email)
   end
 
   def get(id) do

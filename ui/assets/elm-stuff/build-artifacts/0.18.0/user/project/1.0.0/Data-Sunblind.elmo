@@ -15,9 +15,6 @@ var _user$project$Data_Sunblind$setList = F2(
 			},
 			s);
 	});
-var _user$project$Data_Sunblind$getId = function (sun) {
-	return _user$project$Data_Id$toInt(sun.id);
-};
 var _user$project$Data_Sunblind$stateEncoder = function (s) {
 	var toString = function () {
 		var _p0 = s;
@@ -34,9 +31,9 @@ var _user$project$Data_Sunblind$stateEncoder = function (s) {
 	}();
 	return _elm_lang$core$Json_Encode$string(toString);
 };
-var _user$project$Data_Sunblind$Sunblind = F5(
-	function (a, b, c, d, e) {
-		return {id: a, name: b, state: c, order: d, sunblind_: e};
+var _user$project$Data_Sunblind$Sunblind = F4(
+	function (a, b, c, d) {
+		return {id: a, name: b, state: c, sunblind_: d};
 	});
 var _user$project$Data_Sunblind$Position = {ctor: 'Position'};
 var _user$project$Data_Sunblind$isManual = function (s) {
@@ -69,111 +66,36 @@ var _user$project$Data_Sunblind$stateDecoder = A2(
 		}
 	},
 	_elm_lang$core$Json_Decode$string);
-var _user$project$Data_Sunblind$decoder = A6(
-	_elm_lang$core$Json_Decode$map5,
+var _user$project$Data_Sunblind$decoder = A5(
+	_elm_lang$core$Json_Decode$map4,
 	_user$project$Data_Sunblind$Sunblind,
-	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
+	A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'state', _user$project$Data_Sunblind$stateDecoder),
-	A2(_elm_lang$core$Json_Decode$field, 'order', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'sunblind', _elm_lang$core$Json_Decode$string));
-var _user$project$Data_Sunblind$setOn = function (s) {
-	var data = _elm_lang$core$Json_Encode$object(
-		{
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(
-					_user$project$Data_Id$toInt(s.id))
-			},
-			_1: {ctor: '[]'}
-		});
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'sunblinds/setOn');
-	return A3(
-		_elm_lang$http$Http$post,
-		url_,
-		_elm_lang$http$Http$jsonBody(data),
-		_user$project$Data_Sunblind$decoder);
-};
-var _user$project$Data_Sunblind$setOff = function (s) {
-	var data = _elm_lang$core$Json_Encode$object(
-		{
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(
-					_user$project$Data_Id$toInt(s.id))
-			},
-			_1: {ctor: '[]'}
-		});
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'sunblinds/setOff');
-	return A3(
-		_elm_lang$http$Http$post,
-		url_,
-		_elm_lang$http$Http$jsonBody(data),
-		_user$project$Data_Sunblind$decoder);
-};
-var _user$project$Data_Sunblind$changePosition = function (s) {
-	var data = _elm_lang$core$Json_Encode$object(
-		{
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(
-					_user$project$Data_Id$toInt(s.id))
-			},
-			_1: {ctor: '[]'}
-		});
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'sunblinds/changePosition');
-	return A3(
-		_elm_lang$http$Http$post,
-		url_,
-		_elm_lang$http$Http$jsonBody(data),
-		_user$project$Data_Sunblind$decoder);
-};
-var _user$project$Data_Sunblind$toggle = function (s) {
-	var _p2 = s.state;
-	switch (_p2.ctor) {
-		case 'Open':
-			return _user$project$Data_Sunblind$setOff(s);
-		case 'Close':
-			return _user$project$Data_Sunblind$setOn(s);
-		default:
-			return _user$project$Data_Sunblind$changePosition(s);
-	}
-};
 var _user$project$Data_Sunblind$click = function (s) {
-	var data = _elm_lang$core$Json_Encode$object(
-		{
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(
-					_user$project$Data_Id$toInt(s.id))
-			},
-			_1: {ctor: '[]'}
-		});
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'sunblinds/click');
+	var url_ = A2(
+		_elm_lang$core$Basics_ops['++'],
+		_user$project$Request$url,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'sunblinds/click/',
+			_elm_lang$core$Basics$toString(s.id)));
 	return A3(
 		_user$project$Request$post,
 		url_,
-		_elm_lang$http$Http$jsonBody(data),
-		_user$project$Data_Sunblind$decoder);
+		_elm_lang$http$Http$emptyBody,
+		_user$project$Request$data(_user$project$Data_Sunblind$decoder));
 };
 var _user$project$Data_Sunblind$setState = F2(
 	function (s, state) {
-		var data = _elm_lang$core$Json_Encode$object(
+		var data_ = _elm_lang$core$Json_Encode$object(
 			{
 				ctor: '::',
 				_0: {
 					ctor: '_Tuple2',
 					_0: 'id',
-					_1: _elm_lang$core$Json_Encode$int(
-						_user$project$Data_Id$toInt(s.id))
+					_1: _elm_lang$core$Json_Encode$int(s.id)
 				},
 				_1: {
 					ctor: '::',
@@ -189,8 +111,8 @@ var _user$project$Data_Sunblind$setState = F2(
 		return A3(
 			_elm_lang$http$Http$post,
 			url_,
-			_elm_lang$http$Http$jsonBody(data),
-			_user$project$Data_Sunblind$decoder);
+			_elm_lang$http$Http$jsonBody(data_),
+			_user$project$Request$data(_user$project$Data_Sunblind$decoder));
 	});
 var _user$project$Data_Sunblind$isOpen = function (sun) {
 	return _elm_lang$core$Native_Utils.eq(sun.state, _user$project$Data_Sunblind$Open);

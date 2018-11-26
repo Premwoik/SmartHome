@@ -1,0 +1,129 @@
+var _lgastako$elm_select$Select$makeFromString = function (xs) {
+	var fromString = function (s) {
+		var matches = A2(
+			_elm_lang$core$List$filter,
+			function (x) {
+				return _elm_lang$core$Native_Utils.eq(
+					_elm_lang$core$Basics$toString(x),
+					s);
+			},
+			xs);
+		return A2(
+			_elm_lang$core$Maybe$map,
+			function (match) {
+				return (_elm_lang$core$Native_Utils.cmp(
+					_elm_lang$core$List$length(matches),
+					1) > 0) ? _elm_lang$core$Native_Utils.crash(
+					'Select',
+					{
+						start: {line: 111, column: 33},
+						end: {line: 111, column: 44}
+					})('> 1 match in generic fromString') : match;
+			},
+			_elm_lang$core$List$head(matches));
+	};
+	return fromString;
+};
+var _lgastako$elm_select$Select$makeFromString_ = function (xs) {
+	var fromString = _lgastako$elm_select$Select$makeFromString(xs);
+	var fromString_ = function (s) {
+		var _p0 = fromString(s);
+		if (_p0.ctor === 'Nothing') {
+			return _elm_lang$core$Native_Utils.crashCase(
+				'Select',
+				{
+					start: {line: 126, column: 13},
+					end: {line: 131, column: 22}
+				},
+				_p0)('fromString returned Nothing in fromString_');
+		} else {
+			return _p0._0;
+		}
+	};
+	return fromString_;
+};
+var _lgastako$elm_select$Select$fromSelected_ = F5(
+	function (xs, msg, toId, toLabel, sel) {
+		var optionize = function (x) {
+			return A2(
+				_elm_lang$html$Html$option,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: function (_p2) {
+							return _elm_lang$html$Html_Attributes$value(
+								toId(_p2));
+						}(x),
+						_1: {ctor: '[]'}
+					},
+					_elm_lang$core$Native_Utils.eq(x, sel) ? {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$selected(true),
+						_1: {ctor: '[]'}
+					} : {ctor: '[]'}),
+				{
+					ctor: '::',
+					_0: function (_p3) {
+						return _elm_lang$html$Html$text(
+							toLabel(_p3));
+					}(x),
+					_1: {ctor: '[]'}
+				});
+		};
+		return A2(
+			_elm_lang$html$Html$select,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onInput(
+					function (_p4) {
+						return msg(
+							A2(_lgastako$elm_select$Select$makeFromString_, xs, _p4));
+					}),
+				_1: {ctor: '[]'}
+			},
+			A2(_elm_lang$core$List$map, optionize, xs));
+	});
+var _lgastako$elm_select$Select$from_ = F4(
+	function (xs, msg, toId, toLabel) {
+		var optionize = function (x) {
+			return A2(
+				_elm_lang$html$Html$option,
+				{
+					ctor: '::',
+					_0: function (_p5) {
+						return _elm_lang$html$Html_Attributes$value(
+							toId(_p5));
+					}(x),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: function (_p6) {
+						return _elm_lang$html$Html$text(
+							toLabel(_p6));
+					}(x),
+					_1: {ctor: '[]'}
+				});
+		};
+		return A2(
+			_elm_lang$html$Html$select,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onInput(
+					function (_p7) {
+						return msg(
+							A2(_lgastako$elm_select$Select$makeFromString_, xs, _p7));
+					}),
+				_1: {ctor: '[]'}
+			},
+			A2(_elm_lang$core$List$map, optionize, xs));
+	});
+var _lgastako$elm_select$Select$fromSelected = F3(
+	function (xs, msg, sel) {
+		return A5(_lgastako$elm_select$Select$fromSelected_, xs, msg, _elm_lang$core$Basics$toString, _elm_lang$core$Basics$toString, sel);
+	});
+var _lgastako$elm_select$Select$from = F2(
+	function (xs, msg) {
+		return A4(_lgastako$elm_select$Select$from_, xs, msg, _elm_lang$core$Basics$toString, _elm_lang$core$Basics$toString);
+	});

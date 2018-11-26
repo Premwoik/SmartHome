@@ -1,54 +1,355 @@
-var _user$project$Main$urlOf = function (model) {
-	var $short = function () {
-		var _p0 = A2(_elm_lang$core$Array$get, model.selectedTab, model.tabs);
-		if (_p0.ctor === 'Nothing') {
-			return '';
-		} else {
-			return _elm_lang$core$String$toLower(_p0._0.name);
+var _user$project$Main$e404 = function (_p0) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A3(
+				_debois$elm_mdl$Material_Options$styled,
+				_elm_lang$html$Html$h1,
+				{
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Options$cs('mdl-typography--display-4'),
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Typography$center,
+						_1: {ctor: '[]'}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('404'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Main$Model = F6(
+	function (a, b, c, d, e, f) {
+		return {mdl: a, dashboard: b, admin: c, tabsType: d, selectedTab: e, phxSocket: f};
+	});
+var _user$project$Main$DefaultType = {ctor: 'DefaultType'};
+var _user$project$Main$AdminType = {ctor: 'AdminType'};
+var _user$project$Main$DashboardType = {ctor: 'DashboardType'};
+var _user$project$Main$JoinChannel = {ctor: 'JoinChannel'};
+var _user$project$Main$PhoenixMsg = function (a) {
+	return {ctor: 'PhoenixMsg', _0: a};
+};
+var _user$project$Main$AdminMsg = function (a) {
+	return {ctor: 'AdminMsg', _0: a};
+};
+var _user$project$Main$DashboardMsg = function (a) {
+	return {ctor: 'DashboardMsg', _0: a};
+};
+var _user$project$Main$model = {
+	mdl: _debois$elm_mdl$Material$model,
+	dashboard: _user$project$Page_Dashboard$model,
+	admin: _user$project$Admin$model,
+	tabsType: _user$project$Main$DefaultType,
+	selectedTab: 0,
+	phxSocket: A4(
+		_fbonetti$elm_phoenix_socket$Phoenix_Socket$on,
+		'gierczak',
+		'dashboard:lobby',
+		function (_p1) {
+			return _user$project$Main$DashboardMsg(
+				_user$project$Page_Dashboard$ReceiveDashboardMessage(_p1));
+		},
+		_fbonetti$elm_phoenix_socket$Phoenix_Socket$withDebug(
+			_fbonetti$elm_phoenix_socket$Phoenix_Socket$init('ws://localhost:4000/socket/websocket')))
+};
+var _user$project$Main$tabs = {
+	ctor: '::',
+	_0: {
+		ctor: '_Tuple7',
+		_0: 'Home',
+		_1: 'home',
+		_2: function (_p2) {
+			return A2(
+				_elm_lang$html$Html$div,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('HOME'),
+					_1: {ctor: '[]'}
+				});
+		},
+		_3: function (_p3) {
+			return _elm_lang$core$Platform_Sub$none;
+		},
+		_4: function (_p4) {
+			return _elm_lang$core$Platform_Cmd$none;
+		},
+		_5: _user$project$Main$DefaultType,
+		_6: _elm_lang$core$Maybe$Nothing
+	},
+	_1: {
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple7',
+			_0: 'Dashboard',
+			_1: 'dashboard',
+			_2: function (_p5) {
+				return A2(
+					_elm_lang$html$Html$map,
+					_user$project$Main$DashboardMsg,
+					_user$project$Page_Dashboard$view(
+						function (_) {
+							return _.dashboard;
+						}(_p5)));
+			},
+			_3: function (_p6) {
+				return A2(
+					_elm_lang$core$Platform_Sub$map,
+					_user$project$Main$DashboardMsg,
+					_user$project$Page_Dashboard$subs(
+						function (_) {
+							return _.dashboard;
+						}(_p6)));
+			},
+			_4: function (_p7) {
+				return A2(
+					_elm_lang$core$Platform_Cmd$map,
+					_user$project$Main$DashboardMsg,
+					_user$project$Page_Dashboard$init(
+						function (_) {
+							return _.dashboard;
+						}(_p7)));
+			},
+			_5: _user$project$Main$DashboardType,
+			_6: _elm_lang$core$Maybe$Just('dashboard:lobby')
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple7',
+				_0: 'Management',
+				_1: 'admin',
+				_2: function (_p8) {
+					return A2(
+						_elm_lang$html$Html$map,
+						_user$project$Main$AdminMsg,
+						_user$project$Admin$view(
+							function (_) {
+								return _.admin;
+							}(_p8)));
+				},
+				_3: function (_p9) {
+					return A2(
+						_elm_lang$core$Platform_Sub$map,
+						_user$project$Main$AdminMsg,
+						_user$project$Admin$subs(
+							function (_) {
+								return _.admin;
+							}(_p9)));
+				},
+				_4: function (_p10) {
+					return A2(
+						_elm_lang$core$Platform_Cmd$map,
+						_user$project$Main$AdminMsg,
+						_user$project$Admin$init(
+							function (_) {
+								return _.admin;
+							}(_p10)));
+				},
+				_5: _user$project$Main$AdminType,
+				_6: _elm_lang$core$Maybe$Nothing
+			},
+			_1: {ctor: '[]'}
 		}
-	}();
-	return A2(_elm_lang$core$Basics_ops['++'], '#', $short);
+	}
+};
+var _user$project$Main$mTabsTitles = A2(
+	_elm_lang$core$List$map,
+	function (_p11) {
+		var _p12 = _p11;
+		return _elm_lang$html$Html$text(_p12._0);
+	},
+	_user$project$Main$tabs);
+var _user$project$Main$tabTitles = function (model) {
+	var _p13 = model.tabsType;
+	switch (_p13.ctor) {
+		case 'DefaultType':
+			return _user$project$Main$mTabsTitles;
+		case 'AdminType':
+			return A2(
+				_elm_lang$core$List$map,
+				function (x) {
+					return _elm_lang$html$Html$text(x);
+				},
+				_user$project$Admin$tabsTitles);
+		default:
+			return function (_p14) {
+				return A2(
+					_elm_lang$core$List$map,
+					function (x) {
+						return _elm_lang$html$Html$text(x);
+					},
+					_user$project$Page_Dashboard$tabsTitles(
+						function (_) {
+							return _.dashboard;
+						}(_p14)));
+			}(model);
+	}
+};
+var _user$project$Main$mIndTabsTitles = A2(
+	_elm_lang$core$List$indexedMap,
+	F2(
+		function (y, _p15) {
+			var _p16 = _p15;
+			return {
+				ctor: '_Tuple2',
+				_0: y,
+				_1: _elm_lang$html$Html$text(_p16._0)
+			};
+		}),
+	_user$project$Main$tabs);
+var _user$project$Main$tabsViews = function (_p17) {
+	return _elm_lang$core$Array$fromList(
+		A2(
+			_elm_lang$core$List$map,
+			function (_p18) {
+				var _p19 = _p18;
+				return _p19._2;
+			},
+			_p17));
+}(_user$project$Main$tabs);
+var _user$project$Main$tabsSubs = function (_p20) {
+	return _elm_lang$core$Array$fromList(
+		A2(
+			_elm_lang$core$List$map,
+			function (_p21) {
+				var _p22 = _p21;
+				return _p22._3;
+			},
+			_p20));
+}(_user$project$Main$tabs);
+var _user$project$Main$tabsUrls = function (_p23) {
+	return _elm_lang$core$Array$fromList(
+		A2(
+			_elm_lang$core$List$map,
+			function (_p24) {
+				var _p25 = _p24;
+				return _p25._1;
+			},
+			_p23));
+}(_user$project$Main$tabs);
+var _user$project$Main$urlOf = function (model) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		'#',
+		A2(
+			_elm_lang$core$Maybe$withDefault,
+			'',
+			A2(_elm_lang$core$Array$get, model.selectedTab, _user$project$Main$tabsUrls)));
 };
 var _user$project$Main$delta2url = F2(
 	function (model1, model2) {
+		var _p26 = _elm_lang$core$Debug$log('m1');
 		return (!_elm_lang$core$Native_Utils.eq(model1.selectedTab, model2.selectedTab)) ? _elm_lang$core$Maybe$Just(
 			{
 				entry: _rgrempel$elm_route_url$RouteUrl$NewEntry,
 				url: _user$project$Main$urlOf(model2)
 			}) : _elm_lang$core$Maybe$Nothing;
 	});
-var _user$project$Main$tabTitles = function (model) {
-	return function (_p1) {
-		return _elm_lang$core$Array$toList(
-			A2(
-				_elm_lang$core$Array$map,
-				function (x) {
-					return _elm_lang$html$Html$text(x.name);
-				},
-				_p1));
-	}(model.tabs);
+var _user$project$Main$tabsChannel = function (_p27) {
+	return _elm_lang$core$Array$fromList(
+		A2(
+			_elm_lang$core$List$map,
+			function (_p28) {
+				var _p29 = _p28;
+				return _p29._6;
+			},
+			_p27));
+}(_user$project$Main$tabs);
+var _user$project$Main$Mdl = function (a) {
+	return {ctor: 'Mdl', _0: a};
 };
+var _user$project$Main$init = _elm_lang$core$Platform_Cmd$batch(
+	{
+		ctor: '::',
+		_0: _debois$elm_mdl$Material$init(_user$project$Main$Mdl),
+		_1: {ctor: '[]'}
+	});
+var _user$project$Main$subs = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material$subscriptions, _user$project$Main$Mdl, model),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$core$Platform_Sub$map,
+					_user$project$Main$DashboardMsg,
+					_user$project$Page_Dashboard$subs(model.dashboard)),
+				_1: {
+					ctor: '::',
+					_0: A2(_fbonetti$elm_phoenix_socket$Phoenix_Socket$listen, model.phxSocket, _user$project$Main$PhoenixMsg),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
+var _user$project$Main$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: function (_p30) {
+				return A2(
+					_elm_lang$core$Maybe$withDefault,
+					_elm_lang$core$Platform_Sub$none,
+					A2(
+						_elm_lang$core$Maybe$map,
+						function (x) {
+							return x(model);
+						},
+						function (x) {
+							return A2(_elm_lang$core$Array$get, x, _user$project$Main$tabsSubs);
+						}(
+							function (_) {
+								return _.selectedTab;
+							}(_p30))));
+			}(model),
+			_1: {
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material$subscriptions, _user$project$Main$Mdl, model),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Main$AddressChange = function (a) {
+	return {ctor: 'AddressChange', _0: a};
+};
+var _user$project$Main$BackHome = {ctor: 'BackHome'};
 var _user$project$Main$header = {
 	ctor: '::',
 	_0: A2(
 		_elm_lang$html$Html$div,
-		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'float', _1: 'left'},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'default'},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'padding-left', _1: '50px'},
+							_1: {ctor: '[]'}
+						}
+					}
+				}),
+			_1: {ctor: '[]'}
+		},
 		{
 			ctor: '::',
 			_0: A2(
 				_elm_lang$html$Html$h5,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$style(
-						{
-							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'float', _1: 'left'},
-							_1: {
-								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'padding-left', _1: '40px'},
-								_1: {ctor: '[]'}
-							}
-						}),
+					_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$BackHome),
 					_1: {ctor: '[]'}
 				},
 				{
@@ -60,183 +361,265 @@ var _user$project$Main$header = {
 		}),
 	_1: {ctor: '[]'}
 };
-var _user$project$Main$nameToNumber = function (name) {
-	return function (_p2) {
-		return A2(
-			_elm_lang$core$Maybe$withDefault,
-			-1,
-			A2(
-				_elm_lang$core$Array$get,
-				0,
-				A2(
-					_elm_lang$core$Array$map,
-					function (x) {
-						return x.number;
-					},
-					A2(
-						_elm_lang$core$Array$filter,
-						function (x) {
-							return _elm_lang$core$Native_Utils.eq(x.name, name);
-						},
-						function (_) {
-							return _.tabs;
-						}(_p2)))));
-	};
-};
-var _user$project$Main$model = {
-	mdl: _debois$elm_mdl$Material$model,
-	selectedTab: 1,
-	page: _user$project$Page_Page$model,
-	tabs: _elm_lang$core$Array$fromList(
-		{ctor: '[]'})
-};
-var _user$project$Main$Model = F4(
-	function (a, b, c, d) {
-		return {mdl: a, page: b, selectedTab: c, tabs: d};
-	});
-var _user$project$Main$PageMsg = function (a) {
-	return {ctor: 'PageMsg', _0: a};
-};
-var _user$project$Main$switchTab = F2(
-	function (k, just) {
-		return function (_p3) {
-			return A2(
-				_elm_lang$core$Maybe$withDefault,
-				_elm_lang$core$Platform_Cmd$none,
-				A2(
-					_elm_lang$core$Maybe$map,
-					function (_p4) {
-						return A2(
-							_elm_lang$core$Platform_Cmd$map,
-							_user$project$Main$PageMsg,
-							just(_p4));
-					},
-					A2(
-						_elm_lang$core$Array$get,
-						k,
-						function (_) {
-							return _.tabs;
-						}(_p3))));
-		};
-	});
-var _user$project$Main$Mdl = function (a) {
-	return {ctor: 'Mdl', _0: a};
-};
-var _user$project$Main$update = F2(
-	function (msg, model) {
-		var _p5 = msg;
-		switch (_p5.ctor) {
-			case 'LoadTabs':
-				if (_p5._0.ctor === 'Ok') {
-					var tabs_ = _elm_lang$core$Array$fromList(
-						A2(
-							_elm_lang$core$List$sortBy,
-							function (_) {
-								return _.number;
-							},
-							_p5._0._0));
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{tabs: tabs_}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				} else {
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{
-								tabs: _elm_lang$core$Array$fromList(
-									{ctor: '[]'})
-							}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				}
-			case 'SelectTab':
-				var _p6 = _p5._0;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{selectedTab: _p6}),
-					_1: A3(_user$project$Main$switchTab, _p6, _user$project$Page_Page$init, model)
-				};
-			case 'AddressChange':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							selectedTab: A2(_user$project$Main$nameToNumber, _p5._0, model)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Mdl':
-				return A3(_debois$elm_mdl$Material$update, _user$project$Main$Mdl, _p5._0, model);
-			default:
-				return A6(
-					_debois$elm_mdl$Material_Helpers$lift,
-					function (_) {
-						return _.page;
-					},
-					F2(
-						function (m, x) {
-							return _elm_lang$core$Native_Utils.update(
-								m,
-								{page: x});
-						}),
-					_user$project$Main$PageMsg,
-					_user$project$Page_Page$update,
-					_p5._0,
-					model);
-		}
-	});
-var _user$project$Main$subs = function (model) {
-	return _elm_lang$core$Platform_Sub$batch(
-		{
-			ctor: '::',
-			_0: A2(_debois$elm_mdl$Material$subscriptions, _user$project$Main$Mdl, model),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$core$Platform_Sub$map,
-					_user$project$Main$PageMsg,
-					_user$project$Page_Page$subs(model.page)),
-				_1: {ctor: '[]'}
-			}
-		});
-};
-var _user$project$Main$LoadTabs = function (a) {
-	return {ctor: 'LoadTabs', _0: a};
-};
-var _user$project$Main$init = _elm_lang$core$Platform_Cmd$batch(
-	{
-		ctor: '::',
-		_0: _debois$elm_mdl$Material$init(_user$project$Main$Mdl),
-		_1: {
-			ctor: '::',
-			_0: A2(_user$project$Request$send, _user$project$Main$LoadTabs, _user$project$Page_Page$getTabs),
-			_1: {ctor: '[]'}
-		}
-	});
-var _user$project$Main$AddressChange = function (a) {
-	return {ctor: 'AddressChange', _0: a};
-};
 var _user$project$Main$SelectTab = function (a) {
 	return {ctor: 'SelectTab', _0: a};
 };
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		update:
+		while (true) {
+			var _p31 = A2(_elm_lang$core$Debug$log, 'MAIN_LOG: ', msg);
+			var _p32 = msg;
+			switch (_p32.ctor) {
+				case 'PhoenixMsg':
+					var _p33 = A2(_fbonetti$elm_phoenix_socket$Phoenix_Socket$update, _p32._0, model.phxSocket);
+					var phxSocket = _p33._0;
+					var phxCmd = _p33._1;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{phxSocket: phxSocket}),
+						_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$PhoenixMsg, phxCmd)
+					};
+				case 'BackHome':
+					var _v8 = _user$project$Main$SelectTab(0),
+						_v9 = _elm_lang$core$Native_Utils.update(
+						model,
+						{tabsType: _user$project$Main$DefaultType});
+					msg = _v8;
+					model = _v9;
+					continue update;
+				case 'SelectTab':
+					var _p40 = _p32._0;
+					var _p34 = A2(
+						_elm_lang$core$Array$get,
+						_p40,
+						_elm_lang$core$Array$fromList(_user$project$Main$tabs));
+					if (_p34.ctor === 'Just') {
+						var phxMap = function (x) {
+							return A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$PhoenixMsg, x);
+						};
+						var _p35 = function () {
+							var _p36 = A2(_elm_lang$core$Array$get, model.selectedTab, _user$project$Main$tabsChannel);
+							if ((_p36.ctor === 'Just') && (_p36._0.ctor === 'Just')) {
+								return A2(_fbonetti$elm_phoenix_socket$Phoenix_Socket$leave, _p36._0._0, model.phxSocket);
+							} else {
+								return {ctor: '_Tuple2', _0: model.phxSocket, _1: _elm_lang$core$Platform_Cmd$none};
+							}
+						}();
+						var phxSocLeave = _p35._0;
+						var phxCmdLeave = _p35._1;
+						var join = function (ch_) {
+							return A2(
+								_fbonetti$elm_phoenix_socket$Phoenix_Socket$join,
+								_fbonetti$elm_phoenix_socket$Phoenix_Channel$init(ch_),
+								phxSocLeave);
+						};
+						var _p37 = function (_p38) {
+							return A2(
+								_elm_lang$core$Maybe$withDefault,
+								{ctor: '_Tuple2', _0: phxSocLeave, _1: phxCmdLeave},
+								A2(
+									_elm_lang$core$Maybe$map,
+									function (x) {
+										return join(x);
+									},
+									_p38));
+						}(_p34._0._6);
+						var phxSocJoin = _p37._0;
+						var phxCmdJoin = _p37._1;
+						var _p39 = _elm_lang$core$Native_Utils.eq(_p40, model.selectedTab);
+						if (_p39 === true) {
+							return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+						} else {
+							return {
+								ctor: '_Tuple2',
+								_0: _elm_lang$core$Native_Utils.update(
+									model,
+									{selectedTab: _p40, tabsType: _p34._0._5, phxSocket: phxSocJoin}),
+								_1: _elm_lang$core$Platform_Cmd$batch(
+									{
+										ctor: '::',
+										_0: phxMap(phxCmdLeave),
+										_1: {
+											ctor: '::',
+											_0: phxMap(phxCmdJoin),
+											_1: {
+												ctor: '::',
+												_0: _p34._0._4(model),
+												_1: {ctor: '[]'}
+											}
+										}
+									})
+							};
+						}
+					} else {
+						return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+					}
+				case 'JoinChannel':
+					var channel = _fbonetti$elm_phoenix_socket$Phoenix_Channel$init('dashboard:lobby');
+					var _p41 = A2(_fbonetti$elm_phoenix_socket$Phoenix_Socket$join, channel, model.phxSocket);
+					var phxSocket = _p41._0;
+					var phxCmd = _p41._1;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{phxSocket: phxSocket}),
+						_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$PhoenixMsg, phxCmd)
+					};
+				case 'AddressChange':
+					var k = 0;
+					var _v13 = _user$project$Main$SelectTab(k),
+						_v14 = model;
+					msg = _v13;
+					model = _v14;
+					continue update;
+				case 'Mdl':
+					return A3(_debois$elm_mdl$Material$update, _user$project$Main$Mdl, _p32._0, model);
+				case 'DashboardMsg':
+					return A6(
+						_debois$elm_mdl$Material_Helpers$lift,
+						function (_) {
+							return _.dashboard;
+						},
+						F2(
+							function (m, x) {
+								return _elm_lang$core$Native_Utils.update(
+									m,
+									{dashboard: x});
+							}),
+						_user$project$Main$DashboardMsg,
+						_user$project$Page_Dashboard$update,
+						_p32._0,
+						model);
+				default:
+					return A6(
+						_debois$elm_mdl$Material_Helpers$lift,
+						function (_) {
+							return _.admin;
+						},
+						F2(
+							function (m, x) {
+								return _elm_lang$core$Native_Utils.update(
+									m,
+									{admin: x});
+							}),
+						_user$project$Main$AdminMsg,
+						_user$project$Admin$update,
+						_p32._0,
+						model);
+			}
+		}
+	});
+var _user$project$Main$drawer = function (model) {
+	var liColor = function (k) {
+		return _elm_lang$core$Native_Utils.eq(model.selectedTab, k) ? A2(_debois$elm_mdl$Material_Options$css, 'color', 'red') : _debois$elm_mdl$Material_Options$nop;
+	};
+	var weather = A2(
+		_debois$elm_mdl$Material_Options$div,
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Options$css, 'background-color', 'red'),
+			_1: {
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '100px'),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '100px'),
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		{ctor: '[]'});
+	return {
+		ctor: '::',
+		_0: A2(
+			_debois$elm_mdl$Material_Options$div,
+			{
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '5px'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: weather,
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_List$ul,
+						{ctor: '[]'},
+						A2(
+							_elm_lang$core$List$map,
+							function (_p42) {
+								var _p43 = _p42;
+								var _p44 = _p43._0;
+								return A2(
+									_debois$elm_mdl$Material_List$li,
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Main$SelectTab(_p44)),
+										_1: {
+											ctor: '::',
+											_0: liColor(_p44),
+											_1: {ctor: '[]'}
+										}
+									},
+									{
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_List$content,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: _p43._1,
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									});
+							},
+							_user$project$Main$mIndTabsTitles)),
+					_1: {ctor: '[]'}
+				}
+			}),
+		_1: {ctor: '[]'}
+	};
+};
 var _user$project$Main$view_ = function (model) {
-	var top = function (_p7) {
-		return A2(
-			_elm_lang$html$Html$map,
-			_user$project$Main$PageMsg,
-			_user$project$Page_Page$view(
-				function (_) {
-					return _.page;
-				}(_p7)));
-	}(model);
+	var onSelectTab = function () {
+		var _p45 = model.tabsType;
+		switch (_p45.ctor) {
+			case 'DefaultType':
+				return _user$project$Main$SelectTab;
+			case 'DashboardType':
+				return function (x) {
+					return _user$project$Main$DashboardMsg(
+						_user$project$Page_Dashboard$SelectTab(x));
+				};
+			default:
+				return function (x) {
+					return _user$project$Main$AdminMsg(
+						_user$project$Admin$SelectTab(x));
+				};
+		}
+	}();
+	var selectedTab = function () {
+		var _p46 = model.tabsType;
+		switch (_p46.ctor) {
+			case 'DefaultType':
+				return model.selectedTab;
+			case 'DashboardType':
+				return model.dashboard.selectedTab;
+			default:
+				return model.admin.selectedTab;
+		}
+	}();
+	var top = A2(
+		_elm_lang$core$Maybe$withDefault,
+		_user$project$Main$e404,
+		A2(_elm_lang$core$Array$get, model.selectedTab, _user$project$Main$tabsViews))(model);
 	return _debois$elm_mdl$Material_Scheme$top(
 		A4(
 			_debois$elm_mdl$Material_Layout$render,
@@ -244,28 +627,48 @@ var _user$project$Main$view_ = function (model) {
 			model.mdl,
 			{
 				ctor: '::',
-				_0: _debois$elm_mdl$Material_Layout$selectedTab(model.selectedTab),
+				_0: _debois$elm_mdl$Material_Layout$selectedTab(selectedTab),
 				_1: {
 					ctor: '::',
-					_0: _debois$elm_mdl$Material_Layout$onSelectTab(_user$project$Main$SelectTab),
+					_0: _debois$elm_mdl$Material_Layout$onSelectTab(onSelectTab),
 					_1: {
 						ctor: '::',
 						_0: _debois$elm_mdl$Material_Layout$fixedHeader,
 						_1: {
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Layout$scrolling,
-							_1: {ctor: '[]'}
+							_0: _debois$elm_mdl$Material_Layout$fixedDrawer,
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Layout$waterfall(true),
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				}
 			},
 			{
-				drawer: {ctor: '[]'},
+				drawer: _user$project$Main$drawer(model),
 				header: _user$project$Main$header,
 				main: {
 					ctor: '::',
-					_0: top,
-					_1: {ctor: '[]'}
+					_0: A3(
+						_elm_lang$html$Html$node,
+						'meta',
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$name('viewport'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$content('width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'),
+								_1: {ctor: '[]'}
+							}
+						},
+						{ctor: '[]'}),
+					_1: {
+						ctor: '::',
+						_0: top,
+						_1: {ctor: '[]'}
+					}
 				},
 				tabs: {
 					ctor: '_Tuple2',
@@ -276,14 +679,15 @@ var _user$project$Main$view_ = function (model) {
 };
 var _user$project$Main$view = _elm_lang$html$Html_Lazy$lazy(_user$project$Main$view_);
 var _user$project$Main$location2messages = function (location) {
+	var _p47 = A2(_elm_lang$core$Debug$log, 'Location', location.hash);
 	return {
 		ctor: '::',
 		_0: function () {
-			var _p8 = A2(_elm_lang$core$String$dropLeft, 1, location.hash);
-			if (_p8 === '') {
+			var _p48 = A2(_elm_lang$core$String$dropLeft, 1, location.hash);
+			if (_p48 === '') {
 				return _user$project$Main$SelectTab(0);
 			} else {
-				return _user$project$Main$AddressChange(_p8);
+				return _user$project$Main$AddressChange(_p48);
 			}
 		}(),
 		_1: {ctor: '[]'}
@@ -293,7 +697,15 @@ var _user$project$Main$main = _rgrempel$elm_route_url$RouteUrl$program(
 	{
 		delta2url: _user$project$Main$delta2url,
 		location2messages: _user$project$Main$location2messages,
-		init: {ctor: '_Tuple2', _0: _user$project$Main$model, _1: _user$project$Main$init},
+		init: {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				_user$project$Main$model,
+				{
+					mdl: A2(_debois$elm_mdl$Material_Layout$setTabsWidth, 2124, _user$project$Main$model.mdl)
+				}),
+			_1: _user$project$Main$init
+		},
 		view: _user$project$Main$view,
 		subscriptions: function (model) {
 			return _user$project$Main$subs(model);

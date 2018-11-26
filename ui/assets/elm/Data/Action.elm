@@ -4,28 +4,27 @@ import Data.Port as Port exposing (Port)
 import Json.Decode as Decode exposing (field, bool, string, list, Decoder, int, at)
 
 import Http
-import Request
+import Request exposing (data)
 import Json.Encode as Encode
 
 
 
+
 type alias Action =
-    { id : Id
+    { id : Int
     , name : String
     , state : Bool
     , function : String
-    , order: Int
     , action_ : String
     }
 
 decoder : Decode.Decoder Action
 decoder =
-    Decode.map6 Action
-        (field "id" Id.decoder)
+    Decode.map5 Action
+        (field "id" int)
         (field "name" string)
         (field "state" bool)
         (field "function" string)
-        (field "order" int)
         (field "action" string)
 
 
@@ -34,22 +33,18 @@ decoder =
 setOn : Action -> Http.Request Action
 setOn a =
     let
-        url_ = Request.url ++ "actions/setOn"
-        data = Encode.object
-            [ ("id", Encode.int (Id.toInt a.id))
-            ]
+        url_ = Request.url ++ "actions/setOn/" ++ (toString a.id)
+
     in
-    Http.post url_ (Http.jsonBody data) decoder
+    Http.post url_ Http.emptyBody (data decoder)
 
 setOff : Action -> Http.Request Action
 setOff a =
     let
-        url_ = Request.url ++ "actions/setOff"
-        data = Encode.object
-            [ ("id", Encode.int (Id.toInt a.id))
-            ]
+        url_ = Request.url ++ "actions/setOff/" ++ (toString a.id)
+
     in
-    Http.post url_ (Http.jsonBody data) decoder
+    Http.post url_ Http.emptyBody (data decoder)
 
 
 toggle : Action -> Http.Request Action

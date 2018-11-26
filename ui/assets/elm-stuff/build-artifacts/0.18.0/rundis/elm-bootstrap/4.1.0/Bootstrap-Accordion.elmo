@@ -1,0 +1,501 @@
+var _rundis$elm_bootstrap$Bootstrap_Accordion$transitionStyle = F2(
+	function (withAnimation, height) {
+		return _elm_lang$html$Html_Attributes$style(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'height', _1: height},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'overflow', _1: 'hidden'},
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				_elm_lang$core$Native_Utils.eq(withAnimation, true) ? {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: '-webkit-transition-timing-function', _1: 'ease'},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: '-o-transition-timing-function', _1: 'ease'},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'transition-timing-function', _1: 'ease'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: '-webkit-transition-duration', _1: '0.35s'},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: '-o-transition-duration', _1: '0.35s'},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'transition-duration', _1: '0.35s'},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: '-webkit-transition-property', _1: 'height'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: '-o-transition-property', _1: 'height'},
+												_1: {
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'transition-property', _1: 'height'},
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				} : {ctor: '[]'}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$heightDecoder = A2(
+	_elm_lang$core$Json_Decode$field,
+	'currentTarget',
+	_debois$elm_dom$DOM$parentElement(
+		_debois$elm_dom$DOM$nextSibling(
+			A2(_debois$elm_dom$DOM$childNode, 0, _debois$elm_dom$DOM$offsetHeight))));
+var _rundis$elm_bootstrap$Bootstrap_Accordion$listGroup = _rundis$elm_bootstrap$Bootstrap_Card_Internal$listGroup;
+var _rundis$elm_bootstrap$Bootstrap_Accordion$block = _rundis$elm_bootstrap$Bootstrap_Card_Internal$block;
+var _rundis$elm_bootstrap$Bootstrap_Accordion$CardState = F2(
+	function (a, b) {
+		return {visibility: a, height: b};
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$Config = function (a) {
+	return {ctor: 'Config', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$config = function (toMsg) {
+	return _rundis$elm_bootstrap$Bootstrap_Accordion$Config(
+		{
+			toMsg: toMsg,
+			withAnimation: false,
+			onlyOneOpen: false,
+			cards: {ctor: '[]'}
+		});
+};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$withAnimation = function (_p0) {
+	var _p1 = _p0;
+	return _rundis$elm_bootstrap$Bootstrap_Accordion$Config(
+		_elm_lang$core$Native_Utils.update(
+			_p1._0,
+			{withAnimation: true}));
+};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$onlyOneOpen = function (_p2) {
+	var _p3 = _p2;
+	return _rundis$elm_bootstrap$Bootstrap_Accordion$Config(
+		_elm_lang$core$Native_Utils.update(
+			_p3._0,
+			{onlyOneOpen: true}));
+};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$cards = F2(
+	function (cards, _p4) {
+		var _p5 = _p4;
+		return _rundis$elm_bootstrap$Bootstrap_Accordion$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p5._0,
+				{cards: cards}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$State = function (a) {
+	return {ctor: 'State', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$initialState = _rundis$elm_bootstrap$Bootstrap_Accordion$State(_elm_lang$core$Dict$empty);
+var _rundis$elm_bootstrap$Bootstrap_Accordion$Shown = {ctor: 'Shown'};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$initialStateCardOpen = function (id) {
+	return _rundis$elm_bootstrap$Bootstrap_Accordion$State(
+		_elm_lang$core$Dict$fromList(
+			{
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: id,
+					_1: A2(_rundis$elm_bootstrap$Bootstrap_Accordion$CardState, _rundis$elm_bootstrap$Bootstrap_Accordion$Shown, _elm_lang$core$Maybe$Nothing)
+				},
+				_1: {ctor: '[]'}
+			}));
+};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$StartUp = {ctor: 'StartUp'};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$StartDown = {ctor: 'StartDown'};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$isOpen = F2(
+	function (id, _p6) {
+		var _p7 = _p6;
+		var _p8 = A2(_elm_lang$core$Dict$get, id, _p7._0);
+		if (_p8.ctor === 'Just') {
+			var _p9 = _p8._0.visibility;
+			return _elm_lang$core$Native_Utils.eq(_p9, _rundis$elm_bootstrap$Bootstrap_Accordion$Shown) || _elm_lang$core$Native_Utils.eq(_p9, _rundis$elm_bootstrap$Bootstrap_Accordion$StartDown);
+		} else {
+			return false;
+		}
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$Hidden = {ctor: 'Hidden'};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$subscriptions = F2(
+	function (_p10, toMsg) {
+		var _p11 = _p10;
+		var _p16 = _p11._0;
+		var needsSub = A2(
+			_elm_lang$core$List$any,
+			function (_p12) {
+				var _p13 = _p12;
+				return A2(
+					_elm_lang$core$List$member,
+					_p13._1.visibility,
+					{
+						ctor: '::',
+						_0: _rundis$elm_bootstrap$Bootstrap_Accordion$StartDown,
+						_1: {
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Accordion$StartUp,
+							_1: {ctor: '[]'}
+						}
+					});
+			},
+			_elm_lang$core$Dict$toList(_p16));
+		var updState = _rundis$elm_bootstrap$Bootstrap_Accordion$State(
+			A2(
+				_elm_lang$core$Dict$map,
+				F2(
+					function (id, state) {
+						var _p14 = state.visibility;
+						switch (_p14.ctor) {
+							case 'StartDown':
+								return _elm_lang$core$Native_Utils.update(
+									state,
+									{visibility: _rundis$elm_bootstrap$Bootstrap_Accordion$Shown});
+							case 'StartUp':
+								return _elm_lang$core$Native_Utils.update(
+									state,
+									{visibility: _rundis$elm_bootstrap$Bootstrap_Accordion$Hidden});
+							default:
+								return state;
+						}
+					}),
+				_p16));
+		return needsSub ? _elm_lang$animation_frame$AnimationFrame$times(
+			function (_p15) {
+				return toMsg(updState);
+			}) : _elm_lang$core$Platform_Sub$none;
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$visibilityTransition = F2(
+	function (withAnimation, visibility) {
+		var _p17 = {ctor: '_Tuple2', _0: withAnimation, _1: visibility};
+		_v8_6:
+		do {
+			if (_p17.ctor === '_Tuple2') {
+				if (_p17._0 === true) {
+					switch (_p17._1.ctor) {
+						case 'Hidden':
+							return _rundis$elm_bootstrap$Bootstrap_Accordion$StartDown;
+						case 'StartDown':
+							return _rundis$elm_bootstrap$Bootstrap_Accordion$Shown;
+						case 'Shown':
+							return _rundis$elm_bootstrap$Bootstrap_Accordion$StartUp;
+						default:
+							return _rundis$elm_bootstrap$Bootstrap_Accordion$Hidden;
+					}
+				} else {
+					switch (_p17._1.ctor) {
+						case 'Hidden':
+							return _rundis$elm_bootstrap$Bootstrap_Accordion$Shown;
+						case 'Shown':
+							return _rundis$elm_bootstrap$Bootstrap_Accordion$Hidden;
+						default:
+							break _v8_6;
+					}
+				}
+			} else {
+				break _v8_6;
+			}
+		} while(false);
+		return _rundis$elm_bootstrap$Bootstrap_Accordion$Shown;
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$clickHandler = F4(
+	function (_p20, _p19, decoder, _p18) {
+		var _p21 = _p20;
+		var _p27 = _p21._0;
+		var _p22 = _p19;
+		var _p26 = _p22._0.withAnimation;
+		var _p25 = _p22._0.onlyOneOpen;
+		var _p23 = _p18;
+		var _p24 = _p23._0.id;
+		var currentCardState = A2(
+			_elm_lang$core$Maybe$withDefault,
+			{visibility: _rundis$elm_bootstrap$Bootstrap_Accordion$Hidden, height: _elm_lang$core$Maybe$Nothing},
+			A2(_elm_lang$core$Dict$get, _p24, _p27));
+		var initStates = A3(_elm_lang$core$Dict$insert, _p24, currentCardState, _p27);
+		var updOthersHidden = function (h) {
+			return _rundis$elm_bootstrap$Bootstrap_Accordion$State(
+				A2(
+					_elm_lang$core$Dict$map,
+					F2(
+						function (i, c) {
+							return _elm_lang$core$Native_Utils.eq(i, _p24) ? {
+								height: _elm_lang$core$Maybe$Just(h),
+								visibility: A2(_rundis$elm_bootstrap$Bootstrap_Accordion$visibilityTransition, _p26, c.visibility)
+							} : ((_elm_lang$core$Native_Utils.eq(c.visibility, _rundis$elm_bootstrap$Bootstrap_Accordion$Shown) && (_elm_lang$core$Native_Utils.eq(_p26, true) && _elm_lang$core$Native_Utils.eq(_p25, true))) ? _elm_lang$core$Native_Utils.update(
+								c,
+								{visibility: _rundis$elm_bootstrap$Bootstrap_Accordion$StartUp}) : ((_elm_lang$core$Native_Utils.eq(c.visibility, _rundis$elm_bootstrap$Bootstrap_Accordion$Shown) && (_elm_lang$core$Native_Utils.eq(_p26, false) && _elm_lang$core$Native_Utils.eq(_p25, true))) ? _elm_lang$core$Native_Utils.update(
+								c,
+								{visibility: _rundis$elm_bootstrap$Bootstrap_Accordion$Hidden}) : c));
+						}),
+					initStates));
+		};
+		return A2(
+			_elm_lang$core$Json_Decode$andThen,
+			function (v) {
+				return _elm_lang$core$Json_Decode$succeed(
+					_p22._0.toMsg(
+						updOthersHidden(v)));
+			},
+			decoder);
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$renderToggle = F3(
+	function (state, config, _p28) {
+		var _p29 = _p28;
+		var _p30 = _p29._0.header;
+		var toggle = _p30._0.toggle;
+		var _p31 = toggle;
+		var attributes = _p31._0.attributes;
+		var children = _p31._0.children;
+		return A2(
+			_elm_lang$html$Html$a,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$href(
+						A2(_elm_lang$core$Basics_ops['++'], '#', _p29._0.id)),
+					_1: {
+						ctor: '::',
+						_0: A3(
+							_elm_lang$html$Html_Events$onWithOptions,
+							'click',
+							{stopPropagation: false, preventDefault: true},
+							A4(_rundis$elm_bootstrap$Bootstrap_Accordion$clickHandler, state, config, _rundis$elm_bootstrap$Bootstrap_Accordion$heightDecoder, _p29)),
+						_1: {ctor: '[]'}
+					}
+				},
+				attributes),
+			children);
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$renderCardHeader = F3(
+	function (state, config, _p32) {
+		var _p33 = _p32;
+		var _p34 = _p33._0.header;
+		var elemFn = _p34._0.elemFn;
+		var attributes = _p34._0.attributes;
+		var toggle = _p34._0.toggle;
+		var childrenPreToggle = _p34._0.childrenPreToggle;
+		var childrenPostToggle = _p34._0.childrenPostToggle;
+		return A2(
+			elemFn,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				attributes,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('card-header'),
+					_1: {ctor: '[]'}
+				}),
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				childrenPreToggle,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: A3(_rundis$elm_bootstrap$Bootstrap_Accordion$renderToggle, state, config, _p33),
+						_1: {ctor: '[]'}
+					},
+					childrenPostToggle)));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$getOrInitCardState = F2(
+	function (id, _p35) {
+		var _p36 = _p35;
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			{visibility: _rundis$elm_bootstrap$Bootstrap_Accordion$Hidden, height: _elm_lang$core$Maybe$Nothing},
+			A2(_elm_lang$core$Dict$get, id, _p36._0));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$animationAttributes = F3(
+	function (state, _p38, _p37) {
+		var _p39 = _p38;
+		var _p40 = _p37;
+		var styles = _rundis$elm_bootstrap$Bootstrap_Accordion$transitionStyle(_p39._0.withAnimation);
+		var cardState = A2(_rundis$elm_bootstrap$Bootstrap_Accordion$getOrInitCardState, _p40._0.id, state);
+		var pixelHeight = A2(
+			_elm_lang$core$Maybe$withDefault,
+			'0',
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (v) {
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(v),
+						'px');
+				},
+				cardState.height));
+		var _p41 = cardState.visibility;
+		switch (_p41.ctor) {
+			case 'Hidden':
+				return {
+					ctor: '::',
+					_0: styles('0px'),
+					_1: {ctor: '[]'}
+				};
+			case 'StartDown':
+				return {
+					ctor: '::',
+					_0: styles('0px'),
+					_1: {ctor: '[]'}
+				};
+			case 'StartUp':
+				return {
+					ctor: '::',
+					_0: styles(pixelHeight),
+					_1: {ctor: '[]'}
+				};
+			default:
+				var _p42 = cardState.height;
+				if (_p42.ctor === 'Just') {
+					return {
+						ctor: '::',
+						_0: styles(pixelHeight),
+						_1: {ctor: '[]'}
+					};
+				} else {
+					return {
+						ctor: '::',
+						_0: styles('100%'),
+						_1: {ctor: '[]'}
+					};
+				}
+		}
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$renderCardBlock = F3(
+	function (state, config, _p43) {
+		var _p44 = _p43;
+		return A2(
+			_elm_lang$html$Html$div,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$id(_p44._0.id),
+					_1: {ctor: '[]'}
+				},
+				A3(_rundis$elm_bootstrap$Bootstrap_Accordion$animationAttributes, state, config, _p44)),
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					_rundis$elm_bootstrap$Bootstrap_Card_Internal$renderBlocks(_p44._0.blocks)),
+				_1: {ctor: '[]'}
+			});
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$renderCard = F3(
+	function (state, config, _p45) {
+		var _p46 = _p45;
+		var _p47 = _p46;
+		return A2(
+			_elm_lang$html$Html$div,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_rundis$elm_bootstrap$Bootstrap_Card_Internal$cardAttributes(_p46._0.options),
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('card'),
+					_1: {ctor: '[]'}
+				}),
+			{
+				ctor: '::',
+				_0: A3(_rundis$elm_bootstrap$Bootstrap_Accordion$renderCardHeader, state, config, _p47),
+				_1: {
+					ctor: '::',
+					_0: A3(_rundis$elm_bootstrap$Bootstrap_Accordion$renderCardBlock, state, config, _p47),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$view = F2(
+	function (state, _p48) {
+		var _p49 = _p48;
+		return A2(
+			_elm_lang$html$Html$div,
+			{ctor: '[]'},
+			A2(
+				_elm_lang$core$List$map,
+				A2(_rundis$elm_bootstrap$Bootstrap_Accordion$renderCard, state, _p49),
+				_p49._0.cards));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$mapCardState = F3(
+	function (id, mapperFn, _p50) {
+		var _p51 = _p50;
+		var updCardState = mapperFn(
+			A2(_rundis$elm_bootstrap$Bootstrap_Accordion$getOrInitCardState, id, _p51));
+		return _rundis$elm_bootstrap$Bootstrap_Accordion$State(
+			A3(_elm_lang$core$Dict$insert, id, updCardState, _p51._0));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$Card = function (a) {
+	return {ctor: 'Card', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$card = function (_p52) {
+	var _p53 = _p52;
+	return _rundis$elm_bootstrap$Bootstrap_Accordion$Card(
+		{id: _p53.id, options: _p53.options, header: _p53.header, blocks: _p53.blocks});
+};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$Toggle = function (a) {
+	return {ctor: 'Toggle', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$toggle = F2(
+	function (attributes, children) {
+		return _rundis$elm_bootstrap$Bootstrap_Accordion$Toggle(
+			{attributes: attributes, children: children});
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$Header = function (a) {
+	return {ctor: 'Header', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_Accordion$prependHeader = F2(
+	function (elements, _p54) {
+		var _p55 = _p54;
+		var _p56 = _p55._0;
+		return _rundis$elm_bootstrap$Bootstrap_Accordion$Header(
+			_elm_lang$core$Native_Utils.update(
+				_p56,
+				{
+					childrenPreToggle: A2(_elm_lang$core$Basics_ops['++'], elements, _p56.childrenPreToggle)
+				}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$appendHeader = F2(
+	function (elements, _p57) {
+		var _p58 = _p57;
+		var _p59 = _p58._0;
+		return _rundis$elm_bootstrap$Bootstrap_Accordion$Header(
+			_elm_lang$core$Native_Utils.update(
+				_p59,
+				{
+					childrenPostToggle: A2(_elm_lang$core$Basics_ops['++'], _p59.childrenPreToggle, elements)
+				}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$headerPrivate = F3(
+	function (elemFn, attributes, toggle) {
+		return _rundis$elm_bootstrap$Bootstrap_Accordion$Header(
+			{
+				elemFn: elemFn,
+				attributes: attributes,
+				toggle: toggle,
+				childrenPreToggle: {ctor: '[]'},
+				childrenPostToggle: {ctor: '[]'}
+			});
+	});
+var _rundis$elm_bootstrap$Bootstrap_Accordion$header = _rundis$elm_bootstrap$Bootstrap_Accordion$headerPrivate(_elm_lang$html$Html$div);
+var _rundis$elm_bootstrap$Bootstrap_Accordion$headerH1 = _rundis$elm_bootstrap$Bootstrap_Accordion$headerPrivate(_elm_lang$html$Html$h1);
+var _rundis$elm_bootstrap$Bootstrap_Accordion$headerH2 = _rundis$elm_bootstrap$Bootstrap_Accordion$headerPrivate(_elm_lang$html$Html$h2);
+var _rundis$elm_bootstrap$Bootstrap_Accordion$headerH3 = _rundis$elm_bootstrap$Bootstrap_Accordion$headerPrivate(_elm_lang$html$Html$h3);
+var _rundis$elm_bootstrap$Bootstrap_Accordion$headerH4 = _rundis$elm_bootstrap$Bootstrap_Accordion$headerPrivate(_elm_lang$html$Html$h4);
+var _rundis$elm_bootstrap$Bootstrap_Accordion$headerH5 = _rundis$elm_bootstrap$Bootstrap_Accordion$headerPrivate(_elm_lang$html$Html$h5);
+var _rundis$elm_bootstrap$Bootstrap_Accordion$headerH6 = _rundis$elm_bootstrap$Bootstrap_Accordion$headerPrivate(_elm_lang$html$Html$h6);

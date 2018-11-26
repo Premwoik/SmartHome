@@ -1,116 +1,56 @@
-var _user$project$Data_Light$unpackFill = function (_p0) {
-	return _elm_lang$core$Basics$toFloat(
-		A2(
-			_elm_lang$core$Maybe$withDefault,
-			0,
-			function (_) {
-				return _.fill;
-			}(_p0)));
-};
-var _user$project$Data_Light$Light = F6(
-	function (a, b, c, d, e, f) {
-		return {id: a, fill: b, order: c, state: d, name: e, light_: f};
+var _user$project$Data_Light$Light = F4(
+	function (a, b, c, d) {
+		return {id: a, state: b, name: c, light_: d};
 	});
-var _user$project$Data_Light$decoder = A7(
-	_elm_lang$core$Json_Decode$map6,
+var _user$project$Data_Light$decoder = A5(
+	_elm_lang$core$Json_Decode$map4,
 	_user$project$Data_Light$Light,
-	A2(_elm_lang$core$Json_Decode$field, 'id', _user$project$Data_Id$decoder),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'fill',
-		_elm_lang$core$Json_Decode$nullable(_elm_lang$core$Json_Decode$int)),
-	A2(_elm_lang$core$Json_Decode$field, 'order', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'state', _elm_lang$core$Json_Decode$bool),
 	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'light', _elm_lang$core$Json_Decode$string));
 var _user$project$Data_Light$setOn = function (l) {
-	var data = _elm_lang$core$Json_Encode$object(
-		{
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(
-					_user$project$Data_Id$toInt(l.id))
-			},
-			_1: {ctor: '[]'}
-		});
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'lights/setOn');
+	var url_ = A2(
+		_elm_lang$core$Basics_ops['++'],
+		_user$project$Request$url,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'lights/setOn/',
+			_elm_lang$core$Basics$toString(l.id)));
 	return A3(
 		_elm_lang$http$Http$post,
 		url_,
-		_elm_lang$http$Http$jsonBody(data),
-		_user$project$Data_Light$decoder);
+		_elm_lang$http$Http$emptyBody,
+		A2(
+			_elm_lang$core$Json_Decode$at,
+			{
+				ctor: '::',
+				_0: 'data',
+				_1: {ctor: '[]'}
+			},
+			_user$project$Data_Light$decoder));
 };
 var _user$project$Data_Light$setOff = function (l) {
-	var data = _elm_lang$core$Json_Encode$object(
-		{
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'id',
-				_1: _elm_lang$core$Json_Encode$int(
-					_user$project$Data_Id$toInt(l.id))
-			},
-			_1: {ctor: '[]'}
-		});
-	var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'lights/setOff');
+	var url_ = A2(
+		_elm_lang$core$Basics_ops['++'],
+		_user$project$Request$url,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'lights/setOff/',
+			_elm_lang$core$Basics$toString(l.id)));
 	return A3(
 		_elm_lang$http$Http$post,
 		url_,
-		_elm_lang$http$Http$jsonBody(data),
-		_user$project$Data_Light$decoder);
+		_elm_lang$http$Http$emptyBody,
+		A2(
+			_elm_lang$core$Json_Decode$at,
+			{
+				ctor: '::',
+				_0: 'data',
+				_1: {ctor: '[]'}
+			},
+			_user$project$Data_Light$decoder));
 };
 var _user$project$Data_Light$toggle = function (l) {
 	return l.state ? _user$project$Data_Light$setOff(l) : _user$project$Data_Light$setOn(l);
 };
-var _user$project$Data_Light$setFill = F2(
-	function (fill, l) {
-		var data = _elm_lang$core$Json_Encode$object(
-			{
-				ctor: '::',
-				_0: {
-					ctor: '_Tuple2',
-					_0: 'id',
-					_1: _elm_lang$core$Json_Encode$int(
-						_user$project$Data_Id$toInt(l.id))
-				},
-				_1: {
-					ctor: '::',
-					_0: {
-						ctor: '_Tuple2',
-						_0: 'fill',
-						_1: _elm_lang$core$Json_Encode$int(
-							_elm_lang$core$Basics$round(fill))
-					},
-					_1: {ctor: '[]'}
-				}
-			});
-		var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'lights/setFill');
-		return A3(
-			_elm_lang$http$Http$post,
-			url_,
-			_elm_lang$http$Http$jsonBody(data),
-			_user$project$Data_Light$decoder);
-	});
-var _user$project$Data_Light$Off = {ctor: 'Off'};
-var _user$project$Data_Light$On = {ctor: 'On'};
-var _user$project$Data_Light$notState = function (state) {
-	var _p1 = state;
-	if (_p1.ctor === 'On') {
-		return _user$project$Data_Light$Off;
-	} else {
-		return _user$project$Data_Light$On;
-	}
-};
-var _user$project$Data_Light$stateDecoder = A2(
-	_elm_lang$core$Json_Decode$andThen,
-	function (state) {
-		var _p2 = state;
-		if (_p2 === true) {
-			return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Light$On);
-		} else {
-			return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Light$Off);
-		}
-	},
-	_elm_lang$core$Json_Decode$bool);

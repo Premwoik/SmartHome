@@ -1,0 +1,309 @@
+var _rundis$elm_bootstrap$Bootstrap_Pagination$sizeClass = function (size) {
+	var _p0 = size;
+	switch (_p0.ctor) {
+		case 'Large':
+			return {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('pagination-lg'),
+				_1: {ctor: '[]'}
+			};
+		case 'Small':
+			return {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('pagination-sm'),
+				_1: {ctor: '[]'}
+			};
+		default:
+			return {ctor: '[]'};
+	}
+};
+var _rundis$elm_bootstrap$Bootstrap_Pagination$listAttributes = function (config) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('pagination'),
+			_1: {ctor: '[]'}
+		},
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_rundis$elm_bootstrap$Bootstrap_Pagination$sizeClass(config.size),
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				function () {
+					var _p1 = config.hAlign;
+					if (_p1.ctor === 'Just') {
+						return {
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_General_Internal$hAlignClass(_p1._0),
+							_1: {ctor: '[]'}
+						};
+					} else {
+						return {ctor: '[]'};
+					}
+				}(),
+				config.listAttrs)));
+};
+var _rundis$elm_bootstrap$Bootstrap_Pagination$navAttributes = function (config) {
+	var _p2 = config.ariaLabel;
+	if (_p2.ctor === 'Just') {
+		return {
+			ctor: '::',
+			_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-label', _p2._0),
+			_1: {ctor: '[]'}
+		};
+	} else {
+		return {ctor: '[]'};
+	}
+};
+var _rundis$elm_bootstrap$Bootstrap_Pagination$view = function (_p3) {
+	var _p4 = _p3;
+	var _p5 = _p4._0;
+	return A2(
+		_elm_lang$html$Html$nav,
+		_rundis$elm_bootstrap$Bootstrap_Pagination$navAttributes(_p5),
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$ul,
+				_rundis$elm_bootstrap$Bootstrap_Pagination$listAttributes(_p5),
+				A2(_elm_lang$core$List$map, _rundis$elm_bootstrap$Bootstrap_Pagination_Internal$viewItem, _p5.items)),
+			_1: {ctor: '[]'}
+		});
+};
+var _rundis$elm_bootstrap$Bootstrap_Pagination$ConfigRec = F6(
+	function (a, b, c, d, e, f) {
+		return {size: a, ariaLabel: b, hAlign: c, attrs: d, listAttrs: e, items: f};
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination$ListConfig = F7(
+	function (a, b, c, d, e, f, g) {
+		return {selectedMsg: a, prevItem: b, nextItem: c, activeIdx: d, data: e, itemFn: f, urlFn: g};
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination$ListItem = F2(
+	function (a, b) {
+		return {attributes: a, children: b};
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination$Config = function (a) {
+	return {ctor: 'Config', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_Pagination$ariaLabel = F2(
+	function (label, _p6) {
+		var _p7 = _p6;
+		return _rundis$elm_bootstrap$Bootstrap_Pagination$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p7._0,
+				{
+					ariaLabel: _elm_lang$core$Maybe$Just(label)
+				}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination$size = F2(
+	function (s, _p8) {
+		var _p9 = _p8;
+		return _rundis$elm_bootstrap$Bootstrap_Pagination$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p9._0,
+				{size: s}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination$attrs = F2(
+	function (xs, _p10) {
+		var _p11 = _p10;
+		return _rundis$elm_bootstrap$Bootstrap_Pagination$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p11._0,
+				{attrs: xs}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination$listAttrs = F2(
+	function (xs, _p12) {
+		var _p13 = _p12;
+		return _rundis$elm_bootstrap$Bootstrap_Pagination$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p13._0,
+				{listAttrs: xs}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination$align = F2(
+	function (hAlign, _p14) {
+		var _p15 = _p14;
+		return _rundis$elm_bootstrap$Bootstrap_Pagination$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p15._0,
+				{
+					hAlign: _elm_lang$core$Maybe$Just(hAlign)
+				}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination$items = F2(
+	function (xs, _p16) {
+		var _p17 = _p16;
+		return _rundis$elm_bootstrap$Bootstrap_Pagination$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p17._0,
+				{items: xs}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination$itemsList = F2(
+	function (conf, config) {
+		var count = _elm_lang$core$List$length(conf.data);
+		var byIdx = function (idx) {
+			return _elm_lang$core$List$head(
+				A2(
+					_elm_lang$core$List$map,
+					_elm_lang$core$Tuple$second,
+					A2(
+						_elm_lang$core$List$filter,
+						function (_p18) {
+							var _p19 = _p18;
+							return _elm_lang$core$Native_Utils.eq(_p19._0, idx);
+						},
+						A2(
+							_elm_lang$core$List$indexedMap,
+							F2(
+								function (v0, v1) {
+									return {ctor: '_Tuple2', _0: v0, _1: v1};
+								}),
+							conf.data))));
+		};
+		var prevItem = (_elm_lang$core$Native_Utils.cmp(conf.activeIdx, 0) > 0) ? byIdx(conf.activeIdx - 1) : _elm_lang$core$Maybe$Nothing;
+		var nextItem = (_elm_lang$core$Native_Utils.cmp(conf.activeIdx, count - 1) < 0) ? byIdx(conf.activeIdx + 1) : _elm_lang$core$Maybe$Nothing;
+		return A3(
+			_elm_lang$core$Basics$flip,
+			_rundis$elm_bootstrap$Bootstrap_Pagination$items,
+			config,
+			A2(
+				_elm_lang$core$List$filterMap,
+				_elm_lang$core$Basics$identity,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$core$Maybe$map,
+							function (_p20) {
+								var _p21 = _p20;
+								return A3(
+									_rundis$elm_bootstrap$Bootstrap_Pagination_Item$link,
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										function () {
+											var _p22 = prevItem;
+											if (_p22.ctor === 'Just') {
+												return {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$href(
+														A2(conf.urlFn, conf.activeIdx - 1, _p22._0)),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Events$onClick(
+															conf.selectedMsg(conf.activeIdx - 1)),
+														_1: {ctor: '[]'}
+													}
+												};
+											} else {
+												return {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$href('#'),
+													_1: {ctor: '[]'}
+												};
+											}
+										}(),
+										_p21.attributes),
+									_p21.children,
+									A2(
+										_rundis$elm_bootstrap$Bootstrap_Pagination_Item$disabled,
+										(_elm_lang$core$Native_Utils.cmp(count, 2) < 0) || (_elm_lang$core$Native_Utils.cmp(conf.activeIdx, 1) < 0),
+										_rundis$elm_bootstrap$Bootstrap_Pagination_Item$item));
+							},
+							conf.prevItem),
+						_1: {ctor: '[]'}
+					},
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						A2(
+							_elm_lang$core$List$indexedMap,
+							F2(
+								function (idx, item) {
+									var _p23 = A2(conf.itemFn, idx, item);
+									var attributes = _p23.attributes;
+									var children = _p23.children;
+									return _elm_lang$core$Maybe$Just(
+										A3(
+											_rundis$elm_bootstrap$Bootstrap_Pagination_Item$link,
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$href(
+														A2(conf.urlFn, idx, item)),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Events$onClick(
+															conf.selectedMsg(idx)),
+														_1: {ctor: '[]'}
+													}
+												},
+												attributes),
+											children,
+											A2(
+												_rundis$elm_bootstrap$Bootstrap_Pagination_Item$disabled,
+												_elm_lang$core$Native_Utils.eq(idx, conf.activeIdx),
+												_rundis$elm_bootstrap$Bootstrap_Pagination_Item$item)));
+								}),
+							conf.data),
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$core$Maybe$map,
+								function (_p24) {
+									var _p25 = _p24;
+									return A3(
+										_rundis$elm_bootstrap$Bootstrap_Pagination_Item$link,
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											function () {
+												var _p26 = nextItem;
+												if (_p26.ctor === 'Just') {
+													return {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$href(
+															A2(conf.urlFn, conf.activeIdx + 1, _p26._0)),
+														_1: {
+															ctor: '::',
+															_0: _elm_lang$html$Html_Events$onClick(
+																conf.selectedMsg(conf.activeIdx + 1)),
+															_1: {ctor: '[]'}
+														}
+													};
+												} else {
+													return {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$href('#'),
+														_1: {ctor: '[]'}
+													};
+												}
+											}(),
+											_p25.attributes),
+										_p25.children,
+										A2(
+											_rundis$elm_bootstrap$Bootstrap_Pagination_Item$disabled,
+											(_elm_lang$core$Native_Utils.cmp(count, 2) < 0) || (_elm_lang$core$Native_Utils.cmp(conf.activeIdx, count - 2) > 0),
+											_rundis$elm_bootstrap$Bootstrap_Pagination_Item$item));
+								},
+								conf.nextItem),
+							_1: {ctor: '[]'}
+						}))));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Pagination$Large = {ctor: 'Large'};
+var _rundis$elm_bootstrap$Bootstrap_Pagination$large = function (config) {
+	return A2(_rundis$elm_bootstrap$Bootstrap_Pagination$size, _rundis$elm_bootstrap$Bootstrap_Pagination$Large, config);
+};
+var _rundis$elm_bootstrap$Bootstrap_Pagination$Small = {ctor: 'Small'};
+var _rundis$elm_bootstrap$Bootstrap_Pagination$small = function (config) {
+	return A2(_rundis$elm_bootstrap$Bootstrap_Pagination$size, _rundis$elm_bootstrap$Bootstrap_Pagination$Small, config);
+};
+var _rundis$elm_bootstrap$Bootstrap_Pagination$Default = {ctor: 'Default'};
+var _rundis$elm_bootstrap$Bootstrap_Pagination$defaultConfig = _rundis$elm_bootstrap$Bootstrap_Pagination$Config(
+	{
+		size: _rundis$elm_bootstrap$Bootstrap_Pagination$Default,
+		ariaLabel: _elm_lang$core$Maybe$Nothing,
+		hAlign: _elm_lang$core$Maybe$Nothing,
+		attrs: {ctor: '[]'},
+		listAttrs: {ctor: '[]'},
+		items: {ctor: '[]'}
+	});

@@ -20,8 +20,8 @@ defmodule DB.Action do
 
   def changeset(action, params \\ %{}) do
     action
-    |> cast(params, [:active])
-    |> validate_required([:active])
+    |> cast(params, [:function, :active, :params, :frequency, :start_time, :end_time])
+#    |> validate_required([:active])
     #    |> validate_format(:email, ~r/@/)
     #    |> validate_inclusion(:age, 18..100)
     #    |> unique_constraint(:email)
