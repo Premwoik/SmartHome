@@ -28,6 +28,9 @@ var _user$project$Data_Dashboard$empty = A6(
 	'',
 	'',
 	_elm_lang$core$Array$empty);
+var _user$project$Data_Dashboard$Task = function (a) {
+	return {ctor: 'Task', _0: a};
+};
 var _user$project$Data_Dashboard$Sunblind = function (a) {
 	return {ctor: 'Sunblind', _0: a};
 };
@@ -59,7 +62,11 @@ var _user$project$Data_Dashboard$decoderContent = _elm_lang$core$Json_Decode$one
 					_1: {
 						ctor: '::',
 						_0: A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Dashboard$Action, _user$project$Data_Action$decoder),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(_elm_lang$core$Json_Decode$map, _user$project$Data_Dashboard$Task, _user$project$Data_Task$decoder),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}

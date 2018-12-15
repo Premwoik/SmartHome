@@ -34,52 +34,60 @@ var _user$project$Admin_Action$encode = function (a) {
 				ctor: '::',
 				_0: {
 					ctor: '_Tuple2',
-					_0: 'function',
-					_1: _elm_lang$core$Json_Encode$string(a.$function)
+					_0: 'name',
+					_1: _elm_lang$core$Json_Encode$string(a.name)
 				},
 				_1: {
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
-						_0: 'active',
-						_1: _elm_lang$core$Json_Encode$bool(a.active)
+						_0: 'function',
+						_1: _elm_lang$core$Json_Encode$string(a.$function)
 					},
 					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: 'params',
-							_1: _elm_lang$core$Json_Encode$string(a.params)
+							_0: 'active',
+							_1: _elm_lang$core$Json_Encode$bool(a.active)
 						},
 						_1: {
 							ctor: '::',
 							_0: {
 								ctor: '_Tuple2',
-								_0: 'frequency',
-								_1: _elm_lang$core$Json_Encode$int(a.frequency)
+								_0: 'params',
+								_1: _elm_lang$core$Json_Encode$string(a.params)
 							},
 							_1: {
 								ctor: '::',
 								_0: {
 									ctor: '_Tuple2',
-									_0: 'start_time',
-									_1: A2(optional, _elm_lang$core$Json_Encode$string, a.startTime)
+									_0: 'frequency',
+									_1: _elm_lang$core$Json_Encode$int(a.frequency)
 								},
 								_1: {
 									ctor: '::',
 									_0: {
 										ctor: '_Tuple2',
-										_0: 'end_time',
-										_1: A2(optional, _elm_lang$core$Json_Encode$string, a.endTime)
+										_0: 'start_time',
+										_1: A2(optional, _elm_lang$core$Json_Encode$string, a.startTime)
 									},
 									_1: {
 										ctor: '::',
 										_0: {
 											ctor: '_Tuple2',
-											_0: 'port_id',
-											_1: A2(optional, _elm_lang$core$Json_Encode$int, a.portId)
+											_0: 'end_time',
+											_1: A2(optional, _elm_lang$core$Json_Encode$string, a.endTime)
 										},
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 'port_id',
+												_1: A2(optional, _elm_lang$core$Json_Encode$int, a.portId)
+											},
+											_1: {ctor: '[]'}
+										}
 									}
 								}
 							}
@@ -89,11 +97,11 @@ var _user$project$Admin_Action$encode = function (a) {
 			}
 		});
 };
-var _user$project$Admin_Action$Action = F8(
-	function (a, b, c, d, e, f, g, h) {
-		return {id: a, $function: b, active: c, params: d, frequency: e, startTime: f, endTime: g, portId: h};
+var _user$project$Admin_Action$Action = F9(
+	function (a, b, c, d, e, f, g, h, i) {
+		return {id: a, name: b, $function: c, active: d, params: e, frequency: f, startTime: g, endTime: h, portId: i};
 	});
-var _user$project$Admin_Action$empty = A8(_user$project$Admin_Action$Action, 0, '', false, '{}', 1000, _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing);
+var _user$project$Admin_Action$empty = A9(_user$project$Admin_Action$Action, 0, '', '', false, '{}', 1000, _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing);
 var _user$project$Admin_Action$decoder = A3(
 	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
 	'port_id',
@@ -124,9 +132,13 @@ var _user$project$Admin_Action$decoder = A3(
 							_elm_lang$core$Json_Decode$string,
 							A3(
 								_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-								'id',
-								_elm_lang$core$Json_Decode$int,
-								_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Admin_Action$Action)))))))));
+								'name',
+								_elm_lang$core$Json_Decode$string,
+								A3(
+									_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+									'id',
+									_elm_lang$core$Json_Decode$int,
+									_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Admin_Action$Action))))))))));
 var _user$project$Admin_Action$getActions = function () {
 	var decode = A2(
 		_elm_lang$core$Json_Decode$at,

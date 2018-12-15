@@ -73,6 +73,8 @@ defmodule UiWeb.DashboardView do
     render_ports(d.ports)
     ++
     render_sunblinds(d.sunblinds)
+    ++
+    render_tasks(d.tasks)
     |> Enum.sort_by(fn {o, _} -> o end)
     |> Enum.map(fn {_, x} -> x end)
   end
@@ -101,4 +103,7 @@ defmodule UiWeb.DashboardView do
     Enum.map(sunblinds, fn {o, d} -> {o, UiWeb.SunblindView.render("dash_sunblind.json", %{sunblind: d})} end)
   end
 
+  def render_tasks(tasks) do
+    Enum.map(tasks, fn {o, d} -> {o, UiWeb.TaskView.render("dash_task.json", %{task: d})} end)
+  end
 end

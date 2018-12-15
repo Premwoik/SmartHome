@@ -12,6 +12,7 @@ defmodule UiWeb.ActionView do
 
   def render("action.json", %{action: action}) do
     %{id: action.id,
+      name: action.name,
       function: action.function,
       active: action.active,
       params: action.params,
@@ -27,7 +28,7 @@ defmodule UiWeb.ActionView do
 
   def render("dash_action.json", %{action: action}) do
     %{id: action.id,
-      name: "Name",
+      name: action.name,
       function: action.function,
       state: action.active,
       action: ""

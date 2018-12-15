@@ -68,6 +68,9 @@ var _user$project$Page_Dashboard$ReceiveDashboardMessage = function (a) {
 var _user$project$Page_Dashboard$SunblindManualToggle = function (a) {
 	return {ctor: 'SunblindManualToggle', _0: a};
 };
+var _user$project$Page_Dashboard$ResponseTask = function (a) {
+	return {ctor: 'ResponseTask', _0: a};
+};
 var _user$project$Page_Dashboard$ResponseAction = function (a) {
 	return {ctor: 'ResponseAction', _0: a};
 };
@@ -84,6 +87,9 @@ var _user$project$Page_Dashboard$ResponseDimmer = function (a) {
 	return {ctor: 'ResponseDimmer', _0: a};
 };
 var _user$project$Page_Dashboard$Skip = {ctor: 'Skip'};
+var _user$project$Page_Dashboard$TaskEdit = function (a) {
+	return {ctor: 'TaskEdit', _0: a};
+};
 var _user$project$Page_Dashboard$LightEdit = function (a) {
 	return {ctor: 'LightEdit', _0: a};
 };
@@ -113,6 +119,9 @@ var _user$project$Page_Dashboard$SetDimmerFill = F2(
 	function (a, b) {
 		return {ctor: 'SetDimmerFill', _0: a, _1: b};
 	});
+var _user$project$Page_Dashboard$TaskToggle = function (a) {
+	return {ctor: 'TaskToggle', _0: a};
+};
 var _user$project$Page_Dashboard$SunblindToggle = function (a) {
 	return {ctor: 'SunblindToggle', _0: a};
 };
@@ -356,6 +365,14 @@ var _user$project$Page_Dashboard$update = F2(
 								_user$project$Page_Dashboard$ResponseAction,
 								_user$project$Data_Action$toggle(_p14)));
 					}(_p3._0);
+				case 'TaskToggle':
+					return function (_p15) {
+						return nomodel(
+							A2(
+								_user$project$Request$send,
+								_user$project$Page_Dashboard$ResponseTask,
+								_user$project$Data_Task$toggle(_p15)));
+					}(_p3._0);
 				case 'ResponseDimmer':
 					if (_p3._0.ctor === 'Ok') {
 						return {
@@ -451,6 +468,25 @@ var _user$project$Page_Dashboard$update = F2(
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					}
+				case 'ResponseTask':
+					if (_p3._0.ctor === 'Ok') {
+						return {
+							ctor: '_Tuple2',
+							_0: A2(
+								updateContent,
+								model.raise,
+								_user$project$Data_Dashboard$Task(_p3._0._0)),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{data: _user$project$Data_Dashboard$empty}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
 				case 'LightEdit':
 					return skip;
 				case 'DimmerEdit':
@@ -461,8 +497,10 @@ var _user$project$Page_Dashboard$update = F2(
 					return skip;
 				case 'PortEdit':
 					return skip;
+				case 'TaskEdit':
+					return skip;
 				case 'ReceiveDashboardMessage':
-					var _p15 = A2(_elm_lang$core$Debug$log, 'Reveive', _p3._0);
+					var _p16 = A2(_elm_lang$core$Debug$log, 'Reveive', _p3._0);
 					return A2(
 						_debois$elm_mdl$Material_Helpers$map2nd,
 						_elm_lang$core$Platform_Cmd$map(_user$project$Page_Dashboard$Snackbar),
@@ -498,7 +536,7 @@ var _user$project$Page_Dashboard$update = F2(
 	});
 var _user$project$Page_Dashboard$actionCard = F2(
 	function (mdl, action) {
-		var _p16 = '';
+		var _p17 = '';
 		return A2(
 			_debois$elm_mdl$Material_Card$actions,
 			{ctor: '[]'},
@@ -925,8 +963,8 @@ var _user$project$Page_Dashboard$lightCard = F2(
 var _user$project$Page_Dashboard$sunblindCard = F2(
 	function (mdl, sunblind) {
 		var icon = function () {
-			var _p17 = sunblind.state;
-			switch (_p17.ctor) {
+			var _p18 = sunblind.state;
+			switch (_p18.ctor) {
 				case 'Position':
 					return 'loop';
 				case 'InMove':
@@ -1039,7 +1077,7 @@ var _user$project$Page_Dashboard$sunblindCard = F2(
 var _user$project$Page_Dashboard$portCard = F2(
 	function (mdl, port_) {
 		var icon = _elm_lang$core$Native_Utils.eq(port_.state, true) ? 'power' : 'power_off';
-		var _p18 = '';
+		var _p19 = '';
 		return A2(
 			_debois$elm_mdl$Material_Card$actions,
 			{ctor: '[]'},
@@ -1105,6 +1143,148 @@ var _user$project$Page_Dashboard$portCard = F2(
 								_1: {ctor: '[]'}
 							}),
 						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Page_Dashboard$taskCard = F2(
+	function (mdl, task) {
+		var icon = _elm_lang$core$Native_Utils.eq(task.status, _user$project$Data_Task$Inactive) ? 'power_off' : 'power';
+		var _p20 = '';
+		return A2(
+			_debois$elm_mdl$Material_Card$actions,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$div,
+					_user$project$Page_Dashboard$cardActionCss,
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Options$span,
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Typography$title,
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Status: '),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Options$span,
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Typography$body2,
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-left', '1rem'),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(
+										_elm_lang$core$Basics$toString(task.status)),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Options$span,
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Typography$title,
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Typ: '),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_debois$elm_mdl$Material_Options$span,
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Typography$body2,
+											_1: {
+												ctor: '::',
+												_0: A2(_debois$elm_mdl$Material_Options$css, 'padding-left', '1rem'),
+												_1: {ctor: '[]'}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(task.type_),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_Card$subhead,
+											{
+												ctor: '::',
+												_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+												_1: {
+													ctor: '::',
+													_0: A2(_debois$elm_mdl$Material_Options$css, 'justify-content', 'space-between'),
+													_1: {
+														ctor: '::',
+														_0: A2(_debois$elm_mdl$Material_Options$css, 'align-items', 'center'),
+														_1: {
+															ctor: '::',
+															_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '.3rem 2.5rem'),
+															_1: {ctor: '[]'}
+														}
+													}
+												}
+											},
+											{
+												ctor: '::',
+												_0: A5(
+													_debois$elm_mdl$Material_Button$render,
+													_user$project$Page_Dashboard$Mdl,
+													{
+														ctor: '::',
+														_0: 0,
+														_1: {ctor: '[]'}
+													},
+													mdl,
+													{
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Options$onClick(
+															_user$project$Page_Dashboard$TaskToggle(task)),
+														_1: {
+															ctor: '::',
+															_0: _debois$elm_mdl$Material_Button$fab,
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_debois$elm_mdl$Material_Options$when,
+																	!_elm_lang$core$Native_Utils.eq(task.status, _user$project$Data_Task$Inactive),
+																	_debois$elm_mdl$Material_Button$colored),
+																_1: {ctor: '[]'}
+															}
+														}
+													},
+													{
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Icon$i(icon),
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
 					}),
 				_1: {ctor: '[]'}
 			});
@@ -1215,7 +1395,7 @@ var _user$project$Page_Dashboard$card = F7(
 											_debois$elm_mdl$Material_Options$span,
 											{
 												ctor: '::',
-												_0: _debois$elm_mdl$Material_Typography$display2,
+												_0: _debois$elm_mdl$Material_Typography$display1,
 												_1: {
 													ctor: '::',
 													_0: _debois$elm_mdl$Material_Color$text(_debois$elm_mdl$Material_Color$primary),
@@ -1259,84 +1439,95 @@ var _user$project$Page_Dashboard$genCard = F4(
 				},
 				{ctor: '[]'});
 		};
-		var _p19 = '';
-		var _p20 = content;
-		switch (_p20.ctor) {
+		var _p21 = '';
+		var _p22 = content;
+		switch (_p22.ctor) {
 			case 'Dimmer':
-				var _p21 = _p20._0;
+				var _p23 = _p22._0;
 				return A7(
 					_user$project$Page_Dashboard$card,
 					{ctor: '[]'},
 					'sciemniacz',
-					_p21.name,
+					_p23.name,
 					i,
 					raise,
-					A4(_user$project$Page_Dashboard$dimmerCard, mdl, _p21, i, raise),
-					_user$project$Page_Dashboard$DimmerEdit(_p21));
+					A4(_user$project$Page_Dashboard$dimmerCard, mdl, _p23, i, raise),
+					_user$project$Page_Dashboard$DimmerEdit(_p23));
 			case 'Sunblind':
-				var _p22 = _p20._0;
+				var _p24 = _p22._0;
 				return A7(
 					_user$project$Page_Dashboard$card,
 					{ctor: '[]'},
 					'roleta',
-					_p22.name,
+					_p24.name,
 					i,
 					raise,
-					A2(_user$project$Page_Dashboard$sunblindCard, mdl, _p22),
-					_user$project$Page_Dashboard$SunblindEdit(_p22));
+					A2(_user$project$Page_Dashboard$sunblindCard, mdl, _p24),
+					_user$project$Page_Dashboard$SunblindEdit(_p24));
 			case 'Light':
-				var _p23 = _p20._0;
+				var _p25 = _p22._0;
 				return A7(
 					_user$project$Page_Dashboard$card,
 					{ctor: '[]'},
 					'światło',
-					_p23.name,
+					_p25.name,
 					i,
 					raise,
-					A2(_user$project$Page_Dashboard$lightCard, mdl, _p23),
-					_user$project$Page_Dashboard$LightEdit(_p23));
+					A2(_user$project$Page_Dashboard$lightCard, mdl, _p25),
+					_user$project$Page_Dashboard$LightEdit(_p25));
 			case 'Action':
-				var _p24 = _p20._0;
+				var _p26 = _p22._0;
 				return A7(
 					_user$project$Page_Dashboard$card,
 					{ctor: '[]'},
 					'akcja',
-					_p24.name,
+					_p26.name,
 					i,
 					raise,
-					A2(_user$project$Page_Dashboard$actionCard, mdl, _p24),
-					_user$project$Page_Dashboard$ActionEdit(_p24));
-			default:
-				var _p25 = _p20._0;
+					A2(_user$project$Page_Dashboard$actionCard, mdl, _p26),
+					_user$project$Page_Dashboard$ActionEdit(_p26));
+			case 'Port':
+				var _p27 = _p22._0;
 				return A7(
 					_user$project$Page_Dashboard$card,
 					{ctor: '[]'},
-					'port',
-					_p25.name,
+					A2(_elm_lang$core$Basics_ops['++'], _p27.type_, '*'),
+					_p27.name,
 					i,
 					raise,
-					A2(_user$project$Page_Dashboard$portCard, mdl, _p25),
-					_user$project$Page_Dashboard$PortEdit(_p25));
+					A2(_user$project$Page_Dashboard$portCard, mdl, _p27),
+					_user$project$Page_Dashboard$PortEdit(_p27));
+			default:
+				var _p28 = _p22._0;
+				return A7(
+					_user$project$Page_Dashboard$card,
+					{ctor: '[]'},
+					'zadanie',
+					_p28.name,
+					i,
+					raise,
+					A2(_user$project$Page_Dashboard$taskCard, mdl, _p28),
+					_user$project$Page_Dashboard$TaskEdit(_p28));
 		}
 	});
 var _user$project$Page_Dashboard$genCells = function (model) {
 	var cellBody = function (d) {
 		return A2(
 			_elm_lang$core$List$map,
-			function (_p26) {
-				var _p27 = _p26;
-				return A4(_user$project$Page_Dashboard$genCard, model.mdl, _p27._0, _p27._1, model.raise);
+			function (_p29) {
+				var _p30 = _p29;
+				return A4(_user$project$Page_Dashboard$genCard, model.mdl, _p30._0, _p30._1, model.raise);
 			},
 			d);
 	};
-	var l_ = function (_p28) {
+	var l_ = function (_p31) {
 		return _elm_lang$core$Array$toIndexedList(
 			function (_) {
 				return _.content;
 			}(
 				function (_) {
 					return _.data;
-				}(_p28)));
+				}(_p31)));
 	}(model);
 	var rest = A2(
 		_elm_lang$core$Basics_ops['%'],

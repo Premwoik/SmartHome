@@ -5,6 +5,7 @@ import Data.Dimmer as Dimmer exposing (Dimmer)
 import Data.Port as Port exposing (Port)
 import Data.Action as Action exposing (Action)
 import Data.Sunblind as Sunblind exposing (Sunblind)
+import Data.Task as Task exposing (Task)
 
 import Http
 import Json.Decode as Decode exposing (field, map4, map3, map, string, map7, Decoder, array)
@@ -28,6 +29,7 @@ type Content
     | Port Port
     | Action Action
     | Sunblind Sunblind
+    | Task Task
 
 
 type alias Dashboard =
@@ -57,6 +59,7 @@ decoderContent =
         , map Sunblind Sunblind.decoder
         , map Port Port.decoder
         , map Action Action.decoder
+        , map Task Task.decoder
         ]
 
 decoder : Decoder Dashboard

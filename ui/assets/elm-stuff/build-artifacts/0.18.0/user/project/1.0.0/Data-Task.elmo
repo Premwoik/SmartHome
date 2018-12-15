@@ -1,0 +1,76 @@
+var _user$project$Data_Task$Task = F5(
+	function (a, b, c, d, e) {
+		return {id: a, name: b, type_: c, status: d, task: e};
+	});
+var _user$project$Data_Task$Running = {ctor: 'Running'};
+var _user$project$Data_Task$Inactive = {ctor: 'Inactive'};
+var _user$project$Data_Task$Waiting = {ctor: 'Waiting'};
+var _user$project$Data_Task$statusDecoder = A2(
+	_elm_lang$core$Json_Decode$andThen,
+	function (b) {
+		var _p0 = b;
+		switch (_p0) {
+			case 'inactive':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Task$Inactive);
+			case 'running':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Task$Running);
+			case 'waiting':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Data_Task$Waiting);
+			default:
+				return _elm_lang$core$Json_Decode$fail(
+					A2(_elm_lang$core$Basics_ops['++'], 'Wrong state value. It can only be one of \'inactive\', \'running\' or \'waiting\', when is: ', b));
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _user$project$Data_Task$decoder = A3(
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+	'task',
+	_elm_lang$core$Json_Decode$string,
+	A3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+		'status',
+		_user$project$Data_Task$statusDecoder,
+		A3(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+			'type',
+			_elm_lang$core$Json_Decode$string,
+			A3(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+				'name',
+				_elm_lang$core$Json_Decode$string,
+				A3(
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+					'id',
+					_elm_lang$core$Json_Decode$int,
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Data_Task$Task))))));
+var _user$project$Data_Task$setOn = function (t) {
+	var url_ = A2(
+		_elm_lang$core$Basics_ops['++'],
+		_user$project$Request$url,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'tasks/setOn/',
+			_elm_lang$core$Basics$toString(t.id)));
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$emptyBody,
+		_user$project$Request$data(_user$project$Data_Task$decoder));
+};
+var _user$project$Data_Task$setOff = function (t) {
+	var url_ = A2(
+		_elm_lang$core$Basics_ops['++'],
+		_user$project$Request$url,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'tasks/setOff/',
+			_elm_lang$core$Basics$toString(t.id)));
+	return A3(
+		_elm_lang$http$Http$post,
+		url_,
+		_elm_lang$http$Http$emptyBody,
+		_user$project$Request$data(_user$project$Data_Task$decoder));
+};
+var _user$project$Data_Task$toggle = function (t) {
+	return (!_elm_lang$core$Native_Utils.eq(t.status, _user$project$Data_Task$Inactive)) ? _user$project$Data_Task$setOff(t) : _user$project$Data_Task$setOn(t);
+};
