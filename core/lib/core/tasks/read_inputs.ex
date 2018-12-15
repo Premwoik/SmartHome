@@ -10,7 +10,7 @@ defmodule Core.Tasks.ReadInputs do
 
   @impl true
   def execute(task, %{last_read: last_read} = state) do
-    case @device.read_active_outputs_helper(task.device) do
+    case @device.read_active_inputs(task.device) do
       {:ok, read} ->
         new_up = read -- last_read
         new_down = last_read -- read

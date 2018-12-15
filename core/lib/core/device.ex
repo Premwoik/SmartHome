@@ -1,31 +1,65 @@
 defmodule Core.Device do
   @moduledoc false
 
-  @callback set_outputs(device :: %DB.Device{}, ids :: list(integer), state :: boolean) :: any
+  @callback set_outputs(device :: %DB.Device{}, list({integer, integer})) :: any
+  @callback set_pwm_outputs(device :: %DB.Device{}, list({integer, integer})) :: any
   @callback read_outputs(device :: %DB.Device{}) :: list({integer, boolean})
-  @callback read_active_outputs(device :: map) :: list(integer)
+  @callback read_active_inputs(device :: map) :: list(integer)
+  @callback read_temperatures(device :: %DB.Device{}) :: list({list, integer})
+  @callback read_counted_values(device :: %DB.Device{}) :: list(integer)
+  @callback heartbeat(device :: %DB.Device{}) :: any
 
   alias DB.Port
 
-  def read_active_outputs_helper(device) do
-    module(device).read_active_outputs(device)
-  end
-
   def set_outputs_helper(ports, state) do
     ports
-    |> Enum.group_by(&(&1.device))
-    |> Enum.map(
+    |> Enum.map(fn p -> %{p | state: state} end)
+    |> handle_multiple_devices(
          fn {d, p} ->
-           try do
-             case module(d).set_outputs d, ports_to_num(p), state do
-               :ok -> :ok
-               {:error, err} -> {:error, p, err}
-             end
-           catch
-             :exit, _ -> :ok
-           end
+           execute_function fn -> module(d).set_outputs d, ports_to_num(p) end, p
          end
        )
+  end
+
+
+  def set_pwm_outputs(ports) do
+    ports
+    |> handle_multiple_devices(
+         fn {d, p} ->
+           arg = Enum.map(p, fn p_ -> {p_.number, p_.pwm_fill} end)
+           execute_function fn -> module(d).set_pwm_outputs d, arg end, p
+         end
+       )
+  end
+
+
+  def read_active_inputs(device) do
+    execute_function fn ->  module(device).read_active_inputs(device) end
+  end
+
+  def read_temperatures(device) do
+    execute_function fn -> module(device).read_temperatures(device) end
+  end
+
+  def read_counted_values(device) do
+    execute_function fn -> module(device).read_counted_values(device) end
+  end
+
+
+  def send_heartbeat(device) do
+    execute_function fn -> module(device).heartbeat(device) end
+  end
+
+
+
+
+
+  # Privates
+
+  defp handle_multiple_devices(ports, func) do
+    ports
+    |> Enum.group_by(&(&1.device))
+    |> Enum.map(func)
     |> Enum.filter(fn x -> x != :ok end)
     |> case do
          [] -> :ok
@@ -40,11 +74,44 @@ defmodule Core.Device do
        end
   end
 
-  # Privates
+
+
+  defp execute_function(func, o \\ nil)
+  defp execute_function(func, nil) do
+    try do
+      func.()
+    catch
+      :exit, _ ->
+        {:error, "Device don't implement this functionality"}
+    end
+  end
+  defp execute_function(func, o) do
+    try do
+      case func.() do
+        {:ok, []} -> :ok
+        {:error, err} -> {:error, o, err}
+      end
+    catch
+      :exit, _ ->
+        {:error, o, "Device don't implement this functionality"}
+    end
+  end
+
+  defp build_pwm_fun_args(ports) do
+  end
 
   defp ports_to_num(ports) do
-    Enum.map(ports, &(&1.number))
+    ports
+    |> Enum.flat_map(
+         fn p -> if p.inverted_logic, do: [p.number, state_to_num(not p.state)], else: [p.number, state_to_num(p.state)]
+         end
+       )
+    |> IO.inspect()
   end
+
+  defp state_to_num(false), do: 0
+  defp state_to_num(_), do: 1
+
 
   defp module(device) do
     String.to_existing_atom("Elixir." <> device.type)

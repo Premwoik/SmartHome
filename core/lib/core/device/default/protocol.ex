@@ -10,22 +10,25 @@ defmodule Core.Device.Default.Protocol do
   """
 
   def encode(num, cmd, args), do:
-    [num, cmd | args]
-    |> (&(&1 ++ [compute_control_sum(&1), @control_bit])).()
-    |> (&([@control_bit, @control_bit | &1])).()
+    [255, cmd | args] ++ [250]
+#    [num, cmd | args]
+#    |> (&(&1 ++ [compute_control_sum(&1), @control_bit])).()
+#    |> (&([@control_bit, @control_bit | &1])).()
 
 
   def decode(message) do
-    try do
-      body = message
-             |> check_head
-             |> check_end
-             |> check_control_sum
-             |> get_body
-      {:ok, body}
-    rescue
-      e in RuntimeError -> {:error, e.message}
-    end
+    len = (length message) - 2
+    {:ok, Enum.slice(message, 1, len)}
+#    try do
+#      body = message
+#             |> check_head
+#             |> check_end
+#             |> check_control_sum
+#             |> get_body
+#      {:ok, body}
+#    rescue
+#      e in RuntimeError -> {:error, e.message}
+#    end
   end
 
 

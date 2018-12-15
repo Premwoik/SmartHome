@@ -27,14 +27,16 @@ defmodule Core.Tasks do
   # Client
 
   def start_link(args) do
-    GenServer.start_link(__MODULE__, args)
+    GenServer.start_link(__MODULE__, args, name: __MODULE__)
   end
 
   @doc """
 
   """
   def reload(name \\ __MODULE__) do
-    GenServer.call(name, :reload_tasks)
+    name
+    |> Process.whereis()
+    |> Process.exit(:kill)
   end
 
 
@@ -53,6 +55,7 @@ defmodule Core.Tasks do
 
   @impl true
   def init(args) do
+    IO.puts("INIT")
     waiting = DB.Task.get_active()
     send(self(), :waiting)
     {:ok, %{started: [], waiting: waiting, timer_ref: nil}}
@@ -60,15 +63,17 @@ defmodule Core.Tasks do
 
 
   @impl true
-  def handle_call(:refresh_tasks, %{started: started, waiting: waiting} = s) do
+  def handle_cast(:refresh_tasks, %{started: started, waiting: waiting} = s) do
+    IO.puts "REF"
     DB.Task.get_active()
     |> Enum.filter(fn x -> x.status == "waiting" end)
+    |> IO.inspect()
     |> fn new -> {:noreply, %{s | waiting: waiting ++ new}} end.()
   end
 
 
   @impl true
-  def handle_call({:finish_task, task}, %{started: started} = s) do
+  def handle_call({:finish_task, task}, _from,  %{started: started} = s) do
     still_started = Enum.filter started, fn {_, t} -> t != task  end
     :ok = DB.Task.update(task, status: "end")
     {:noreply, %{s | started: still_started}}
@@ -111,6 +116,7 @@ defmodule Core.Tasks do
           module(task).execute(task, state)
           |> case do
                {:ok, state_} -> state_
+               :ok -> state
                :error -> state
              end
         if next_execution?(task, num) do
