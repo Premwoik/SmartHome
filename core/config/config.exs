@@ -22,7 +22,7 @@ use Mix.Config
 #
 # You can also configure a 3rd-party app:
 #
-config :logger, level: :info
+#config :logger, level: :info
 ##
 
 config :core, :devices_module, Core.Devices
@@ -44,7 +44,7 @@ config :core, :date_time_adapter, Core.Utils.DateTime.Native
 
 
 #config :socket_test2,
-import_config "../../db/config/config.exs"
+#import_config "../../db/config/config.exs"
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
 # by uncommenting the line below and defining dev.exs, test.exs and such.

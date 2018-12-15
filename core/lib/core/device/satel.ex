@@ -15,7 +15,7 @@ defmodule Core.Device.Satel do
   end
 
   @impl true
-  def read_active_outputs(device) do
+  def read_active_inputs(device) do
     i_violation {device.ip, device.port}
   end
 

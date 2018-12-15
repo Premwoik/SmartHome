@@ -17,7 +17,9 @@ defmodule Core.Actions do
   ## Public
 
   def reload, do:
-    Process.exit(__MODULE__, :normal)
+    __MODULE__
+    |> Process.whereis()
+    |> Process.exit(:normal)
 
   def activate_up(ids, name \\ __MODULE__) do
     try do

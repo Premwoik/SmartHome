@@ -18,8 +18,10 @@ defmodule Core.Device.Supervisor do
 
   defp get_specs(%Device{process: false}), do: %{}
 
-  defp get_specs(%Device{type: type} = device), do:
+  defp get_specs(%Device{type: type} = device) do
     get_specs(device, (get_type_info type))
+    |> IO.inspect()
+  end
 
 
   #  defp get_specs(%Device{type: type, name: name, ip: ip, port: port} = device, {:watcher, module}) do
