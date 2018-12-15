@@ -28,7 +28,7 @@ defmodule UiWeb.Router do
     resources "/actions", ActionController, except: [:new, :edit]
     resources "/devices", DeviceController, except: [:new, :edit]
     resources "/dashboards", DashboardController, except: [:new, :edit]
-
+    resources "/tasks", TaskController, except: [:new, :edit]
 
     get "/dashboards/view/short", DashboardController, :short
     get "/dashboards/view/:id", DashboardController, :view
@@ -50,6 +50,9 @@ defmodule UiWeb.Router do
 
     post "/ports/setOn/:id", PortController, :set_on
     post "/ports/setOff/:id", PortController, :set_off
+
+    post "/tasks/setOn/:id", TaskController, :set_on
+    post "/tasks/setOff/:id", TaskController, :set_off
 
   end
 

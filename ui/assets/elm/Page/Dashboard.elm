@@ -37,11 +37,10 @@ import Data.Light as Light exposing (Light)
 import Data.Dimmer as Dimmer exposing (Dimmer)
 import Data.Action as Action exposing (Action)
 import Data.Sunblind as Sunblind exposing (Sunblind)
-
+import Data.Task as Task exposing (Task)
 
 import Json.Encode as Encode
 import Json.Decode as Decode
-import Task
 
 -- INIT
 init : Model -> Cmd Msg
@@ -102,6 +101,7 @@ type Msg
     | PortToggle Port
     | LightToggle Light
     | SunblindToggle Sunblind
+    | TaskToggle Task
     | SetDimmerFill Dimmer Float
     | DimLightToggle Dimmer Dimmer.Light
     | DimmerToggle Dimmer
@@ -111,12 +111,14 @@ type Msg
     | SunblindEdit Sunblind
     | ActionEdit Action
     | LightEdit Light
+    | TaskEdit Task
     | Skip
     | ResponseDimmer (Result Http.Error Dimmer)
     | ResponseLight (Result Http.Error Light)
     | ResponseSunblind (Result Http.Error Sunblind)
     | ResponsePort (Result Http.Error Port)
     | ResponseAction (Result Http.Error Action)
+    | ResponseTask (Result Http.Error Task)
     | SunblindManualToggle Sunblind
     | ReceiveDashboardMessage Decode.Value
 
@@ -181,6 +183,9 @@ update msg model =
         ActionToggle a ->
             a |> Action.toggle >> Request.send ResponseAction >> nomodel
 
+        TaskToggle t ->
+            t |> Task.toggle >> Request.send ResponseTask >> nomodel
+
         ResponseDimmer (Ok d) ->
             (updateContent model.raise (Dashboard.Dimmer d), Cmd.none)
         ResponseDimmer (Err _) ->
@@ -202,6 +207,11 @@ update msg model =
         ResponseAction (Err _) ->
             ({model | data = Dashboard.empty}, Cmd.none)
 
+        ResponseTask (Ok t) ->
+            (updateContent model.raise (Dashboard.Task t), Cmd.none)
+        ResponseTask (Err _) ->
+            ({model | data = Dashboard.empty}, Cmd.none)
+
         LightEdit l ->
             skip
         DimmerEdit d ->
@@ -211,6 +221,8 @@ update msg model =
         SunblindEdit s ->
             skip
         PortEdit p ->
+            skip
+        TaskEdit t ->
             skip
 
         ReceiveDashboardMessage raw ->
@@ -298,7 +310,9 @@ genCard mdl i content raise =
         Dashboard.Action a ->
             card [] "akcja" a.name i raise (actionCard mdl a) (ActionEdit a)
         Dashboard.Port p ->
-            card [] "port" p.name i raise (portCard mdl p) (PortEdit p)
+            card [] (p.type_ ++ "*") p.name i raise (portCard mdl p) (PortEdit p)
+        Dashboard.Task t ->
+            card [] "zadanie" t.name i raise (taskCard mdl t) (TaskEdit t)
 
 
 
@@ -497,6 +511,39 @@ portCard mdl port_ =
                           ]
         ]
 
+taskCard : Material.Model -> Task -> Card.Block Msg
+taskCard mdl task =
+    let
+        _ = ""
+        icon = if task.status == Task.Inactive then "power_off" else "power"
+
+    in
+    Card.actions
+        []
+        [    Options.div
+                         cardActionCss
+                          [ Options.span [Typography.title] [text "Status: "]
+                          , Options.span [Typography.body2, css "padding-left" "1rem"] [text (toString task.status)]
+                          , Options.span [Typography.title] [text "Typ: "]
+                          , Options.span [Typography.body2, css "padding-left" "1rem"] [text task.type_]
+                          , Card.subhead
+                                  [ css "display" "flex"
+                                  , css "justify-content" "space-between"
+                                  , css "align-items" "center"
+                                  , css "padding" ".3rem 2.5rem"
+                                  ]
+                                  [
+                                     Button.render Mdl [0] mdl
+                                                 [ Options.onClick (TaskToggle task)
+                                                 , Button.fab
+                                                 , Options.when (task.status /= Task.Inactive) Button.colored
+                                                 ]
+                                                 [ Icon.i icon]
+                                  ]
+                          ]
+        ]
+
+
 card : List (Options.Style Msg) -> String -> String -> Int -> Int -> (Card.Block Msg) -> Msg ->  Html Msg
 card props type_ name k raised action menuMsg=
     Card.view
@@ -522,7 +569,7 @@ card props type_ name k raised action menuMsg=
             , Options.div
                         [ css "padding" "0rem 2rem 0 2rem" ]
                         [ Options.span
-                            [ Typography.display2
+                            [ Typography.display1
                             , Color.text Color.primary
                             ]
                             [ text name ]

@@ -17,6 +17,7 @@ import Request as API exposing (url)
 
 type alias Action =
     { id : Int
+    , name : String
     , function : String
     , active : Bool
     , params : String
@@ -29,13 +30,14 @@ type alias Action =
 
 empty : Action
 empty =
-    Action 0 "" False "{}" 1000 Nothing Nothing Nothing
+    Action 0 "" "" False "{}" 1000 Nothing Nothing Nothing
 
 
 decoder : Decode.Decoder Action
 decoder =
     decode Action
     |> required "id" int
+    |> required "name" string
     |> required "function" string
     |> required "active" bool
     |> required "params" string
@@ -53,6 +55,7 @@ encode a =
     in
     Encode.object
         [ ("id", Encode.int a.id)
+        , ("name", Encode.string a.name)
         , ("function", Encode.string a.function)
         , ("active", Encode.bool a.active)
         , ("params", Encode.string a.params)

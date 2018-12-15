@@ -13,18 +13,18 @@ type alias Port =
     { id : Id
     , name : String
     , state : Bool
---    , portType: String
+    , type_: String
 --    , order : Int
     , port_ : String
     }
 
 decoder : Decoder Port
 decoder =
-    Decode.map4 Port
+    Decode.map5 Port
         (field "id" Id.decoder)
         (field "name" string)
         (field "state" bool)
---        (field "port_type" string)
+        (field "type" string)
 --        (field "order" int)
         (field "port" string)
 
