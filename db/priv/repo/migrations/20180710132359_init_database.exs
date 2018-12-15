@@ -7,6 +7,7 @@ defmodule DB.Repo.Migrations.InitDatabase do
       add :ip, :string
       add :port, :integer
       add :type, :string
+      add :alive, :boolean
       add :process, :boolean
     end
     create table(:ports) do
@@ -17,6 +18,8 @@ defmodule DB.Repo.Migrations.InitDatabase do
       add :mode, :string
       add :timeout, :integer, default: 0
       add :state, :boolean
+      add :pwm_fill, :integer, default: 0
+      add :inverted_logic, :boolean, default: false
     end
     create table(:watchers) do
       add :device_id, references("devices", on_delete: :nilify_all)
@@ -25,6 +28,7 @@ defmodule DB.Repo.Migrations.InitDatabase do
     end
 
     create table(:actions) do
+      add :name, :string
       add :active, :boolean
       add :params, :string
       add :function, :string

@@ -10,6 +10,7 @@ defmodule DB.Repo.Migrations.AddTasks do
 
     create table(:tasks) do
       add :type_id, references("task_types", on_delete: :nilify_all)
+      add :name, :string
       add :status, :string
       add :action_id, references("actions", on_delete: :nilify_all)
       add :device_id, references("devices", on_delete: :nilify_all)

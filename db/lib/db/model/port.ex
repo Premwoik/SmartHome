@@ -12,6 +12,8 @@ defmodule DB.Port do
     field :number, :integer
     field :mode, :string
     field :state, :boolean
+    field :pwm_fill, :integer
+    field :inverted_logic, :boolean
     field :type, :string
     field :timeout, :integer
     belongs_to :device, DB.Device
