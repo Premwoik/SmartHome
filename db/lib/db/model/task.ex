@@ -9,6 +9,7 @@ defmodule DB.Task do
 
   schema "tasks" do
     belongs_to :type, DB.TaskType
+    field :name, :string
     field :status, :string
     belongs_to :action, DB.Action
     belongs_to :device, DB.Device

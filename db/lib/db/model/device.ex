@@ -9,9 +9,9 @@ defmodule DB.Device do
   field :ip, :string
   field :port, :integer
   field :type, :string
+  field :alive, :boolean, default: false
   field :process, :boolean, default: true
   has_many :ports, DB.Port
-  has_one :watcher, DB.Watcher
   end
 
   def changeset(dimmer, params \\ %{}) do

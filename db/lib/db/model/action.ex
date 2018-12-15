@@ -8,6 +8,7 @@ defmodule DB.Action do
 
   @derive {Poison.Encoder, only: [:id, :function, :active, :params, :port]}
   schema "actions" do
+    field :name, :string
     field :function, :string
     field :active, :boolean
     field :params, :string

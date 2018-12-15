@@ -134,6 +134,7 @@ defmodule DB.Init do
     type2 = "AutoLights"
     #CałyDom - RoletyZamykanie
     %Action{
+      name: "Zamykanie rolet",
       function: type1,
       active: true,
       params: "{}",
@@ -144,6 +145,7 @@ defmodule DB.Init do
 
     #Salon - Swiatlo - 1 lampa
     %Action{
+      name: "Salon schody",
       function: type2,
       active: true,
       params: "[30000]",
@@ -157,6 +159,7 @@ defmodule DB.Init do
 
     #KuchniaSalon - Swiatlo - 1 lampa
     %Action{
+      name: "Salon stół",
       function: type2,
       active: true,
       params: "[30000]",
@@ -169,6 +172,7 @@ defmodule DB.Init do
 
     #    #Salon - Swiatlo - Dwa dimmery
     %Action{
+      name: "Salon wypoczynek",
       function: type2,
       active: true,
       params: "[30000]",
@@ -179,9 +183,6 @@ defmodule DB.Init do
     }
     |> Repo.insert!
 
-
-    %Watcher{device_id: 2, status: true, freq: 1000}
-    |> Repo.insert!
 
     :ok
   end
@@ -204,15 +205,28 @@ defmodule DB.Init do
       module: "Core.Tasks.ReadInputs"
     }
     |> Repo.insert!
-
-
-
+    %TaskType{
+      name: "Heartbeat",
+      module: "Core.Tasks.Heartbeat"
+    }
+    |> Repo.insert!
+    %TaskType{
+      name: "Read Wattmeters data",
+      module: "Core.Tasks.ReadUsedEnergy"
+    }
+    |> Repo.insert!
+    %TaskType{
+      name: "Read Thermometers data",
+      module: "Core.Tasks.ReadTemperature"
+    }
+    |> Repo.insert!
 
 
     # read integra inputs
     %Task{
       type_id: 3,
-      status: "waiting",
+      name: "Czytaj satel",
+      status: "inactive",
       action: nil,
       device_id: 2,
       execution_time: nil,
@@ -226,7 +240,8 @@ defmodule DB.Init do
     # make sunblinds closed at night
     %Task{
       type_id: 1,
-      status: "waiting",
+      name: "Zamykanie rolet",
+      status: "inactive",
       action_id: 1,
       device: nil,
       frequency: 0,
@@ -240,7 +255,8 @@ defmodule DB.Init do
     # make sunblinds opened at morning
     %Task{
       type_id: 2,
-      status: "waiting",
+      name: "Otwieranie rolet",
+      status: "inactive",
       action_id: 1,
       device: nil,
       frequency: 0,
@@ -250,6 +266,54 @@ defmodule DB.Init do
       end_date: nil
     }
     |> Repo.insert!
+
+    # make sunblinds opened at morning
+    %Task{
+      type_id: 4,
+      name: "heartbeat arduino mega",
+      status: "waiting",
+      action: nil,
+      device_id: 1,
+      frequency: 5000,
+      execution_time: nil,
+      limit: -1,
+      start_date: nil,
+      end_date: nil
+    }
+    |> Repo.insert!
+
+    # make sunblinds opened at morning
+    %Task{
+      type_id: 5,
+      name: "read temps from arduino mega",
+      status: "waiting",
+      action: nil,
+      device_id: 1,
+      frequency: 5000,
+      execution_time: nil,
+      limit: -1,
+      start_date: nil,
+      end_date: nil
+    }
+    |> Repo.insert!
+
+    # make sunblinds opened at morning
+    %Task{
+      type_id: 6,
+      name: "read watts from arduino mega",
+      status: "waiting",
+      action: nil,
+      device_id: 1,
+      frequency: 5000,
+      execution_time: nil,
+      limit: -1,
+      start_date: nil,
+      end_date: nil
+    }
+    |> Repo.insert!
+
+
+
 
     :ok
   end
