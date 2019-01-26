@@ -3,7 +3,7 @@ import Data.Id as Id
 import Json.Decode as Decode exposing (field, bool, string, map5, Decoder, andThen)
 
 import Http
-import Request
+import Request exposing (data, refBody)
 import Json.Encode as Encode
 
 
@@ -54,19 +54,19 @@ decoder =
 
 -- Api
 
-setOn : Light -> Http.Request Light
-setOn l =
+setOn : Maybe Int -> Light -> Http.Request Light
+setOn sRef l =
     let
         url_ = Request.url ++ "lights/setOn/" ++ (toString l.id)
     in
-    Http.post url_ Http.emptyBody (Decode.at ["data"] decoder)
+    Http.post url_ (refBody sRef []) (Decode.at ["data"] decoder)
 
-setOff : Light -> Http.Request Light
-setOff l =
+setOff : Maybe Int -> Light -> Http.Request Light
+setOff sRef l =
     let
         url_ = Request.url ++ "lights/setOff/" ++ (toString l.id)
     in
-    Http.post url_ Http.emptyBody (Decode.at ["data"] decoder)
+    Http.post url_ (refBody sRef []) (Decode.at ["data"] decoder)
 
 --setFill : Float -> Light -> Http.Request Light
 --setFill fill l =
@@ -79,6 +79,15 @@ setOff l =
 --    in
 --    Http.post url_ (Http.jsonBody data) decoder
 
-toggle : Light -> Http.Request Light
-toggle l =
-   if l.state then setOff l else setOn l
+toggle : Maybe Int-> Light -> Http.Request Light
+toggle sRef l=
+   if l.state then setOff sRef l else setOn sRef l
+
+
+getView : Int -> Http.Request Light
+getView id =
+  let
+      url_ = Request.url ++ "lights/cardView/" ++ (toString id)
+  in
+  Http.get url_ (data decoder)
+

@@ -5,8 +5,8 @@ defmodule UiWeb.ActionController do
   alias DB.Action
 
   alias Core.Controllers.ActionController
-
-  action_fallback UiWeb.FallbackController
+  alias UiWeb.DashboardChannel.Helper, as: DashHelper
+  action_fallback(UiWeb.FallbackController)
 
   def index(conn, _params) do
     actions = Admin.list_actions()
@@ -44,23 +44,34 @@ defmodule UiWeb.ActionController do
     end
   end
 
-  def set_on(conn, %{"id" => id}) do
+  def set_on(conn, %{"id" => id} = o) do
+    IO.inspect(o)
+
     res =
       DB.Action.get([id])
       |> ActionController.turn_on()
 
+    DashHelper.broadcast_update_from(o, [id], "action")
+
     action = Admin.get_action!(id)
-    render(conn, "show.json", dash_action: action)
+    render(conn, "show.json", action: action)
   end
 
+  def set_off(conn, %{"id" => id} = o) do
+    IO.inspect(o)
 
-  def set_off(conn, %{"id" => id}) do
     res =
       DB.Action.get([id])
       |> ActionController.turn_off()
 
+    DashHelper.broadcast_update_from(o, [id], "action")
+
     action = Admin.get_action!(id)
-    render(conn, "show.json", dash_action: action)
+    render(conn, "show.json", action: action)
   end
 
+  def dash_show(conn, %{"id" => id}) do
+    action = Admin.get_action!(id)
+    render(conn, "show.json", action: action)
+  end
 end

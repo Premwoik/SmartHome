@@ -5,7 +5,7 @@ import Http
 import Json.Decode.Pipeline as DP exposing (required, decode)
 import Json.Decode as Decode
 import Json.Encode as Encode
-import Request exposing (data)
+import Request exposing (data, refBody)
 
 type alias Task =
     { id : Int
@@ -42,23 +42,31 @@ decoder =
     |> required "status" statusDecoder
     |> required "task" Decode.string
 
-setOn : Task -> Http.Request Task
-setOn t =
+setOn : Maybe Int -> Task -> Http.Request Task
+setOn sRef t =
     let
         url_ = Request.url ++ "tasks/setOn/" ++ (toString t.id)
 
     in
-    Http.post url_ Http.emptyBody (data decoder)
+    Http.post url_ (refBody sRef []) (data decoder)
 
-setOff : Task -> Http.Request Task
-setOff t =
+setOff : Maybe Int -> Task -> Http.Request Task
+setOff sRef t =
     let
         url_ = Request.url ++ "tasks/setOff/" ++ (toString t.id)
 
     in
-    Http.post url_ Http.emptyBody (data decoder)
+    Http.post url_ (refBody sRef []) (data decoder)
 
 
-toggle : Task -> Http.Request Task
-toggle t =
-   if t.status /= Inactive then setOff t else setOn t
+toggle : Maybe Int -> Task ->  Http.Request Task
+toggle sRef t=
+   if t.status /= Inactive then setOff sRef t else setOn sRef t
+
+
+getView : Int -> Http.Request Task
+getView id =
+  let
+      url_ = Request.url ++ "tasks/cardView/" ++ (toString id)
+  in
+  Http.get url_ (data decoder)

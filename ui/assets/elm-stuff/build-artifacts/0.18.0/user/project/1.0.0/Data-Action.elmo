@@ -10,34 +10,56 @@ var _user$project$Data_Action$decoder = A6(
 	A2(_elm_lang$core$Json_Decode$field, 'state', _elm_lang$core$Json_Decode$bool),
 	A2(_elm_lang$core$Json_Decode$field, 'function', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'action', _elm_lang$core$Json_Decode$string));
-var _user$project$Data_Action$setOn = function (a) {
+var _user$project$Data_Action$setOn = F2(
+	function (a, sRef) {
+		var url_ = A2(
+			_elm_lang$core$Basics_ops['++'],
+			_user$project$Request$url,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'actions/setOn/',
+				_elm_lang$core$Basics$toString(a.id)));
+		return A3(
+			_elm_lang$http$Http$post,
+			url_,
+			A2(
+				_user$project$Request$refBody,
+				sRef,
+				{ctor: '[]'}),
+			_user$project$Request$data(_user$project$Data_Action$decoder));
+	});
+var _user$project$Data_Action$setOff = F2(
+	function (a, sRef) {
+		var url_ = A2(
+			_elm_lang$core$Basics_ops['++'],
+			_user$project$Request$url,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'actions/setOff/',
+				_elm_lang$core$Basics$toString(a.id)));
+		return A3(
+			_elm_lang$http$Http$post,
+			url_,
+			A2(
+				_user$project$Request$refBody,
+				sRef,
+				{ctor: '[]'}),
+			_user$project$Request$data(_user$project$Data_Action$decoder));
+	});
+var _user$project$Data_Action$toggle = F2(
+	function (sRef, a) {
+		return a.state ? A2(_user$project$Data_Action$setOff, a, sRef) : A2(_user$project$Data_Action$setOn, a, sRef);
+	});
+var _user$project$Data_Action$getView = function (id) {
 	var url_ = A2(
 		_elm_lang$core$Basics_ops['++'],
 		_user$project$Request$url,
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			'actions/setOn/',
-			_elm_lang$core$Basics$toString(a.id)));
-	return A3(
-		_elm_lang$http$Http$post,
+			'actions/cardView/',
+			_elm_lang$core$Basics$toString(id)));
+	return A2(
+		_elm_lang$http$Http$get,
 		url_,
-		_elm_lang$http$Http$emptyBody,
 		_user$project$Request$data(_user$project$Data_Action$decoder));
-};
-var _user$project$Data_Action$setOff = function (a) {
-	var url_ = A2(
-		_elm_lang$core$Basics_ops['++'],
-		_user$project$Request$url,
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			'actions/setOff/',
-			_elm_lang$core$Basics$toString(a.id)));
-	return A3(
-		_elm_lang$http$Http$post,
-		url_,
-		_elm_lang$http$Http$emptyBody,
-		_user$project$Request$data(_user$project$Data_Action$decoder));
-};
-var _user$project$Data_Action$toggle = function (a) {
-	return a.state ? _user$project$Data_Action$setOff(a) : _user$project$Data_Action$setOn(a);
 };

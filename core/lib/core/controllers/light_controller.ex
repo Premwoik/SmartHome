@@ -1,15 +1,20 @@
 defmodule Core.Controllers.LightController do
   @moduledoc false
 
-  @behaviour Core.Controllers.Controller
+#  @behaviour Core.Controllers.Controller
+
+  @callback set_fill() :: any
+  @callback turn_on() :: any
+  @callback turn_off() :: any
 
   alias DB.{Light, Dimmer, Port}
   alias Core.Controllers.BasicController
-  import Core.Controllers.BasicController, only: [flatten_result: 1]
+  alias Core.Controllers.DimmerController
+  import Core.Controllers.BasicController, only: [flatten_result: 1, prepare_for_basic: 1]
 
 
   def turn_on(lights) do
-    {dim, normal} = Enum.split_with(lights, &Light.dim_light?/1)
+    {dim, normal} = split_types(lights)
     [
       prepare_for_basic(normal)
       |> BasicController.turn_on(),
@@ -19,7 +24,7 @@ defmodule Core.Controllers.LightController do
   end
 
   def turn_off(lights) do
-    {dim, normal} = Enum.split_with(lights, &Light.dim_light?/1)
+    {dim, normal} = split_types(lights)
     [
       prepare_for_basic(normal)
       |> BasicController.turn_off(),
@@ -28,49 +33,24 @@ defmodule Core.Controllers.LightController do
     |> flatten_result()
   end
 
-  def toggle(lights) do
-    lights
-    |> Enum.split_with(fn light -> light.port.state end)
-    |> fn {off, on} -> [turn_off(off), turn_on(on)] end.()
-    |> flatten_result()
-  end
-
   def set_brightness(lights, brightness) when is_list lights do
     lights
     |> Enum.map(fn light -> light.dimmer end)
     |> Enum.uniq()
-    |> Enum.map(fn dimmer -> set_brightness dimmer, brightness end)
+    |> Enum.map(fn dimmer -> DimmerController.set_brightness dimmer, brightness end)
     |> flatten_result()
   end
 
-  def set_brightness(dimmer, brightness) do
-    if dimmer.fill > 0 do
-      time = Dimmer.fill_to_time(dimmer, brightness)
-      if time > 0 do
-        new_dimmer_port = %Port{DB.Repo.preload(dimmer.port, :device) | timeout: time}
-        case BasicController.turn_on([new_dimmer_port]) do
-          :ok ->
-            Dimmer.update_fill(dimmer, brightness)
-            :ok
-          error -> error
-        end
-      end
-    else
-      {:error, "Dimmer must be turned on, before changing his brightness"}
-    end
-  end
+
 
 
 
   # Privates
-  defp prepare_for_basic(any) when is_list any do
-    any
-    |> Enum.map(&(&1.port))
-    |> DB.Repo.preload(:device)
-  end
-  defp prepare_for_basic(any) do
-    any
-    |> DB.Repo.preload(:device)
+
+  defp split_types(lights) do
+    lights
+    |> DB.Repo.preload(dimmer: [:port])
+    |> Enum.split_with(&Light.dim_light?/1)
   end
 
   defp turn_on_dim_lights(lights) do

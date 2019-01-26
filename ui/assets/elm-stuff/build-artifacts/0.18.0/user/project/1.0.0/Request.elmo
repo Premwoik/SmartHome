@@ -1,3 +1,22 @@
+var _user$project$Request$refBody = F2(
+	function (s, v) {
+		var _p0 = s;
+		if (_p0.ctor === 'Just') {
+			return _elm_lang$http$Http$jsonBody(
+				_elm_lang$core$Json_Encode$object(
+					{
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'joinRef',
+							_1: _elm_lang$core$Json_Encode$int(_p0._0)
+						},
+						_1: v
+					}));
+		} else {
+			return _elm_lang$http$Http$emptyBody;
+		}
+	});
 var _user$project$Request$delete = function (url) {
 	return _elm_lang$http$Http$request(
 		{
@@ -5,9 +24,9 @@ var _user$project$Request$delete = function (url) {
 			headers: {ctor: '[]'},
 			url: url,
 			body: _elm_lang$http$Http$emptyBody,
-			expect: function (_p0) {
+			expect: function (_p1) {
 				return _elm_lang$http$Http$expectStringResponse(
-					_elm_lang$core$Basics$always(_p0));
+					_elm_lang$core$Basics$always(_p1));
 			}(
 				_elm_lang$core$Result$Ok(
 					{ctor: '_Tuple0'})),

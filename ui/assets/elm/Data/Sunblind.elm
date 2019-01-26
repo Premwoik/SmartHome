@@ -3,7 +3,7 @@ import Json.Decode as Decode exposing (string, map, field, Decoder, bool, map4, 
 import Data.Id as Id
 
 import Http
-import Request exposing (data)
+import Request exposing (data, refBody)
 import Json.Encode as Encode
 
 
@@ -99,26 +99,35 @@ set s state =
 -- API
 
 
-click : Sunblind -> Http.Request Sunblind
-click  s =
+click : Maybe Int-> Sunblind -> Http.Request Sunblind
+click sRef s =
       let
          url_ = Request.url ++ "sunblinds/click/" ++ toString(s.id)
       in
-     Request.post url_ Http.emptyBody (data decoder)
+     Request.post url_ (refBody sRef []) (data decoder)
 
 
-setState : Sunblind -> State -> Http.Request Sunblind
-setState s state =
+setState : Maybe Int -> Sunblind -> State -> Http.Request Sunblind
+setState sRef s state =
     let
         url_ = Request.url ++ "sunblinds/calibrate"
-        data_ = Encode.object
+        data_ =
             [ ("id", Encode.int s.id)
             , ("state", stateEncoder state)
             ]
     in
-    Http.post url_ (Http.jsonBody data_) (data decoder)
+    Http.post url_ (refBody sRef data_) (data decoder)
 
 
-toggleManual : Sunblind -> Http.Request Sunblind
-toggleManual s =
-    if s.state == Position then setState s Open else setState s Position
+toggleManual : Maybe Int -> Sunblind -> Http.Request Sunblind
+toggleManual sRef s=
+    if s.state == Position then setState sRef s Open else setState sRef s Position
+
+
+
+getView : Int -> Http.Request Sunblind
+getView id =
+  let
+      url_ = Request.url ++ "sunblinds/cardView/" ++ (toString id)
+  in
+  Http.get url_ (data decoder)

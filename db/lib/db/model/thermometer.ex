@@ -7,4 +7,6 @@ defmodule DB.Thermometer do
     field :address, :string
   end
 
+
+
 end

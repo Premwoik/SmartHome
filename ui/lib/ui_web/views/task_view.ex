@@ -11,9 +11,11 @@ defmodule UiWeb.TaskView do
   end
 
   def render("task.json", %{task: task}) do
-    %{id: task.id,
+    %{
+      id: task.id,
       name: task.name,
       type_id: task.type_id,
+      type: task.type.name,
       status: task.status,
       action_id: task.action_id,
       device_id: task.device_id,
@@ -21,20 +23,20 @@ defmodule UiWeb.TaskView do
       execution_time: task.execution_time,
       limit: task.limit,
       start_date: task.start_date,
-      end_date: task.end_date}
-  end
-
-  def render("show.json", %{dash_task: task}) do
-    %{data: render_one(task, TaskView, "dash_task.json")}
-  end
-
-  def render("dash_task.json", %{task: task}) do
-    %{id: task.id,
-      name: task.name,
-      type: task.type.name,
-      status: task.status,
-      task: ""
+      end_date: task.end_date
     }
   end
 
+  # def render("show.json", %{dash_task: task}) do
+  # %{data: render_one(task, TaskView, "dash_task.json")}
+  # end
+
+  # def render("dash_task.json", %{task: task}) do
+  # %{id: task.id,
+  # name: task.name,
+  # type: task.type.name,
+  # status: task.status,
+  # task: ""
+  # }
+  # end
 end

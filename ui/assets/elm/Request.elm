@@ -2,6 +2,7 @@ module Request exposing (..)
 
 import Http exposing (Body, Request, expectJson, request)
 import Json.Decode as Decode
+import Json.Encode as Encode
 import Task
 
 url = "http://0.0.0.0:4000/api/"
@@ -34,6 +35,8 @@ post url body decoder =
                 }
 
 
+
+
 data : Decode.Decoder a -> Decode.Decoder a
 data d =
     Decode.at ["data"] d
@@ -61,3 +64,11 @@ delete url =
     , timeout = Nothing
     , withCredentials = False
     }
+
+refBody : Maybe Int -> List (String, Encode.Value) -> Http.Body
+refBody s v =
+    case s of
+        Just val ->
+            Http.jsonBody <| Encode.object (("joinRef", Encode.int val) :: v)
+        Nothing ->
+            Http.emptyBody

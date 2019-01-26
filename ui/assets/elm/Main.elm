@@ -24,7 +24,9 @@ import Array exposing (Array)
 import Dict exposing (Dict)
 import Http
 import Data.Dashboard exposing (DashboardShort, Dashboard)
+
 import Page.Dashboard as Dashboard
+import Page.Dashboard.Type as Dashboard
 import Request
 import Data.Id exposing (Id)
 import Material.Helpers exposing (lift)
@@ -61,7 +63,7 @@ model =
     , selectedTab = 0
     , phxSocket = Phoenix.Socket.init "ws://localhost:4000/socket/websocket"
           |> Phoenix.Socket.withDebug
-          |> Phoenix.Socket.on "gierczak" "dashboard:lobby" (Dashboard.ReceiveDashboardMessage >> DashboardMsg)
+          |> Phoenix.Socket.on "update" "dashboard:lobby" (Dashboard.ReceiveDashboardMessage >> DashboardMsg)
     }
 
 -- UPDATE
@@ -112,12 +114,23 @@ update msg model =
 
                        join ch_ = Phoenix.Socket.join (Phoenix.Channel.init ch_) phxSocLeave
                        phxMap x = Cmd.map PhoenixMsg x
+                       getSocRef = ch |> Maybe.andThen (\x -> Dict.get x phxSocJoin.channels) |> Maybe.map .joinRef
+                       updatePageModel =
+                           case type_ of
+                               DashboardType ->
+                                    let
+                                        dash = model.dashboard
+                                        newDash = {dash | socketRef = getSocRef}
+                                    in
+                                    {model | dashboard = newDash}
+                               _ ->
+                                    model
                     in
                     case k == model.selectedTab of
                         True ->
                             ( model , Cmd.none)
                         False ->
-                            ( { model | selectedTab = k, tabsType = type_, phxSocket = phxSocJoin}
+                            ( { updatePageModel | selectedTab = k, tabsType = type_, phxSocket = phxSocJoin}
                             , Cmd.batch [phxMap phxCmdLeave, phxMap phxCmdJoin, cmd_ model]
                             )
                 Nothing ->
@@ -208,10 +221,14 @@ drawer model =
     let
         weather =
             Options.div
-                [ css "background-color" "red"
-                , css  "height" "100px"
+                [ css  "height" "100px"
                 , css  "width" "100px"
-                ] []
+                , css "padding" "0 1rem 0 1rem"
+
+                , css "margin-left" "3rem"
+--                , css "background-color" "red"
+
+                ] [img [src "../static/images/home.svg", width 100, height 100] []]
         liColor k = if model.selectedTab == k then css "color" "red" else Options.nop
     in
     [ Options.div
@@ -234,7 +251,7 @@ header =
         [ h5
             [ onClick BackHome
             ]
-            [ text "easyHome" ]
+            [ text "SmartHome" ]
         ]]
 
 

@@ -20,8 +20,4 @@ erl_crash.dump
 *.ez
 
 # Ignore package tarball (built via "mix hex.build").
-socket_test2-*.tar
-
-addr = {'192.168.2.136', 9000}
-
-SatelProtocol.run_command({'192.168.2.136', 9000}, "00")
+/.idea/

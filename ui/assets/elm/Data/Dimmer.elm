@@ -6,7 +6,7 @@ import Json.Decode as Decode exposing (nullable, map5, field, string, float, lis
 import Http
 import Request
 import Json.Encode as Encode
-import Request exposing (data)
+import Request exposing (data, refBody)
 
 type alias Light =
     { id : Int
@@ -55,56 +55,63 @@ directionDecoder =
 
 isOn : Dimmer -> Bool
 isOn dim =
-    .lights >> List.any .state <| dim
+    (.lights >> List.any .state <| dim) || dim.fill > 0
 
 
 -- API
 
 
-setFill : Float -> Dimmer -> Http.Request Dimmer
-setFill fill d=
+setFill : Float -> Maybe Int -> Dimmer-> Http.Request Dimmer
+setFill fill sRef d=
     let
-        url_ = Request.url ++ "dimmers/setFill"
-        data = Encode.object
+        url_ = Request.url ++ "dimmers/setBrightness"
+        data_ =
             [ ("id", Encode.int d.id)
             , ("fill", Encode.int (round fill))
             ]
     in
-    Http.post url_ (Http.jsonBody data) decoder
+    Http.post url_ (refBody sRef data_) (data decoder)
 
-setOn : Dimmer -> Http.Request Dimmer
-setOn d =
+setOn : Maybe Int -> Dimmer -> Http.Request Dimmer
+setOn sRef d =
    let
         url_ = Request.url ++ "dimmers/setOn/" ++ (toString d.id)
     in
-    Http.post url_ Http.emptyBody (data decoder)
+    Http.post url_ (refBody sRef []) (data decoder)
 
-setOff : Dimmer -> Http.Request Dimmer
-setOff d =
+setOff : Maybe Int -> Dimmer -> Http.Request Dimmer
+setOff sRef d =
    let
         url_ = Request.url ++ "dimmers/setOff/" ++ (toString d.id)
     in
-    Http.post url_ Http.emptyBody (data decoder)
+    Http.post url_ (refBody sRef []) (data decoder)
 
-toggle : Dimmer -> Http.Request Dimmer
-toggle d =
-    if isOn d then setOff d else setOn d
+toggle : Maybe Int -> Dimmer ->  Http.Request Dimmer
+toggle sRef d=
+    if isOn d then setOff sRef d else setOn sRef d
 
-setLightOn : Light -> Http.Request Dimmer
-setLightOn l =
+setLightOn : Maybe Int -> Light -> Http.Request Dimmer
+setLightOn sRef l =
     let
          url_ = Request.url ++ "dimmers/setLightOn/" ++ (toString l.id)
      in
-     Http.post url_ Http.emptyBody (data decoder)
+     Http.post url_ (refBody sRef []) (data decoder)
 
-setLightOff : Light -> Http.Request Dimmer
-setLightOff l =
+setLightOff : Maybe Int -> Light -> Http.Request Dimmer
+setLightOff sRef l =
   let
        url_ = Request.url ++ "dimmers/setLightOff/" ++ (toString l.id)
 
    in
-   Http.post url_ Http.emptyBody (data decoder)
+   Http.post url_ (refBody sRef  []) (data decoder)
 
-toggleLight : Light -> Http.Request Dimmer
-toggleLight l =
-    if l.state then setLightOff l else setLightOn l
+toggleLight : Maybe Int-> Light -> Http.Request Dimmer
+toggleLight sRef l=
+    if l.state then setLightOff sRef l else setLightOn sRef l
+
+getView : Int -> Http.Request Dimmer
+getView id =
+    let
+        url_ = Request.url ++ "dimmers/cardView/" ++ (toString id)
+    in
+    Http.get url_ (data decoder)

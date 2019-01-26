@@ -5,7 +5,8 @@ defmodule UiWeb.PortController do
   alias DB.Port
   alias Core.Controllers.BasicController
 
-  action_fallback UiWeb.FallbackController
+  alias UiWeb.DashboardChannel.Helper, as: DashHelper
+  action_fallback(UiWeb.FallbackController)
 
   def index(conn, _params) do
     ports = PortAdmin.list_ports()
@@ -42,20 +43,28 @@ defmodule UiWeb.PortController do
     end
   end
 
-  def set_on(conn, %{"id" => id}) do
+  def set_on(conn, %{"id" => id} = o) do
     DB.Port.get([id])
     |> BasicController.turn_on()
 
+    DashHelper.broadcast_update_from(o, [id], "port")
+
     port = PortAdmin.get_port!(id)
-    render(conn, "show.json", dash_port: port)
+    render(conn, "show.json", port: port)
   end
 
-  def set_off(conn, %{"id" => id}) do
+  def set_off(conn, %{"id" => id} = o) do
     DB.Port.get([id])
     |> BasicController.turn_off()
 
+    DashHelper.broadcast_update_from(o, [id], "port")
+
     port = PortAdmin.get_port!(id)
-    render(conn, "show.json", dash_port: port)
+    render(conn, "show.json", port: port)
   end
 
+  def dash_show(conn, %{"id" => id}) do
+    port = PortAdmin.get_port!(id)
+    render(conn, "show.json", port: port)
+  end
 end

@@ -21,7 +21,7 @@ config :shoehorn,
 config :logger, backends: [RingLogger]
 
 # Set the number of messages to hold in the circular buffer
-config :logger, RingLogger, max_size: 100
+config :logger, RingLogger, max_size: 1024
 
 
 

@@ -49,11 +49,11 @@ var _user$project$Main$model = {
 	selectedTab: 0,
 	phxSocket: A4(
 		_fbonetti$elm_phoenix_socket$Phoenix_Socket$on,
-		'gierczak',
+		'update',
 		'dashboard:lobby',
 		function (_p1) {
 			return _user$project$Main$DashboardMsg(
-				_user$project$Page_Dashboard$ReceiveDashboardMessage(_p1));
+				_user$project$Page_Dashboard_Type$ReceiveDashboardMessage(_p1));
 		},
 		_fbonetti$elm_phoenix_socket$Phoenix_Socket$withDebug(
 			_fbonetti$elm_phoenix_socket$Phoenix_Socket$init('ws://localhost:4000/socket/websocket')))
@@ -354,7 +354,7 @@ var _user$project$Main$header = {
 				},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text('easyHome'),
+					_0: _elm_lang$html$Html$text('SmartHome'),
 					_1: {ctor: '[]'}
 				}),
 			_1: {ctor: '[]'}
@@ -391,12 +391,14 @@ var _user$project$Main$update = F2(
 					model = _v9;
 					continue update;
 				case 'SelectTab':
-					var _p40 = _p32._0;
+					var _p43 = _p32._0;
 					var _p34 = A2(
 						_elm_lang$core$Array$get,
-						_p40,
+						_p43,
 						_elm_lang$core$Array$fromList(_user$project$Main$tabs));
 					if (_p34.ctor === 'Just') {
+						var _p42 = _p34._0._5;
+						var _p41 = _p34._0._6;
 						var phxMap = function (x) {
 							return A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$PhoenixMsg, x);
 						};
@@ -426,18 +428,43 @@ var _user$project$Main$update = F2(
 										return join(x);
 									},
 									_p38));
-						}(_p34._0._6);
+						}(_p41);
 						var phxSocJoin = _p37._0;
 						var phxCmdJoin = _p37._1;
-						var _p39 = _elm_lang$core$Native_Utils.eq(_p40, model.selectedTab);
-						if (_p39 === true) {
+						var getSocRef = A2(
+							_elm_lang$core$Maybe$map,
+							function (_) {
+								return _.joinRef;
+							},
+							A2(
+								_elm_lang$core$Maybe$andThen,
+								function (x) {
+									return A2(_elm_lang$core$Dict$get, x, phxSocJoin.channels);
+								},
+								_p41));
+						var updatePageModel = function () {
+							var _p39 = _p42;
+							if (_p39.ctor === 'DashboardType') {
+								var dash = model.dashboard;
+								var newDash = _elm_lang$core$Native_Utils.update(
+									dash,
+									{socketRef: getSocRef});
+								return _elm_lang$core$Native_Utils.update(
+									model,
+									{dashboard: newDash});
+							} else {
+								return model;
+							}
+						}();
+						var _p40 = _elm_lang$core$Native_Utils.eq(_p43, model.selectedTab);
+						if (_p40 === true) {
 							return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 						} else {
 							return {
 								ctor: '_Tuple2',
 								_0: _elm_lang$core$Native_Utils.update(
-									model,
-									{selectedTab: _p40, tabsType: _p34._0._5, phxSocket: phxSocJoin}),
+									updatePageModel,
+									{selectedTab: _p43, tabsType: _p42, phxSocket: phxSocJoin}),
 								_1: _elm_lang$core$Platform_Cmd$batch(
 									{
 										ctor: '::',
@@ -459,9 +486,9 @@ var _user$project$Main$update = F2(
 					}
 				case 'JoinChannel':
 					var channel = _fbonetti$elm_phoenix_socket$Phoenix_Channel$init('dashboard:lobby');
-					var _p41 = A2(_fbonetti$elm_phoenix_socket$Phoenix_Socket$join, channel, model.phxSocket);
-					var phxSocket = _p41._0;
-					var phxCmd = _p41._1;
+					var _p44 = A2(_fbonetti$elm_phoenix_socket$Phoenix_Socket$join, channel, model.phxSocket);
+					var phxSocket = _p44._0;
+					var phxCmd = _p44._1;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -471,10 +498,10 @@ var _user$project$Main$update = F2(
 					};
 				case 'AddressChange':
 					var k = 0;
-					var _v13 = _user$project$Main$SelectTab(k),
-						_v14 = model;
-					msg = _v13;
-					model = _v14;
+					var _v14 = _user$project$Main$SelectTab(k),
+						_v15 = model;
+					msg = _v14;
+					model = _v15;
 					continue update;
 				case 'Mdl':
 					return A3(_debois$elm_mdl$Material$update, _user$project$Main$Mdl, _p32._0, model);
@@ -521,18 +548,41 @@ var _user$project$Main$drawer = function (model) {
 		_debois$elm_mdl$Material_Options$div,
 		{
 			ctor: '::',
-			_0: A2(_debois$elm_mdl$Material_Options$css, 'background-color', 'red'),
+			_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '100px'),
 			_1: {
 				ctor: '::',
-				_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '100px'),
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '100px'),
 				_1: {
 					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '100px'),
-					_1: {ctor: '[]'}
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '0 1rem 0 1rem'),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-left', '3rem'),
+						_1: {ctor: '[]'}
+					}
 				}
 			}
 		},
-		{ctor: '[]'});
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$img,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$src('../static/images/home.svg'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$width(100),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$height(100),
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				{ctor: '[]'}),
+			_1: {ctor: '[]'}
+		});
 	return {
 		ctor: '::',
 		_0: A2(
@@ -552,18 +602,18 @@ var _user$project$Main$drawer = function (model) {
 						{ctor: '[]'},
 						A2(
 							_elm_lang$core$List$map,
-							function (_p42) {
-								var _p43 = _p42;
-								var _p44 = _p43._0;
+							function (_p45) {
+								var _p46 = _p45;
+								var _p47 = _p46._0;
 								return A2(
 									_debois$elm_mdl$Material_List$li,
 									{
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$onClick(
-											_user$project$Main$SelectTab(_p44)),
+											_user$project$Main$SelectTab(_p47)),
 										_1: {
 											ctor: '::',
-											_0: liColor(_p44),
+											_0: liColor(_p47),
 											_1: {ctor: '[]'}
 										}
 									},
@@ -574,7 +624,7 @@ var _user$project$Main$drawer = function (model) {
 											{ctor: '[]'},
 											{
 												ctor: '::',
-												_0: _p43._1,
+												_0: _p46._1,
 												_1: {ctor: '[]'}
 											}),
 										_1: {ctor: '[]'}
@@ -589,14 +639,14 @@ var _user$project$Main$drawer = function (model) {
 };
 var _user$project$Main$view_ = function (model) {
 	var onSelectTab = function () {
-		var _p45 = model.tabsType;
-		switch (_p45.ctor) {
+		var _p48 = model.tabsType;
+		switch (_p48.ctor) {
 			case 'DefaultType':
 				return _user$project$Main$SelectTab;
 			case 'DashboardType':
 				return function (x) {
 					return _user$project$Main$DashboardMsg(
-						_user$project$Page_Dashboard$SelectTab(x));
+						_user$project$Page_Dashboard_Type$SelectTab(x));
 				};
 			default:
 				return function (x) {
@@ -606,8 +656,8 @@ var _user$project$Main$view_ = function (model) {
 		}
 	}();
 	var selectedTab = function () {
-		var _p46 = model.tabsType;
-		switch (_p46.ctor) {
+		var _p49 = model.tabsType;
+		switch (_p49.ctor) {
 			case 'DefaultType':
 				return model.selectedTab;
 			case 'DashboardType':
@@ -679,15 +729,15 @@ var _user$project$Main$view_ = function (model) {
 };
 var _user$project$Main$view = _elm_lang$html$Html_Lazy$lazy(_user$project$Main$view_);
 var _user$project$Main$location2messages = function (location) {
-	var _p47 = A2(_elm_lang$core$Debug$log, 'Location', location.hash);
+	var _p50 = A2(_elm_lang$core$Debug$log, 'Location', location.hash);
 	return {
 		ctor: '::',
 		_0: function () {
-			var _p48 = A2(_elm_lang$core$String$dropLeft, 1, location.hash);
-			if (_p48 === '') {
+			var _p51 = A2(_elm_lang$core$String$dropLeft, 1, location.hash);
+			if (_p51 === '') {
 				return _user$project$Main$SelectTab(0);
 			} else {
-				return _user$project$Main$AddressChange(_p48);
+				return _user$project$Main$AddressChange(_p51);
 			}
 		}(),
 		_1: {ctor: '[]'}

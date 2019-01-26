@@ -6,7 +6,8 @@ defmodule UiWeb.LightController do
   alias Core.Controllers.BasicController
   alias DB.Light
 
-  action_fallback UiWeb.FallbackController
+  alias UiWeb.DashboardChannel.Helper, as: DashHelper
+  action_fallback(UiWeb.FallbackController)
 
   def index(conn, _params) do
     lights = LightAdmin.list_lights()
@@ -47,28 +48,40 @@ defmodule UiWeb.LightController do
     res =
       Dimmer.get(id)
       |> LightController.set_brightness(String.to_integer(fill))
-    json conn
-         |> put_status(:ok), "#{inspect res}"
+
+    json(
+      conn
+      |> put_status(:ok),
+      "#{inspect(res)}"
+    )
   end
 
+  def set_on(conn, %{"id" => id} = o) do
+    res =
+      [LightAdmin.get_light!(id)]
+      |> BasicController.prepare_for_basic()
+      |> BasicController.turn_on()
 
-  def set_on(conn, %{"id" => id}) do
-    res = [LightAdmin.get_light!(id)]
-          |> BasicController.prepare_for_basic()
-          |> BasicController.turn_on()
+    DashHelper.broadcast_update_from(o, [id], "light")
 
-    light = LightAdmin.get_light! id
-    render(conn, "show.json", dash_light: light)
+    light = LightAdmin.get_light!(id)
+    render(conn, "show.json", light: light)
   end
 
-  def set_off(conn, %{"id" => id}) do
-    res = [LightAdmin.get_light!(id)]
-          |> BasicController.prepare_for_basic()
-          |> BasicController.turn_off()
+  def set_off(conn, %{"id" => id} = o) do
+    res =
+      [LightAdmin.get_light!(id)]
+      |> BasicController.prepare_for_basic()
+      |> BasicController.turn_off()
 
-    light = LightAdmin.get_light! id
-    render(conn, "show.json", dash_light: light)
+    DashHelper.broadcast_update_from(o, [id], "light")
+
+    light = LightAdmin.get_light!(id)
+    render(conn, "show.json", light: light)
   end
 
-
+  def dash_show(conn, %{"id" => id}) do
+    light = LightAdmin.get_light!(id)
+    render(conn, "show.json", light: light)
+  end
 end

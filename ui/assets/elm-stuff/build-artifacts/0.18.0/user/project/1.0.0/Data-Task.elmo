@@ -43,34 +43,56 @@ var _user$project$Data_Task$decoder = A3(
 					'id',
 					_elm_lang$core$Json_Decode$int,
 					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Data_Task$Task))))));
-var _user$project$Data_Task$setOn = function (t) {
+var _user$project$Data_Task$setOn = F2(
+	function (sRef, t) {
+		var url_ = A2(
+			_elm_lang$core$Basics_ops['++'],
+			_user$project$Request$url,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'tasks/setOn/',
+				_elm_lang$core$Basics$toString(t.id)));
+		return A3(
+			_elm_lang$http$Http$post,
+			url_,
+			A2(
+				_user$project$Request$refBody,
+				sRef,
+				{ctor: '[]'}),
+			_user$project$Request$data(_user$project$Data_Task$decoder));
+	});
+var _user$project$Data_Task$setOff = F2(
+	function (sRef, t) {
+		var url_ = A2(
+			_elm_lang$core$Basics_ops['++'],
+			_user$project$Request$url,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'tasks/setOff/',
+				_elm_lang$core$Basics$toString(t.id)));
+		return A3(
+			_elm_lang$http$Http$post,
+			url_,
+			A2(
+				_user$project$Request$refBody,
+				sRef,
+				{ctor: '[]'}),
+			_user$project$Request$data(_user$project$Data_Task$decoder));
+	});
+var _user$project$Data_Task$toggle = F2(
+	function (sRef, t) {
+		return (!_elm_lang$core$Native_Utils.eq(t.status, _user$project$Data_Task$Inactive)) ? A2(_user$project$Data_Task$setOff, sRef, t) : A2(_user$project$Data_Task$setOn, sRef, t);
+	});
+var _user$project$Data_Task$getView = function (id) {
 	var url_ = A2(
 		_elm_lang$core$Basics_ops['++'],
 		_user$project$Request$url,
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			'tasks/setOn/',
-			_elm_lang$core$Basics$toString(t.id)));
-	return A3(
-		_elm_lang$http$Http$post,
+			'tasks/cardView/',
+			_elm_lang$core$Basics$toString(id)));
+	return A2(
+		_elm_lang$http$Http$get,
 		url_,
-		_elm_lang$http$Http$emptyBody,
 		_user$project$Request$data(_user$project$Data_Task$decoder));
-};
-var _user$project$Data_Task$setOff = function (t) {
-	var url_ = A2(
-		_elm_lang$core$Basics_ops['++'],
-		_user$project$Request$url,
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			'tasks/setOff/',
-			_elm_lang$core$Basics$toString(t.id)));
-	return A3(
-		_elm_lang$http$Http$post,
-		url_,
-		_elm_lang$http$Http$emptyBody,
-		_user$project$Request$data(_user$project$Data_Task$decoder));
-};
-var _user$project$Data_Task$toggle = function (t) {
-	return (!_elm_lang$core$Native_Utils.eq(t.status, _user$project$Data_Task$Inactive)) ? _user$project$Data_Task$setOff(t) : _user$project$Data_Task$setOn(t);
 };

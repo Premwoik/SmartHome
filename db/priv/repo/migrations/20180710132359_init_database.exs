@@ -46,6 +46,7 @@ defmodule DB.Repo.Migrations.InitDatabase do
 
     create table(:dimmers) do
       add :port_id, references("ports", on_delete: :nilify_all)
+      add :type, :string, default: "old"
       add :fill, :integer
       add :direction, :integer, default: 1
       add :time, :integer, default: 4_500

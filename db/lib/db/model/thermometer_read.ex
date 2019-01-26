@@ -2,9 +2,9 @@ defmodule DB.Thermometer.Read do
   @moduledoc false
   use Ecto.Schema
 
-  schema "thermometer_reads" do
+  schema "therm_temp_reads" do
     belongs_to :therm, DB.Thermometer
-    field :value, :integer
+    field :value, :float
     timestamps()
   end
 end

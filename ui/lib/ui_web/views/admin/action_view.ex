@@ -11,7 +11,8 @@ defmodule UiWeb.ActionView do
   end
 
   def render("action.json", %{action: action}) do
-    %{id: action.id,
+    %{
+      id: action.id,
       name: action.name,
       function: action.function,
       active: action.active,
@@ -19,20 +20,20 @@ defmodule UiWeb.ActionView do
       frequency: action.frequency,
       start_time: action.start_time,
       end_time: action.end_time,
-      port_id: action.port_id}
-  end
-
-  def render("show.json", %{dash_action: action}) do
-    %{data: render_one(action, ActionView, "dash_action.json")}
-  end
-
-  def render("dash_action.json", %{action: action}) do
-    %{id: action.id,
-      name: action.name,
-      function: action.function,
-      state: action.active,
-      action: ""
+      port_id: action.port_id
     }
   end
 
+  # def render("show.json", %{dash_action: action}) do
+  # %{data: render_one(action, ActionView, "dash_action.json")}
+  # end
+
+  # def render("dash_action.json", %{action: action}) do
+  # %{id: action.id,
+  # name: action.name,
+  # function: action.function,
+  # state: action.active,
+  # action: ""
+  # }
+  # end
 end

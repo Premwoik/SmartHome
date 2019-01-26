@@ -9,7 +9,8 @@ defmodule Ui.Application do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
-      UiWeb.Endpoint
+      UiWeb.Endpoint,
+      UiWeb.DashboardChannel.Helper
       # Starts a worker by calling: Ui.Worker.start_link(arg)
       # {Ui.Worker, arg},
     ]
