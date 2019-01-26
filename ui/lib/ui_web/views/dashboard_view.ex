@@ -72,38 +72,36 @@ defmodule UiWeb.DashboardView do
     ++
     render_ports(d.ports)
     ++
-    render_sunblinds(d.sunblinds)
-    ++
     render_tasks(d.tasks)
     |> Enum.sort_by(fn {o, _} -> o end)
     |> Enum.map(fn {_, x} -> x end)
   end
 
   def render_lights(lights) do
-    Enum.map(lights, fn {o, l} -> {o, UiWeb.LightView.render("dash_light.json", %{light: l})} end)
+    Enum.map(lights, fn {o, l} -> {o, UiWeb.LightView.render("light.json", %{light: l})} end)
   end
 
   def render_dimmers(dimmers) do
-    Enum.map(dimmers, fn {o, d} -> {o, UiWeb.DimmerView.render("dash_dimmer.json", %{dimmer: d})} end)
+    Enum.map(dimmers, fn {o, d} -> {o, UiWeb.DimmerView.render("dimmer.json", %{dimmer: d})} end)
   end
 
   def render_sunblinds(sunblinds) do
-    Enum.map(sunblinds, fn {o, d} -> {o, UiWeb.SunblindView.render("dash_sunblind.json", %{sunblind: d})} end)
+    Enum.map(sunblinds, fn {o, d} -> {o, UiWeb.SunblindView.render("sunblind.json", %{sunblind: d})} end)
   end
 
   def render_actions(actions) do
-    Enum.map(actions, fn {o, d} -> {o, UiWeb.ActionView.render("dash_action.json", %{action: d})} end)
+    Enum.map(actions, fn {o, d} -> {o, UiWeb.ActionView.render("action.json", %{action: d})} end)
   end
 
   def render_ports(ports) do
-    Enum.map(ports, fn {o, d} -> {o, UiWeb.PortView.render("dash_port.json", %{port: d})} end)
+    Enum.map(ports, fn {o, d} -> {o, UiWeb.PortView.render("port.json", %{port: d})} end)
   end
 
   def render_sunblinds(sunblinds) do
-    Enum.map(sunblinds, fn {o, d} -> {o, UiWeb.SunblindView.render("dash_sunblind.json", %{sunblind: d})} end)
+    Enum.map(sunblinds, fn {o, d} -> {o, UiWeb.SunblindView.render("sunblind.json", %{sunblind: d})} end)
   end
 
   def render_tasks(tasks) do
-    Enum.map(tasks, fn {o, d} -> {o, UiWeb.TaskView.render("dash_task.json", %{task: d})} end)
+    Enum.map(tasks, fn {o, d} -> {o, UiWeb.TaskView.render("task.json", %{task: d})} end)
   end
 end

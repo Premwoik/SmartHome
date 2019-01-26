@@ -2,7 +2,7 @@ defmodule Core.Tasks.ReadInputs do
   @moduledoc false
 
   @behaviour Core.Tasks.Task
-  alias Core.Devices
+  alias Core.Controllers.BasicController, as: Basics
   require Logger
 
   @device Application.get_env(:core, :device_helper)
@@ -10,7 +10,7 @@ defmodule Core.Tasks.ReadInputs do
 
   @impl true
   def execute(task, %{last_read: last_read} = state) do
-    case @device.read_active_inputs(task.device) do
+    case Basics.read(task.device) do
       {:ok, read} ->
         new_up = read -- last_read
         new_down = last_read -- read

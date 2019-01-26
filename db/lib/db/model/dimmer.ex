@@ -103,6 +103,13 @@ defmodule DB.Dimmer do
     |> Repo.update()
   end
 
+  def update(dim, args \\ %{}) do
+
+    Ecto.Changeset.change(dim, args)
+    |> IO.inspect()
+    |> Repo.update()
+  end
+
   def update_fill(ids, fill, direction) do
     Repo.update_all (from d in Dimmer, where: d.port_id in ^ids),
                     set: [

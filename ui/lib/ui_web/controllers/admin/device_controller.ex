@@ -4,6 +4,7 @@ defmodule UiWeb.DeviceController do
   alias Ui.Admin
   alias DB.Device
 
+  alias UiWeb.DashboardChannel.Helper, as: DashHelper
   action_fallback UiWeb.FallbackController
 
   def index(conn, _params) do

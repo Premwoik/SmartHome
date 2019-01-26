@@ -44,16 +44,17 @@ defmodule Fw.MixProject do
     [
       {:nerves, "~> 1.3", runtime: false},
       {:shoehorn, "~> 0.4"},
+      {:ring_logger, "~> 0.4"},
       {:db, path: "../db"},
       {:core, path: "../core"},
-      {:ui, path: "../ui"}
+      {:ui, path: "../ui"},
+      {:foreign_sources, path: "../foreign_sources"}
     ] ++ deps(@target)
   end
 
   # Specify target specific dependencies
   defp deps("host") do
     [
-      {:ring_logger, "~> 0.4"},
     ]
   end
 
@@ -69,6 +70,7 @@ defmodule Fw.MixProject do
   defp system("rpi0"), do: [{:nerves_system_rpi0, "~> 1.0", runtime: false}]
   defp system("rpi2"), do: [{:nerves_system_rpi2, "~> 1.0", runtime: false}]
   defp system("rpi3"), do: [{:nerves_system_rpi3, "~> 1.0", runtime: false}]
+  defp system("rpi3_base"), do: [{:rpi3_base, path: "../rpi3_base", runtime: false}]
   defp system("bbb"), do: [{:nerves_system_bbb, "~> 1.0", runtime: false}]
   defp system("ev3"), do: [{:nerves_system_ev3, "~> 1.0", runtime: false}]
   defp system("qemu_arm"), do: [{:nerves_system_qemu_arm, "~> 1.0", runtime: false}]

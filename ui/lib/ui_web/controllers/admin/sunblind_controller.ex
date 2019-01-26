@@ -3,13 +3,13 @@ defmodule UiWeb.SunblindController do
 
   alias Ui.AdminSunblind
 
-
   @device Application.get_env(:core, :devices_module)
 
   alias DB.{Sunblind}
   alias Core.Controllers.SunblindController
 
-  action_fallback UiWeb.FallbackController
+  alias UiWeb.DashboardChannel.Helper, as: DashHelper
+  action_fallback(UiWeb.FallbackController)
 
   def index(conn, _params) do
     sunblinds = AdminSunblind.list_sunblinds()
@@ -46,35 +46,40 @@ defmodule UiWeb.SunblindController do
     end
   end
 
-
-  def click(conn, %{"id" => id}) do
+  def click(conn, %{"id" => id} = o) do
     res =
       AdminSunblind.get_sunblind!(id)
       |> SunblindController.click()
 
+    DashHelper.broadcast_update_from(o, [id], "sunblind")
 
     sun = AdminSunblind.get_sunblind!(id)
-    render(conn, "show.json", %{dash_sunblind: sun})
+    render(conn, "show.json", %{sunblind: sun})
   end
 
-  def calibrate(conn, %{"id" => id, "state" => state}) do
+  def calibrate(conn, %{"id" => id, "state" => state} = o) do
     AdminSunblind.get_sunblind!(id)
     |> SunblindController.calibrate(state)
 
+    DashHelper.broadcast_update_from(o, [id], "sunblind")
+
     sun = AdminSunblind.get_sunblind!(id)
-    render(conn, "show.json", %{dash_sunblind: sun})
-#    with {:ok, s} <-
-#           id
-#           |> Sunblind.get()
-#           |> SunblindController.calibrate(state)
-#      do
-#      json conn
-#           |> put_status(:ok), "#{s.state}"
-#    else
-#      error -> json conn
-#                    |> put_status(:ok), "#{inspect error}"
-#    end
+    render(conn, "show.json", %{sunblind: sun})
+    #    with {:ok, s} <-
+    #           id
+    #           |> Sunblind.get()
+    #           |> SunblindController.calibrate(state)
+    #      do
+    #      json conn
+    #           |> put_status(:ok), "#{s.state}"
+    #    else
+    #      error -> json conn
+    #                    |> put_status(:ok), "#{inspect error}"
+    #    end
   end
 
-
+  def dash_show(conn, %{"id" => id}) do
+    sunblind = AdminSunblind.get_sunblind!(id)
+    render(conn, "show.json", sunblind: sunblind)
+  end
 end

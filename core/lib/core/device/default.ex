@@ -16,7 +16,9 @@ defmodule Core.Device.Default do
 
   end
 
-  @behaviour Core.Device
+  @behaviour Core.Controllers.PortController
+  @behaviour Core.Controllers.ThermometerController
+  @behaviour Core.Controllers.WattmeterController
 
   @client Application.get_env(:core, :two_way_client)
   @protocol Core.Device.Default.Protocol
@@ -32,22 +34,23 @@ defmodule Core.Device.Default do
     noreply_send(device, cmd, [])
   end
 
-
   @impl true
-  def set_outputs(device, data) do
-    Logger.info("#{device.name} - set_outputs - #{inspect data}")
+  def set_outputs(device, ports) do
     cmd = Code.setOutputs()
+    data = ports_to_num(ports)
+    Logger.info("#{device.name} - set_outputs - #{inspect data}")
     noreply_send(device, cmd, data)
   end
 
   @impl true
-  def set_pwm_outputs(device, data) do
+  def set_pwm_outputs(device, ports) do
     cmd = Code.setPwmOutputs()
+    data = Enum.flat_map(ports, fn p -> [p.number, p.pwm_fill] end)
     noreply_send(device, cmd, data)
   end
 
   @impl true
-  def read_counted_values(device) do
+  def read_watts(device) do
     noreply_send(device, Code.readWattmeters(), [])
   end
 
@@ -55,9 +58,16 @@ defmodule Core.Device.Default do
     noreply_send(device, Code.heartbeat(), [])
   end
 
+
   @impl true
   def read_temperatures(device) do
-    noreply_send(device, Code.readTemp(), [])
+    case noreply_send(device, Code.readTemp(), []) do
+      {:ok, val} ->
+        {addr, [h, l]} = Enum.split(val, 8)
+        raw = h <<< 8 ||| l
+        {:ok, {to_string(addr), raw}}
+      err_ -> err_
+    end
   end
 
 
@@ -87,4 +97,18 @@ defmodule Core.Device.Default do
       timeout -> {:error, "confirmation timeout"}
     end
   end
+
+  defp ports_to_num(ports) do
+    ports
+    |> Enum.flat_map(
+         fn p -> if p.inverted_logic, do: [p.number, state_to_num(not p.state)], else: [p.number, state_to_num(p.state)]
+         end
+       )
+    |> IO.inspect()
+  end
+
+  defp state_to_num(false), do: 0
+  defp state_to_num(_), do: 1
+
+
 end

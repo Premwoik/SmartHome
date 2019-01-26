@@ -7,7 +7,7 @@ defmodule Core do
     import Supervisor.Spec, warn: false
     children = [
       Core.Device.Supervisor,
-#      Core.Actions,
+      Core.Actions,
       Core.Tasks
     ]
     opts = [strategy: :one_for_one, name: Core.Supervisor]
@@ -17,5 +17,6 @@ defmodule Core do
   def reload do
     :ok = Supervisor.stop(Device.Supervisor, :normal)
   end
+
 
 end

@@ -17,7 +17,7 @@ defmodule DB.Application do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: DB.Supervisor]
     res = Supervisor.start_link(children, opts)
-    IO.inspect(type)
+#    IO.inspect(type)
     if type != :test, do: DB.Init.run()
     res
   end
@@ -52,6 +52,9 @@ defmodule DB.Application do
       if function_exported?(pool, :unboxed_run, 2) do
         pool.unboxed_run(repo, fn -> migrator.(repo, migrations_path, :up, opts) end)
       else
+        IO.inspect(repo)
+        IO.inspect(migrations_path)
+        IO.inspect(repo)
         migrator.(repo, migrations_path, :up, opts)
       end
 

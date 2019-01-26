@@ -13,11 +13,15 @@ defmodule Core.Actions.AutoLights do
 
   @impl true
   def execute(on_off, action, %{offPid: pid} = amem) do
+    IO.puts "HALO"
+    IO.inspect(action)
     case alive? pid do
       true ->
+        IO.puts("ALIVE")
         send pid, :notified
         amem
       false ->
+        IO.puts("DEAD")
         turn_on_lights(action)
         |> update_pid(amem)
     end
@@ -33,10 +37,13 @@ defmodule Core.Actions.AutoLights do
     lights =
       DB.Action.get_args_ids(action)
       |> DB.Light.get()
+      |> IO.inspect()
 
     if any_on? lights do
+      IO.puts("NIE MOZNA WLACZAC")
       nil
     else
+      IO.puts("MOGE WŁAĆZAC")
       case LightController.turn_on(lights) do
         :ok ->
           [time | _] = Poison.decode! action.params

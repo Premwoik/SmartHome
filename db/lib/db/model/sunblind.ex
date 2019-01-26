@@ -10,6 +10,7 @@ defmodule DB.Sunblind do
   @derive {Poison.Encoder, except: [:__meta__]}
   schema "sunblinds" do
     belongs_to :port, DB.Port
+    belongs_to :open_port, DB.Port
     field :position, :integer, default: 0
     field :type, :string, default: "only_close" # :only_close | :pulse | :other
     field :full_open_time, :integer, default: 0

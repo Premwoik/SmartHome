@@ -73,47 +73,63 @@ var _user$project$Data_Sunblind$decoder = A5(
 	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'state', _user$project$Data_Sunblind$stateDecoder),
 	A2(_elm_lang$core$Json_Decode$field, 'sunblind', _elm_lang$core$Json_Decode$string));
-var _user$project$Data_Sunblind$click = function (s) {
+var _user$project$Data_Sunblind$click = F2(
+	function (sRef, s) {
+		var url_ = A2(
+			_elm_lang$core$Basics_ops['++'],
+			_user$project$Request$url,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'sunblinds/click/',
+				_elm_lang$core$Basics$toString(s.id)));
+		return A3(
+			_user$project$Request$post,
+			url_,
+			A2(
+				_user$project$Request$refBody,
+				sRef,
+				{ctor: '[]'}),
+			_user$project$Request$data(_user$project$Data_Sunblind$decoder));
+	});
+var _user$project$Data_Sunblind$setState = F3(
+	function (sRef, s, state) {
+		var data_ = {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(s.id)
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'state',
+					_1: _user$project$Data_Sunblind$stateEncoder(state)
+				},
+				_1: {ctor: '[]'}
+			}
+		};
+		var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'sunblinds/calibrate');
+		return A3(
+			_elm_lang$http$Http$post,
+			url_,
+			A2(_user$project$Request$refBody, sRef, data_),
+			_user$project$Request$data(_user$project$Data_Sunblind$decoder));
+	});
+var _user$project$Data_Sunblind$getView = function (id) {
 	var url_ = A2(
 		_elm_lang$core$Basics_ops['++'],
 		_user$project$Request$url,
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			'sunblinds/click/',
-			_elm_lang$core$Basics$toString(s.id)));
-	return A3(
-		_user$project$Request$post,
+			'sunblinds/cardView/',
+			_elm_lang$core$Basics$toString(id)));
+	return A2(
+		_elm_lang$http$Http$get,
 		url_,
-		_elm_lang$http$Http$emptyBody,
 		_user$project$Request$data(_user$project$Data_Sunblind$decoder));
 };
-var _user$project$Data_Sunblind$setState = F2(
-	function (s, state) {
-		var data_ = _elm_lang$core$Json_Encode$object(
-			{
-				ctor: '::',
-				_0: {
-					ctor: '_Tuple2',
-					_0: 'id',
-					_1: _elm_lang$core$Json_Encode$int(s.id)
-				},
-				_1: {
-					ctor: '::',
-					_0: {
-						ctor: '_Tuple2',
-						_0: 'state',
-						_1: _user$project$Data_Sunblind$stateEncoder(state)
-					},
-					_1: {ctor: '[]'}
-				}
-			});
-		var url_ = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$url, 'sunblinds/calibrate');
-		return A3(
-			_elm_lang$http$Http$post,
-			url_,
-			_elm_lang$http$Http$jsonBody(data_),
-			_user$project$Request$data(_user$project$Data_Sunblind$decoder));
-	});
 var _user$project$Data_Sunblind$isOpen = function (sun) {
 	return _elm_lang$core$Native_Utils.eq(sun.state, _user$project$Data_Sunblind$Open);
 };
@@ -123,6 +139,7 @@ var _user$project$Data_Sunblind$setOpenList = function (list) {
 var _user$project$Data_Sunblind$setOpen = function (s) {
 	return A2(_user$project$Data_Sunblind$set, s, _user$project$Data_Sunblind$Open);
 };
-var _user$project$Data_Sunblind$toggleManual = function (s) {
-	return _elm_lang$core$Native_Utils.eq(s.state, _user$project$Data_Sunblind$Position) ? A2(_user$project$Data_Sunblind$setState, s, _user$project$Data_Sunblind$Open) : A2(_user$project$Data_Sunblind$setState, s, _user$project$Data_Sunblind$Position);
-};
+var _user$project$Data_Sunblind$toggleManual = F2(
+	function (sRef, s) {
+		return _elm_lang$core$Native_Utils.eq(s.state, _user$project$Data_Sunblind$Position) ? A3(_user$project$Data_Sunblind$setState, sRef, s, _user$project$Data_Sunblind$Open) : A3(_user$project$Data_Sunblind$setState, sRef, s, _user$project$Data_Sunblind$Position);
+	});

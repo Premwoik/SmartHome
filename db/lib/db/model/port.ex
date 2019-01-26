@@ -6,6 +6,13 @@ defmodule DB.Port do
 
   alias DB.{Repo, Port}
 
+#  types:
+#  - input
+#  - output
+#  - output_pwm
+
+
+
   @derive {Poison.Encoder, only: [:name, :state, :id]}
   schema "ports" do
     field :name, :string
@@ -23,7 +30,7 @@ defmodule DB.Port do
   def changeset(port, params \\ %{}) do
     IO.inspect(params)
     port
-    |> cast(params, [:state, :number, :name, :type, :mode, :timeout])
+    |> cast(params, [:state, :number, :name, :type, :mode, :timeout, :pwm_fill])
   end
 
   def get(ids) do
@@ -47,6 +54,13 @@ defmodule DB.Port do
   def update_state2(ports, state) do
     for port <- ports do
       Ecto.Changeset.change(port, state: state)
+      |> Repo.update()
+    end
+  end
+
+  def update(ports, args \\ %{}) do
+    for port <- ports do
+      Ecto.Changeset.change(port, args)
       |> Repo.update()
     end
   end

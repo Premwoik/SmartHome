@@ -21,16 +21,16 @@ defmodule UiWeb.SunblindView do
     }
   end
 
-  def render("show.json", %{dash_sunblind: sunblind}) do
-    %{data: render_one(sunblind, SunblindView, "dash_sunblind.json")}
-  end
+  #def render("show.json", %{dash_sunblind: sunblind}) do
+    #%{data: render_one(sunblind, SunblindView, "dash_sunblind.json")}
+  #end
 
-  def render("dash_sunblind.json", %{sunblind: sunblind}) do
-    %{id: sunblind.id,
-      name: sunblind.port.name,
-      state: sunblind.state,
-      sunblind: ""
-    }
-  end
+  #def render("dash_sunblind.json", %{sunblind: sunblind}) do
+    #%{id: sunblind.id,
+      #name: sunblind.port.name,
+      #state: sunblind.state,
+      #sunblind: ""
+    #}
+  #end
 
 end

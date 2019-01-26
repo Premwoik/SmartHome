@@ -1,8 +1,0 @@
-var _rtfeldman$elm_css$Hash$murmurSeed = 15739;
-var _rtfeldman$elm_css$Hash$fromString = function (str) {
-	return A2(
-		_elm_lang$core$String$cons,
-		_elm_lang$core$Native_Utils.chr('_'),
-		_rtfeldman$hex$Hex$toString(
-			A2(_Skinney$murmur3$Murmur3$hashString, _rtfeldman$elm_css$Hash$murmurSeed, str)));
-};

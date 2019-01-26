@@ -2,7 +2,7 @@ defmodule Core.Tasks.ReadUsedEnergy do
   @moduledoc false
 
   @behaviour Core.Tasks.Task
-  alias Core.Devices
+  alias Core.Controllers.WattmeterController, as: Wattmeters
   require Logger
 
   @device Application.get_env(:core, :device_helper)
@@ -10,7 +10,7 @@ defmodule Core.Tasks.ReadUsedEnergy do
 
   @impl true
   def execute(task, _) do
-    @device.read_counted_values(task.device)
+    Wattmeters.read(task.device)
     |> case do
          {:ok, val} ->
             Logger.info("Read energy #{inspect val}")

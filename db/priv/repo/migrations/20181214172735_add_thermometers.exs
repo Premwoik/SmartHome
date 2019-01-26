@@ -11,7 +11,7 @@ defmodule DB.Repo.Migrations.AddThermometers do
 
     create table(:therm_temp_reads) do
       add :therm_id, references(:thermometers, on_delete: :delete_all)
-      add :value, :integer
+      add :value, :float
       timestamps()
     end
 

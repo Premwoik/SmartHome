@@ -24,7 +24,7 @@ defmodule Db.MixProject do
   defp deps do
     [
       {:poison, "~> 3.1"},
-      {:sqlite_ecto2, "~> 2.2"},
+      {:sqlite_ecto2, "~>2.3"},
       {:timex, "~> 3.1"},
       {:timex_ecto, "~> 3.1"}
       # {:dep_from_hexpm, "~> 0.3.0"},

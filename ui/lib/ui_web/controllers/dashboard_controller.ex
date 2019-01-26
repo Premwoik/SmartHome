@@ -51,6 +51,7 @@ defmodule UiWeb.DashboardController do
 
   def view(conn, %{"id" => id}) do
     d = DashboardAdmin.get_dashboard!(id)
+    IO.inspect(d)
     render(conn, "show.json", dash_dashboard: d)
   end
 
