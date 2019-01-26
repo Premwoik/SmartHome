@@ -1,0 +1,3 @@
+[submodule "rpi3_base"]
+	path = rpi3_base
+	url = https://github.com/Premwoik/rpi3_base.git
