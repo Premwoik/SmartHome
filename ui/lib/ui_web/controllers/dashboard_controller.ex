@@ -37,7 +37,6 @@ defmodule UiWeb.DashboardController do
 
   def delete(conn, %{"id" => id}) do
     dashboard = DashboardAdmin.get_dashboard_short!(id)
-    IO.inspect(dashboard)
     with {:ok, %Page{}} <- DashboardAdmin.delete_dashboard(dashboard) do
       send_resp(conn, :no_content, "")
     end
@@ -51,7 +50,6 @@ defmodule UiWeb.DashboardController do
 
   def view(conn, %{"id" => id}) do
     d = DashboardAdmin.get_dashboard!(id)
-    IO.inspect(d)
     render(conn, "show.json", dash_dashboard: d)
   end
 

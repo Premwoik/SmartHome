@@ -12,15 +12,23 @@ defmodule Core.Actions.CloseSunblinds do
   end
 
   @impl true
-  def execute(:up, _action, amem) do
-    Sunblind.get_type("only_close")
+  def execute(:up, action, amem) do
+    DB.Action.get_args_ids(action)
+    |> DB.Sunblind.get_by_port()
     |> SunblindController.close()
-    amem
-  end
-  def execute(:down, _action, amem) do
-    Sunblind.get_type("only_close")
-    |> SunblindController.open()
+
+    # Sunblind.get_type("only_close")
+    # |> SunblindController.close()
     amem
   end
 
+  def execute(:down, action, amem) do
+    DB.Action.get_args_ids(action)
+    |> DB.Sunblind.get_by_port()
+    |> SunblindController.open()
+
+    # Sunblind.get_type("only_close")
+    # |> SunblindController.open()
+    amem
+  end
 end

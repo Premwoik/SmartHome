@@ -222,7 +222,7 @@ defmodule Ui.DashboardAdmin do
       join: c in "page_content_lights",
       on: c.light_id == l.id,
       where: c.page_id == ^page_id,
-      preload: [:port, :dimmer],
+      preload: [:port, dimmer: [:port]],
       select: {c.order, l}
     )
     |> Repo.all

@@ -6,16 +6,18 @@ defmodule DB.Sunblind do
 
   alias DB.{Repo, Sunblind, Port}
 
-
   @derive {Poison.Encoder, except: [:__meta__]}
   schema "sunblinds" do
-    belongs_to :port, DB.Port
-    belongs_to :open_port, DB.Port
-    field :position, :integer, default: 0
-    field :type, :string, default: "only_close" # :only_close | :pulse | :other
-    field :full_open_time, :integer, default: 0
-    field :direction, :string, default: "up" # :down | :up
-    field :state, :string, default: "open" # :open | :close | :in_move | :position
+    belongs_to(:port, DB.Port)
+    belongs_to(:open_port, DB.Port)
+    field(:position, :integer, default: 0)
+    # :only_close | :pulse | :other
+    field(:type, :string, default: "only_close")
+    field(:full_open_time, :integer, default: 0)
+    # :down | :up
+    field(:direction, :string, default: "up")
+    # :open | :close | :in_move | :position
+    field(:state, :string, default: "open")
   end
 
   def valid_state?(state) do
@@ -23,39 +25,24 @@ defmodule DB.Sunblind do
     |> Enum.any?(fn s -> s == state end)
   end
 
-  def by_port(ids) when is_list ids do
+  @deprecated "use get_by_port/1 instead"
+  def by_port(ids) when is_list(ids) do
     from(s in Sunblind, where: s.port_id in ^ids, preload: [:port])
     |> Repo.all()
   end
 
-   def get(ids) when is_list ids do
+  def get_by_port(ids) do
+    by_port(ids)
+  end
+
+  def get(ids) when is_list(ids) do
     from(s in Sunblind, where: s.id in ^ids, preload: [:port])
     |> Repo.all()
   end
+
   def get(id) do
     Repo.get(Sunblind, id)
     |> Repo.preload(:port)
-  end
-
-  def get_view_format(id) do
-    from(
-      s in Sunblind,
-      where: s.id == ^id,
-      join: c in "page_content_sunblinds",
-      on: c.sunblind_id == s.id,
-      join: p in Port,
-      on: p.id == s.port_id,
-      select: %{
-        id: s.id,
-        state: s.state,
-        sunblind_type: s.type,
-        position: s.position,
-        order: c.order,
-        name: p.name,
-        sunblind: ""
-      }
-    )
-    |> Repo.all
   end
 
   def get_type(type) do
@@ -68,32 +55,31 @@ defmodule DB.Sunblind do
     |> Repo.preload(:port)
   end
 
-  #  def get_by_port(ids) do
-  #
-  #  end
-
   def update(sunblind, changes \\ %{}) do
     Ecto.Changeset.change(sunblind, changes)
-    |> Repo.update!
+    |> Repo.update!()
   end
 
-  def update_state([id | _] = ids, state) when is_integer id do
+  def update_state([id | _] = ids, state) when is_integer(id) do
     from(s in Sunblind, where: s.port_id in ^ids)
     |> Repo.update_all(
-         set: [
-           state: state
-         ]
-       )
+      set: [
+        state: state
+      ]
+    )
   end
-  def update_state(sunblinds, state) when is_list sunblinds do
+
+  def update_state(sunblinds, state) when is_list(sunblinds) do
     ids = Enum.map(sunblinds, fn x -> x.id end)
+
     from(s in Sunblind, where: s.id in ^ids)
     |> Repo.update_all(
-         set: [
-           state: state
-         ]
-       )
+      set: [
+        state: state
+      ]
+    )
   end
+
   def update_state(sunblind, state) do
     if valid_state?(state) do
       Ecto.Changeset.change(sunblind, state: state)
@@ -102,6 +88,4 @@ defmodule DB.Sunblind do
       {:error, "incorrect state"}
     end
   end
-
-
 end
