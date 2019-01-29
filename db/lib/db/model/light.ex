@@ -24,7 +24,7 @@ defmodule DB.Light do
   end
 
   def get(ids) when is_list ids do
-    DB.Repo.all from l in DB.Light, where: l.port_id in ^ids,
+    DB.Repo.all from l in DB.Light, where: l.id in ^ids,
                                     preload: [
                                       :port,
                                       dimmer: [:port]

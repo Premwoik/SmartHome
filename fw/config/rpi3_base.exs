@@ -1,6 +1,8 @@
 
 use Mix.Config
 
+config :tzdata, :autoupdate, :disabled
+
 config :ui, UiWeb.Endpoint,
        url: [host: "192.168.2.100"],
        http: [port: 80],

@@ -12,9 +12,9 @@ defmodule Core.Device.Default do
     def readWattmeters, do: 111
     def setPwmOutputs, do: 105
     def heartbeat, do: 200
-
-
   end
+
+  @mode System.get_env("MIX_MODE") || "normal"
 
   @behaviour Core.Controllers.PortController
   @behaviour Core.Controllers.ThermometerController
@@ -24,7 +24,6 @@ defmodule Core.Device.Default do
   @protocol Core.Device.Default.Protocol
 
   def start_link(host, port, opts, keywords, timeout \\ 5000, length \\ 11) do
-    IO.inspect(@client)
     @client.start_link(host, port, opts, keywords, timeout, length)
   end
 
@@ -38,15 +37,15 @@ defmodule Core.Device.Default do
   def set_outputs(device, ports) do
     cmd = Code.setOutputs()
     data = ports_to_num(ports)
-    Logger.info("#{device.name} - set_outputs - #{inspect data}")
-    noreply_send(device, cmd, data)
+    Logger.info("#{device.name} - set_outputs - #{inspect(data)}")
+    noreply_send(device, cmd, data, @mode)
   end
 
   @impl true
   def set_pwm_outputs(device, ports) do
     cmd = Code.setPwmOutputs()
     data = Enum.flat_map(ports, fn p -> [p.number, p.pwm_fill] end)
-    noreply_send(device, cmd, data)
+    noreply_send(device, cmd, data, @mode)
   end
 
   @impl true
@@ -58,7 +57,6 @@ defmodule Core.Device.Default do
     noreply_send(device, Code.heartbeat(), [])
   end
 
-
   @impl true
   def read_temperatures(device) do
     case noreply_send(device, Code.readTemp(), []) do
@@ -66,32 +64,40 @@ defmodule Core.Device.Default do
         {addr, [h, l]} = Enum.split(val, 8)
         raw = h <<< 8 ||| l
         {:ok, {to_string(addr), raw}}
-      err_ -> err_
+
+      err_ ->
+        err_
     end
   end
 
-
-
   # Privates
+  defp noreply_send(device, cmd, args, mode \\ "normal")
 
-  defp noreply_send(device, cmd, args) do
+  defp noreply_send(device, cmd, args, "no") do
+    {:ok, []}
+  end
+  defp noreply_send(device, cmd, args, mode_) do
     msg = @protocol.encode(0, cmd, args)
-    case @client.send_with_resp device, msg do
+
+    case @client.send_with_resp(device, msg) do
       :ok -> wait_for_confirmation()
       error -> error
     end
   end
 
+
   defp wait_for_confirmation(timeout \\ 1_000) do
     receive do
       msg ->
-        case @protocol.decode msg do
+        case @protocol.decode(msg) do
           {:ok, [cmd, status | args]} ->
             case status == 200 do
               true -> {:ok, args}
               false -> {:error, "wrong response code"}
             end
-          error -> error
+
+          error ->
+            error
         end
     after
       timeout -> {:error, "confirmation timeout"}
@@ -100,15 +106,13 @@ defmodule Core.Device.Default do
 
   defp ports_to_num(ports) do
     ports
-    |> Enum.flat_map(
-         fn p -> if p.inverted_logic, do: [p.number, state_to_num(not p.state)], else: [p.number, state_to_num(p.state)]
-         end
-       )
-    |> IO.inspect()
+    |> Enum.flat_map(fn p ->
+      if p.inverted_logic,
+        do: [p.number, state_to_num(not p.state)],
+        else: [p.number, state_to_num(p.state)]
+    end)
   end
 
   defp state_to_num(false), do: 0
   defp state_to_num(_), do: 1
-
-
 end

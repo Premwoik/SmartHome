@@ -3,7 +3,7 @@
 ## Distributed Erlang Options
 ##  The cookie needs to be configured prior to vm boot for
 ##  for read only filesystem.
-
++C multi_time_warp
 # -name fw@0.0.0.0
 -setcookie XQXuI29EitlsYK33NBsyZjOOKcuj6HGD2Fi0B1123A6WWvgQYmkiGL7tceARMS8b
 

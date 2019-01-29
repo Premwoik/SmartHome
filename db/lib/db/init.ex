@@ -282,13 +282,13 @@ defmodule DB.Init do
     # 6
     l6 = %Light{port_id: 10, dimmer_id: 8}
 
-    %Dimmer{port_id: 2, fill: 0, lights: [l1, l2]}
+    %Dimmer{port_id: 2, type: "click", fill: 0, lights: [l1, l2]}
     |> Repo.insert!()
 
-    %Dimmer{port_id: 5, fill: 0, lights: [l3, l4]}
+    %Dimmer{port_id: 5, type: "click", fill: 0, lights: [l3, l4]}
     |> Repo.insert!()
 
-    %Dimmer{port_id: 8, fill: 0, lights: [l5, l6]}
+    %Dimmer{port_id: 8, type: "click", fill: 0, lights: [l5, l6]}
     |> Repo.insert!()
 
     :ok
