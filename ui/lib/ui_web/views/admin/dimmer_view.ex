@@ -6,11 +6,11 @@ defmodule UiWeb.DimmerView do
   alias UiWeb.View.Helper
 
   def render("index.json", %{dimmers: dimmers}) do
-    %{data: render_many(dimmers, DimmerView, "dimmer.json")}
+    %{data: render_many(dimmers, UiWeb.DimmerView, "dimmer.json")}
   end
 
   def render("show.json", %{dimmer: dimmer}) do
-    %{data: render_one(dimmer, DimmerView, "dimmer.json")}
+    %{data: render_one(dimmer, UiWeb.DimmerView, "dimmer.json")}
   end
 
   def render("dimmer.json", %{dimmer: dimmer}) do
@@ -21,7 +21,7 @@ defmodule UiWeb.DimmerView do
       fill: dimmer.fill,
       direction: dimmer.direction,
       full_time: dimmer.time,
-      lights: Helper.obj_to_view(LightView, :light, dimmer.lights)
+      lights: Helper.objs_to_view(UiWeb.LightView, :light, dimmer.lights)
     }
   end
 

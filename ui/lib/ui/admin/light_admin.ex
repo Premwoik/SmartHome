@@ -20,7 +20,7 @@ defmodule Ui.LightAdmin do
 
   """
   def list_lights do
-    Repo.all(Light) |> Repo.preload([:port, :dimmer])
+    Repo.all(Light) |> Repo.preload([:port, dimmer: [:port]])
   end
 
   @doc """

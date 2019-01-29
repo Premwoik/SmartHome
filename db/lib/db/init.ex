@@ -335,7 +335,7 @@ defmodule DB.Init do
       }
       |> Repo.insert!()
 
-    sunblinds = Repo.all(from(p in Port, where: p.id in [11, 13, 14, 15, 16]))
+    sunblinds = Repo.all(from(p in Port, where: p.id in [12, 13, 14, 15, 16, 17]))
 
     type1 = "CloseSunblinds"
     type2 = "AutoLights"
@@ -452,7 +452,7 @@ defmodule DB.Init do
       action_id: 1,
       device: nil,
       frequency: 0,
-      execution_time: ~T[15:00:00],
+      execution_time: ~T[16:00:00],
       limit: -1,
       start_date: nil,
       end_date: nil
@@ -467,7 +467,7 @@ defmodule DB.Init do
       action_id: 1,
       device: nil,
       frequency: 0,
-      execution_time: ~T[05:00:00],
+      execution_time: ~T[06:00:00],
       limit: -1,
       start_date: nil,
       end_date: nil

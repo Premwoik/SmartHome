@@ -1,6 +1,6 @@
 defmodule UiWeb.LightView do
   use UiWeb, :view
-  alias UiWeb.{PortView, DimmerView}
+  alias UiWeb.{PortView, DimmerView, LightView}
   alias UiWeb.View.Helper
 
   def render("index.json", %{lights: lights}) do
@@ -12,6 +12,7 @@ defmodule UiWeb.LightView do
   end
 
   def render("light.json", %{light: light}) do
+    IO.inspect(light)
     %{
       id: light.id,
       port_id: light.port_id,
