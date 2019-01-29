@@ -122,7 +122,6 @@ defmodule Core.Device do
         do: [p.number, state_to_num(not p.state)],
         else: [p.number, state_to_num(p.state)]
     end)
-    |> IO.inspect()
   end
 
   defp state_to_num(false), do: 0

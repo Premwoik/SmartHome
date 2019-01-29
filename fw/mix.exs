@@ -1,5 +1,4 @@
-defmodule Fw.MixProject do
-  use Mix.Project
+defmodule Fw.MixProject do use Mix.Project
 
   @target System.get_env("MIX_TARGET") || "host"
 
@@ -45,6 +44,7 @@ defmodule Fw.MixProject do
       {:nerves, "~> 1.3", runtime: false},
       {:shoehorn, "~> 0.4"},
       {:ring_logger, "~> 0.4"},
+      {:cpu_monitor, path: "../cpu_monitor"},
       {:db, path: "../db"},
       {:core, path: "../core"},
       {:ui, path: "../ui"},
@@ -62,7 +62,8 @@ defmodule Fw.MixProject do
     [
       {:nerves_runtime, "~> 0.6"},
       {:nerves_init_gadget, "~> 0.3"},
-      {:nerves_network, "~> 0.3"}
+      {:nerves_network, "~> 0.3"},
+      {:nerves_time, "~> 0.2"}
     ] ++ system(target)
   end
 

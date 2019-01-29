@@ -9,11 +9,13 @@ defmodule DB.Dimmer do
 
   @derive {Poison.Encoder, except: [:__meta__]}
   schema "dimmers" do
-    belongs_to :port, DB.Port
-    field :fill, :integer
-    field :direction, :integer
-    field :time, :integer
-    has_many :lights, DB.Light
+    belongs_to(:port, DB.Port)
+    # click | pwm
+    field(:type, :string, default: "click")
+    field(:fill, :integer)
+    field(:direction, :integer)
+    field(:time, :integer)
+    has_many(:lights, DB.Light)
     #    many_to_many :lights, DB.Port, join_through: "dimmers_lights", on_delete: :delete_all
   end
 
@@ -32,31 +34,30 @@ defmodule DB.Dimmer do
     |> Repo.preload([:port, lights: [:port]])
   end
 
-  def get(ids) when is_list ids do
-    Repo.all from d in Dimmer, where: d.port_id in ^ids, preload: [:port]
+  def get(ids) when is_list(ids) do
+    Repo.all(from(d in Dimmer, where: d.port_id in ^ids, preload: [:port]))
   end
+
   def get(id) do
     [res] = get([id])
     res
   end
 
   def get_view_format(id) do
-
-    load_lights =
-      fn id ->
-        from(
-          l in Light,
-          join: p in Port,
-          on: p.id == l.port_id,
-          where: l.dimmer_id == ^id,
-          select: %{
-            id: l.id,
-            state: p.state,
-            name: p.name,
-          }
-        )
-        |> Repo.all()
-      end
+    load_lights = fn id ->
+      from(
+        l in Light,
+        join: p in Port,
+        on: p.id == l.port_id,
+        where: l.dimmer_id == ^id,
+        select: %{
+          id: l.id,
+          state: p.state,
+          name: p.name
+        }
+      )
+      |> Repo.all()
+    end
 
     from(
       d in Dimmer,
@@ -73,16 +74,17 @@ defmodule DB.Dimmer do
         dimmer: ""
       }
     )
-    |> Repo.all
-    |> Enum.map(&(Map.put(&1, :lights, load_lights.(&1.id))))
+    |> Repo.all()
+    |> Enum.map(&Map.put(&1, :lights, load_lights.(&1.id)))
   end
-
-
-
 
   def any_light_on?(dimmer) do
     Repo.all(
-      from l in Light, join: p in Port, on: p.id == l.port_id, where: l.dimmer_id == ^dimmer.id and p.state == true
+      from(l in Light,
+        join: p in Port,
+        on: p.id == l.port_id,
+        where: l.dimmer_id == ^dimmer.id and p.state == true
+      )
     )
     |> Kernel.length()
     |> Kernel.>(0)
@@ -104,30 +106,34 @@ defmodule DB.Dimmer do
   end
 
   def update(dim, args \\ %{}) do
-
     Ecto.Changeset.change(dim, args)
     |> IO.inspect()
     |> Repo.update()
   end
 
   def update_fill(ids, fill, direction) do
-    Repo.update_all (from d in Dimmer, where: d.port_id in ^ids),
-                    set: [
-                      fill: fill,
-                      direction: direction
-                    ]
+    Repo.update_all(from(d in Dimmer, where: d.port_id in ^ids),
+      set: [
+        fill: fill,
+        direction: direction
+      ]
+    )
   end
 
   @spec fill_to_time(map, integer) :: integer
   def fill_to_time(dimmer, new_fill) do
     res = (new_fill - dimmer.fill) * dimmer.direction
+
     cond do
       res > 0 ->
         get_time(dimmer.time, res)
+
       res == 0 ->
         0
+
       dimmer.direction > 0 ->
         get_time(dimmer.time, 200 - dimmer.fill - new_fill)
+
       true ->
         get_time(dimmer.time, dimmer.fill + new_fill)
     end
@@ -147,6 +153,4 @@ defmodule DB.Dimmer do
     end
     |> round
   end
-
-
 end

@@ -10,18 +10,14 @@ defmodule Core.Actions.AutoLights do
     %{lastInvoke: 0, offPid: nil}
   end
 
-
   @impl true
   def execute(on_off, action, %{offPid: pid} = amem) do
-    IO.puts "HALO"
-    IO.inspect(action)
-    case alive? pid do
+    case alive?(pid) do
       true ->
-        IO.puts("ALIVE")
-        send pid, :notified
+        send(pid, :notified)
         amem
+
       false ->
-        IO.puts("DEAD")
         turn_on_lights(action)
         |> update_pid(amem)
     end
@@ -30,25 +26,27 @@ defmodule Core.Actions.AutoLights do
   #  Privates
 
   defp alive?(nil), do: false
-  defp alive?(pid), do:
-    Process.alive? pid
+  defp alive?(pid), do: Process.alive?(pid)
 
   defp turn_on_lights(action) do
     lights =
       DB.Action.get_args_ids(action)
-      |> DB.Light.get()
-      |> IO.inspect()
+      |> DB.Light.get_by_port()
 
-    if any_on? lights do
-      IO.puts("NIE MOZNA WLACZAC")
+    if any_on?(lights) do
       nil
     else
-      IO.puts("MOGE WŁAĆZAC")
       case LightController.turn_on(lights) do
         :ok ->
-          [time | _] = Poison.decode! action.params
-          {:ok, pid} = Task.start fn -> turn_off_after(lights, time) end
+          # TODO should i load again or maybe manual change values? 
+          lights2 =
+            DB.Action.get_args_ids(action)
+            |> DB.Light.get_by_port()
+
+          [time | _] = Poison.decode!(action.params)
+          {:ok, pid} = Task.start(fn -> turn_off_after(lights2, time) end)
           pid
+
         error ->
           nil
       end
@@ -68,11 +66,10 @@ defmodule Core.Actions.AutoLights do
   end
 
   defp update_pid(nil, mem), do: mem
+
   defp update_pid(pid, mem) do
-    Map.put mem, :offPid, pid
+    Map.put(mem, :offPid, pid)
   end
 
-  defp any_on?(lights), do:
-    Enum.any? lights, &(&1.port.state == true)
-
+  defp any_on?(lights), do: Enum.any?(lights, &(&1.port.state == true))
 end
