@@ -16,14 +16,15 @@ defmodule Core.Actions do
 
   ## Public
 
-  def reload, do:
-    __MODULE__
-    |> Process.whereis()
-    |> Process.exit(:normal)
+  def reload,
+    do:
+      __MODULE__
+      |> Process.whereis()
+      |> Process.exit(:normal)
 
   def activate_up(ids, name \\ __MODULE__) do
     try do
-      GenServer.call name, {:activate, :up, ids}
+      GenServer.call(name, {:activate, :up, ids})
     catch
       :exit, _ -> :ok
     end
@@ -31,26 +32,27 @@ defmodule Core.Actions do
 
   def activate_down(ids, name \\ __MODULE__) do
     try do
-      GenServer.call name, {:activate, :down, ids}
-    catch
-      :exit, _ -> :ok
-    end
-  end
-  def get_state(name \\ __MODULE__) do
-    try do
-      GenServer.call name, :get_state
-    catch
-      :exit, _ -> :ok
-    end
-  end
-  def reload_actions(name \\ __MODULE__) do
-    try do
-      GenServer.call name, :reload_actions
+      GenServer.call(name, {:activate, :down, ids})
     catch
       :exit, _ -> :ok
     end
   end
 
+  def get_state(name \\ __MODULE__) do
+    try do
+      GenServer.call(name, :get_state)
+    catch
+      :exit, _ -> :ok
+    end
+  end
+
+  def reload_actions(name \\ __MODULE__) do
+    try do
+      GenServer.call(name, :reload_actions)
+    catch
+      :exit, _ -> :ok
+    end
+  end
 
   ## Callbacks
 
@@ -74,8 +76,7 @@ defmodule Core.Actions do
   @impl true
   def handle_call(:reload_actions, _from, %{amem: amem} = s) do
     actions = DB.Action.all_active()
-    ids = Enum.map actions, fn {_, {id, _}} -> id end
-    amem_ = :maps.filter fn id, _ -> Enum.any? ids, &(&1 == id) end, amem
+    amem_ = :maps.filter(fn id, _ -> Enum.any?(actions, fn %{id: id_} -> id_ == id end) end, amem)
     {:reply, :ok, %{s | actions: actions, amem: amem_}}
   end
 
@@ -84,11 +85,13 @@ defmodule Core.Actions do
   defp after_invoke([], amem, errors) do
     {amem, errors}
   end
+
   defp after_invoke([r | results], amem, errors \\ []) do
     case r do
       {:ok, {id, mem}} ->
         amem_ = Map.put(amem, id, mem)
         after_invoke(results, amem_, errors)
+
       {:error, err} ->
         after_invoke(results, amem, [err | errors])
     end
@@ -97,6 +100,7 @@ defmodule Core.Actions do
   @spec invoke_actions(atom, list(integer), map) :: map
   defp invoke_actions(on_off, ids, %{actions: actions, amem: amem} = s) do
     match? = fn id, action -> action.id == id end
+
     for id <- ids,
         action <- actions,
         match?.(id, action) do
@@ -104,15 +108,15 @@ defmodule Core.Actions do
     end
   end
 
-  @spec proceed_action(Core.Actions.Action.state, map, map) :: map
+  @spec proceed_action(Core.Actions.Action.state(), map, map) :: map
   defp proceed_action(on_off, action, nil) do
     amem = get_module(action.function).init_memory()
     proceed_action(on_off, action, amem)
   end
+
   defp proceed_action(on_off, action, amem) do
     with {:ok, amem_} <- check_activation_freq(15_000, amem),
-         :ok <- check_activation_time(action.start_time, action.end_time)
-      do
+         :ok <- check_activation_time(action.start_time, action.end_time) do
       try do
         result = apply(get_module(action.function), :execute, [on_off, action, amem_])
         {:ok, {action.id, result}}
@@ -124,23 +128,26 @@ defmodule Core.Actions do
     end
   end
 
-
   @spec check_activation_freq(integer, map) :: {:ok, map} | :fail
   defp check_activation_freq(0, amem), do: {:ok, amem}
+
   defp check_activation_freq(delay, %{lastInvoke: last_invoke} = amem) do
     current_time = :os.system_time(:millisecond)
+
     if current_time - last_invoke > delay do
       {:ok, %{amem | lastInvoke: current_time}}
     else
       {:error, "Its too early to invoke action again"}
     end
   end
+
   defp check_activation_freq(_, amem) do
     {:ok, Map.put(amem, :lastInvoke, :os.system_time(:millisecond))}
   end
 
-  @spec check_activation_time(Time.t, Time.t) :: :ok | :fail
+  @spec check_activation_time(Time.t(), Time.t()) :: :ok | :fail
   defp check_activation_time(nil, nil), do: :ok
+
   defp check_activation_time(times, timee) do
     if Core.Utils.Time.in_interval?(times, timee) do
       :ok
@@ -149,10 +156,7 @@ defmodule Core.Actions do
     end
   end
 
-
-
   def get_module(function) do
-    String.to_existing_atom "Elixir.Core.Actions." <> function
+    String.to_existing_atom("Elixir.Core.Actions." <> function)
   end
-
 end

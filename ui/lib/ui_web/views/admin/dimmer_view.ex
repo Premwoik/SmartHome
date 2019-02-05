@@ -24,19 +24,4 @@ defmodule UiWeb.DimmerView do
       lights: Helper.objs_to_view(UiWeb.LightView, :light, dimmer.lights)
     }
   end
-
-  # def render("show.json", %{dash_dimmer: dimmer}) do
-  # %{data: render_one(dimmer, DimmerView, "dash_dimmer.json")}
-  # end
-
-  # def render("dash_dimmer.json", %{dimmer: dimmer}) do
-  # %{
-  # id: dimmer.id,
-  # name: dimmer.port.name,
-  # fill: dimmer.fill,
-  # lights: Enum.map(dimmer.lights, &LightView.render("dash_light.json", %{light: &1})),
-  # dimmer: ""
-  ##      group: dimmer.group
-  # }
-  # end
 end

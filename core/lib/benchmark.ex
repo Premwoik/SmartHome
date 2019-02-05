@@ -6,6 +6,14 @@ defmodule Benchmark do
     |> elem(0)
     |> Kernel./(1_000_000)
   end
+
+  def measure_r(function) do
+    function
+    |> :timer.tc
+    |> fn {time, res} -> {time/ 1_000_000, res} end.()
+  end
+
+
 end
 
 

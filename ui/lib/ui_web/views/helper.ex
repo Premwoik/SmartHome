@@ -4,7 +4,7 @@ defmodule UiWeb.View.Helper do
   @spec obj_to_view(module :: atom, type :: atom, obj :: any) :: any
   def obj_to_view(module, type, obj) do
     if Ecto.assoc_loaded?(obj) do
-      module.render("show.json", Map.put(%{}, type, obj))
+      module.render("show.json", Map.put(%{}, type, obj)).data
     else
       nil
     end
@@ -12,7 +12,7 @@ defmodule UiWeb.View.Helper do
 
   def objs_to_view(module, type, objs) do
     if Ecto.assoc_loaded?(objs) do
-      Enum.map(objs, fn x -> module.render("show.json", Map.put(%{}, type, x)) end)
+      Enum.map(objs, fn x -> module.render("show.json", Map.put(%{}, type, x)).data end)
     else
       nil
     end

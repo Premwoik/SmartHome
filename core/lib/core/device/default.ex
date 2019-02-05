@@ -14,8 +14,6 @@ defmodule Core.Device.Default do
     def heartbeat, do: 200
   end
 
-  @mode System.get_env("MIX_MODE") || "normal"
-
   @behaviour Core.Controllers.PortController
   @behaviour Core.Controllers.ThermometerController
   @behaviour Core.Controllers.WattmeterController
@@ -38,14 +36,14 @@ defmodule Core.Device.Default do
     cmd = Code.setOutputs()
     data = ports_to_num(ports)
     Logger.info("#{device.name} - set_outputs - #{inspect(data)}")
-    noreply_send(device, cmd, data, @mode)
+    noreply_send(device, cmd, data)
   end
 
   @impl true
   def set_pwm_outputs(device, ports) do
     cmd = Code.setPwmOutputs()
     data = Enum.flat_map(ports, fn p -> [p.number, p.pwm_fill] end)
-    noreply_send(device, cmd, data, @mode)
+    noreply_send(device, cmd, data)
   end
 
   @impl true
@@ -71,22 +69,28 @@ defmodule Core.Device.Default do
   end
 
   # Privates
-  defp noreply_send(device, cmd, args, mode \\ "normal")
+  defp noreply_send(device, cmd, args, try_max \\ 5)
 
-  defp noreply_send(device, cmd, args, "no") do
-    {:ok, []}
-  end
-  defp noreply_send(device, cmd, args, mode_) do
+  defp noreply_send(_, _, _, 0),
+    do: {:error, "All allowed attempts failed. Can't get response!"}
+
+  defp noreply_send(device, cmd, args, max_try) do
     msg = @protocol.encode(0, cmd, args)
 
     case @client.send_with_resp(device, msg) do
-      :ok -> wait_for_confirmation()
-      error -> error
+      :ok ->
+
+        case wait_for_confirmation() do
+          :timeout -> noreply_send(device, cmd, args)
+          response -> response
+        end
+
+      error ->
+        error
     end
   end
 
-
-  defp wait_for_confirmation(timeout \\ 1_000) do
+  defp wait_for_confirmation(timeout \\ 2_000) do
     receive do
       msg ->
         case @protocol.decode(msg) do
@@ -100,7 +104,7 @@ defmodule Core.Device.Default do
             error
         end
     after
-      timeout -> {:error, "confirmation timeout"}
+      timeout -> :timeout
     end
   end
 

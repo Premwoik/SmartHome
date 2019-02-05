@@ -528,15 +528,21 @@ defmodule DB.Init do
       order: 1,
       title: "Przemek",
       description: "Page about Przemek's Room",
-      lights: [Repo.get(Light, 1), Repo.get(Light, 3)],
-      ports: [Repo.get(Port, 2), Repo.get(Port, 5)],
-      dimmers: [Repo.get(Dimmer, 2), Repo.get(Dimmer, 3)],
-      sunblinds: [Repo.get(Sunblind, 1)],
-      actions: [Repo.get(Action, 1), Repo.get(Action, 2)],
-      tasks: []
+      lights: get_(Light, [1, 2, 3, 4, 5, 6]),
+      ports: [],
+      dimmers: get_(Dimmer, [1, 2, 3]),
+      sunblinds: get_(Sunblind, [1, 2, 3, 4, 5, 6]),
+      actions: get_(Action, [1, 2, 3, 4]),
+      tasks: get_(Task, [1, 2, 3, 4, 5, 6])
     }
     |> Repo.insert!()
 
     :ok
+  end
+
+  defp get_(type, ids) do
+    for i <- ids do
+      Repo.get(type, i)
+    end
   end
 end
