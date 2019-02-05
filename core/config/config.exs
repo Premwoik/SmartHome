@@ -27,7 +27,8 @@ use Mix.Config
 
 config :core, :devices_module, Core.Devices
 
-config :core, :two_way_client, Core.Device.Client.TwoWay
+#config :core, :two_way_client, Core.Device.Client.TwoWay
+config :core, :two_way_client, Core.Device.Client.TwoWayMock
 config :core, :one_way_client, Core.Device.Client.OneWay
 
 config :core, :basic_controller, Core.Controllers.BasicController

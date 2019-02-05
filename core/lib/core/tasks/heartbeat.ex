@@ -9,8 +9,18 @@ defmodule Core.Tasks.Heartbeat do
 
   @impl true
   def execute(task, _) do
-    Logger.info("Heartbeat to #{inspect task.device.name}")
-    @device.send_heartbeat(task.device)
+    {time, res} = Benchmark.measure_r(fn -> @device.do_(:heartbeat, task.device) end)
+
+    case res do
+      {:ok, _} ->
+        Logger.debug("Heartbeat to #{inspect(task.device.name)} passed with time: #{time}sec.")
+
+      err ->
+        Logger.error(
+          "Heartbeat to #{inspect(task.device.name)} failed with result #{inspect(err)}."
+        )
+    end
+
     :ok
   end
 
@@ -18,5 +28,4 @@ defmodule Core.Tasks.Heartbeat do
   def init_state() do
     :empty
   end
-
 end

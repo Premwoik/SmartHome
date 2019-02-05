@@ -59,8 +59,9 @@ defmodule UiWeb.LightController do
   def set_on(conn, %{"id" => id} = o) do
     res =
       [LightAdmin.get_light!(id)]
-      |> BasicController.prepare_for_basic()
-      |> BasicController.turn_on()
+      |> LightController.turn_on()
+      #|> BasicController.prepare_for_basic()
+      #|> BasicController.turn_on()
 
     DashHelper.broadcast_update_from(o, [id], "light")
 
@@ -71,8 +72,9 @@ defmodule UiWeb.LightController do
   def set_off(conn, %{"id" => id} = o) do
     res =
       [LightAdmin.get_light!(id)]
-      |> BasicController.prepare_for_basic()
-      |> BasicController.turn_off()
+      |> LightController.turn_off()
+      #|> BasicController.prepare_for_basic()
+      #|> BasicController.turn_off()
 
     DashHelper.broadcast_update_from(o, [id], "light")
 

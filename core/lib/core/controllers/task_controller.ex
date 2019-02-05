@@ -7,15 +7,16 @@ defmodule Core.Controllers.TaskController do
     |> Enum.map(fn x -> x.id end)
     |> DB.Task.update_status("waiting")
 
-    Core.Tasks.reload()
+    Core.Tasks.update()
     :ok
   end
+
   def turn_off(tasks) do
     tasks
     |> Enum.map(fn x -> x.id end)
     |> DB.Task.update_status("inactive")
 
-    Core.Tasks.reload()
+    Core.Tasks.update()
     :ok
   end
 end
