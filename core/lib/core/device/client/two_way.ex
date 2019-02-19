@@ -1,5 +1,4 @@
 defmodule Core.Device.Client.TwoWay do
-
   @moduledoc false
 
   use Connection
@@ -11,7 +10,6 @@ defmodule Core.Device.Client.TwoWay do
     Logger.info("Initializing Device.Client")
     Connection.start_link(__MODULE__, {host, port, opts, timeout, length}, keywords)
   end
-
 
   ## Public
 
@@ -33,7 +31,16 @@ defmodule Core.Device.Client.TwoWay do
 
   @impl true
   def init({host, port, opts, timeout, length}) do
-    s = %{host: host, port: port, opts: opts, timeout: timeout, length: length, sock: nil, observers: :queue.new()}
+    s = %{
+      host: host,
+      port: port,
+      opts: opts,
+      timeout: timeout,
+      length: length,
+      sock: nil,
+      observers: :queue.new()
+    }
+
     {:connect, :init, s}
   end
 
@@ -51,32 +58,36 @@ defmodule Core.Device.Client.TwoWay do
     case :gen_tcp.connect(host, port, opts, timeout) do
       {:ok, sock} ->
         {:ok, %{s | sock: sock}}
+
       {:error, _} ->
-        Logger.info "cannot connect"
+        Logger.info("cannot connect")
         {:backoff, 1000, s}
     end
   end
 
-
   @impl true
   def disconnect(info, %{sock: sock} = s) do
     :ok = :gen_tcp.close(sock)
+
     case info do
       {:close, from} ->
         Connection.reply(from, :ok)
+
       {:error, :closed} ->
         :error_logger.format("Connection closed~n", [])
+
       {:error, reason} ->
         reason = :inet.format_error(reason)
         :error_logger.format("Connection error: ~s~n", [reason])
     end
+
     {:connect, :reconnect, %{s | sock: nil}}
   end
 
   @impl true
   def handle_info({:tcp, port, msg}, %{observers: obsrvs} = s) do
-    Logger.info("Received message: #{inspect(msg, charlists: :as_lists)}")
-
+    # Logger.("Received message: #{inspect(msg, charlists: :as_lists)}")
+    # TODO add checking message age and identyfying  
     if !:queue.is_empty(obsrvs) do
       {{:value, pid}, obsrvs2} = :queue.out(obsrvs)
       send(pid, msg)
@@ -103,6 +114,7 @@ defmodule Core.Device.Client.TwoWay do
     case :gen_tcp.send(sock, data) do
       :ok ->
         {:reply, :ok, s}
+
       {:error, _} = error ->
         {:disconnect, error, error, s}
     end
@@ -116,14 +128,11 @@ defmodule Core.Device.Client.TwoWay do
       ) do
     case :gen_tcp.send(sock, data) do
       :ok ->
-        obsrv = :queue.in fpid, observers
+        obsrv = :queue.in(fpid, observers)
         {:reply, :ok, %{s | observers: obsrv}}
+
       {:error, _} = error ->
         {:disconnect, error, error, s}
     end
   end
-
-  #  Privates
-
-
 end

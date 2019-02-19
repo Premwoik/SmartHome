@@ -1,6 +1,6 @@
 defmodule Core.Device.Client.OneWay do
   @moduledoc false
-
+  require Logger
   @behaviour Core.Devices.Client
 
   # TODO add send in new thread
@@ -23,12 +23,12 @@ defmodule Core.Device.Client.OneWay do
   defp send_cmd(_, _, 0), do: {:error, "Busy too many times"}
 
   defp send_cmd({host, port} = addr, command, max_attempts) do
-    case :gen_tcp.connect(to_charlist(host), port, [:binary, active: false], 1000) do
+    case :gen_tcp.connect(to_charlist(host), port, [:binary, active: false], 2000) do
       {:ok, sock} ->
         :ok = :gen_tcp.send(sock, command)
 
         resp =
-          case :gen_tcp.recv(sock, 23, 1000) do
+          case :gen_tcp.recv(sock, 23, 2000) do
             {:ok, resp} ->
               if String.slice(resp, 0..8) == "\x10\x42\x75\x73\x79\x21\x0D\x0A" do
                 Process.sleep(100)
@@ -38,6 +38,7 @@ defmodule Core.Device.Client.OneWay do
               end
 
             error ->
+              Logger.error "satel recv timeout"
               error
           end
 
@@ -45,6 +46,7 @@ defmodule Core.Device.Client.OneWay do
         resp
 
       error ->
+        Logger.error "satel connection timeout"
         error
     end
   end

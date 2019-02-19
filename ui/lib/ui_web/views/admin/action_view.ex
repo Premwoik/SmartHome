@@ -3,11 +3,11 @@ defmodule UiWeb.ActionView do
   alias UiWeb.ActionView
 
   def render("index.json", %{actions: actions}) do
-    %{data: render_many(actions, ActionView, "action.json")}
+    render_many(actions, ActionView, "action.json")
   end
 
   def render("show.json", %{action: action}) do
-    %{data: render_one(action, ActionView, "action.json")}
+    render_one(action, ActionView, "action.json")
   end
 
   def render("action.json", %{action: action}) do
@@ -20,7 +20,8 @@ defmodule UiWeb.ActionView do
       frequency: action.frequency,
       start_time: action.start_time,
       end_time: action.end_time,
-      port_id: action.port_id
+      port_id: action.port_id,
+      '@type': "action"
     }
   end
 

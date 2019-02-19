@@ -1,6 +1,5 @@
 use Mix.Config
 
-
 config :db,
        DB.Repo,
        adapter: Sqlite.Ecto2,

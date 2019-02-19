@@ -3,11 +3,11 @@ defmodule UiWeb.DeviceView do
   alias UiWeb.DeviceView
 
   def render("index.json", %{devices: devices}) do
-    %{data: render_many(devices, DeviceView, "device.json")}
+    render_many(devices, DeviceView, "device.json")
   end
 
   def render("show.json", %{device: device}) do
-    %{data: render_one(device, DeviceView, "device.json")}
+    render_one(device, DeviceView, "device.json")
   end
 
   def render("device.json", %{device: device}) do
@@ -15,7 +15,8 @@ defmodule UiWeb.DeviceView do
       name: device.name,
       ip: device.ip,
       port: device.port,
-      type: device.type
+      type: device.type,
+      '@type': "device"
     }
   end
 end

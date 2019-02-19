@@ -40,8 +40,8 @@ defmodule Ui.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:cors_plug, "~> 1.5"},
-#      {:db, path: "../db"},
-#      {:core, path: "../core"}
+      {:db, path: "../db"},
+      {:core, path: "../core"}
     ]
   end
 end

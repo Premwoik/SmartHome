@@ -2,7 +2,7 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-#config :logger,
+# config :logger,
 #       backends: [:console],
 #       compile_time_purge_level: :info
 
@@ -22,13 +22,13 @@ use Mix.Config
 #
 # You can also configure a 3rd-party app:
 #
-#config :logger, level: :info
+# config :logger, level: :info
 ##
 
-config :core, :devices_module, Core.Devices
+#config :core, :devices_module, Core.Devices
 
-#config :core, :two_way_client, Core.Device.Client.TwoWay
-config :core, :two_way_client, Core.Device.Client.TwoWayMock
+config :core, :two_way_client, Core.Device.Client.TwoWay
+# config :core, :two_way_client, Core.Device.Client.TwoWayMock
 config :core, :one_way_client, Core.Device.Client.OneWay
 
 config :core, :basic_controller, Core.Controllers.BasicController
@@ -43,15 +43,12 @@ config :core, :database_module, DB
 config :core, :time_adapter, Core.Utils.Time.Real
 config :core, :date_time_adapter, Core.Utils.DateTime.Native
 
-
-#config :socket_test2,
-#import_config "../../db/config/config.exs"
+# config :socket_test2,
+# import_config "../../db/config/config.exs"
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
 # by uncommenting the line below and defining dev.exs, test.exs and such.
 # Configuration from the imported file will override the ones defined
 # here (which is why it is important to import them last).
 #
-import_config "#{Mix.env}.exs"
-
-
+import_config "#{Mix.env()}.exs"

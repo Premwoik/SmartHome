@@ -3,11 +3,11 @@ defmodule UiWeb.PortView do
   alias UiWeb.PortView
 
   def render("index.json", %{ports: ports}) do
-    %{data: render_many(ports, PortView, "port.json")}
+    render_many(ports, PortView, "port.json")
   end
 
   def render("show.json", %{port: port}) do
-    %{data: render_one(port, PortView, "port.json")}
+    render_one(port, PortView, "port.json")
   end
 
   def render("port.json", %{port: port}) do
@@ -19,7 +19,8 @@ defmodule UiWeb.PortView do
       state: port.state,
       type: port.type,
       timeout: port.timeout,
-      device_id: port.device_id
+      device_id: port.device_id,
+      '@type': "port"
     }
   end
 

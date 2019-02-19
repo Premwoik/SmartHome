@@ -29,7 +29,7 @@ defmodule DB.Init do
       :ok = insert_ard_mega()
       :ok = insert_integra64()
       :ok = insert_tasks()
-      :ok = init_pages
+      :ok = init_pages()
       :ok
     end
 
@@ -330,7 +330,7 @@ defmodule DB.Init do
         ip: "192.168.2.136",
         port: 9000,
         type: "Core.Device.Satel",
-        process: false,
+        process: true,
         ports: [p8, p9, p10, p62]
       }
       |> Repo.insert!()
@@ -354,7 +354,7 @@ defmodule DB.Init do
     %Action{
       name: "Salon schody",
       function: type2,
-      active: true,
+      active: false,
       params: "[30000]",
       port_id: 18,
       start_time: ~T[15:00:00],
@@ -367,7 +367,7 @@ defmodule DB.Init do
     %Action{
       name: "Salon stół",
       function: type2,
-      active: true,
+      active: false,
       params: "[30000]",
       port_id: 19,
       start_time: ~T[15:00:00],
@@ -380,7 +380,7 @@ defmodule DB.Init do
     %Action{
       name: "Salon wypoczynek",
       function: type2,
-      active: true,
+      active: false,
       params: "[30000]",
       port_id: 20,
       start_time: ~T[15:00:00],
@@ -524,7 +524,7 @@ defmodule DB.Init do
 
   def init_pages() do
     %Page{
-      name: "Rooms",
+      name: "Wszystkie urządzenia",
       order: 1,
       title: "Przemek",
       description: "Page about Przemek's Room",
@@ -534,6 +534,48 @@ defmodule DB.Init do
       sunblinds: get_(Sunblind, [1, 2, 3, 4, 5, 6]),
       actions: get_(Action, [1, 2, 3, 4]),
       tasks: get_(Task, [1, 2, 3, 4, 5, 6])
+    }
+    |> Repo.insert!()
+
+    %Page{
+      name: "Salon",
+      order: 1,
+      title: "Przemek",
+      description: "Page about Przemek's Room",
+      lights: get_(Light, [1, 2, 3, 4, 5, 6]),
+      ports: [],
+      dimmers: get_(Dimmer, [1, 2, 3]),
+      sunblinds: get_(Sunblind, [5, 6]),
+      actions: get_(Action, [2, 3, 4]),
+      tasks: []
+    }
+    |> Repo.insert!()
+
+    %Page{
+      name: "Zadania i akcje",
+      order: 1,
+      title: "Przemek",
+      description: "Page about Przemek's Room",
+      lights: [],
+      ports: [],
+      dimmers: [],
+      sunblinds: [],
+      actions: get_(Action, [1, 2, 3, 4]),
+      tasks: get_(Task, [1, 2, 3, 4, 5, 6])
+    }
+    |> Repo.insert!()
+
+    %Page{
+      name: "Rolety",
+      order: 1,
+      title: "Przemek",
+      description: "Page about Przemek's Room",
+      lights: [],
+      ports: [],
+      dimmers: [],
+      sunblinds: get_(Sunblind, [1, 2, 3, 4, 5, 6]),
+      actions: [],
+      tasks: []
     }
     |> Repo.insert!()
 

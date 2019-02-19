@@ -3,11 +3,11 @@ defmodule UiWeb.SunblindView do
   alias UiWeb.SunblindView
 
   def render("index.json", %{sunblinds: sunblinds}) do
-    %{data: render_many(sunblinds, SunblindView, "sunblind.json")}
+    render_many(sunblinds, SunblindView, "sunblind.json")
   end
 
   def render("show.json", %{sunblind: sunblind}) do
-    %{data: render_one(sunblind, SunblindView, "sunblind.json")}
+    render_one(sunblind, SunblindView, "sunblind.json")
   end
 
   def render("sunblind.json", %{sunblind: sunblind}) do
@@ -17,7 +17,8 @@ defmodule UiWeb.SunblindView do
       type: sunblind.type,
       full_open_time: sunblind.full_open_time,
       direction: sunblind.direction,
-      state: sunblind.state
+      state: sunblind.state,
+      '@type': "sunblind"
     }
   end
 

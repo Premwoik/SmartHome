@@ -4,11 +4,11 @@ defmodule UiWeb.DashboardView do
   alias Ui.{LightView}
 
   def render("index.json", %{dashboards: dashboards}) do
-    %{data: render_many(dashboards, DashboardView, "dashboard.json")}
+    render_many(dashboards, DashboardView, "dashboard.json")
   end
 
   def render("show.json", %{dashboard: dashboard}) do
-    %{data: render_one(dashboard, DashboardView, "dashboard.json")}
+    render_one(dashboard, DashboardView, "dashboard.json")
   end
 
   def render("dashboard.json", %{dashboard: dashboard}) do
@@ -28,11 +28,11 @@ defmodule UiWeb.DashboardView do
   end
 
   def render("index.json", %{dashboards_short: dashboards}) do
-    %{data: render_many(dashboards, DashboardView, "dashboard_short.json")}
+   render_many(dashboards, DashboardView, "dashboard_short.json")
   end
 
   def render("show.json", %{dashboard_short: dashboard}) do
-    %{data: render_one(dashboard, DashboardView, "dashboard_short.json")}
+    render_one(dashboard, DashboardView, "dashboard_short.json")
   end
 
   def render("dashboard_short.json", %{dashboard: dashboard}) do
@@ -44,11 +44,11 @@ defmodule UiWeb.DashboardView do
 
 
   def render("index.json", %{dash_dashboards: dashboards}) do
-    %{data: render_many(dashboards, DashboardView, "dash_dashboard.json")}
+    render_many(dashboards, DashboardView, "dash_dashboard.json")
   end
 
   def render("show.json", %{dash_dashboard: dashboard}) do
-    %{data: render_one(dashboard, DashboardView, "dash_dashboard.json")}
+    render_one(dashboard, DashboardView, "dash_dashboard.json")
   end
 
   def render("dash_dashboard.json", %{dashboard: dashboard}) do
