@@ -23,11 +23,12 @@ defmodule UiWeb.Router do
     pipe_through :api
 
     resources "/dimmers", DimmerController, except: [:new, :edit]
-#    resources "/lights", LightController, except: [:new, :edit]
+    resources "/lights", LightController, except: [:new, :edit]
     resources "/ports", PortController, except: [:new, :edit]
     resources "/actions", ActionController, except: [:new, :edit]
     resources "/devices", DeviceController, except: [:new, :edit]
     resources "/dashboards", DashboardController, except: [:new, :edit]
+    resources "/sunblinds", SunblindController, except: [:new, :edit]
     resources "/tasks", TaskController, except: [:new, :edit]
 
     get "/dashboards/view/short", DashboardController, :short

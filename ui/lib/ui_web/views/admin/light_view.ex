@@ -4,11 +4,11 @@ defmodule UiWeb.LightView do
   alias UiWeb.View.Helper
 
   def render("index.json", %{lights: lights}) do
-    %{data: render_many(lights, LightView, "light.json")}
+    render_many(lights, LightView, "light.json")
   end
 
   def render("show.json", %{light: light}) do
-    %{data: render_one(light, LightView, "light.json")}
+    render_one(light, LightView, "light.json")
   end
 
   def render("light.json", %{light: light}) do
@@ -17,7 +17,9 @@ defmodule UiWeb.LightView do
       port_id: light.port_id,
       dimmer_id: light.dimmer_id,
       port: Helper.obj_to_view(PortView, :port, light.port),
-      dimmer: Helper.obj_to_view(DimmerView, :dimmer, light.dimmer)
+      dimmer: Helper.obj_to_view(DimmerView, :dimmer, light.dimmer),
+      '@type': "light"
+      
     }
   end
 end

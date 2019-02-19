@@ -1,4 +1,5 @@
-defmodule Fw.MixProject do use Mix.Project
+defmodule Fw.MixProject do
+  use Mix.Project
 
   @target System.get_env("MIX_TARGET") || "host"
 
@@ -33,7 +34,7 @@ defmodule Fw.MixProject do use Mix.Project
   def application do
     [
       mod: {Fw.Application, []},
-      extra_applications: [:logger, :runtime_tools],
+      extra_applications: [:logger, :runtime_tools]
       #      included_applications: [:socket_test2, :db]
     ]
   end
@@ -54,8 +55,7 @@ defmodule Fw.MixProject do use Mix.Project
 
   # Specify target specific dependencies
   defp deps("host") do
-    [
-    ]
+    []
   end
 
   defp deps(target) do

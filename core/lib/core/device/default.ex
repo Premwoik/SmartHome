@@ -79,7 +79,6 @@ defmodule Core.Device.Default do
 
     case @client.send_with_resp(device, msg) do
       :ok ->
-
         case wait_for_confirmation() do
           :timeout -> noreply_send(device, cmd, args)
           response -> response

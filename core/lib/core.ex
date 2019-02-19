@@ -14,7 +14,7 @@ defmodule Core do
   def reload do
     :ok = Supervisor.stop(Device.Supervisor, :normal)
   end
-  
+
   def children() do
     [
       Core.Device.Supervisor,
