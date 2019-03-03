@@ -3,8 +3,8 @@ defmodule DB.Wattmeter.Read do
   use Ecto.Schema
 
   schema "wattmeter_reads" do
-    belongs_to :wattmeter, DB.Wattmeter
-    field :value, :integer
+    belongs_to(:wattmeter, DB.Wattmeter)
+    field(:value, :integer)
     timestamps()
   end
 end

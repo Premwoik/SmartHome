@@ -8,16 +8,26 @@ defmodule DB.Page do
 
   @derive {Poison.Encoder, except: [:__meta__]}
   schema "pages" do
-    field :name, :string
-    field :order, :integer
-    field :title, :string
-    field :description, :string
-    many_to_many :lights, DB.Light, join_through: "page_content_lights", on_delete: :delete_all
-    many_to_many :sunblinds, DB.Sunblind, join_through: "page_content_sunblinds", on_delete: :delete_all
-    many_to_many :dimmers, DB.Dimmer, join_through: "page_content_dimmers", on_delete: :delete_all
-    many_to_many :ports, DB.Port, join_through: "page_content_ports", on_delete: :delete_all
-    many_to_many :actions, DB.Action, join_through: "page_content_actions", on_delete: :delete_all
-    many_to_many :tasks, DB.Task, join_through: "page_content_tasks", on_delete: :delete_all
+    field(:name, :string)
+    field(:order, :integer)
+    field(:title, :string)
+    field(:description, :string)
+    many_to_many(:lights, DB.Light, join_through: "page_content_lights", on_delete: :delete_all)
+
+    many_to_many(:sunblinds, DB.Sunblind,
+      join_through: "page_content_sunblinds",
+      on_delete: :delete_all
+    )
+
+    many_to_many(:dimmers, DB.Dimmer, join_through: "page_content_dimmers", on_delete: :delete_all)
+
+    many_to_many(:ports, DB.Port, join_through: "page_content_ports", on_delete: :delete_all)
+
+    many_to_many(:actions, DB.Action, join_through: "page_content_actions", on_delete: :delete_all)
+
+    many_to_many(:tasks, DB.Task, join_through: "page_content_tasks", on_delete: :delete_all)
+
+    many_to_many(:devices, DB.Device, join_through: "page_content_devices", on_delete: :delete_all)
   end
 
   def changeset(page, attrs) do

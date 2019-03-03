@@ -135,8 +135,4 @@ defmodule UiWeb.DimmerController do
     render(conn, "show.json", dimmer: dim)
   end
 
-  def dash_show(conn, %{"id" => id}) do
-    dimmer = DimmerAdmin.get_dimmer!(id)
-    render(conn, "show.json", dimmer: dimmer)
-  end
 end

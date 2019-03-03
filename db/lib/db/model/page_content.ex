@@ -1,4 +1,5 @@
 defmodule DB.PageContent do
+  # TODO check if it could be removed
   @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
@@ -7,37 +8,27 @@ defmodule DB.PageContent do
 
   alias DB.{Page, PageContent, Repo, Port, Light, Sunblind, Dimmer, Action, Task, TaskType}
 
-
-
   def preload_all do
     [
       :actions,
       :tasks,
       :ports,
+      :devices,
       lights: [:port],
       sunblinds: [:port],
       dimmers: [:port]
     ]
   end
 
-
-
   def get_cont_list(page_id) do
-    view_format_ports(page_id)
-    ++
-    view_format_lights(page_id)
-    ++
-    view_format_dimmers(page_id)
-    ++
-    view_format_sunblinds(page_id)
-    ++
-    view_format_actions(page_id)
-    ++
-    view_format_tasks(page_id)
+    (view_format_ports(page_id) ++
+       view_format_lights(page_id) ++
+       view_format_dimmers(page_id) ++
+       view_format_sunblinds(page_id) ++
+       view_format_actions(page_id) ++ view_format_tasks(page_id))
     |> Enum.sort_by(fn {o, _} -> o end)
     |> Enum.map(fn {_, x} -> x end)
   end
-
 
   def view_format_ports(page_id) do
     from(
@@ -47,7 +38,7 @@ defmodule DB.PageContent do
       where: c.page_id == ^page_id,
       select: {c.order, p}
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   def view_format_lights(page_id) do
@@ -59,7 +50,7 @@ defmodule DB.PageContent do
       preload: [:port, :dimmer],
       select: {c.order, l}
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   def view_format_sunblinds(page_id) do
@@ -71,12 +62,10 @@ defmodule DB.PageContent do
       preload: :port,
       select: {c.order, s}
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   def view_format_dimmers(page_id) do
-
-
     from(
       d in Dimmer,
       join: c in "page_content_dimmers",
@@ -85,7 +74,7 @@ defmodule DB.PageContent do
       preload: [:port, lights: [:port]],
       select: {c.order, d}
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   def view_format_actions(page_id) do
@@ -109,5 +98,4 @@ defmodule DB.PageContent do
     )
     |> Repo.all()
   end
-
 end

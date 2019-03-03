@@ -62,8 +62,4 @@ defmodule UiWeb.TaskController do
     render(conn, "show.json", task: data)
   end
 
-  def dash_show(conn, %{"id" => id}) do
-    task = TaskAdmin.get_task!(id)
-    render(conn, "show.json", task: task)
-  end
 end

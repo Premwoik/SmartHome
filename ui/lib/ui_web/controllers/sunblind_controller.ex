@@ -65,21 +65,6 @@ defmodule UiWeb.SunblindController do
 
     sun = AdminSunblind.get_sunblind!(id)
     render(conn, "show.json", %{sunblind: sun})
-    #    with {:ok, s} <-
-    #           id
-    #           |> Sunblind.get()
-    #           |> SunblindController.calibrate(state)
-    #      do
-    #      json conn
-    #           |> put_status(:ok), "#{s.state}"
-    #    else
-    #      error -> json conn
-    #                    |> put_status(:ok), "#{inspect error}"
-    #    end
   end
 
-  def dash_show(conn, %{"id" => id}) do
-    sunblind = AdminSunblind.get_sunblind!(id)
-    render(conn, "show.json", sunblind: sunblind)
-  end
 end

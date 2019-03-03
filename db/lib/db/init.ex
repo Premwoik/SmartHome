@@ -225,6 +225,7 @@ defmodule DB.Init do
         name: "ard_mega",
         ip: "192.168.2.137",
         port: 1000,
+        alive: true,
         type: "Core.Device.Default",
         ports: [
           p2,
@@ -330,6 +331,7 @@ defmodule DB.Init do
         ip: "192.168.2.136",
         port: 9000,
         type: "Core.Device.Satel",
+        alive: true,
         process: true,
         ports: [p8, p9, p10, p62]
       }
@@ -533,7 +535,9 @@ defmodule DB.Init do
       dimmers: get_(Dimmer, [1, 2, 3]),
       sunblinds: get_(Sunblind, [1, 2, 3, 4, 5, 6]),
       actions: get_(Action, [1, 2, 3, 4]),
-      tasks: get_(Task, [1, 2, 3, 4, 5, 6])
+      tasks: get_(Task, [1, 2, 3, 4, 5, 6]),
+      devices: []
+
     }
     |> Repo.insert!()
 
@@ -547,7 +551,8 @@ defmodule DB.Init do
       dimmers: get_(Dimmer, [1, 2, 3]),
       sunblinds: get_(Sunblind, [5, 6]),
       actions: get_(Action, [2, 3, 4]),
-      tasks: []
+      tasks: [],
+      devices: []
     }
     |> Repo.insert!()
 
@@ -561,7 +566,8 @@ defmodule DB.Init do
       dimmers: [],
       sunblinds: [],
       actions: get_(Action, [1, 2, 3, 4]),
-      tasks: get_(Task, [1, 2, 3, 4, 5, 6])
+      tasks: get_(Task, [1, 2, 3, 4, 5, 6]),
+      devices: []
     }
     |> Repo.insert!()
 
@@ -575,7 +581,8 @@ defmodule DB.Init do
       dimmers: [],
       sunblinds: get_(Sunblind, [1, 2, 3, 4, 5, 6]),
       actions: [],
-      tasks: []
+      tasks: [],
+      devices: []
     }
     |> Repo.insert!()
 

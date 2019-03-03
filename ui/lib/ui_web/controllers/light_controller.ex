@@ -3,7 +3,7 @@ defmodule UiWeb.LightController do
 
   alias Ui.LightAdmin
   alias Core.Controllers.LightController
-  alias Core.Controllers.BasicController
+  #alias Core.Controllers.BasicController
   alias DB.Light
 
   alias UiWeb.DashboardChannel.Helper, as: DashHelper
@@ -44,20 +44,7 @@ defmodule UiWeb.LightController do
     end
   end
 
-  def set_brightness(conn, %{"id" => id, "fill" => fill}) do
-    res =
-      Dimmer.get(id)
-      |> LightController.set_brightness(String.to_integer(fill))
-
-    json(
-      conn
-      |> put_status(:ok),
-      "#{inspect(res)}"
-    )
-  end
-
   def set_on(conn, %{"id" => id} = o) do
-    res =
       [LightAdmin.get_light!(id)]
       |> LightController.turn_on()
       #|> BasicController.prepare_for_basic()
@@ -70,7 +57,6 @@ defmodule UiWeb.LightController do
   end
 
   def set_off(conn, %{"id" => id} = o) do
-    res =
       [LightAdmin.get_light!(id)]
       |> LightController.turn_off()
       #|> BasicController.prepare_for_basic()
@@ -82,8 +68,4 @@ defmodule UiWeb.LightController do
     render(conn, "show.json", light: light)
   end
 
-  def dash_show(conn, %{"id" => id}) do
-    light = LightAdmin.get_light!(id)
-    render(conn, "show.json", light: light)
-  end
 end

@@ -73,6 +73,8 @@ defmodule UiWeb.DashboardView do
     render_ports(d.ports)
     ++
     render_tasks(d.tasks)
+    ++
+    render_devices(d.devices)
     |> Enum.sort_by(fn {o, _} -> o end)
     |> Enum.map(fn {_, x} -> x end)
   end
@@ -104,4 +106,10 @@ defmodule UiWeb.DashboardView do
   def render_tasks(tasks) do
     Enum.map(tasks, fn {o, d} -> {o, UiWeb.TaskView.render("task.json", %{task: d})} end)
   end
+
+  def render_devices(devices) do
+    Enum.map(devices, fn {o, d} -> {o, UiWeb.DeviceView.render("device.json", %{device: d})} end)
+  end
+
+
 end

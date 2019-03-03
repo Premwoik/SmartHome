@@ -70,8 +70,4 @@ defmodule UiWeb.ActionController do
     render(conn, "show.json", action: action)
   end
 
-  def dash_show(conn, %{"id" => id}) do
-    action = Admin.get_action!(id)
-    render(conn, "show.json", action: action)
-  end
 end

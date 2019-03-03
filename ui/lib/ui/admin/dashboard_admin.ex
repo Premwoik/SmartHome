@@ -6,7 +6,7 @@ defmodule Ui.DashboardAdmin do
   import Ecto.Query, warn: false
   alias DB.Repo
 
-  alias DB.{Page, PageContent, Repo, Port, Light, Sunblind, Dimmer, Action, Task, TaskType}
+  alias DB.{Page, PageContent, Repo, Port, Light, Sunblind, Dimmer, Action, Task, TaskType, Device}
   alias DB.Page, as: Dashboard
 
   @doc """
@@ -29,8 +29,7 @@ defmodule Ui.DashboardAdmin do
                    lights: content_lights(d.id),
                    sunblinds: content_sunblinds(d.id),
                    tasks: content_tasks(d.id),
-#                   devices: content_devices(d.id)
-
+                   devices: content_devices(d.id)
                  }
          end
        )
@@ -38,23 +37,8 @@ defmodule Ui.DashboardAdmin do
 
   def list_dashboards_short do
     Repo.all(Dashboard)
+    |> Enum.sort_by(fn x -> x.order end)
   end
-
-  #  def list_dashboards_dash do
-  #    Repo.all(Dashboard)
-  #    |> Enum.map(
-  #         fn d -> %{
-  #                   d |
-  #                   ports: view_format_ports(d.id),
-  #                   actions: view_format_actions(d.id),
-  #                   dimmers: view_format_dimmers(d.id),
-  #                   lights: view_format_lights(d.id),
-  #                   sunblinds: view_format_sunblinds(d.id),
-  #                   tasks: view_format_tasks(d.id)
-  #                 }
-  #         end
-  #       )
-  #  end
 
   @doc """
   Gets a single dashboard.
@@ -80,8 +64,7 @@ defmodule Ui.DashboardAdmin do
       lights: view_format_lights(id),
       sunblinds: view_format_sunblinds(id),
       tasks: view_format_tasks(id),
-#      devices: []
-#      devices: view_format_devices(id)
+      devices: view_format_devices(id)
     }
   end
 
@@ -98,7 +81,8 @@ defmodule Ui.DashboardAdmin do
       dimmers: content_dimmers(id),
       lights: content_lights(id),
       sunblinds: content_sunblinds(id),
-      tasks: content_tasks(id)
+      tasks: content_tasks(id),
+      devices: content_devices(id)
     }
   end
 
@@ -144,6 +128,7 @@ defmodule Ui.DashboardAdmin do
     from(p in DB.PageContentSunblind, where: p.page_id == ^id) |> Repo.delete_all
     from(p in DB.PageContentAction, where: p.page_id == ^id) |> Repo.delete_all
     from(p in DB.PageContentTask, where: p.page_id == ^id) |> Repo.delete_all
+    from(p in DB.PageContentDevice, where: p.page_id == ^id) |> Repo.delete_all
 
     update_content dashboard.id, attrs
 
@@ -166,13 +151,14 @@ defmodule Ui.DashboardAdmin do
   end
 
 
-  def update_content(id, %{"ports" => ports, "lights" => lights, "dimmers" => dimmers, "sunblinds"=> sunblinds, "actions"=> actions, "tasks" => tasks}) do
+  def update_content(id, %{"ports" => ports, "lights" => lights, "dimmers" => dimmers, "sunblinds"=> sunblinds, "actions"=> actions, "tasks" => tasks, "devices" => devices}) do
     Enum.map(Poison.decode!(ports), &(DB.PageContentPort.insert_or_update(id, &1)))
     Enum.map(Poison.decode!(lights), &(DB.PageContentLight.insert_or_update(id, &1)))
     Enum.map(Poison.decode!(dimmers), &(DB.PageContentDimmer.insert_or_update(id, &1)))
     Enum.map(Poison.decode!(sunblinds), &(DB.PageContentSunblind.insert_or_update(id, &1)))
     Enum.map(Poison.decode!(actions), &(DB.PageContentAction.insert_or_update(id, &1)))
     Enum.map(Poison.decode!(tasks), &(DB.PageContentTask.insert_or_update(id, &1)))
+    Enum.map(Poison.decode!(devices), &(DB.PageContentDevice.insert_or_update(id, &1)))
   end
 
   @doc """
@@ -280,6 +266,16 @@ defmodule Ui.DashboardAdmin do
     |> Repo.all()
   end
 
+  def view_format_devices(page_id) do
+    from(
+      d in Device,
+      join: c in "page_content_devices",
+      on: c.device_id == d.id,
+      where: c.page_id == ^page_id,
+      select: {c.order, d}
+    )
+    |> Repo.all()
+  end
 
 
   def content_actions(id) do
