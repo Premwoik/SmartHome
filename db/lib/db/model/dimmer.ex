@@ -10,23 +10,16 @@ defmodule DB.Dimmer do
   @derive {Poison.Encoder, except: [:__meta__]}
   schema "dimmers" do
     belongs_to(:port, DB.Port)
-    # click | pwm
     field(:type, :string, default: "click")
     field(:fill, :integer)
     field(:direction, :integer)
     field(:time, :integer)
     has_many(:lights, DB.Light)
-    #    many_to_many :lights, DB.Port, join_through: "dimmers_lights", on_delete: :delete_all
   end
 
   def changeset(dimmer, params \\ %{}) do
     dimmer
-    |> cast(params, [:fill, :direction, :time])
-    |> Ecto.Changeset.cast_assoc(:port, with: &DB.Port.changeset/2)
-
-    #    |> validate_format(:email, ~r/@/)
-    #    |> validate_inclusion(:age, 18..100)
-    #    |> unique_constraint(:email)
+    |> cast(params, [:fill, :direction, :time, :type])
   end
 
   def all() do

@@ -19,7 +19,7 @@ defmodule Ui.AdminSunblind do
 
   """
   def list_sunblinds do
-    Repo.all(Sunblind)
+    Repo.all(Sunblind) |> Repo.preload(:port)
   end
 
   @doc """

@@ -28,7 +28,8 @@ defmodule UiWeb.DashboardController do
   end
 
   def update(conn, %{"id" => id, "dashboard" => dashboard_params}) do
-    dashboard = DashboardAdmin.get_dashboard_short!(id)
+    IO.inspect(dashboard_params)
+    dashboard = DashboardAdmin.get_dashboard!(id)
 
     with {:ok, dashboard} <- DashboardAdmin.update_dashboard(dashboard, dashboard_params) do
       render(conn, "show.json", dashboard: dashboard)
@@ -52,6 +53,5 @@ defmodule UiWeb.DashboardController do
     d = DashboardAdmin.get_dashboard!(id)
     render(conn, "show.json", dash_dashboard: d)
   end
-
 
 end

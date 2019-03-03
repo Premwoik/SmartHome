@@ -16,6 +16,7 @@ defmodule UiWeb.DeviceView do
       ip: device.ip,
       port: device.port,
       type: device.type,
+      alive: device.alive,
       '@type': "device"
     }
   end

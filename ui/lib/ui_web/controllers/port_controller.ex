@@ -63,8 +63,4 @@ defmodule UiWeb.PortController do
     render(conn, "show.json", port: port)
   end
 
-  def dash_show(conn, %{"id" => id}) do
-    port = PortAdmin.get_port!(id)
-    render(conn, "show.json", port: port)
-  end
 end

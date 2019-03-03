@@ -9,13 +9,13 @@ defmodule DB.Light do
 
   @derive {Poison.Encoder, except: [:__meta__, :dimmer]}
   schema "lights" do
-    belongs_to :port, DB.Port
-    belongs_to :dimmer, DB.Dimmer
+    belongs_to(:port, DB.Port)
+    belongs_to(:dimmer, DB.Dimmer)
   end
 
-
   def changeset(light, attrs) do
-
+    light
+    |> cast(attrs, [:port_id, :dimmer_id])
   end
 
   def all() do
@@ -23,32 +23,42 @@ defmodule DB.Light do
     |> DB.Repo.preload(:port)
   end
 
-  def get(ids) when is_list ids do
-    DB.Repo.all from l in DB.Light, where: l.id in ^ids,
-                                    preload: [
-                                      :port,
-                                      dimmer: [:port]
-                                    ]
+  def get(ids) when is_list(ids) do
+    DB.Repo.all(
+      from(l in DB.Light,
+        where: l.id in ^ids,
+        preload: [
+          :port,
+          dimmer: [:port]
+        ]
+      )
+    )
   end
+
   def get(id) do
     [res] = get([id])
     res
   end
 
-  def get_by_port(ids) when is_list ids do
-    DB.Repo.all from l in DB.Light, where: l.port_id in ^ids,
-                                    preload: [
-                                      :port,
-                                      dimmer: [:port]
-                                    ]
+  def get_by_port(ids) when is_list(ids) do
+    DB.Repo.all(
+      from(l in DB.Light,
+        where: l.port_id in ^ids,
+        preload: [
+          :port,
+          dimmer: [:port]
+        ]
+      )
+    )
   end
+
   def get_by_port(id) do
     [res] = get([id])
     res
   end
 
   def get_by_dimmer(id) do
-    (from l in DB.Light, where: l.dimmer_id == ^id, preload: [:port, dimmer: [:port]])
+    from(l in DB.Light, where: l.dimmer_id == ^id, preload: [:port, dimmer: [:port]])
     |> DB.Repo.all()
   end
 
@@ -60,7 +70,6 @@ defmodule DB.Light do
   def dim_light?(light) do
     light.dimmer != nil
   end
-
 
   def get_view_format(id) do
     from(
@@ -81,7 +90,6 @@ defmodule DB.Light do
         light: ""
       }
     )
-    |> Repo.all
+    |> Repo.all()
   end
-
 end
