@@ -45,8 +45,6 @@ defmodule UiWeb.ActionController do
   end
 
   def set_on(conn, %{"id" => id} = o) do
-    IO.inspect(o)
-
     res =
       DB.Action.get([id])
       |> ActionController.turn_on()
@@ -58,8 +56,6 @@ defmodule UiWeb.ActionController do
   end
 
   def set_off(conn, %{"id" => id} = o) do
-    IO.inspect(o)
-
     res =
       DB.Action.get([id])
       |> ActionController.turn_off()
@@ -70,4 +66,15 @@ defmodule UiWeb.ActionController do
     render(conn, "show.json", action: action)
   end
 
+  def update_args(conn, r = %{"id" => id, "port_ids" => port_ids}) do
+    id_ = String.to_integer(id)
+    with :ok <- Admin.update_action_args(id_, port_ids) do
+      send_resp(conn, :no_content, "")
+    end
+  end
+
+  def get_args(conn, %{"id" => id}) do
+    args = DB.ActionArgument.get(id)
+    render(conn, "show_args.json", %{args: args}) 
+  end
 end

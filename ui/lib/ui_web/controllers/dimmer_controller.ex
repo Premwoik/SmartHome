@@ -30,8 +30,9 @@ defmodule UiWeb.DimmerController do
 
   def update(conn, %{"id" => id, "dimmer" => dimmer_params}) do
     dimmer = DimmerAdmin.get_dimmer!(id)
-
-    with {:ok, %Dimmer{} = dimmer} <- DimmerAdmin.update_dimmer(dimmer, dimmer_params) do
+    #TODO remove below mock
+    dimmer_params2 = Map.put(dimmer_params, "time", Map.get(dimmer_params, "full_time"))
+    with {:ok, %Dimmer{} = dimmer} <- DimmerAdmin.update_dimmer(dimmer, dimmer_params2) do
       render(conn, "show.json", dimmer: dimmer)
     end
   end

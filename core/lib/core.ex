@@ -17,9 +17,9 @@ defmodule Core do
 
   def children() do
     [
-      Core.Device.Supervisor,
-      Core.Actions,
-      Core.Tasks
+      #Core.Device.Supervisor,
+      #Core.Actions,
+      #Core.Tasks
     ]
   end
 end

@@ -24,6 +24,20 @@ defmodule UiWeb.ActionView do
       '@type': "action"
     }
   end
+  
+
+  def render("show_args.json", %{args: args}) do
+    render_many(args, ActionView, "arg.json")
+  end
+
+  def render("arg.json", %{action: arg}) do
+    %{
+      action_id: arg.id,
+      port_id: arg.port_id,
+      name: arg.name,
+      type: arg.type
+    }
+  end
 
   # def render("show.json", %{dash_action: action}) do
   # %{data: render_one(action, ActionView, "dash_action.json")}

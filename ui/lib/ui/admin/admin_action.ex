@@ -96,4 +96,11 @@ defmodule Ui.ActionAdmin do
     Action.changeset(action, %{})
   end
 
+
+  def update_action_args(id, port_ids) do
+    from(p in DB.ActionArgument, where: p.action_id == ^id) |> Repo.delete_all
+
+    Enum.map(port_ids, fn port_id -> DB.ActionArgument.insert(id, port_id) end)
+    :ok
+  end
 end
