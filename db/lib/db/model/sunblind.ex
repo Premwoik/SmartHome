@@ -12,7 +12,7 @@ defmodule DB.Sunblind do
     belongs_to(:open_port, DB.Port)
     field(:position, :integer, default: 0)
     # :only_close | :pulse | :other
-    field(:type, :string, default: "only_close")
+    field(:type, :string, default: "only_close") # only_close | pulse | pulse2
     field(:full_open_time, :integer, default: 0)
     # :down | :up
     field(:direction, :string, default: "up")
