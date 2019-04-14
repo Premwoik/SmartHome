@@ -103,7 +103,7 @@ defmodule Core.Device do
   defp execute_function(func, o) do
     try do
       case func.() do
-        {:ok, []} -> :ok
+        {:ok, []} -> :ok #TODO change this, becouse it looks like no data can be return 
         {:error, err} -> {:error, o, err}
       end
     catch
