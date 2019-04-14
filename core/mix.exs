@@ -26,6 +26,7 @@ defmodule SocketTest2.MixProject do
       {:mock, "~> 0.3.0", only: :test},
       {:mox, "~> 0.4", only: :test},
       {:poison, "~> 3.1"},
+      {:httpotion, "~> 3.1.0"},
       {:connection, "~> 1.0.4"},
       {:timex, "~> 3.0"},
       {:db, path: "../db"},

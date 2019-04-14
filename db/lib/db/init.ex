@@ -30,6 +30,7 @@ defmodule DB.Init do
       :ok = insert_integra64()
       :ok = insert_tasks()
       :ok = init_pages()
+      :ok = insert_shelly()
       :ok
     end
 
@@ -49,6 +50,52 @@ defmodule DB.Init do
     #    Repo.delete_all(Device)
     #    Repo.delete_all(TaskType)
     #    Repo.delete_all(Task)
+    :ok
+  end
+
+  def insert_shelly() do
+    p1 = %Port{
+      name: "Test S1",
+      type: "light",
+      number: 0,
+      mode: "output",
+      inverted_logic: false,
+      state: false
+    }
+
+    p2 = %Port{
+      name: "Test S2",
+      type: "light",
+      number: 0,
+      mode: "output",
+      inverted_logic: false,
+      state: false
+    }
+
+    dev1 =
+      %Device{
+        name: "shelly1",
+        ip: "192.168.2.138",
+        port: 80,
+        alive: true,
+        process: false,
+        type: "Core.Device.Shelly",
+        ports: [p1]
+      }
+      |> Repo.insert!()
+
+    dev2 =
+      %Device{
+        name: "shelly2",
+        ip: "192.168.2.120",
+        port: 80,
+        alive: true,
+        process: false,
+        type: "Core.Device.Shelly",
+        ports: [p2]
+      }
+      |> Repo.insert!()
+
     :ok
   end
 
