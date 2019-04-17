@@ -31,6 +31,8 @@ defmodule UiWeb.Router do
     resources "/sunblinds", SunblindController, except: [:new, :edit]
     resources "/tasks", TaskController, except: [:new, :edit]
 
+    get "/devices/types/all", DeviceController, :get_types
+
     get "/dashboards/view/short", DashboardController, :short
     get "/dashboards/view/:id", DashboardController, :view
 

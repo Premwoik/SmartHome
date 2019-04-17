@@ -5,14 +5,14 @@ defmodule Ui.Admin do
 
   import Ecto.Query, warn: false
   alias DB.Repo
-  alias DB.Device
+  alias DB.{Device, DeviceType}
 
   def list_devices do
-    Repo.all(Device)
+    Repo.all(Device) |> Repo.preload(:type)
   end
 
 
-  def get_device!(id), do: Repo.get!(Device, id)
+  def get_device!(id), do: Repo.get!(Device, id) |> Repo.preload(:type)
 
 
   def create_device(attrs \\ %{}) do
@@ -36,6 +36,9 @@ defmodule Ui.Admin do
     Device.changeset(device, %{})
   end
 
+  def get_types do
+    Repo.all(DeviceType)
+  end
 
 
 end

@@ -26,7 +26,7 @@ defmodule DB.Port do
 
   def changeset(port, params \\ %{}) do
     port
-    |> cast(params, [:state, :number, :name, :type, :mode, :timeout, :pwm_fill])
+    |> cast(params, [:state, :device_id, :number, :name, :type, :mode, :timeout, :pwm_fill])
   end
 
   def get(ids) do
