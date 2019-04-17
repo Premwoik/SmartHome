@@ -41,4 +41,10 @@ defmodule UiWeb.DeviceController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def get_types(conn, _params) do
+    types = Admin.get_types()
+    render(conn, "index.json", device_types: types)
+  end
+
 end

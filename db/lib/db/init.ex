@@ -9,6 +9,7 @@ defmodule DB.Init do
     Dimmer,
     Port,
     Device,
+    DeviceType,
     Action,
     Repo,
     Sunblind,
@@ -54,6 +55,13 @@ defmodule DB.Init do
   end
 
   def insert_shelly() do
+
+    type = %DeviceType{
+      name: "Shelly",
+      module: "Core.Device.Shelly"
+    }
+    |> Repo.insert!()
+
     p1 = %Port{
       name: "Test S1",
       type: "light",
@@ -79,7 +87,7 @@ defmodule DB.Init do
         port: 80,
         alive: true,
         process: false,
-        type: "Core.Device.Shelly",
+        type_id: type.id,
         ports: [p1]
       }
       |> Repo.insert!()
@@ -91,7 +99,7 @@ defmodule DB.Init do
         port: 80,
         alive: true,
         process: false,
-        type: "Core.Device.Shelly",
+        type_id: type.id,
         ports: [p2]
       }
       |> Repo.insert!()
@@ -267,13 +275,20 @@ defmodule DB.Init do
       state: false
     }
 
+    type = %DeviceType{
+      name: "Default",
+      module: "Core.Device.Default"
+    }
+    |> Repo.insert!()
+
+
     dev1 =
       %Device{
         name: "ard_mega",
         ip: "192.168.2.137",
         port: 1000,
         alive: true,
-        type: "Core.Device.Default",
+        type_id: type.id,
         ports: [
           p2,
           p18,
@@ -372,12 +387,20 @@ defmodule DB.Init do
       state: nil
     }
 
+   type = %DeviceType{
+      name: "Satel",
+      module: "Core.Device.Satel"
+    }
+    |> Repo.insert!()
+
+
+
     dev1 =
       %Device{
         name: "integra",
         ip: "192.168.2.136",
         port: 9000,
-        type: "Core.Device.Satel",
+        type_id: type.id,
         alive: true,
         process: true,
         ports: [p8, p9, p10, p62]

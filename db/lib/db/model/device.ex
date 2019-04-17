@@ -8,7 +8,7 @@ defmodule DB.Device do
     field(:name, :string)
     field(:ip, :string)
     field(:port, :integer)
-    field(:type, :string)
+    belongs_to(:type, DB.DeviceType)
     field(:alive, :boolean, default: false)
     field(:process, :boolean, default: true)
     has_many(:ports, DB.Port)

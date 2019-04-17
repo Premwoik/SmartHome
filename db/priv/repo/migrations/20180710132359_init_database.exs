@@ -6,7 +6,7 @@ defmodule DB.Repo.Migrations.InitDatabase do
       add :name, :string
       add :ip, :string
       add :port, :integer
-      add :type, :string
+      #add :type, :string
       add :alive, :boolean
       add :process, :boolean
     end

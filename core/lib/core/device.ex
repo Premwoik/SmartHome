@@ -128,6 +128,7 @@ defmodule Core.Device do
   defp state_to_num(_), do: 1
 
   defp module(device) do
-    String.to_existing_atom("Elixir." <> device.type)
+    DB.Repo.prealod(device, :type)
+    String.to_existing_atom("Elixir." <> device.type.module)
   end
 end
