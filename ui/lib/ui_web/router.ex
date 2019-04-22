@@ -59,6 +59,12 @@ defmodule UiWeb.Router do
 
     post "/tasks/setOn/:id", TaskController, :set_on
     post "/tasks/setOff/:id", TaskController, :set_off
+    get "/tasks/types/all", TaskController, :get_types
+
+    get "/stats/device-journal/report/:id", DeviceJournalController, :get_report
+    get "/stats/device-journal/report_sec/:id", DeviceJournalController, :get_report_s
+
+    get "/stats/device-journal/logs/:id", DeviceJournalController, :get_logs
 
   end
 

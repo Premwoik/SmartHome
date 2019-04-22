@@ -1,6 +1,7 @@
 defmodule UiWeb.DeviceView do
   use UiWeb, :view
   alias UiWeb.DeviceView
+  alias UiWeb.View.Helper
 
   def render("index.json", %{devices: devices}) do
     render_many(devices, DeviceView, "device.json")
@@ -17,7 +18,7 @@ defmodule UiWeb.DeviceView do
       port: device.port,
       type_id: device.type_id,
       #TODO handle not preload 
-      type: render("device_type.json", %{device_type: device.type}),
+      type: Helper.obj_to_view(DeviceView, :device_type, device.type),
       alive: device.alive,
       '@type': "device"
     }
@@ -25,12 +26,11 @@ defmodule UiWeb.DeviceView do
   #DEVICE TYPE
   # TODO move to new module?
   def render("index.json", %{device_types: device_types}) do
-    IO.puts("PIERD")
     render_many(device_types, DeviceView, "device_type.json", as: :device_type)
   end
 
   def render("show.json", %{device_type: device_type}) do
-    render_one(device_type, DeviceView, "device_type.json")
+    render_one(device_type, DeviceView, "device_type.json", as: :device_type)
   end
 
   def render("device_type.json", %{device_type: device_type}) do

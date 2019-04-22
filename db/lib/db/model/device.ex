@@ -4,26 +4,31 @@ defmodule DB.Device do
   import Ecto.Changeset
   import Ecto.Query
 
+  alias DB.{Device, Repo, DeviceType}
+
   schema "devices" do
     field(:name, :string)
     field(:ip, :string)
     field(:port, :integer)
     belongs_to(:type, DB.DeviceType)
     field(:alive, :boolean, default: false)
-    field(:process, :boolean, default: true)
     has_many(:ports, DB.Port)
   end
 
   def changeset(device, params \\ %{}) do
     device
-    |> cast(params, [:name, :ip, :port, :type, :alive, :process])
+    |> cast(params, [:name, :ip, :port, :type_id, :alive])
   end
 
+  def preload, do: [device: :type]
+
   def get(id) do
-    DB.Repo.get(DB.Device, id)
+    Repo.get(Device, id)
+    |> Repo.preload(:type)
   end
 
   def all() do
-    DB.Repo.all(DB.Device)
+    Repo.all(Device)
+    |> Repo.preload(:type)
   end
 end
