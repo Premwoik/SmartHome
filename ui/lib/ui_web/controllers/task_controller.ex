@@ -2,7 +2,7 @@ defmodule UiWeb.TaskController do
   use UiWeb, :controller
 
   alias Ui.TaskAdmin
-  alias DB.Task
+  alias DB.{Task, TaskType}
 
   alias UiWeb.DashboardChannel.Helper, as: DashHelper
   action_fallback(UiWeb.FallbackController)
@@ -41,6 +41,13 @@ defmodule UiWeb.TaskController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  
+  def get_types(conn, _params) do
+    types = TaskType.all_map()
+    json(conn, types)
+  end
+
 
   def set_on(conn, %{"id" => id} = o) do
     tasks = [TaskAdmin.get_task!(id)]

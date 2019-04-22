@@ -65,7 +65,7 @@ defmodule Core.Controllers.SunblindController do
   end
 
   defp to_ports(sunblinds, next_state \\ "") do
-    Enum.map(sunblinds, fn s -> DB.Repo.preload(s, [:port, :open_port]) |> to_port(next_state) end)
+    Enum.map(sunblinds, fn s -> DB.Repo.preload(s, [Port.preload, Port.preload(:open_port)]) |> to_port(next_state) end)
   end
 
   defp to_port(%{type: type, port: p, open_port: op}, next_state) do
@@ -73,7 +73,6 @@ defmodule Core.Controllers.SunblindController do
       {"pulse2", "open"} -> op
       _ -> p
     end
-    |> DB.Repo.preload(:device)
   end
 
   defp proceed_result(res, sunblinds, state) do

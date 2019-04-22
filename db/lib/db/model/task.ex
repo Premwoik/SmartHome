@@ -22,7 +22,7 @@ defmodule DB.Task do
 
   def changeset(port, params \\ %{}) do
     port
-    |> cast(params, [:name, :status, :action_id, :device_id, :frequency, :execution_time, :limit])
+    |> cast(params, [:name, :status, :type_id, :action_id, :device_id, :frequency, :execution_time, :limit])
 
     # TODO add others parameters to the cast, only when android app will be seting it correctly
   end
@@ -32,7 +32,7 @@ defmodule DB.Task do
   end
 
   def get_active() do
-    from(t in Task, where: t.status != "inactive", preload: [:type, :device, :action])
+    from(t in Task, where: t.status != "inactive", preload: [:type, [device: [:type]], :action])
     |> Repo.all()
   end
 

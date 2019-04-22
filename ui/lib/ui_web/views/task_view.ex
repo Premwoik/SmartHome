@@ -1,6 +1,7 @@
 defmodule UiWeb.TaskView do
   use UiWeb, :view
   alias UiWeb.TaskView
+  alias UiWeb.View.Helper
 
   def render("index.json", %{tasks: tasks}) do
     render_many(tasks, TaskView, "task.json")
@@ -15,7 +16,8 @@ defmodule UiWeb.TaskView do
       id: task.id,
       name: task.name,
       type_id: task.type_id,
-      type: task.type.name,
+      # TODO do something with type
+      type: nil, # Helper.obj_to_view(TaskView, :type, task.type),
       status: task.status,
       action_id: task.action_id,
       device_id: task.device_id,

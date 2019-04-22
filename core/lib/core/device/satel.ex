@@ -7,6 +7,8 @@ defmodule Core.Device.Satel do
   # @client Core.Device.Client.OneWay
   @protocol Core.Devices.Satel.Protocol
 
+  alias DB.DeviceJournal
+
   use Bitwise
 
   def start_link(host, port, opts, keywords, timeout \\ 5000, length \\ 11) do
@@ -20,6 +22,7 @@ defmodule Core.Device.Satel do
 
   @impl true
   def read_active_inputs(device) do
+    DeviceJournal.log(device.id, "read_active_inputs", info = "")
     i_violation(device)
   end
 
