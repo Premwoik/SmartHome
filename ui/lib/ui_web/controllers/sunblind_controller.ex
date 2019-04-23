@@ -48,7 +48,7 @@ defmodule UiWeb.SunblindController do
 
   def click(conn, %{"id" => id} = o) do
     res =
-      AdminSunblind.get_sunblind!(id)
+      DB.Sunblind.get(id)
       |> SunblindController.click()
 
     DashHelper.broadcast_update_from(o, [id], "sunblind")

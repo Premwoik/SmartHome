@@ -7,5 +7,6 @@ defmodule DB.DeviceType do
   schema "device_types" do
     field(:name, :string)
     field(:module, :string)
+    field(:process, :boolean, default: true)
   end
 end

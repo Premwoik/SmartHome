@@ -5,6 +5,7 @@ defmodule DB.Repo.Migrations.AddDeviceType do
     create table(:device_types) do
       add :name, :string
       add :module, :string
+      add :process, :boolean
     end
 
     alter table(:devices) do

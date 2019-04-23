@@ -22,7 +22,7 @@ defmodule DB.Init do
 
   def start_link, do: {:ok, spawn_link(__MODULE__, :run, [])}
 
-  def run do
+  def run() do
     Logger.info("Creating data!")
     :ok = delete_all()
 
@@ -55,12 +55,13 @@ defmodule DB.Init do
   end
 
   def insert_shelly() do
-
-    type = %DeviceType{
-      name: "Shelly",
-      module: "Core.Device.Shelly"
-    }
-    |> Repo.insert!()
+    type =
+      %DeviceType{
+        name: "Shelly",
+        module: "Core.Device.Shelly",
+        process: false
+      }
+      |> Repo.insert!()
 
     p1 = %Port{
       name: "Test S1",
@@ -86,7 +87,6 @@ defmodule DB.Init do
         ip: "192.168.2.138",
         port: 80,
         alive: true,
-        process: false,
         type_id: type.id,
         ports: [p1]
       }
@@ -98,7 +98,6 @@ defmodule DB.Init do
         ip: "192.168.2.120",
         port: 80,
         alive: true,
-        process: false,
         type_id: type.id,
         ports: [p2]
       }
@@ -275,12 +274,13 @@ defmodule DB.Init do
       state: false
     }
 
-    type = %DeviceType{
-      name: "Default",
-      module: "Core.Device.Default"
-    }
-    |> Repo.insert!()
-
+    type =
+      %DeviceType{
+        name: "Default",
+        module: "Core.Device.Default",
+        process: true
+      }
+      |> Repo.insert!()
 
     dev1 =
       %Device{
@@ -387,13 +387,13 @@ defmodule DB.Init do
       state: nil
     }
 
-   type = %DeviceType{
-      name: "Satel",
-      module: "Core.Device.Satel"
-    }
-    |> Repo.insert!()
-
-
+    type =
+      %DeviceType{
+        name: "Satel",
+        module: "Core.Device.Satel",
+        process: true
+      }
+      |> Repo.insert!()
 
     dev1 =
       %Device{
@@ -402,7 +402,6 @@ defmodule DB.Init do
         port: 9000,
         type_id: type.id,
         alive: true,
-        process: true,
         ports: [p8, p9, p10, p62]
       }
       |> Repo.insert!()
@@ -498,6 +497,18 @@ defmodule DB.Init do
     %TaskType{
       name: "Read Thermometers data",
       module: "Core.Tasks.ReadTemperature"
+    }
+    |> Repo.insert!()
+
+    %TaskType{
+      name: "Read Outputs",
+      module: "Core.Tasks.ReadOutputs"
+    }
+    |> Repo.insert!()
+
+    %TaskType{
+      name: "Device activity supervisor task",
+      module: "Core.Tasks.DeviceActivitySupervisor"
     }
     |> Repo.insert!()
 
@@ -607,7 +618,6 @@ defmodule DB.Init do
       actions: get_(Action, [1, 2, 3, 4]),
       tasks: get_(Task, [1, 2, 3, 4, 5, 6]),
       devices: []
-
     }
     |> Repo.insert!()
 

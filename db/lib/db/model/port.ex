@@ -4,7 +4,7 @@ defmodule DB.Port do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias DB.{Repo, Port}
+  alias DB.{Repo, Port, Device}
 
   #  types:
   #  - input
@@ -29,8 +29,21 @@ defmodule DB.Port do
     |> cast(params, [:state, :device_id, :number, :name, :type, :mode, :timeout, :pwm_fill])
   end
 
+  def preload(key \\ :port) do
+    Keyword.put([], key, Device.preload())
+  end
+
+  def update_out_of_date(device_id, data) do
+    query =
+      List.foldr(data, Port, fn {num, state}, acc ->
+        where(acc, [p], p.device_id == ^device_id and p.number == ^num and p.state != ^state)
+      end)
+      |> update([p], [set: [state: not p.state]])
+      |> Repo.update_all([])
+  end
+
   def get(ids) do
-    Repo.all(from(p in Port, where: p.id in ^ids, preload: [:device]))
+    Repo.all(from(p in Port, where: p.id in ^ids, preload: ^Device.preload()))
   end
 
   def pulse?(port) do
