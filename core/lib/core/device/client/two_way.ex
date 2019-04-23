@@ -3,6 +3,7 @@ defmodule Core.Device.Client.TwoWay do
 
   use Connection
   require Logger
+  alias Core.DeviceMonitor
 
   @behaviour Core.Devices.Client
 

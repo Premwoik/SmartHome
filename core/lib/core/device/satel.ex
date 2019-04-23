@@ -22,8 +22,24 @@ defmodule Core.Device.Satel do
 
   @impl true
   def read_active_inputs(device) do
-    DeviceJournal.log(device.id, "read_active_inputs", info = "")
-    i_violation(device)
+    case i_violation(device) do
+      {:ok, r} = resp ->
+        DeviceJournal.log(device.id, "read_active_inputs", info = "")
+        resp
+
+      {:error, err} = err_ ->
+        DeviceJournal.log(
+          device.id,
+          "read_active_inputs",
+          type = DeviceJournal.Type.error(),
+          info = "#{err}"
+        )
+
+        err
+
+      err ->
+        err
+    end
   end
 
   @impl true
