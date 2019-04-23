@@ -13,6 +13,7 @@ defmodule Core.Controllers.BasicController do
   @callback set_pwm_outputs(device :: %DB.Device{}, ports :: list(%DB.Port{})) :: any
   @callback set_outputs(device :: %DB.Device{}, ports :: list(%DB.Port{})) :: any
   @callback read_active_inputs(device :: %DB.Device{}) :: any
+  @callback read_outputs(device :: %DB.Device{}) :: any
 
   @doc "ports "
   def turn_on(ports, pid \\ nil) do
@@ -77,6 +78,11 @@ defmodule Core.Controllers.BasicController do
     Core.Device.do_(:read_active_inputs, d)
   end
 
+
+  def read_outputs(%DB.Device{} = d) do
+    Core.Device.do_(:read_outputs, d)
+  end
+
   def flatten_result(list) do
     list
     |> Enum.filter(&(&1 != :ok))
@@ -94,12 +100,12 @@ defmodule Core.Controllers.BasicController do
   def prepare_for_basic(any) when is_list(any) do
     any
     |> Enum.map(& &1.port)
-    |> DB.Repo.preload(:device)
+    |> DB.Repo.preload(Device.preload)
   end
 
   def prepare_for_basic(any) do
     any
-    |> DB.Repo.preload(:device)
+    |> DB.Repo.preload(Device.preload)
   end
 
   def recv_postpone_resp(timeout \\ 10_000) do

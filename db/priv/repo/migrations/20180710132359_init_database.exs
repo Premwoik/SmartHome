@@ -8,7 +8,6 @@ defmodule DB.Repo.Migrations.InitDatabase do
       add :port, :integer
       #add :type, :string
       add :alive, :boolean
-      add :process, :boolean
     end
     create table(:ports) do
       add :device_id, references("devices", on_delete: :nilify_all)

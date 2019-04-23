@@ -52,7 +52,7 @@ defmodule DB.Sunblind do
 
   def get(id) do
     Repo.get(Sunblind, id)
-    |> Repo.preload(:port)
+    |> Repo.preload(port: [device: :type])
   end
 
   def get_type(type) do
