@@ -1,22 +1,24 @@
 defmodule Core.Controllers.TaskController do
   @moduledoc false
   @behaviour Core.Controllers.Controller
+  alias UiWeb.DashboardChannel.Helper, as: Channel
 
   def turn_on(tasks) do
-    tasks
-    |> Enum.map(fn x -> x.id end)
-    |> DB.Task.update_status("waiting")
-
-    Core.Tasks.update()
-    :ok
+    set(tasks, "waiting")
   end
 
   def turn_off(tasks) do
-    tasks
-    |> Enum.map(fn x -> x.id end)
-    |> DB.Task.update_status("inactive")
+    set(tasks, "inactive")
+  end
+
+  def set(tasks, status) do
+    res =
+      tasks
+      |> Enum.map(fn x -> x.id end)
+      |> DB.Task.update_status(status)
 
     Core.Tasks.update()
-    :ok
+    Enum.each(tasks, fn %{id: id, ref: ref} -> Channel.broadcast_change("task", id, ref + 1) end)
+    res
   end
 end

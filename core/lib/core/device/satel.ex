@@ -24,7 +24,7 @@ defmodule Core.Device.Satel do
   def read_active_inputs(device) do
     case i_violation(device) do
       {:ok, r} = resp ->
-        DeviceJournal.log(device.id, "read_active_inputs", info = "")
+        DeviceJournal.log(device.id, "read_active_inputs", info = "#{inspect r, charlists: :as_lists}")
         resp
 
       {:error, err} = err_ ->

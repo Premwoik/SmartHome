@@ -4,23 +4,36 @@ defmodule DB.Light do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
+  import DB
 
   alias DB.{Light, Port, Repo, Dimmer}
 
   @derive {Poison.Encoder, except: [:__meta__, :dimmer]}
   schema "lights" do
+    field(:ref, :integer)
     belongs_to(:port, DB.Port)
     belongs_to(:dimmer, DB.Dimmer)
   end
 
-  def changeset(light, attrs) do
+  def changeset(light, attrs, all_str \\ false) do
+    params_ = inc_ref(light, Enum.into(attrs, %{}), all_str)
     light
-    |> cast(attrs, [:port_id, :dimmer_id])
+    |> cast(params_, [:port_id, :dimmer_id, :ref])
   end
 
   def all() do
     DB.Repo.all(DB.Light)
     |> DB.Repo.preload(:port)
+  end
+
+  def update_one(l, params \\ %{}) do
+    changeset(l, params)
+    |> Repo.update()
+  end
+
+  def update(ls, params \\ %{}) do
+    Enum.each(ls, fn l -> changeset(l, params) |> Repo.update() end)
+    :ok
   end
 
   def get(ids) when is_list(ids) do

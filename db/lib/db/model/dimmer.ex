@@ -5,6 +5,7 @@ defmodule DB.Dimmer do
 
   import Ecto.Query
 
+  import DB
   alias DB.{Repo, Light, Port, Dimmer}
 
   @derive {Poison.Encoder, except: [:__meta__]}
@@ -14,12 +15,14 @@ defmodule DB.Dimmer do
     field(:fill, :integer)
     field(:direction, :integer)
     field(:time, :integer)
+    field(:ref, :integer)
     has_many(:lights, DB.Light)
   end
 
-  def changeset(dimmer, params \\ %{}) do
+  def changeset(dimmer, params \\ %{}, all_str \\ false) do
+    params_ = inc_ref(dimmer, Enum.into(params, %{}), all_str)
     dimmer
-    |> cast(params, [:fill, :direction, :time, :type])
+    |> cast(params_, [:fill, :direction, :time, :type, :ref])
   end
 
   def all() do
@@ -93,57 +96,46 @@ defmodule DB.Dimmer do
     )
   end
 
-  def update_fill(dim, fill) do
-    Ecto.Changeset.change(dim, fill: fill, direction: dim.direction * -1)
+  def update_fill(dim, fill, dir) do
+    #dir = if fill == 0, do: 1, else: dim.direction * -1
+    changeset(dim, fill: fill, direction: dir)
     |> Repo.update()
   end
 
   def update(dim, args \\ %{}) do
-    Ecto.Changeset.change(dim, args)
-    |> IO.inspect()
+    changeset(dim, args)
     |> Repo.update()
   end
 
-  def update_fill(ids, fill, direction) do
-    Repo.update_all(from(d in Dimmer, where: d.port_id in ^ids),
-      set: [
-        fill: fill,
-        direction: direction
-      ]
-    )
-  end
-
   @spec fill_to_time(map, integer) :: integer
-  def fill_to_time(dimmer, new_fill) do
-    res = (new_fill - dimmer.fill) * dimmer.direction
-
+  def fill_to_time(%{fill: fill, direction: dir, time: time}, new_fill) do
+    res = (new_fill - fill) * dir
+    #IO.puts("fill_to_time, dimmer.fill: #{inspect fill}, new_fill: #{inspect new_fill}, direction: #{inspect dir}")
     cond do
       res > 0 ->
-        get_time(dimmer.time, res)
+        #good direction
+        #IO.puts ("good direction")
+        {get_time(time, res), dir * -1} 
 
       res == 0 ->
-        0
+        #IO.puts("NOTHING")
+        #nothing to do 
+        {0, dir}
 
-      dimmer.direction > 0 ->
-        get_time(dimmer.time, 200 - dimmer.fill - new_fill)
+      dir > 0 ->
+        #IO.puts("dim inc, but dec")
+        # dimmer want to increase brightness, but we want to decrease
+        {get_time(time, 200 - fill - new_fill), dir}
 
       true ->
-        get_time(dimmer.time, dimmer.fill + new_fill)
+        #IO.puts("dim dec, but inc")
+        # dimmer want to decrease brightness, but we want to increase
+        {get_time(time, fill + new_fill), dir}
     end
   end
 
   @spec get_time(integer, integer) :: integer
   defp get_time(max_time, fill) do
-    cond do
-      fill > 150 -> max_time * 1.75
-      fill > 125 -> max_time * 1.50
-      fill > 100 -> max_time * 1.25
-      fill > 75 -> max_time
-      fill > 50 -> max_time * 0.75
-      fill > 25 -> max_time * 0.5
-      fill > 0 -> max_time * 0.25
-      true -> 0
-    end
-    |> round
+    round(max_time * (fill / 100))
   end
 end

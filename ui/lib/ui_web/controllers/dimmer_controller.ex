@@ -1,10 +1,10 @@
 defmodule UiWeb.DimmerController do
   use UiWeb, :controller
 
-  alias Ui.DimmerAdmin
-  alias Ui.LightAdmin
+  alias Ui.{DimmerAdmin}
   alias Core.Controllers.{LightController, DimmerController}
   alias DB.{Dimmer, Light, Port}
+  alias UiWeb.Controllers.ErrorHelper
 
   alias UiWeb.DashboardChannel.Helper, as: DashHelper
   action_fallback(UiWeb.FallbackController)
@@ -46,94 +46,31 @@ defmodule UiWeb.DimmerController do
   end
 
   def set_on(conn, %{"id" => id} = o) do
-    DimmerAdmin.get_dimmer!(id)
-    |> List.wrap()
-    |> DimmerController.turn_on()
-    |> case do
-      :ok ->
-        DashHelper.broadcast_update_from(o, [id], "dimmer")
-
-      _ ->
-        :err
-    end
-
-    DashHelper.broadcast_update_from(o, [id], "dimmer")
-
-    dim = DimmerAdmin.get_dimmer!(id)
-    render(conn, "show.json", dimmer: dim)
+    set(conn, Map.put(o, "fill", 100))
   end
 
   def set_off(conn, %{"id" => id} = o) do
-    DimmerAdmin.get_dimmer!(id)
-    |> List.wrap()
-    |> DimmerController.turn_off()
-    |> case do
-      :ok ->
-        DashHelper.broadcast_update_from(o, [id], "dimmer")
-
-      _ ->
-        :err
-    end
-
-    dim = DimmerAdmin.get_dimmer!(id)
-    render(conn, "show.json", dimmer: dim)
+    set(conn, Map.put(o, "fill", 0))
   end
 
-  def set_brightness(conn, %{"id" => id, "fill" => fill} = o) do
+  def set(conn, %{"id" => id, "fill" => fill} = o) do
     fill_ =
       cond do
         fill > 100 -> 100
-        fill < 5 -> 5
+        fill < 0 -> 0
         true -> fill
       end
 
-    DimmerAdmin.get_dimmer!(id)
-    |> DimmerController.set_brightness(fill_)
-    |> case do
-      :ok ->
-        #           DashHelper.broadcast_update_from(o, [id], "dimmer")
-        :ok
-
-      _ ->
-        :err
+    with {:ok, dim} <- DimmerAdmin.get_dimmer(id),
+         true <- DB.check_ref(o, dim),
+         :ok <- Benchmark.measure_p fn -> DimmerController.set_brightness(dim, fill_) end
+    do
+      dim = DimmerAdmin.get_dimmer!(id)
+      render(conn, "show.json", dimmer: dim)
+    else
+      casual_errors ->
+        ErrorHelper.handling_casual_errors(conn, casual_errors)
     end
-
-    dim = DimmerAdmin.get_dimmer!(id)
-    render(conn, "show.json", dimmer: dim)
-  end
-
-  def set_light_on(conn, %{"id" => id} = o) do
-    l = LightAdmin.get_light!(id)
-
-    LightController.turn_on([l])
-    |> case do
-      :ok ->
-        DashHelper.broadcast_update_from(o, [id], "dimmer")
-
-      _ ->
-        :err
-    end
-
-    dim = DimmerAdmin.get_dimmer!(l.dimmer_id)
-    render(conn, "show.json", dimmer: dim)
-  end
-
-  def set_light_off(conn, %{"id" => id} = o) do
-    l = LightAdmin.get_light!(id)
-
-    LightController.turn_off([l])
-    |> case do
-      :ok ->
-        DashHelper.broadcast_update_from(o, [id], "dimmer")
-
-      _ ->
-        :err
-    end
-
-    DashHelper.broadcast_update_from(o, [id], "dimmer")
-
-    dim = DimmerAdmin.get_dimmer!(l.dimmer_id)
-    render(conn, "show.json", dimmer: dim)
   end
 
 end

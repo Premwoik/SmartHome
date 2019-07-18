@@ -2,25 +2,24 @@ defmodule Core.Controllers.ActionController do
   @moduledoc false
 
   @behaviour Core.Controllers.Controller
+  alias UiWeb.DashboardChannel.Helper, as: Channel
 
   def turn_on(actions) do
-    actions
-#    |> Enum.filter(fn x -> x.active end)
-    |> Enum.map(fn a -> a.id end)
-    |> DB.Action.change_state(true)
-
-    Core.Actions.reload_actions()
-    :ok
+    set(actions, true)
   end
 
   def turn_off(actions) do
-    actions
-#    |> Enum.filter(fn x -> !x.active end)
-    |> Enum.map(fn a -> a.id end)
-    |> DB.Action.change_state(false)
-
-    Core.Actions.reload_actions()
-    :ok
+    set(actions, false)
   end
 
+  def set(actions, state) do
+    res =
+      actions
+      |> Enum.map(fn a -> a.id end)
+      |> DB.Action.change_state(state)
+
+    Core.Actions.reload_actions()
+    Enum.each(actions, fn %{id: id, ref: ref} -> Channel.broadcast_change("action", id, ref + 1) end)
+    res
+  end
 end

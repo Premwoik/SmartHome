@@ -2,61 +2,73 @@ defmodule Core.Controllers.DimmerController do
   @moduledoc false
 
   alias DB.{Light, Dimmer, Port}
+  alias UiWeb.DashboardChannel.Helper, as: Channel
   alias Core.Controllers.BasicController
   alias Core.Controllers.LightController
-  import Core.Controllers.BasicController, only: [flatten_result: 1, prepare_for_basic: 1]
+  # import Core.Controllers.BasicController, only: [flatten_result: 1, prepare_for_basic: 1]
 
-
-  def turn_on(dimmers) do
-    {pwm, normal} = Enum.split_with(dimmers, fn d -> d.lights == [] end)
-    [
-      Enum.flat_map(normal, fn d -> d.lights end)
-      |> LightController.turn_on(),
-      set_pwm_dimmer(pwm, true)
-    ]
-    |> flatten_result()
-  end
-
-  def turn_off(dimmers) do
-    {pwm, normal} = Enum.split_with(dimmers, fn d -> d.lights == [] end)
-    [
-      Enum.flat_map(normal, fn d -> d.lights end)
-      |> LightController.turn_off(),
-      set_pwm_dimmer(pwm, false)
-    ]
-    |> flatten_result()
-  end
-
-  def set_brightness(dimmer, brightness) do
+  def set_brightness(dimmer, value, deep \\ true) do
     dimmer.port.mode
     |> case do
-         "output" ->
-           set_brightness_classic(dimmer, brightness)
-         "output_pwm" ->
-           set_brightness_pwm(dimmer, brightness)
-         _ ->
-           :error
-       end
+      "output" ->
+        set_brightness_classic(dimmer, value, deep)
+
+      "output_pwm" ->
+        set_brightness_pwm(dimmer, value)
+
+      _ ->
+        :error
+    end
     |> case do
-         :ok ->
-           Dimmer.update_fill(dimmer, brightness)
-           :ok
-         e -> e
-       end
-  end
+      {:ok, dir} ->
+        Dimmer.update_fill(dimmer, value, dir)
+        Channel.broadcast_change("dimmer", dimmer.id, dimmer.ref + 1)
+        :ok
 
+      {err, _} ->
+        err
 
-  defp set_brightness_classic(dimmer, brightness) do
-    if dimmer.fill > 0 do
-      Dimmer.fill_to_time(dimmer, brightness)
-      |> fn t -> %Port{DB.Repo.preload(dimmer.port, :device) | timeout: t} end.()
-      |> List.wrap()
-      |> BasicController.turn_on()
-    else
-      {:error, "Dimmer must be turned on, before changing his brightness"}
+      :nothing ->
+        :ok
+
+      e ->
+        e
     end
   end
 
+  defp set_brightness_classic(dimmer, value, deep) do
+    if dimmer.fill != value do
+      cond do
+        deep && dimmer.fill == 0 ->
+          :ok = LightController.set(dimmer.lights, true, false)
+          set_brightness_classic_core(dimmer, value)
+
+        deep && value == 0 ->
+          LightController.set(dimmer.lights, false, false)
+          |> wrap_direction(1)
+
+        value == 0 ->
+          if Dimmer.any_light_on?(dimmer), do: :nothing, else: {:ok, 1}
+
+        true ->
+          set_brightness_classic_core(dimmer, value)
+      end
+    else
+      :nothing
+    end
+  end
+
+  defp wrap_direction(res, dir) do
+    {res, dir}
+  end
+
+  defp set_brightness_classic_core(dimmer, brightness) do
+    {time, dir} = Dimmer.fill_to_time(dimmer, brightness)
+    %Port{DB.Repo.preload(dimmer.port, :device) | timeout: time}
+    |> List.wrap()
+    |> BasicController.turn_on()
+    |> wrap_direction(dir)
+  end
 
   defp set_brightness_pwm(dimmer, brightness) do
     dimmer.port
@@ -64,24 +76,4 @@ defmodule Core.Controllers.DimmerController do
     |> List.wrap()
     |> BasicController.pwm(brightness)
   end
-
-
-  defp set_pwm_dimmer(dimmers, s) do
-    fill = if s, do: 100, else: 0
-    dimmers
-    |> prepare_for_basic()
-    |> BasicController.pwm(fill)
-    |> case do
-         :ok ->
-           Enum.map(
-             dimmers,
-             fn d -> DB.Dimmer.update(d, fill: fill, direction: 0)
-             end
-           )
-           :ok
-         error ->
-           error
-       end
-  end
-
 end

@@ -8,6 +8,7 @@ defmodule DB.Repo.Migrations.AddPages do
       add :title, :string, default: ""
       add :description, :string, default: ""
       add :order, :integer, default: 100
+      add :ref, :integer, default: 1
     end
 
     create table(:page_content_lights) do

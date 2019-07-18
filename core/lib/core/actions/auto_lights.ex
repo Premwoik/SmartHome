@@ -12,15 +12,18 @@ defmodule Core.Actions.AutoLights do
 
   @impl true
   def execute(on_off, action, %{offPid: pid} = amem) do
-    case alive?(pid) do
-      true ->
-        send(pid, :notified)
-        amem
+    #IO.puts "AutoLights #{NaiveDateTime.utc_now()}"
+    Benchmark.measure_p(fn ->
+      case alive?(pid) do
+        true ->
+          send(pid, :notified)
+          amem
 
-      false ->
-        turn_on_lights(action)
-        |> update_pid(amem)
-    end
+        false ->
+          turn_on_lights(action)
+          |> update_pid(amem)
+      end
+    end)
   end
 
   #  Privates

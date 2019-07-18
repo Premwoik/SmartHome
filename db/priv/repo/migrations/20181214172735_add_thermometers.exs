@@ -7,6 +7,7 @@ defmodule DB.Repo.Migrations.AddThermometers do
       add :name, :string
       add :address, :string
       add :device_id, references(:devices, on_delete: :delete_all)
+      add :ref, :integer, default: 1
     end
 
     create table(:therm_temp_reads) do
@@ -15,5 +16,6 @@ defmodule DB.Repo.Migrations.AddThermometers do
       timestamps()
     end
 
+    create unique_index(:thermometers, [:therm_id, :inserted_at])
   end
 end

@@ -9,7 +9,7 @@ defmodule Core.Device do
   @callback read_counted_values(device :: %DB.Device{}) :: list(integer)
   @callback heartbeat(device :: %DB.Device{}) :: any
 
-  alias DB.Port
+  alias DB.{Repo, Port}
 
   @type args_t :: list(%DB.Port{}) | %DB.Device{}
 
@@ -27,6 +27,12 @@ defmodule Core.Device do
 
   def do_r(args, function) do
     do_(function, args)
+  end
+
+  def synchronize(%DB.Device{} = d) do
+    Repo.preload(d, :ports).ports
+    |> Enum.group_by(fn port -> port.state end, fn {_, port} -> port end)
+    |> Enum.each(fn {state, ports} -> Core.Controllers.BasicController.set(ports, state) end)
   end
 
   @deprecated "use do_/2 or do_r/2 instead"
@@ -103,7 +109,8 @@ defmodule Core.Device do
   defp execute_function(func, o) do
     try do
       case func.() do
-        {:ok, []} -> :ok #TODO change this, becouse it looks like no data can be return 
+        # TODO change this, becouse it looks like no data can be return 
+        {:ok, []} -> :ok
         {:error, err} -> {:error, o, err}
       end
     catch
@@ -128,7 +135,7 @@ defmodule Core.Device do
   defp state_to_num(_), do: 1
 
   defp module(device) do
-    #device_ = DB.Repo.preload(device, :type)
-    String.to_existing_atom("Elixir." <> device.type.module)
+    device_ = DB.Repo.preload(device, :type)
+    String.to_existing_atom("Elixir." <> device_.type.module)
   end
 end
