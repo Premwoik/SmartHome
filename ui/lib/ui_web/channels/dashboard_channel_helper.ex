@@ -84,6 +84,15 @@ defmodule UiWeb.DashboardChannel.Helper do
         GenServer.call(__MODULE__, {:broadcast_update_from, ref, data_})
     end
   end
-
+  
+  @spec broadcast_change(string(), integer(), integer()) :: any()
+  def broadcast_change(type, id, ref) do
+    data = %{
+      type: type,
+      id: id,
+      ref: ref, 
+    }
+    UiWeb.Endpoint.broadcast("dashboard:lobby", "object:updated", data)
+  end
 
 end

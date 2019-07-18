@@ -4,6 +4,7 @@ defmodule UiWeb.PortController do
   alias Ui.PortAdmin
   alias DB.Port
   alias Core.Controllers.BasicController
+  alias UiWeb.Controllers.ErrorHelper
 
   alias UiWeb.DashboardChannel.Helper, as: DashHelper
   action_fallback(UiWeb.FallbackController)
@@ -44,23 +45,23 @@ defmodule UiWeb.PortController do
   end
 
   def set_on(conn, %{"id" => id} = o) do
-    DB.Port.get([id])
-    |> BasicController.turn_on()
-
-    DashHelper.broadcast_update_from(o, [id], "port")
-
-    port = PortAdmin.get_port!(id)
-    render(conn, "show.json", port: port)
+    set(conn, Map.put(o, "state", true))
   end
 
   def set_off(conn, %{"id" => id} = o) do
-    DB.Port.get([id])
-    |> BasicController.turn_off()
-
-    DashHelper.broadcast_update_from(o, [id], "port")
-
-    port = PortAdmin.get_port!(id)
-    render(conn, "show.json", port: port)
+    set(conn, Map.put(o, "state", false))
   end
 
+  def set(conn, %{"id" => id, "state" => state} = o) do
+    with {:ok, port} <- PortAdmin.get_port(id),
+         true <- DB.check_ref(o, port),
+         :ok <- BasicController.set([port], state)
+    do
+      port = PortAdmin.get_port!(id)
+      render(conn, "show.json", port: port)
+    else
+      casual_errors ->
+        ErrorHelper.handling_casual_errors(conn, casual_errors)
+    end
+  end
 end

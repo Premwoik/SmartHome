@@ -21,6 +21,7 @@ defmodule UiWeb.ActionView do
       start_time: action.start_time,
       end_time: action.end_time,
       port_id: action.port_id,
+      ref: action.ref,
       '@type': "action"
     }
   end

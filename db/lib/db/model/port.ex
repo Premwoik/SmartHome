@@ -3,6 +3,7 @@ defmodule DB.Port do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
+  import DB
 
   alias DB.{Repo, Port, Device}
 
@@ -21,12 +22,17 @@ defmodule DB.Port do
     field(:inverted_logic, :boolean)
     field(:type, :string)
     field(:timeout, :integer)
+    field(:ref, :integer)
     belongs_to(:device, DB.Device)
+    has_one(:light, DB.Light)
+    has_one(:dimmer, DB.Dimmer)
+    has_one(:sunblind, DB.Sunblind)
   end
 
-  def changeset(port, params \\ %{}) do
+  def changeset(port, params \\ %{}, all_str \\ false) do
+    params_ = inc_ref(port, Enum.into(params, %{}), all_str)
     port
-    |> cast(params, [:state, :device_id, :number, :name, :type, :mode, :timeout, :pwm_fill])
+    |> cast(params_, [:state, :device_id, :number, :name, :type, :mode, :timeout, :pwm_fill, :ref])
   end
 
   def preload(key \\ :port) do
@@ -38,7 +44,7 @@ defmodule DB.Port do
       List.foldr(data, Port, fn {num, state}, acc ->
         where(acc, [p], p.device_id == ^device_id and p.number == ^num and p.state != ^state)
       end)
-      |> update([p], [set: [state: not p.state]])
+      |> update([p], [set: [state: not p.state], inc: [ref: 1]])
       |> Repo.update_all([])
   end
 
@@ -67,7 +73,7 @@ defmodule DB.Port do
 
   def update(ports, args \\ %{}) do
     for port <- ports do
-      Ecto.Changeset.change(port, args)
+      changeset(port, args)
       |> Repo.update()
     end
   end

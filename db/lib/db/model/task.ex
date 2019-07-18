@@ -4,6 +4,7 @@ defmodule DB.Task do
   use Timex.Ecto.Timestamps
   import Ecto.Changeset
   import Ecto.Query
+  import DB
 
   alias DB.{Repo, Task}
 
@@ -18,11 +19,13 @@ defmodule DB.Task do
     field(:limit, :integer)
     field(:start_date, :naive_datetime)
     field(:end_date, :naive_datetime)
+    field(:ref, :integer)
   end
 
-  def changeset(port, params \\ %{}) do
-    port
-    |> cast(params, [:name, :status, :type_id, :action_id, :device_id, :frequency, :execution_time, :limit])
+  def changeset(task, params \\ %{}, all_str \\ false) do
+    params_ = inc_ref(task, Enum.into(params, %{}), all_str)
+    task 
+    |> cast(params_, [:name, :status, :type_id, :action_id, :device_id, :frequency, :execution_time, :limit, :ref])
 
     # TODO add others parameters to the cast, only when android app will be seting it correctly
   end

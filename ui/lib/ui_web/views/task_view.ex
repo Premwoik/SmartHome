@@ -26,6 +26,7 @@ defmodule UiWeb.TaskView do
       limit: task.limit,
       start_date: task.start_date,
       end_date: task.end_date,
+      ref: task.ref,
       '@type': "task"
     }
   end

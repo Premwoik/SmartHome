@@ -3,6 +3,7 @@ defmodule DB.Sunblind do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
+  import DB
 
   alias DB.{Repo, Sunblind, Port}
 
@@ -12,17 +13,20 @@ defmodule DB.Sunblind do
     belongs_to(:open_port, DB.Port)
     field(:position, :integer, default: 0)
     # :only_close | :pulse | :other
-    field(:type, :string, default: "only_close") # only_close | pulse | pulse2
+    # only_close | pulse | pulse2
+    field(:type, :string, default: "only_close")
     field(:full_open_time, :integer, default: 0)
     # :down | :up
     field(:direction, :string, default: "up")
     # :open | :close | :in_move | :position
     field(:state, :string, default: "open")
+    field(:ref, :integer)
   end
 
-  def changeset(action, params \\ %{}) do
-    action
-    |> cast(params, [:state, :direction, :full_open_time, :type, :position])
+  def changeset(sunblind, params \\ %{}, all_str \\ false) do
+    params_ = inc_ref(sunblind, Enum.into(params, %{}), all_str)
+    sunblind
+    |> cast(params_, [:state, :direction, :full_open_time, :type, :position, :ref])
 
     #    |> validate_required([:active])
     #    |> validate_format(:email, ~r/@/)
@@ -66,7 +70,7 @@ defmodule DB.Sunblind do
   end
 
   def update(sunblind, changes \\ %{}) do
-    Ecto.Changeset.change(sunblind, changes)
+    changeset(sunblind, changes)
     |> Repo.update!()
   end
 

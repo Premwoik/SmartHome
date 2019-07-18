@@ -18,7 +18,7 @@ defmodule Ui.TaskAdmin do
 
   """
   def list_tasks do
-    Repo.all(Task) |> Repo.preload :type
+    Repo.all(Task) |> preload()
   end
 
   @doc """
@@ -35,8 +35,19 @@ defmodule Ui.TaskAdmin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id), do: Repo.get!(Task, id) |> Repo.preload(:type)
+  def get_task!(id), do: Repo.get!(Task, id) |> preload()
 
+  def get_task(id) do 
+    res = Repo.get!(Task, id) |> preload()
+    case res do
+      nil -> {:error, :wrong_id}
+      r -> {:ok, r}
+    end
+  end
+
+  def preload(o) do
+    Repo.preload(o, :type)
+  end
   @doc """
   Creates a task.
 
@@ -51,7 +62,7 @@ defmodule Ui.TaskAdmin do
   """
   def create_task(attrs \\ %{}) do
     %Task{}
-    |> Task.changeset(attrs)
+    |> Task.changeset(attrs, all_str = true)
     |> Repo.insert()
   end
 
@@ -69,7 +80,7 @@ defmodule Ui.TaskAdmin do
   """
   def update_task(%Task{} = task, attrs) do
     task
-    |> Task.changeset(attrs)
+    |> Task.changeset(attrs, all_str = true)
     |> Repo.update()
   end
 

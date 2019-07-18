@@ -20,6 +20,7 @@ defmodule UiWeb.PortView do
       type: port.type,
       timeout: port.timeout,
       device_id: port.device_id,
+      ref: port.ref,
       '@type': "port"
     }
   end

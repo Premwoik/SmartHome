@@ -38,19 +38,19 @@ defmodule UiWeb.Router do
 
     post "/dimmers/setOn/:id", DimmerController, :set_on
     post "/dimmers/setOff/:id", DimmerController, :set_off
-    post "/dimmers/setLightOff/:id", DimmerController, :set_light_off
-    post "/dimmers/setLightOn/:id", DimmerController, :set_light_on
-    post "/dimmers/setBrightness", DimmerController, :set_brightness
+    post "/dimmers/setBrightness", DimmerController, :set
 
 
     post "/lights/setOn/:id", LightController, :set_on
     post "/lights/setOff/:id", LightController, :set_off
+    post "/lights/set/:id/:state", LightController, :set
 
     post "/sunblinds/click/:id", SunblindController, :click
     post "/sunblinds/calibrate", SunblindController, :calibrate
 
     post "/actions/setOn/:id", ActionController, :set_on
     post "/actions/setOff/:id", ActionController, :set_off
+    post "/actions/set/:id/:state", ActionController, :set
     post "/actions/update_args/:id", ActionController, :update_args
     get "/actions/get_args/:id", ActionController, :get_args
 
