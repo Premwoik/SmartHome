@@ -20,6 +20,7 @@ defmodule UiWeb.SunblindView do
       full_open_time: sunblind.full_open_time,
       direction: sunblind.direction,
       state: sunblind.state,
+      ref: sunblind.ref,
       '@type': "sunblind"
     }
   end

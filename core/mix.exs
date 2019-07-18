@@ -16,7 +16,7 @@ defmodule SocketTest2.MixProject do
     [
       mod: {Core, []},
       applications: [:timex, :db, :httpotion],
-      extra_applications: [:logger],
+      extra_applications: [:logger, :inets],
     ]
   end
 

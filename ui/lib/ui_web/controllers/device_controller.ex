@@ -1,7 +1,7 @@
 defmodule UiWeb.DeviceController do
   use UiWeb, :controller
 
-  alias Ui.Admin
+  alias Ui.DeviceAdmin, as: Admin
   alias DB.Device
 
   alias UiWeb.DashboardChannel.Helper, as: DashHelper

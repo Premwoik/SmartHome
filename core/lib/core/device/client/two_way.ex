@@ -8,7 +8,7 @@ defmodule Core.Device.Client.TwoWay do
   @behaviour Core.Devices.Client
 
   def start_link(host, port, opts, keywords, timeout \\ 5000, length \\ 11) do
-    Logger.info("Initializing Device.Client")
+    Logger.info("Initializing Device.Client #{host}, #{port}")
     Connection.start_link(__MODULE__, {host, port, opts, timeout, length}, keywords)
   end
 

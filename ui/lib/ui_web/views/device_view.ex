@@ -19,6 +19,7 @@ defmodule UiWeb.DeviceView do
       type_id: device.type_id,
       #TODO handle not preload 
       type: Helper.obj_to_view(DeviceView, :device_type, device.type),
+      ref: device.ref,
       alive: device.alive,
       '@type': "device"
     }

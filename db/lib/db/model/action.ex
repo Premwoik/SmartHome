@@ -4,6 +4,7 @@ defmodule DB.Action do
   import Ecto.Changeset
   import Ecto.Query
   alias DB.{Repo, Action, Port}
+  import DB
 
   @derive {Poison.Encoder, only: [:id, :function, :active, :params, :port]}
   schema "actions" do
@@ -14,13 +15,15 @@ defmodule DB.Action do
     field(:frequency, :integer)
     field(:start_time, :time)
     field(:end_time, :time)
+    field(:ref, :integer)
     belongs_to(:port, DB.Port)
     many_to_many(:args, DB.Port, join_through: "actions_arguments")
   end
 
-  def changeset(action, params \\ %{}) do
+  def changeset(action, params \\ %{}, all_str \\ false) do
+    params_ = inc_ref(action, Enum.into(params, %{}), all_str)
     action
-    |> cast(params, [
+    |> cast(params_, [
       :name,
       :function,
       :active,
@@ -28,7 +31,8 @@ defmodule DB.Action do
       :frequency,
       :start_time,
       :end_time,
-      :port_id
+      :port_id,
+      :ref
     ])
   end
 

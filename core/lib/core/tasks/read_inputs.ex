@@ -10,8 +10,11 @@ defmodule Core.Tasks.ReadInputs do
 
   @impl true
   def execute(task, %{last_read: last_read} = state) do
+
+    #IO.puts "Before read inputs #{NaiveDateTime.utc_now()}"
     case Basics.read(task.device) do
       {:ok, read} ->
+        #IO.puts "After read inputs #{NaiveDateTime.utc_now()}"
         new_up = read -- last_read
         new_down = last_read -- read
 

@@ -18,7 +18,7 @@ defmodule Ui.DimmerAdmin do
 
   """
   def list_dimmers do
-    Repo.all(Dimmer) |> Repo.preload(:port)
+    Repo.all(Dimmer) |> preload()
   end
 
   @doc """
@@ -35,7 +35,19 @@ defmodule Ui.DimmerAdmin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_dimmer!(id), do: Repo.get!(Dimmer, id) |> Repo.preload([:port, lights: [:port]])
+  def get_dimmer!(id), do: Repo.get!(Dimmer, id) |> preload() 
+
+  def get_dimmer(id) do
+    res = Repo.get(Dimmer, id) |> preload() 
+    case res do
+      nil -> {:error, :wrong_id}
+      r -> {:ok, r}
+    end
+  end
+
+
+  def preload(dimmer), do: Repo.preload(dimmer, [:port, lights: [:port]])
+
 
   @doc """
   Creates a dimmer.
@@ -52,7 +64,7 @@ defmodule Ui.DimmerAdmin do
   def create_dimmer(attrs \\ %{}) do
     IO.inspect(attrs)
     %Dimmer{}
-    |> Dimmer.changeset(attrs)
+    |> Dimmer.changeset(attrs, all_str = true)
     |> Repo.insert()
   end
 
@@ -70,7 +82,7 @@ defmodule Ui.DimmerAdmin do
   """
   def update_dimmer(%Dimmer{} = dimmer, attrs) do
     dimmer
-    |> Dimmer.changeset(attrs)
+    |> Dimmer.changeset(attrs, all_str = true)
     |> Repo.update()
   end
 

@@ -21,7 +21,8 @@ defmodule UiWeb.DimmerView do
       fill: dimmer.fill,
       direction: dimmer.direction,
       full_time: dimmer.time,
-      lights: Helper.objs_to_view(UiWeb.LightView, :light, dimmer.lights),
+      ref: dimmer.ref,
+      lights: nil, #Helper.objs_to_view(UiWeb.LightView, :light, dimmer.lights),
       '@type': "dimmer"
     }
   end

@@ -1,4 +1,4 @@
-defmodule Ui.AdminSunblind do
+defmodule Ui.SunblindAdmin do
   @moduledoc """
   The AdminSunblind context.
   """
@@ -38,6 +38,16 @@ defmodule Ui.AdminSunblind do
   """
   def get_sunblind!(id), do: Repo.get!(Sunblind, id) |> Repo.preload(:port)
 
+  def get_sunblind(id) do
+    res = Repo.get!(Sunblind, id) |> preload()
+    case res do
+      nil -> {:error, :wrong_id}
+      r -> {:ok, r}
+    end
+  end
+
+  def preload(sun), do: Repo.preload(sun, :port)
+
 
   @doc """
   Creates a sunblind.
@@ -53,7 +63,7 @@ defmodule Ui.AdminSunblind do
   """
   def create_sunblind(attrs \\ %{}) do
     %Sunblind{}
-    |> Sunblind.changeset(attrs)
+    |> Sunblind.changeset(attrs, all_str = true)
     |> Repo.insert()
   end
 
@@ -71,7 +81,7 @@ defmodule Ui.AdminSunblind do
   """
   def update_sunblind(%Sunblind{} = sunblind, attrs) do
     sunblind
-    |> Sunblind.changeset(attrs)
+    |> Sunblind.changeset(attrs, all_str = true)
     |> Repo.update()
   end
 

@@ -11,6 +11,7 @@ defmodule DB.Repo.Migrations.AddSunblinds do
       add :direction, :string
 #      add :mode
       add :state, :string
+      add :ref, :integer, default: 1
     end
   end
 end

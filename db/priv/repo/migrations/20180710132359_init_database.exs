@@ -8,6 +8,7 @@ defmodule DB.Repo.Migrations.InitDatabase do
       add :port, :integer
       #add :type, :string
       add :alive, :boolean
+      add :ref, :integer, default: 1
     end
     create table(:ports) do
       add :device_id, references("devices", on_delete: :nilify_all)
@@ -19,6 +20,7 @@ defmodule DB.Repo.Migrations.InitDatabase do
       add :state, :boolean
       add :pwm_fill, :integer, default: 0
       add :inverted_logic, :boolean, default: false
+      add :ref, :integer, default: 1
     end
     create table(:watchers) do
       add :device_id, references("devices", on_delete: :nilify_all)
@@ -32,6 +34,7 @@ defmodule DB.Repo.Migrations.InitDatabase do
       add :params, :string
       add :function, :string
       add :port_id, references("ports", on_delete: :nilify_all)
+      add :ref, :integer, default: 1
     end
     create table(:actions_arguments, primary_key: false) do
       add :action_id, references("actions", on_delete: :delete_all)
@@ -49,6 +52,7 @@ defmodule DB.Repo.Migrations.InitDatabase do
       add :fill, :integer
       add :direction, :integer, default: 1
       add :time, :integer, default: 4_500
+      add :ref, :integer, default: 1
     end
   end
 end

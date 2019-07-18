@@ -29,9 +29,9 @@ defmodule DB.Init do
     if !exist? do
       :ok = insert_ard_mega()
       :ok = insert_integra64()
+      :ok = insert_shelly()
       :ok = insert_tasks()
       :ok = init_pages()
-      :ok = insert_shelly()
       :ok
     end
 
@@ -102,6 +102,13 @@ defmodule DB.Init do
         ports: [p2]
       }
       |> Repo.insert!()
+
+
+    %Light{port_id: 22, dimmer_id: nil}
+    |> Repo.insert!()
+    
+    %Light{port_id: 23, dimmer_id: nil}
+    |> Repo.insert!()
 
     :ok
   end
@@ -354,6 +361,18 @@ defmodule DB.Init do
     %Dimmer{port_id: 8, type: "click", fill: 0, lights: [l5, l6]}
     |> Repo.insert!()
 
+    #%Light{
+      #port_id: 23,
+      #dimmer_id: nil
+    #}
+    #|> Repo.insert!()
+
+    #%Light{
+      #port_id: 22,
+      #dimmer_id: nil
+    #}
+    #|> Repo.insert!()
+
     :ok
   end
 
@@ -512,10 +531,16 @@ defmodule DB.Init do
     }
     |> Repo.insert!()
 
+    %TaskType{
+      name: "Clean logs",
+      module: "Core.Tasks.CleanLogs"
+    }
+    |> DB.Repo.insert!()
+
     # read integra inputs
     %Task{
       type_id: 3,
-      name: "Czytaj satel",
+      name: "Odczyt wejść Satel",
       status: "waiting",
       action: nil,
       device_id: 2,
@@ -535,7 +560,7 @@ defmodule DB.Init do
       action_id: 1,
       device: nil,
       frequency: 0,
-      execution_time: ~T[16:00:00],
+      execution_time: ~T[19:00:00],
       limit: -1,
       start_date: nil,
       end_date: nil
@@ -560,7 +585,7 @@ defmodule DB.Init do
     # make sunblinds opened at morning
     %Task{
       type_id: 4,
-      name: "heartbeat arduino mega",
+      name: "Nasłuchiwanie Arduino MEGA",
       status: "waiting",
       action: nil,
       device_id: 1,
@@ -575,7 +600,7 @@ defmodule DB.Init do
     # make sunblinds opened at morning
     %Task{
       type_id: 5,
-      name: "read temps from arduino mega",
+      name: "Odczyt temperatury Arduino MEGA",
       status: "inactive",
       action: nil,
       device_id: 1,
@@ -590,11 +615,39 @@ defmodule DB.Init do
     # make sunblinds opened at morning
     %Task{
       type_id: 6,
-      name: "read watts from arduino mega",
+      name: "Odczyt watów Arduino MEGA",
       status: "inactive",
       action: nil,
       device_id: 1,
       frequency: 300_000,
+      execution_time: nil,
+      limit: -1,
+      start_date: nil,
+      end_date: nil
+    }
+    |> Repo.insert!()
+
+    %Task{
+      type_id: 9,
+      name: "Czyszczenie logów z urządzeń",
+      status: "inactive",
+      action: nil,
+      device_id: nil,
+      frequency: 10_080_000,
+      execution_time: nil,
+      limit: -1,
+      start_date: nil,
+      end_date: nil
+    }
+    |> Repo.insert!()
+
+    %Task{
+      type_id: 7,
+      name: "Odczyt stanu wyjść Shelly2",
+      status: "inactive",
+      action: nil,
+      device_id: 1,
+      frequency: 5_000,
       execution_time: nil,
       limit: -1,
       start_date: nil,

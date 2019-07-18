@@ -31,6 +31,13 @@ defmodule Ui.ActionAdmin do
   """
   def get_action!(id), do: Repo.get(Action, id)
 
+  def get_action(id) do
+    case Repo.get(Action, id) do
+      nil -> {:error, :wrong_id}
+      res -> {:ok, res}
+    end
+  end
+
   @doc """
   Creates a action.
 
@@ -45,7 +52,7 @@ defmodule Ui.ActionAdmin do
   """
   def create_action(attrs \\ %{}) do
     %Action{}
-    |> Action.changeset(attrs)
+    |> Action.changeset(attrs, all_str = true)
     |> Repo.insert()
   end
 
@@ -63,7 +70,7 @@ defmodule Ui.ActionAdmin do
   """
   def update_action(%Action{} = action, attrs) do
     action
-    |> Action.changeset(attrs)
+    |> Action.changeset(attrs, all_str = true)
     |> Repo.update()
   end
 
