@@ -1,4 +1,4 @@
-defmodule Ui.Admin do
+defmodule Ui.DeviceAdmin do
   @moduledoc """
   The Admin context.
   """
@@ -17,13 +17,13 @@ defmodule Ui.Admin do
 
   def create_device(attrs \\ %{}) do
     %Device{}
-    |> Device.changeset(attrs)
+    |> Device.changeset(attrs, all_str = true)
     |> Repo.insert()
   end
 
   def update_device(%Device{} = device, attrs) do
     device
-    |> Device.changeset(attrs)
+    |> Device.changeset(attrs, all_str = true)
     |> Repo.update()
   end
 

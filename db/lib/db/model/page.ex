@@ -4,6 +4,7 @@ defmodule DB.Page do
   import Ecto.Changeset
   import Ecto.Query
 
+  import DB
   alias DB.{Repo, Light, Port, Dimmer, Page}
 
   @derive {Poison.Encoder, except: [:__meta__]}

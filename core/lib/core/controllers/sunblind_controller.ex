@@ -3,6 +3,7 @@ defmodule Core.Controllers.SunblindController do
 
   @behaviour Core.Controllers.Controller
 
+  alias UiWeb.DashboardChannel.Helper, as: Channel
   alias DB.{Port, Sunblind}
   alias Core.Controllers.BasicController
   import Core.Controllers.BasicController, only: [prepare_for_basic: 1, flatten_result: 1]
@@ -61,11 +62,13 @@ defmodule Core.Controllers.SunblindController do
 
   defp skip_not(sunblinds, state) do
     sunblinds
-    |> Enum.filter(&(&1.state ==  state))
+    |> Enum.filter(&(&1.state == state))
   end
 
   defp to_ports(sunblinds, next_state \\ "") do
-    Enum.map(sunblinds, fn s -> DB.Repo.preload(s, [Port.preload, Port.preload(:open_port)]) |> to_port(next_state) end)
+    Enum.map(sunblinds, fn s ->
+      DB.Repo.preload(s, [Port.preload(), Port.preload(:open_port)]) |> to_port(next_state)
+    end)
   end
 
   defp to_port(%{type: type, port: p, open_port: op}, next_state) do
@@ -82,7 +85,8 @@ defmodule Core.Controllers.SunblindController do
         {:error, s, _} -> filter_invalid(sunblinds, s)
       end
 
-    Sunblind.update_state(valid_sunblinds, "in_move")
+    update(valid_sunblinds, "in_move")
+
     Task.start(fn -> unblock_sunblinds(valid_sunblinds, state) end)
     res
   end
@@ -91,16 +95,23 @@ defmodule Core.Controllers.SunblindController do
     Enum.filter(sunblinds, fn s -> !Enum.any?(invalid, fn i -> i.id == s.port.id end) end)
   end
 
-  defp unblock_sunblinds(sunblinds, state) do
+  def unblock_sunblinds(sunblinds, state) do
     sunblinds
     |> Enum.group_by(fn s -> s.full_open_time end)
     |> Enum.sort()
-    |> Enum.each(fn {t, s} ->
+    |> Enum.each(fn {t, ss} ->
       receive do
       after
         t ->
-          Sunblind.update_state(s, state)
+          update(ss, state, 2)
       end
+    end)
+  end
+
+  defp update(sunblinds, state, v \\ 1) do
+    Enum.each(sunblinds, fn %{id: id, ref: ref} = s ->
+      Sunblind.update(s, %{state: state})
+      Channel.broadcast_change("sunblind", id, ref + v)
     end)
   end
 end

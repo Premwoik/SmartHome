@@ -19,6 +19,7 @@ defmodule DB.Repo.Migrations.AddTasks do
       add :limit, :integer
       add :start_date, :naive_datetime
       add :end_date, :naive_datetime
+      add :ref, :integer, default: 1
     end
   end
 end

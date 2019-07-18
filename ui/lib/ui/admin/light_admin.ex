@@ -20,7 +20,7 @@ defmodule Ui.LightAdmin do
 
   """
   def list_lights do
-    Repo.all(Light) |> Repo.preload([:port, dimmer: [:port]])
+    Repo.all(Light) |> preload()
   end
 
   @doc """
@@ -37,7 +37,20 @@ defmodule Ui.LightAdmin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_light!(id), do: Repo.get!(Light, id) |> Repo.preload([:port, dimmer: [:port]])
+  def get_light!(id), do: Repo.get!(Light, id) |> preload() 
+
+  def get_light(id) do
+    res = Repo.get(Light, id) |> preload()
+    case res do
+      nil -> {:error, :wrong_id}
+      r -> {:ok, r}
+    end
+  end
+
+
+  def preload(light) do
+    Repo.preload(light, [:port, dimmer: [:port]])
+  end
 
   @doc """
   Creates a light.
@@ -53,7 +66,7 @@ defmodule Ui.LightAdmin do
   """
   def create_light(attrs \\ %{}) do
     %Light{}
-    |> Light.changeset(attrs)
+    |> Light.changeset(attrs, all_str = true)
     |> Repo.insert()
   end
 
@@ -71,7 +84,7 @@ defmodule Ui.LightAdmin do
   """
   def update_light(%Light{} = light, attrs) do
     light
-    |> Light.changeset(attrs)
+    |> Light.changeset(attrs, all_str = true)
     |> Repo.update()
   end
 

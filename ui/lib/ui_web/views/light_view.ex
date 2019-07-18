@@ -18,6 +18,7 @@ defmodule UiWeb.LightView do
       dimmer_id: light.dimmer_id,
       port: Helper.obj_to_view(PortView, :port, light.port),
       dimmer: Helper.obj_to_view(DimmerView, :dimmer, light.dimmer),
+      ref: light.ref,
       '@type': "light"
       
     }

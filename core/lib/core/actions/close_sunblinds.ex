@@ -13,9 +13,11 @@ defmodule Core.Actions.CloseSunblinds do
 
   @impl true
   def execute(:up, action, amem) do
-    DB.Action.get_args_ids(action)
-    |> DB.Sunblind.get_by_port()
-    |> SunblindController.close()
+    Benchmark.measure_p(fn ->
+      DB.Action.get_args_ids(action)
+      |> DB.Sunblind.get_by_port()
+      |> SunblindController.close()
+    end)
 
     # Sunblind.get_type("only_close")
     # |> SunblindController.close()
@@ -23,9 +25,11 @@ defmodule Core.Actions.CloseSunblinds do
   end
 
   def execute(:down, action, amem) do
-    DB.Action.get_args_ids(action)
-    |> DB.Sunblind.get_by_port()
-    |> SunblindController.open()
+    Benchmark.measure_p(fn ->
+      DB.Action.get_args_ids(action)
+      |> DB.Sunblind.get_by_port()
+      |> SunblindController.open()
+    end)
 
     # Sunblind.get_type("only_close")
     # |> SunblindController.open()

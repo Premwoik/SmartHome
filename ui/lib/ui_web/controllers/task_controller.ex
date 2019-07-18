@@ -3,6 +3,8 @@ defmodule UiWeb.TaskController do
 
   alias Ui.TaskAdmin
   alias DB.{Task, TaskType}
+  alias Core.Controllers.TaskController
+  alias UiWeb.Controllers.ErrorHelper
 
   alias UiWeb.DashboardChannel.Helper, as: DashHelper
   action_fallback(UiWeb.FallbackController)
@@ -50,23 +52,24 @@ defmodule UiWeb.TaskController do
 
 
   def set_on(conn, %{"id" => id} = o) do
-    tasks = [TaskAdmin.get_task!(id)]
-    Core.Controllers.TaskController.turn_on(tasks)
-
-    DashHelper.broadcast_update_from(o, [id], "task")
-
-    data = TaskAdmin.get_task!(id)
-    render(conn, "show.json", task: data)
+    set(conn, Map.put(o, "status", "waiting")) 
   end
 
   def set_off(conn, %{"id" => id} = o) do
-    tasks = [TaskAdmin.get_task!(id)]
-    Core.Controllers.TaskController.turn_off(tasks)
+    set(conn, Map.put(o, "status", "inactive")) 
+  end
 
-    DashHelper.broadcast_update_from(o, [id], "task")
-
-    data = TaskAdmin.get_task!(id)
-    render(conn, "show.json", task: data)
+  def set(conn, %{"id" => id, "status" => status} = o) do
+    with {:ok, task} <- TaskAdmin.get_task(id),
+         true <- DB.check_ref(o, task),
+         {1, nil} <- TaskController.set([task], status)
+    do
+      data = TaskAdmin.get_task!(id)
+      render(conn, "show.json", task: data)
+    else
+      casual_error ->
+        ErrorHelper.handling_casual_errors(conn, casual_error)
+    end
   end
 
 end

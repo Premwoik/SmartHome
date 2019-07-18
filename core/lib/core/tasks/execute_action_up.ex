@@ -6,6 +6,7 @@ defmodule Core.Tasks.ExecuteActionUp do
 
   @impl true
   def execute(task, _) do
+    IO.inspect NaiveDateTime.utc_now()
     @actions.activate_up([task.action_id])
   end
 

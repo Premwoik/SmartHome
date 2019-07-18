@@ -35,7 +35,20 @@ defmodule Ui.PortAdmin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_port!(id), do: Repo.get!(Port, id)
+  def get_port!(id), do: Repo.get!(Port, id) |> preload()
+
+  def get_port(id) do 
+    case Repo.get(Port, id) |> preload() do
+      nil -> 
+        {:error, :wrong_id}
+      p ->
+        {:ok, p}
+    end
+  end
+
+  def preload(p) do
+    DB.Repo.preload(p, :device)
+  end
 
   @doc """
   Creates a port.
@@ -51,7 +64,7 @@ defmodule Ui.PortAdmin do
   """
   def create_port(attrs \\ %{}) do
     %Port{}
-    |> Port.changeset(attrs)
+    |> Port.changeset(attrs, all_str = true)
     |> Repo.insert()
   end
 
@@ -69,7 +82,7 @@ defmodule Ui.PortAdmin do
   """
   def update_port(%Port{} = port, attrs) do
     port
-    |> Port.changeset(attrs)
+    |> Port.changeset(attrs, all_str = true)
     |> Repo.update()
   end
 

@@ -5,6 +5,7 @@ defmodule UiWeb.LightController do
   alias Core.Controllers.LightController
   #alias Core.Controllers.BasicController
   alias DB.Light
+  alias UiWeb.Controllers.ErrorHelper
 
   alias UiWeb.DashboardChannel.Helper, as: DashHelper
   action_fallback(UiWeb.FallbackController)
@@ -44,28 +45,25 @@ defmodule UiWeb.LightController do
     end
   end
 
+  def set(conn, %{"id" => id, "state" => state} = o) do
+    with {:ok, light} <- LightAdmin.get_light(id),
+          true <- DB.check_ref(o, light),
+          :ok <- Benchmark.measure_p fn -> LightController.set([light], state) end
+    do
+      light = LightAdmin.get_light!(id)
+      render(conn, "show.json", light: light)
+    else
+      casual_errors ->
+        ErrorHelper.handling_casual_errors(conn, casual_errors)
+    end
+  end
+
   def set_on(conn, %{"id" => id} = o) do
-      [LightAdmin.get_light!(id)]
-      |> LightController.turn_on()
-      #|> BasicController.prepare_for_basic()
-      #|> BasicController.turn_on()
-
-    DashHelper.broadcast_update_from(o, [id], "light")
-
-    light = LightAdmin.get_light!(id)
-    render(conn, "show.json", light: light)
+    set(conn, Map.put(o, "state", true))
   end
 
   def set_off(conn, %{"id" => id} = o) do
-      [LightAdmin.get_light!(id)]
-      |> LightController.turn_off()
-      #|> BasicController.prepare_for_basic()
-      #|> BasicController.turn_off()
-
-    DashHelper.broadcast_update_from(o, [id], "light")
-
-    light = LightAdmin.get_light!(id)
-    render(conn, "show.json", light: light)
+    set(conn, Map.put(o, "state", false))
   end
 
 end
