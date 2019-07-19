@@ -5,7 +5,7 @@ defmodule Db.MixProject do
     [
       app: :db,
       version: "0.1.0",
-      elixir: "~> 1.6",
+      elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -15,7 +15,7 @@ defmodule Db.MixProject do
   def application do
     [
       applications: [:timex_ecto],
-      extra_applications: [:logger, :sqlite_ecto2, :ecto],
+      extra_applications: [:logger],
       mod: {DB.Application, []}
     ]
   end
