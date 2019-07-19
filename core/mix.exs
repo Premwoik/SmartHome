@@ -1,4 +1,4 @@
-defmodule SocketTest2.MixProject do
+defmodule Core.MixProject do
   use Mix.Project
 
   def project do
@@ -15,8 +15,8 @@ defmodule SocketTest2.MixProject do
   def application do
     [
       mod: {Core, []},
-      applications: [:timex, :db, :httpotion],
-      extra_applications: [:logger, :inets],
+      applications: [:timex],
+      extra_applications: [:logger, :db, :httpotion],
     ]
   end
 

@@ -1,5 +1,3 @@
-# This file is responsible for configuring your application
-# and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
 # This configuration is loaded before any dependency and is restricted
@@ -25,6 +23,10 @@ use Mix.Config
 config :db,
        ecto_repos: [DB.Repo]
 
+config :db,
+       DB.Repo,
+       adapter: Sqlite.Ecto2,
+       database: "../db/itHome.sqlite3"
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
@@ -32,4 +34,4 @@ config :db,
 # Configuration from the imported file will override the ones defined
 # here (which is why it is important to import them last).
 #
-import_config "#{Mix.env}.exs"
+#import_config "#{Mix.env}.exs"

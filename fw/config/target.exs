@@ -30,5 +30,6 @@ config :nerves_init_gadget,
        node_name: "rpi3",
        ssh_console_port: 22
 
+config :tzdata, :autoupdate, :disabled
 
 import_config "../../core/config/config.exs"
