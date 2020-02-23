@@ -9,7 +9,7 @@ defmodule DB.DeviceJournal do
   defmodule Type do
     def normal, do: "NORMAL"
     def error, do: "ERROR"
-    def timeout, do: "TIEMOUT"
+    def timeout, do: "TIMEOUT"
   end
 
   schema "device_journals" do
@@ -20,8 +20,8 @@ defmodule DB.DeviceJournal do
     timestamps
   end
 
-  @spec log(%DB.Device{}, string(), string()) :: any()
-  def log(device, name, info \\ "", type \\ "INFO")
+  @spec log(%DB.Device{} | integer(), string(), string()) :: any()
+  def log(device, name, info \\ "", type \\ "NORMAL")
 
   def log(%Device{} = d, name, info, type) do
     log(d.id, name, info, type)
@@ -30,7 +30,7 @@ defmodule DB.DeviceJournal do
   def log(device_id, name, info, type) do
     Task.start(fn ->
       %DeviceJournal{
-        type: Type.normal(),
+        type: type,
         name: name,
         info: info,
         device_id: device_id
