@@ -53,6 +53,26 @@ defmodule UiWeb.DimmerController do
     set(conn, Map.put(o, "fill", 0))
   end
 
+  def set(conn, %{"id" => id, "fill" => fill, "red" => r, "green" => g, "blue" => b} = o) do
+    fill_ =
+      cond do
+        fill > 100 -> 100
+        fill < 0 -> 0
+        true -> fill
+      end
+
+    with {:ok, dim} <- DimmerAdmin.get_dimmer(id),
+         true <- DB.check_ref(o, dim),
+         :ok <- Benchmark.measure_p fn -> DimmerController.set_rgb_brightness(dim, fill_, r ,g ,b) end
+      do
+      dim = DimmerAdmin.get_dimmer!(id)
+      render(conn, "show.json", dimmer: dim)
+    else
+      casual_errors ->
+        ErrorHelper.handling_casual_errors(conn, casual_errors)
+    end
+  end
+
   def set(conn, %{"id" => id, "fill" => fill} = o) do
     fill_ =
       cond do

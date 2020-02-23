@@ -54,6 +54,14 @@ defmodule Core.Tasks do
 
   @impl true
   @doc """
+
+  """
+  def handle_cast(:update_task, %{timer_ref: ref, started: starded} = s) do
+
+  end
+
+  @impl true
+  @doc """
     Refresh own task's datas to values that are in the database. If task status changed, task process should follow that change, (It means starting new task or ending actually runnig if needed)
   """
   def handle_cast(:update_tasks, %{timer_ref: ref, started: started} = s) do
@@ -139,16 +147,16 @@ defmodule Core.Tasks do
 
       :force_stop ->
         GenServer.cast(__MODULE__, {:finish_task, task})
-        # {:ok, {task, state, num}}
+      # {:ok, {task, state, num}}
     after
       get_wait_time(task) ->
         new_state =
           module(task).execute(task, state)
           |> case do
-            {:ok, state_} -> state_
-            :ok -> state
-            :error -> state
-          end
+               {:ok, state_} -> state_
+               :ok -> state
+               :error -> state
+             end
 
         if next_execution?(task, num) do
           execution_loop(task, new_state, num - 1)

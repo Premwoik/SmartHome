@@ -30,7 +30,7 @@ defmodule UiWeb.TaskController do
 
   def update(conn, %{"id" => id, "task" => task_params}) do
     task = TaskAdmin.get_task!(id)
-
+    Core.Tasks.update()
     with {:ok, %Task{} = task} <- TaskAdmin.update_task(task, task_params) do
       render(conn, "show.json", task: task)
     end

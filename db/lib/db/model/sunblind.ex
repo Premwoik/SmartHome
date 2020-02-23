@@ -26,7 +26,7 @@ defmodule DB.Sunblind do
   def changeset(sunblind, params \\ %{}, all_str \\ false) do
     params_ = inc_ref(sunblind, Enum.into(params, %{}), all_str)
     sunblind
-    |> cast(params_, [:state, :direction, :full_open_time, :type, :position, :ref])
+    |> cast(params_, [:port_id, :open_port_id, :state, :direction, :full_open_time, :type, :position, :ref])
 
     #    |> validate_required([:active])
     #    |> validate_format(:email, ~r/@/)

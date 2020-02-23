@@ -15,6 +15,8 @@ defmodule UiWeb.SunblindView do
     %{id: sunblind.id,
       port: Helper.obj_to_view(PortView, :port, sunblind.port),
       port_id: sunblind.port_id,
+      open_port: Helper.obj_to_view(PortView, :port, sunblind.open_port),
+      open_port_id: sunblind.open_port_id,
       position: sunblind.position,
       type: sunblind.type,
       full_open_time: sunblind.full_open_time,

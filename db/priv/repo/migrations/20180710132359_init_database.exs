@@ -50,6 +50,9 @@ defmodule DB.Repo.Migrations.InitDatabase do
       add :port_id, references("ports", on_delete: :nilify_all)
       add :type, :string
       add :fill, :integer
+      add :red, :integer, default: 0
+      add :green, :integer, default: 0
+      add :blue, :integer, default: 0
       add :direction, :integer, default: 1
       add :time, :integer, default: 4_500
       add :ref, :integer, default: 1

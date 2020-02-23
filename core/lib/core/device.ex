@@ -11,11 +11,15 @@ defmodule Core.Device do
 
   alias DB.{Repo, Port}
 
-  @type args_t :: list(%DB.Port{}) | %DB.Device{}
+  @type args_t :: list(%DB.Port{}) | %DB.Device{} | %{}
 
   @spec do_(function :: atom, args :: args_t) :: any
   def do_(function, %DB.Device{} = d) do
     execute_function(fn -> apply(module(d), function, [d]) end)
+  end
+
+  def do_(function, %{device: %DB.Device{} = d} = args) do
+    execute_function(fn -> apply(module(d), function, [args]) end)
   end
 
   def do_(function, ports) do

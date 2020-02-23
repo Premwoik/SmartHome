@@ -42,7 +42,6 @@ defmodule Fw.MixProject do
       {:nerves, "~> 1.5.0", runtime: false},
       {:shoehorn, "~> 0.6"},
       {:ring_logger, "~> 0.6"},
-      {:sqlite_ecto2, "~>2.3"},
       {:toolshed, "~> 0.2"},
       {:cpu_monitor, path: "../cpu_monitor"},
       {:db, path: "../db"},

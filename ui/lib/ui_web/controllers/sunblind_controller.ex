@@ -28,6 +28,7 @@ defmodule UiWeb.SunblindController do
 
   def show(conn, %{"id" => id}) do
     sunblind = SunblindAdmin.get_sunblind!(id)
+    IO.inspect(sunblind)
     render(conn, "show.json", sunblind: sunblind)
   end
 

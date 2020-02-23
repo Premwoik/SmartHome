@@ -46,7 +46,7 @@ defmodule Ui.DimmerAdmin do
   end
 
 
-  def preload(dimmer), do: Repo.preload(dimmer, [:port, lights: [:port]])
+  def preload(dimmer), do: Repo.preload(dimmer, [port: [:device], lights: [:port]])
 
 
   @doc """

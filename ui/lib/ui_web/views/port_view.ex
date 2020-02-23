@@ -19,6 +19,8 @@ defmodule UiWeb.PortView do
       state: port.state,
       type: port.type,
       timeout: port.timeout,
+      inverted_logic: port.inverted_logic,
+      pwm_fill: port.pwm_fill,
       device_id: port.device_id,
       ref: port.ref,
       '@type': "port"

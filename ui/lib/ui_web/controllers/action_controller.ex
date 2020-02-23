@@ -29,9 +29,8 @@ defmodule UiWeb.ActionController do
   end
 
   def update(conn, %{"id" => id, "action" => action_params}) do
-    IO.inspect(id)
     action = ActionAdmin.get_action!(id)
-
+    Core.Actions.reload_actions()
     with {:ok, %Action{} = action} <- ActionAdmin.update_action(action, action_params) do
       render(conn, "show.json", action: action)
     end

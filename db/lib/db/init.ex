@@ -15,7 +15,7 @@ defmodule DB.Init do
     Sunblind,
     Page,
     PageContent
-  }
+    }
 
   import Ecto.Query
   require Logger
@@ -62,6 +62,13 @@ defmodule DB.Init do
         process: false
       }
       |> Repo.insert!()
+    type2 =
+      %DeviceType{
+        name: "ShellyRGBW2",
+        module: "Core.Device.ShellyRGBW2",
+        process: false
+      }
+      |> Repo.insert!()
 
     p1 = %Port{
       name: "Test S1",
@@ -75,6 +82,14 @@ defmodule DB.Init do
     p2 = %Port{
       name: "Test S2",
       type: "light",
+      number: 0,
+      mode: "output",
+      inverted_logic: false,
+      state: false
+    }
+    p3 = %Port{
+      name: "Test S1",
+      type: "dimmer_rgb",
       number: 0,
       mode: "output",
       inverted_logic: false,
@@ -102,11 +117,24 @@ defmodule DB.Init do
         ports: [p2]
       }
       |> Repo.insert!()
+    dev3 =
+      %Device{
+        name: "shellyRGBW2",
+        ip: "192.168.2.122",
+        port: 80,
+        alive: true,
+        type_id: type2.id,
+        ports: [p3]
+      }
+      |> Repo.insert!()
+
+    %Dimmer{port_id: 24, type: "click", fill: 0, lights: []}
+    |> Repo.insert!()
 
 
     %Light{port_id: 22, dimmer_id: nil}
     |> Repo.insert!()
-    
+
     %Light{port_id: 23, dimmer_id: nil}
     |> Repo.insert!()
 
@@ -362,14 +390,14 @@ defmodule DB.Init do
     |> Repo.insert!()
 
     #%Light{
-      #port_id: 23,
-      #dimmer_id: nil
+    #port_id: 23,
+    #dimmer_id: nil
     #}
     #|> Repo.insert!()
 
     #%Light{
-      #port_id: 22,
-      #dimmer_id: nil
+    #port_id: 22,
+    #dimmer_id: nil
     #}
     #|> Repo.insert!()
 

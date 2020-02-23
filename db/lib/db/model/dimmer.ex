@@ -14,6 +14,9 @@ defmodule DB.Dimmer do
     field(:type, :string, default: "click")
     field(:fill, :integer)
     field(:direction, :integer)
+    field(:red, :integer)
+    field(:green, :integer)
+    field(:blue, :integer)
     field(:time, :integer)
     field(:ref, :integer)
     has_many(:lights, DB.Light)
@@ -22,7 +25,7 @@ defmodule DB.Dimmer do
   def changeset(dimmer, params \\ %{}, all_str \\ false) do
     params_ = inc_ref(dimmer, Enum.into(params, %{}), all_str)
     dimmer
-    |> cast(params_, [:fill, :direction, :time, :type, :ref])
+    |> cast(params_, [:red, :green, :blue, :fill, :port_id, :direction, :time, :type, :ref])
   end
 
   def all() do
@@ -94,6 +97,11 @@ defmodule DB.Dimmer do
         |> Repo.update()
       end
     )
+  end
+
+  def update_color(dim, fill, red, green, blue) do
+    changeset(dim, fill: fill, red: red, green: green, blue: blue)
+    |> Repo.update()
   end
 
   def update_fill(dim, fill, dir) do
