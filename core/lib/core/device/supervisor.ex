@@ -21,6 +21,7 @@ defmodule Core.Device.Supervisor do
 
   defp get_specs(%Device{type: type} = device) do
     get_specs(device, (get_type_info type))
+    |> IO.inspect()
   end
 
 
@@ -40,7 +41,7 @@ defmodule Core.Device.Supervisor do
 
 
   defp get_type_info(type) do
-    module = String.to_atom "Elixir." <> type.module
+    String.to_atom "Elixir." <> type.module
   end
 
 end

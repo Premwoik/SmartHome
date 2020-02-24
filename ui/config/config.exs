@@ -9,6 +9,8 @@ use Mix.Config
 
 
 import_config "../../db/config/config.exs"
+import_config "../../core/config/config.exs"
+
 # Configures the endpoint
 config :ui, UiWeb.Endpoint,
   url: [host: "localhost"],

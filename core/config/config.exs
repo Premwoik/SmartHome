@@ -25,6 +25,8 @@ use Mix.Config
 # config :logger, level: :info
 ##
 
+IO.inspect(" DUOPA ADS XDD")
+
 #config :core, :devices_module, Core.Devices
 
 config :core, :two_way_client, Core.Device.Client.TwoWay

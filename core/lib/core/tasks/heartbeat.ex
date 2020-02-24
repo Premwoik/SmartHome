@@ -4,8 +4,12 @@ defmodule Core.Tasks.Heartbeat do
   alias Core.Devices
   require Logger
 
-  @device Application.get_env(:core, :device_helper)
-  @actions Application.get_env(:core, :actions_server)
+#  @device Application.get_env(:core, :device_helper)
+#  @actions Application.get_env(:core, :actions_server)
+
+
+  @device Core.Device
+  @actions Core.Actions
 
   @impl true
   def execute(task, _) do
