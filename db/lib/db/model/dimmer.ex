@@ -49,7 +49,7 @@ defmodule DB.Dimmer do
         d in DB.Dimmer,
         where: d.port_id in ^ids,
         preload: [
-          :port
+          port: [:device]
         ]
       )
     )
