@@ -20,7 +20,8 @@ defmodule Ui.LightAdmin do
 
   """
   def list_lights do
-    Repo.all(Light) |> preload()
+    Repo.all(Light)
+    |> preload()
   end
 
   @doc """
@@ -37,10 +38,13 @@ defmodule Ui.LightAdmin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_light!(id), do: Repo.get!(Light, id) |> preload() 
+  def get_light!(id),
+      do: Repo.get!(Light, id)
+          |> preload()
 
   def get_light(id) do
-    res = Repo.get(Light, id) |> preload()
+    res = Repo.get(Light, id)
+          |> preload()
     case res do
       nil -> {:error, :wrong_id}
       r -> {:ok, r}

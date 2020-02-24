@@ -63,7 +63,7 @@ defmodule UiWeb.DimmerController do
 
     with {:ok, dim} <- DimmerAdmin.get_dimmer(id),
          true <- DB.check_ref(o, dim),
-         :ok <- Benchmark.measure_p fn -> DimmerController.set_rgb_brightness(dim, fill_, r ,g ,b) end
+         :ok <- Benchmark.measure_p fn -> DimmerController.set_rgb_brightness(dim, fill_, r, g, b) end
       do
       dim = DimmerAdmin.get_dimmer!(id)
       render(conn, "show.json", dimmer: dim)
@@ -84,7 +84,7 @@ defmodule UiWeb.DimmerController do
     with {:ok, dim} <- DimmerAdmin.get_dimmer(id),
          true <- DB.check_ref(o, dim),
          :ok <- Benchmark.measure_p fn -> DimmerController.set_brightness(dim, fill_) end
-    do
+      do
       dim = DimmerAdmin.get_dimmer!(id)
       render(conn, "show.json", dimmer: dim)
     else

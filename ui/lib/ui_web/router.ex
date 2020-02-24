@@ -40,7 +40,6 @@ defmodule UiWeb.Router do
     post "/dimmers/setOff/:id", DimmerController, :set_off
     post "/dimmers/setBrightness", DimmerController, :set
 
-
     post "/lights/setOn/:id", LightController, :set_on
     post "/lights/setOff/:id", LightController, :set_off
     post "/lights/set/:id/:state", LightController, :set
@@ -63,10 +62,7 @@ defmodule UiWeb.Router do
 
     get "/stats/device-journal/report/:id", DeviceJournalController, :get_report
     get "/stats/device-journal/report_sec/:id", DeviceJournalController, :get_report_s
-
     get "/stats/device-journal/logs/:id", DeviceJournalController, :get_logs
 
   end
-
-
 end

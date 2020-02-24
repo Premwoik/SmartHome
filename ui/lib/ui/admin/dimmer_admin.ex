@@ -6,7 +6,7 @@ defmodule Ui.DimmerAdmin do
   import Ecto.Query, warn: false
   alias DB.Repo
   alias Ui.PortAdmin
-  alias DB.{Port,Dimmer}
+  alias DB.{Port, Dimmer}
 
   @doc """
   Returns the list of dimmers.
@@ -18,7 +18,8 @@ defmodule Ui.DimmerAdmin do
 
   """
   def list_dimmers do
-    Repo.all(Dimmer) |> preload()
+    Repo.all(Dimmer)
+    |> preload()
   end
 
   @doc """
@@ -35,10 +36,13 @@ defmodule Ui.DimmerAdmin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_dimmer!(id), do: Repo.get!(Dimmer, id) |> preload() 
+  def get_dimmer!(id),
+      do: Repo.get!(Dimmer, id)
+          |> preload()
 
   def get_dimmer(id) do
-    res = Repo.get(Dimmer, id) |> preload() 
+    res = Repo.get(Dimmer, id)
+          |> preload()
     case res do
       nil -> {:error, :wrong_id}
       r -> {:ok, r}
@@ -62,7 +66,6 @@ defmodule Ui.DimmerAdmin do
 
   """
   def create_dimmer(attrs \\ %{}) do
-    IO.inspect(attrs)
     %Dimmer{}
     |> Dimmer.changeset(attrs, all_str = true)
     |> Repo.insert()

@@ -56,7 +56,7 @@ defmodule UiWeb.PortController do
     with {:ok, port} <- PortAdmin.get_port(id),
          true <- DB.check_ref(o, port),
          :ok <- BasicController.set([port], state)
-    do
+      do
       port = PortAdmin.get_port!(id)
       render(conn, "show.json", port: port)
     else

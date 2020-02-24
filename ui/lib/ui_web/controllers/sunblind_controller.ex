@@ -28,7 +28,6 @@ defmodule UiWeb.SunblindController do
 
   def show(conn, %{"id" => id}) do
     sunblind = SunblindAdmin.get_sunblind!(id)
-    IO.inspect(sunblind)
     render(conn, "show.json", sunblind: sunblind)
   end
 
@@ -52,7 +51,7 @@ defmodule UiWeb.SunblindController do
     with sunblind <- DB.Sunblind.get(id),
          true <- DB.check_ref(o, sunblind),
          :ok <- SunblindController.click(sunblind)
-    do
+      do
       sun = SunblindAdmin.get_sunblind!(id)
       render(conn, "show.json", %{sunblind: sun})
     else
@@ -65,7 +64,7 @@ defmodule UiWeb.SunblindController do
     with {:ok, sunblind} <- SunblindAdmin.get_sunblind(id),
          true <- DB.check_ref(o, sunblind),
          :ok <- SunblindController.calibrate(sunblind, state)
-    do
+      do
       sun = SunblindAdmin.get_sunblind!(id)
       render(conn, "show.json", %{sunblind: sun})
     else

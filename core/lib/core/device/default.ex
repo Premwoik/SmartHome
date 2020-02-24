@@ -20,7 +20,7 @@ defmodule Core.Device.Default do
   @behaviour Core.Controllers.ThermometerController
   @behaviour Core.Controllers.WattmeterController
 
-  @client Application.get_env(:core, :two_way_client)
+  @client Application.fetch_env!(:core, :two_way_client)
   @protocol Core.Device.Default.Protocol
 
   def start_link(host, port, opts, keywords, timeout \\ 5000, length \\ 11) do

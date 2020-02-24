@@ -5,7 +5,7 @@ defmodule UiWeb.Controllers.ErrorHelper do
     case error do
       {:error, :wrong_id} ->
         send_resp(conn, 400, "action wrong id")
-      err -> 
+      err ->
         send_resp(conn, 500, "Not handled error: #{inspect err}")
     end
   end

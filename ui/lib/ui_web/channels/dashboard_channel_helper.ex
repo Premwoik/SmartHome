@@ -73,24 +73,22 @@ defmodule UiWeb.DashboardChannel.Helper do
       ref ->
         data_ =
           data
-          |> IO.inspect()
           |> Enum.map(
                fn
                  %{id: id} -> %{id: id, type: type};
                  id -> %{id: String.to_integer(id), type: type}
                end
              )
-          |> IO.inspect()
         GenServer.call(__MODULE__, {:broadcast_update_from, ref, data_})
     end
   end
-  
+
   @spec broadcast_change(string(), integer(), integer()) :: any()
   def broadcast_change(type, id, ref) do
     data = %{
       type: type,
       id: id,
-      ref: ref, 
+      ref: ref,
     }
     UiWeb.Endpoint.broadcast("dashboard:lobby", "object:updated", data)
   end

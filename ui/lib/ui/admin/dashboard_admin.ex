@@ -122,13 +122,20 @@ defmodule Ui.DashboardAdmin do
   """
   def update_dashboard(dashboard, attrs) do
     id = dashboard.id
-    from(p in DB.PageContentPort, where: p.page_id == ^id) |> Repo.delete_all
-    from(p in DB.PageContentLight, where: p.page_id == ^id) |> Repo.delete_all
-    from(p in DB.PageContentDimmer, where: p.page_id == ^id) |> Repo.delete_all
-    from(p in DB.PageContentSunblind, where: p.page_id == ^id) |> Repo.delete_all
-    from(p in DB.PageContentAction, where: p.page_id == ^id) |> Repo.delete_all
-    from(p in DB.PageContentTask, where: p.page_id == ^id) |> Repo.delete_all
-    from(p in DB.PageContentDevice, where: p.page_id == ^id) |> Repo.delete_all
+    from(p in DB.PageContentPort, where: p.page_id == ^id)
+    |> Repo.delete_all
+    from(p in DB.PageContentLight, where: p.page_id == ^id)
+    |> Repo.delete_all
+    from(p in DB.PageContentDimmer, where: p.page_id == ^id)
+    |> Repo.delete_all
+    from(p in DB.PageContentSunblind, where: p.page_id == ^id)
+    |> Repo.delete_all
+    from(p in DB.PageContentAction, where: p.page_id == ^id)
+    |> Repo.delete_all
+    from(p in DB.PageContentTask, where: p.page_id == ^id)
+    |> Repo.delete_all
+    from(p in DB.PageContentDevice, where: p.page_id == ^id)
+    |> Repo.delete_all
 
     update_content dashboard.id, attrs
 
@@ -138,27 +145,41 @@ defmodule Ui.DashboardAdmin do
     |> load_content()
   end
 
-  def load_content({:ok, %{id: id}= dash}) do
-    {:ok, %{
-      dash |
-      ports: content_ports(id),
-      actions: content_actions(id),
-      dimmers: content_dimmers(id),
-      lights: content_lights(id),
-      sunblinds: content_sunblinds(id),
-      tasks: content_tasks(id)
-    }}
+  def load_content({:ok, %{id: id} = dash}) do
+    {
+      :ok,
+      %{
+        dash |
+        ports: content_ports(id),
+        actions: content_actions(id),
+        dimmers: content_dimmers(id),
+        lights: content_lights(id),
+        sunblinds: content_sunblinds(id),
+        tasks: content_tasks(id)
+      }
+    }
   end
 
 
-  def update_content(id, %{"ports" => ports, "lights" => lights, "dimmers" => dimmers, "sunblinds"=> sunblinds, "actions"=> actions, "tasks" => tasks, "devices" => devices}) do
-    Enum.map(Poison.decode!(ports), &(DB.PageContentPort.insert_or_update(id, &1)))
-    Enum.map(Poison.decode!(lights), &(DB.PageContentLight.insert_or_update(id, &1)))
-    Enum.map(Poison.decode!(dimmers), &(DB.PageContentDimmer.insert_or_update(id, &1)))
-    Enum.map(Poison.decode!(sunblinds), &(DB.PageContentSunblind.insert_or_update(id, &1)))
-    Enum.map(Poison.decode!(actions), &(DB.PageContentAction.insert_or_update(id, &1)))
-    Enum.map(Poison.decode!(tasks), &(DB.PageContentTask.insert_or_update(id, &1)))
-    Enum.map(Poison.decode!(devices), &(DB.PageContentDevice.insert_or_update(id, &1)))
+  def update_content(
+        id,
+        %{
+          "ports" => ports,
+          "lights" => lights,
+          "dimmers" => dimmers,
+          "sunblinds" => sunblinds,
+          "actions" => actions,
+          "tasks" => tasks,
+          "devices" => devices
+        }
+      ) do
+    Enum.each(Poison.decode!(ports), &(DB.PageContentPort.insert_or_update(id, &1)))
+    Enum.each(Poison.decode!(lights), &(DB.PageContentLight.insert_or_update(id, &1)))
+    Enum.each(Poison.decode!(dimmers), &(DB.PageContentDimmer.insert_or_update(id, &1)))
+    Enum.each(Poison.decode!(sunblinds), &(DB.PageContentSunblind.insert_or_update(id, &1)))
+    Enum.each(Poison.decode!(actions), &(DB.PageContentAction.insert_or_update(id, &1)))
+    Enum.each(Poison.decode!(tasks), &(DB.PageContentTask.insert_or_update(id, &1)))
+    Enum.each(Poison.decode!(devices), &(DB.PageContentDevice.insert_or_update(id, &1)))
   end
 
   @doc """
@@ -208,7 +229,10 @@ defmodule Ui.DashboardAdmin do
       join: c in "page_content_lights",
       on: c.light_id == l.id,
       where: c.page_id == ^page_id,
-      preload: [:port, dimmer: [:port]],
+      preload: [
+        :port,
+        dimmer: [:port]
+      ],
       select: {c.order, l}
     )
     |> Repo.all

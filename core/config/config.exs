@@ -1,6 +1,7 @@
 # This file is responsible for configuring your application
 # and its dependencies with the aid of the Mix.Config module.
-use Mix.Config
+#use Mix.Config
+import Config
 
 # config :logger,
 #       backends: [:console],
@@ -25,25 +26,23 @@ use Mix.Config
 # config :logger, level: :info
 ##
 
-IO.inspect(" DUOPA ADS XDD")
-
 #config :core, :devices_module, Core.Devices
 
-config :core, :two_way_client, Core.Device.Client.TwoWay
+config :core, two_way_client: Core.Device.Client.TwoWay
 # config :core, :two_way_client, Core.Device.Client.TwoWayMock
-config :core, :one_way_client, Core.Device.Client.OneWay
+config :core, one_way_client: Core.Device.Client.OneWay
 
-config :core, :basic_controller, Core.Controllers.BasicController
-config :core, :light_controller, Core.Controllers.LightController
+config :core, basic_controller: Core.Controllers.BasicController
+config :core, light_controller: Core.Controllers.LightController
 
-config :core, :actions_server, Core.Actions
-config :core, :tasks_server, Core.Tasks
-config :core, :device_helper, Core.Device
+config :core, actions_server: Core.Actions
+config :core, tasks_server: Core.Tasks
+config :core, device_helper: Core.Device
 
-config :core, :database_module, DB
+config :core, database_module: DB
 
-config :core, :time_adapter, Core.Utils.Time.Real
-config :core, :date_time_adapter, Core.Utils.DateTime.Native
+config :core, time_adapter: Core.Utils.Time.Real
+config :core, date_time_adapter: Core.Utils.DateTime.Native
 
 # config :socket_test2,
 # import_config "../../db/config/config.exs"

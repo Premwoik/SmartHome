@@ -18,7 +18,8 @@ defmodule Ui.TaskAdmin do
 
   """
   def list_tasks do
-    Repo.all(Task) |> preload()
+    Repo.all(Task)
+    |> preload()
   end
 
   @doc """
@@ -35,10 +36,13 @@ defmodule Ui.TaskAdmin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id), do: Repo.get!(Task, id) |> preload()
+  def get_task!(id),
+      do: Repo.get!(Task, id)
+          |> preload()
 
-  def get_task(id) do 
-    res = Repo.get!(Task, id) |> preload()
+  def get_task(id) do
+    res = Repo.get!(Task, id)
+          |> preload()
     case res do
       nil -> {:error, :wrong_id}
       r -> {:ok, r}

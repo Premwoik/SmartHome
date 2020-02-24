@@ -1,15 +1,15 @@
 defmodule UiWeb.DashboardChannel do
   use UiWeb, :channel
-  
+
   def join("dashboard:lobby", payload, socket) do
-#    if authorized?(payload) do
-      send(self, :after_join)
-      {:ok, socket}
-#    else
-#      {:error, %{reason: "unauthorized"}}
-#    end
+    #    if authorized?(payload) do
+    send(self, :after_join)
+    {:ok, socket}
+    #    else
+    #      {:error, %{reason: "unauthorized"}}
+    #    end
   end
-  
+
   def terminate(reason, socket) do
     #UiWeb.DashboardChannel.Helper.remove_socket(socket)
   end

@@ -8,11 +8,14 @@ defmodule Ui.DeviceAdmin do
   alias DB.{Device, DeviceType}
 
   def list_devices do
-    Repo.all(Device) |> Repo.preload(:type)
+    Repo.all(Device)
+    |> Repo.preload(:type)
   end
 
 
-  def get_device!(id), do: Repo.get!(Device, id) |> Repo.preload(:type)
+  def get_device!(id),
+      do: Repo.get!(Device, id)
+          |> Repo.preload(:type)
 
 
   def create_device(attrs \\ %{}) do

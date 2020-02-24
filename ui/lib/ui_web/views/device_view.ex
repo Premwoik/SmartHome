@@ -12,7 +12,8 @@ defmodule UiWeb.DeviceView do
   end
 
   def render("device.json", %{device: device}) do
-    %{id: device.id,
+    %{
+      id: device.id,
       name: device.name,
       ip: device.ip,
       port: device.port,
@@ -35,7 +36,8 @@ defmodule UiWeb.DeviceView do
   end
 
   def render("device_type.json", %{device_type: device_type}) do
-    %{id: device_type.id,
+    %{
+      id: device_type.id,
       name: device_type.name,
       module: device_type.module
     }

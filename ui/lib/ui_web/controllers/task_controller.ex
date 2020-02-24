@@ -44,7 +44,7 @@ defmodule UiWeb.TaskController do
     end
   end
 
-  
+
   def get_types(conn, _params) do
     types = TaskType.all_map()
     json(conn, types)
@@ -52,18 +52,18 @@ defmodule UiWeb.TaskController do
 
 
   def set_on(conn, %{"id" => id} = o) do
-    set(conn, Map.put(o, "status", "waiting")) 
+    set(conn, Map.put(o, "status", "waiting"))
   end
 
   def set_off(conn, %{"id" => id} = o) do
-    set(conn, Map.put(o, "status", "inactive")) 
+    set(conn, Map.put(o, "status", "inactive"))
   end
 
   def set(conn, %{"id" => id, "status" => status} = o) do
     with {:ok, task} <- TaskAdmin.get_task(id),
          true <- DB.check_ref(o, task),
          {1, nil} <- TaskController.set([task], status)
-    do
+      do
       data = TaskAdmin.get_task!(id)
       render(conn, "show.json", task: data)
     else

@@ -3,9 +3,9 @@ defmodule UiWeb.DeviceJournalController do
   alias DB.DeviceJournal
 
 
-  def get_logs(conn, %{"id"=> id}) do
+  def get_logs(conn, %{"id" => id}) do
     data = DeviceJournal.find(id, limit = 50)
-          |> Enum.map(fn l -> log_mapper(l) end)
+           |> Enum.map(fn l -> log_mapper(l) end)
     json(conn, data)
   end
 
@@ -49,5 +49,5 @@ defmodule UiWeb.DeviceJournalController do
       [r2]
     end
   end
-    
+
 end

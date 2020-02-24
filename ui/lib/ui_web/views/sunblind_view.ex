@@ -12,7 +12,8 @@ defmodule UiWeb.SunblindView do
   end
 
   def render("sunblind.json", %{sunblind: sunblind}) do
-    %{id: sunblind.id,
+    %{
+      id: sunblind.id,
       port: Helper.obj_to_view(PortView, :port, sunblind.port),
       port_id: sunblind.port_id,
       open_port: Helper.obj_to_view(PortView, :port, sunblind.open_port),

@@ -35,11 +35,14 @@ defmodule Ui.PortAdmin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_port!(id), do: Repo.get!(Port, id) |> preload()
+  def get_port!(id),
+      do: Repo.get!(Port, id)
+          |> preload()
 
-  def get_port(id) do 
-    case Repo.get(Port, id) |> preload() do
-      nil -> 
+  def get_port(id) do
+    case Repo.get(Port, id)
+         |> preload() do
+      nil ->
         {:error, :wrong_id}
       p ->
         {:ok, p}

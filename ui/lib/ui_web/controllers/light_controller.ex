@@ -47,9 +47,9 @@ defmodule UiWeb.LightController do
 
   def set(conn, %{"id" => id, "state" => state} = o) do
     with {:ok, light} <- LightAdmin.get_light(id),
-          true <- DB.check_ref(o, light),
-          :ok <- Benchmark.measure_p fn -> LightController.set([light], state) end
-    do
+         true <- DB.check_ref(o, light),
+         :ok <- Benchmark.measure_p fn -> LightController.set([light], state) end
+      do
       light = LightAdmin.get_light!(id)
       render(conn, "show.json", light: light)
     else

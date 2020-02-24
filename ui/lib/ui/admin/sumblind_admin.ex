@@ -19,7 +19,8 @@ defmodule Ui.SunblindAdmin do
 
   """
   def list_sunblinds do
-    Repo.all(Sunblind) |> preload
+    Repo.all(Sunblind)
+    |> preload
   end
 
   @doc """
@@ -36,10 +37,13 @@ defmodule Ui.SunblindAdmin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_sunblind!(id), do: Repo.get!(Sunblind, id) |> Repo.preload([:port, :open_port])
+  def get_sunblind!(id),
+      do: Repo.get!(Sunblind, id)
+          |> Repo.preload([:port, :open_port])
 
   def get_sunblind(id) do
-    res = Repo.get!(Sunblind, id) |> preload()
+    res = Repo.get!(Sunblind, id)
+          |> preload()
     case res do
       nil -> {:error, :wrong_id}
       r -> {:ok, r}

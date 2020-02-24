@@ -25,7 +25,7 @@ defmodule UiWeb.ActionView do
       '@type': "action"
     }
   end
-  
+
 
   def render("show_args.json", %{args: args}) do
     render_many(args, ActionView, "arg.json")

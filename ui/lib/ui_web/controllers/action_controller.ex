@@ -48,7 +48,7 @@ defmodule UiWeb.ActionController do
     with {:ok, action} <- ActionAdmin.get_action(id),
          true <- DB.check_ref(o, action),
          {1, nil} <- ActionController.set([action], state)
-    do
+      do
       action = ActionAdmin.get_action!(id)
       render(conn, "show.json", action: action)
     else
@@ -58,14 +58,14 @@ defmodule UiWeb.ActionController do
   end
 
   def set_on(conn, %{"id" => id} = o) do
-    set(conn, Map.put(o, "state", true)) 
+    set(conn, Map.put(o, "state", true))
   end
 
   def set_off(conn, %{"id" => id} = o) do
-    set(conn, Map.put(o, "state", false)) 
+    set(conn, Map.put(o, "state", false))
   end
 
-  def update_args(conn, r = %{"id" => id, "port_ids" => port_ids}) do
+  def update_args(conn, %{"id" => id, "port_ids" => port_ids} = r) do
     id_ = String.to_integer(id)
     with :ok <- ActionAdmin.update_action_args(id_, port_ids) do
       send_resp(conn, :no_content, "")
@@ -74,6 +74,6 @@ defmodule UiWeb.ActionController do
 
   def get_args(conn, %{"id" => id}) do
     args = DB.ActionArgument.get(id)
-    render(conn, "show_args.json", %{args: args}) 
+    render(conn, "show_args.json", %{args: args})
   end
 end

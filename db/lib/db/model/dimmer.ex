@@ -42,6 +42,19 @@ defmodule DB.Dimmer do
     res
   end
 
+
+  def get_by_port(ids) when is_list(ids) do
+    DB.Repo.all(
+      from(
+        d in DB.Dimmer,
+        where: d.port_id in ^ids,
+        preload: [
+          :port
+        ]
+      )
+    )
+  end
+
   def get_view_format(id) do
     load_lights = fn id ->
       from(
@@ -79,7 +92,8 @@ defmodule DB.Dimmer do
 
   def any_light_on?(dimmer) do
     Repo.all(
-      from(l in Light,
+      from(
+        l in Light,
         join: p in Port,
         on: p.id == l.port_id,
         where: l.dimmer_id == ^dimmer.id and p.state == true
@@ -123,7 +137,7 @@ defmodule DB.Dimmer do
       res > 0 ->
         #good direction
         #IO.puts ("good direction")
-        {get_time(time, res), dir * -1} 
+        {get_time(time, res), dir * -1}
 
       res == 0 ->
         #IO.puts("NOTHING")

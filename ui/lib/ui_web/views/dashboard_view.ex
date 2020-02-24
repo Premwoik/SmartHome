@@ -12,7 +12,8 @@ defmodule UiWeb.DashboardView do
   end
 
   def render("dashboard.json", %{dashboard: dashboard}) do
-    %{id: dashboard.id,
+    %{
+      id: dashboard.id,
       name: dashboard.name,
       title: dashboard.title,
       order: dashboard.order,
@@ -28,7 +29,7 @@ defmodule UiWeb.DashboardView do
   end
 
   def render("index.json", %{dashboards_short: dashboards}) do
-   render_many(dashboards, DashboardView, "dashboard_short.json")
+    render_many(dashboards, DashboardView, "dashboard_short.json")
   end
 
   def render("show.json", %{dashboard_short: dashboard}) do
@@ -36,7 +37,8 @@ defmodule UiWeb.DashboardView do
   end
 
   def render("dashboard_short.json", %{dashboard: dashboard}) do
-    %{id: dashboard.id,
+    %{
+      id: dashboard.id,
       name: dashboard.name,
       number: dashboard.order
     }
@@ -52,7 +54,8 @@ defmodule UiWeb.DashboardView do
   end
 
   def render("dash_dashboard.json", %{dashboard: dashboard}) do
-    %{id: dashboard.id,
+    %{
+      id: dashboard.id,
       name: dashboard.name,
       title: dashboard.title,
       order: dashboard.order,

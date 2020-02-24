@@ -3,7 +3,7 @@ defmodule Core.Device.Satel do
 
   @behaviour Core.Device
 
-  @client Application.get_env(:core, :two_way_client)
+  @client Application.fetch_env!(:core, :two_way_client)
   # @client Core.Device.Client.OneWay
   @protocol Core.Devices.Satel.Protocol
 

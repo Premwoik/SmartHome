@@ -20,7 +20,7 @@ defmodule UiWeb.LightView do
       dimmer: Helper.obj_to_view(DimmerView, :dimmer, light.dimmer),
       ref: light.ref,
       '@type': "light"
-      
+
     }
   end
 end
