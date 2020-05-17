@@ -139,7 +139,7 @@ defmodule Core.Device.Default do
     ports
     |> Enum.flat_map(
          fn p ->
-           [p.number, 1, round(p.timeout / 100)]
+           [p.number, 0, round(p.timeout / 100)]
          end
        )
   end
