@@ -3,6 +3,7 @@ defmodule Core.Device do
 
   @callback set_outputs(device :: %DB.Device{}, list({integer, integer})) :: any
   @callback set_pwm_outputs(device :: %DB.Device{}, list({integer, integer})) :: any
+  @callback set_time_dimmer(device :: %DB.Device{}, list({integer, integer})) :: any
   @callback read_outputs(device :: %DB.Device{}) :: list({integer, boolean})
   @callback read_active_inputs(device :: map) :: list(integer)
   @callback read_temperatures(device :: %DB.Device{}) :: list({list, integer})

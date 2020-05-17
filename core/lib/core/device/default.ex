@@ -9,6 +9,7 @@ defmodule Core.Device.Default do
     @moduledoc false
 
     def setOutputs, do: 100
+    def setTimeDimmer, do: 102
     def readTemp, do: 110
     def readInputs, do: 112
     def readWattmeters, do: 111
@@ -38,13 +39,21 @@ defmodule Core.Device.Default do
   def set_outputs(device, ports) do
     cmd = Code.setOutputs()
     data = ports_to_num(ports)
-    DeviceJournal.log(device.id, "set_outputs", info="Ustawianie portów #{inspect(data)}")
+    DeviceJournal.log(device.id, "set_outputs", info = "Ustawianie portów #{inspect(data)}")
+    noreply_send(device, cmd, data)
+  end
+
+  @impl true
+  def set_time_dimmer(device, ports) do
+    cmd = Code.setTimeDimmer()
+    data = time_ports_to_num(ports)
+    DeviceJournal.log(device.id, "set_time_dimmer", info = "Ustawianie czasowych ściemniaczy #{inspect(data)}")
     noreply_send(device, cmd, data)
   end
 
   @impl true
   def set_pwm_outputs(device, ports) do
-    DeviceJournal.log(device.id, "set_pwm_outputs", info="")
+    DeviceJournal.log(device.id, "set_pwm_outputs", info = "")
     cmd = Code.setPwmOutputs()
     data = Enum.flat_map(ports, fn p -> [p.number, p.pwm_fill] end)
     noreply_send(device, cmd, data)
@@ -52,7 +61,7 @@ defmodule Core.Device.Default do
 
   @impl true
   def read_watts(device) do
-    DeviceJournal.log(device.id, "read_watts", info ="")
+    DeviceJournal.log(device.id, "read_watts", info = "")
     noreply_send(device, Code.readWattmeters(), [])
   end
 
@@ -63,11 +72,12 @@ defmodule Core.Device.Default do
 
   @impl true
   def read_temperatures(device) do
-    DeviceJournal.log(device.id, "read_temperatures", info= "")
+    DeviceJournal.log(device.id, "read_temperatures", info = "")
     case noreply_send(device, Code.readTemp(), []) do
       {:ok, val} ->
         {addr, [h, l]} = Enum.split(val, 8)
-        raw = h <<< 8 ||| l
+        raw = h
+              <<< 8 ||| l
         {:ok, {to_string(addr), raw}}
 
       err_ ->
@@ -79,7 +89,7 @@ defmodule Core.Device.Default do
   defp noreply_send(device, cmd, args, try_max \\ 5)
 
   defp noreply_send(_, _, _, 0),
-    do: {:error, "All allowed attempts failed. Can't get response!"}
+       do: {:error, "All allowed attempts failed. Can't get response!"}
 
   defp noreply_send(device, cmd, args, max_try) do
     msg = @protocol.encode(0, cmd, args)
@@ -116,11 +126,22 @@ defmodule Core.Device.Default do
 
   defp ports_to_num(ports) do
     ports
-    |> Enum.flat_map(fn p ->
-      if p.inverted_logic,
-        do: [p.number, state_to_num(not p.state)],
-        else: [p.number, state_to_num(p.state)]
-    end)
+    |> Enum.flat_map(
+         fn p ->
+           if p.inverted_logic,
+              do: [p.number, state_to_num(not p.state)],
+              else: [p.number, state_to_num(p.state)]
+         end
+       )
+  end
+
+  defp time_ports_to_num(ports) do
+    ports
+    |> Enum.flat_map(
+         fn p ->
+           [p.number, state_to_num(p.inverted_logic), round(p.timeout / 100)]
+         end
+       )
   end
 
   defp state_to_num(false), do: 0

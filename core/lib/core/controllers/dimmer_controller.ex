@@ -121,7 +121,8 @@ defmodule Core.Controllers.DimmerController do
     {time, dir} = Dimmer.fill_to_time(dimmer, brightness)
     %Port{DB.Repo.preload(dimmer.port, :device) | timeout: time}
     |> List.wrap()
-    |> BasicController.turn_on()
+    |> Core.Device.do_r(:set_time_dimmer)
+#    TODO should I here update also port state???
     |> wrap_direction(dir)
   end
 
