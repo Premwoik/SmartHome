@@ -123,6 +123,7 @@ defmodule Core.Controllers.DimmerController do
     |> List.wrap()
     |> Core.Device.do_r(:set_time_dimmer)
 #    TODO should I here update also port state???
+    |> IO.inspect()
     |> wrap_direction(dir)
   end
 
