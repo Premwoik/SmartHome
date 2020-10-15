@@ -88,8 +88,8 @@ defmodule DB.Init do
       state: false
     }
     p3 = %Port{
-      name: "Test S1",
-      type: "dimmer_rgb",
+      name: "Ledy belka",
+      type: "dimmer_rgbw",
       number: 0,
       mode: "output",
       inverted_logic: false,
@@ -128,7 +128,7 @@ defmodule DB.Init do
       }
       |> Repo.insert!()
 
-    %Dimmer{port_id: 24, type: "click", fill: 0, lights: []}
+    %Dimmer{port_id: 24, fill: 0, lights: []}
     |> Repo.insert!()
 
 
@@ -380,13 +380,13 @@ defmodule DB.Init do
     # 6
     l6 = %Light{port_id: 10, dimmer_id: 8}
 
-    %Dimmer{port_id: 2, type: "click", fill: 0, lights: [l1, l2]}
+    %Dimmer{port_id: 2, fill: 0, lights: [l1, l2]}
     |> Repo.insert!()
 
-    %Dimmer{port_id: 5, type: "click", fill: 0, lights: [l3, l4]}
+    %Dimmer{port_id: 5, fill: 0, lights: [l3, l4]}
     |> Repo.insert!()
 
-    %Dimmer{port_id: 8, type: "click", fill: 0, lights: [l5, l6]}
+    %Dimmer{port_id: 8, fill: 0, lights: [l5, l6]}
     |> Repo.insert!()
 
     #%Light{
@@ -410,7 +410,7 @@ defmodule DB.Init do
       name: "CzujkaSalonSchody",
       type: "motion_sensor",
       number: 8,
-      mode: "undef",
+      mode: "input",
       state: nil
     }
 
@@ -419,18 +419,18 @@ defmodule DB.Init do
       name: "CzujkaSalonKuchnia",
       type: "motion_sensor",
       number: 9,
-      mode: "undef",
+      mode: "input",
       state: nil
     }
 
     # 21
-    p10 = %Port{name: "CzujkaSalon", type: "motion_sensor", number: 10, mode: "undef", state: nil}
+    p10 = %Port{name: "CzujkaSalon", type: "motion_sensor", number: 10, mode: "input", state: nil}
     # 22
     p62 = %Port{
       name: "SygnalZamknieciaRolet",
       type: "alarm_input",
       number: 62,
-      mode: "undef",
+      mode: "input",
       state: nil
     }
 
@@ -453,22 +453,24 @@ defmodule DB.Init do
       }
       |> Repo.insert!()
 
-    sunblinds = Repo.all(from(p in Port, where: p.id in [12, 13, 14, 15, 16, 17]))
+    sunblindsClose = Repo.all(from(p in Port, where: p.id in [12, 13, 14, 15, 16, 17]))
+    sunblindsOpen = Repo.all(from(p in Port, where: p.id in [12, 15, 16, 17]))
+    sunblindsPrzemek = Repo.all(from(p in Port, where: p.id in [13, 14]))
 
     type1 = "CloseSunblinds"
     type2 = "AutoLights"
-    # CałyDom - RoletyZamykanie
+    # CałyDom - RoletyZamykanie id: 1
     %Action{
-      name: "Zamykanie rolet",
+      name: "Cały dom",
       function: type1,
       active: true,
       params: "{}",
       port: nil,
-      args: sunblinds
+      args: sunblindsClose
     }
     |> Repo.insert!()
 
-    # Salon - Swiatlo - 1 lampa
+    # Salon - Swiatlo - 1 lampa id:2
     %Action{
       name: "Salon schody",
       function: type2,
@@ -481,7 +483,7 @@ defmodule DB.Init do
     }
     |> Repo.insert!()
 
-    # KuchniaSalon - Swiatlo - 1 lampa
+    # KuchniaSalon - Swiatlo - 1 lampa id:3
     %Action{
       name: "Salon stół",
       function: type2,
@@ -494,7 +496,7 @@ defmodule DB.Init do
     }
     |> Repo.insert!()
 
-    #    #Salon - Swiatlo - Dwa dimmery
+    #    #Salon - Swiatlo - Dwa dimmery id:4
     %Action{
       name: "Salon wypoczynek",
       function: type2,
@@ -507,65 +509,124 @@ defmodule DB.Init do
     }
     |> Repo.insert!()
 
+    # Default sunblinds openening id:5
+    %Action{
+      name: "Auto otwieranie",
+      function: type1,
+      active: true,
+      params: "{}",
+      port: nil,
+      args: sunblindsOpen
+    }
+    |> Repo.insert!()
+
+
+    # Przemek's room sunblinds openening id:6
+    %Action{
+      name: "Pokój Przemek",
+      function: type1,
+      active: true,
+      params: "{}",
+      port: nil,
+      args: sunblindsPrzemek
+    }
+    |> Repo.insert!()
+
     :ok
   end
 
   def insert_tasks() do
+    #    id: 1
     %TaskType{
-      name: "Calling action up",
-      module: "Core.Tasks.ExecuteActionUp"
+#      name: "Calling action up",
+      name: "Akcja z wysokim sygnałem",
+      module: "Core.Tasks.ExecuteActionUp",
+      action: true,
+      device: false,
     }
     |> Repo.insert!()
 
+    #    id: 2
     %TaskType{
-      name: "Calling action down",
-      module: "Core.Tasks.ExecuteActionDown"
+#      name: "Calling action down",
+      name: "Akcja z niskim sygnałem",
+      module: "Core.Tasks.ExecuteActionDown",
+      action: true,
+      device: false,
     }
     |> Repo.insert!()
 
+    #    id: 3
     %TaskType{
       name: "Read device inputs",
-      module: "Core.Tasks.ReadInputs"
+      name: "Odczytaj wejścia urządzenia",
+      module: "Core.Tasks.ReadInputs",
+      action: false,
+      device: true,
     }
     |> Repo.insert!()
 
+    #    id: 4
     %TaskType{
-      name: "Heartbeat",
-      module: "Core.Tasks.Heartbeat"
+#      name: "Heartbeat",
+      name: "Nasłuchuj urządzenie",
+      module: "Core.Tasks.Heartbeat",
+      action: false,
+      device: true,
     }
     |> Repo.insert!()
 
+    #    id: 5
     %TaskType{
-      name: "Read Wattmeters data",
-      module: "Core.Tasks.ReadUsedEnergy"
+#      name: "Read Wattmeters data",
+      name: "Odczytaj watomierze urządzenia",
+      module: "Core.Tasks.ReadUsedEnergy",
+      action: false,
+      device: true,
     }
     |> Repo.insert!()
 
+    #    id: 6
     %TaskType{
-      name: "Read Thermometers data",
-      module: "Core.Tasks.ReadTemperature"
+#      name: "Read Thermometers data",
+      name: "Odczytaj termometry urządzenia",
+      module: "Core.Tasks.ReadTemperature",
+      action: false,
+      device: true,
     }
     |> Repo.insert!()
 
+    #    id: 7
     %TaskType{
-      name: "Read Outputs",
-      module: "Core.Tasks.ReadOutputs"
+#      name: "Read Outputs",
+      name: "Odczytaj wyjścia urządzenia",
+      module: "Core.Tasks.ReadOutputs",
+      action: false,
+      device: true,
     }
     |> Repo.insert!()
 
+    #    id: 8
     %TaskType{
-      name: "Device activity supervisor task",
-      module: "Core.Tasks.DeviceActivitySupervisor"
-    }
-    |> Repo.insert!()
-
-    %TaskType{
-      name: "Clean logs",
-      module: "Core.Tasks.CleanLogs"
+#      name: "Clean logs",
+      name: "Wyczyść historię",
+      module: "Core.Tasks.CleanLogs",
+      action: false,
+      device: false,
     }
     |> DB.Repo.insert!()
 
-    # read integra inputs
+    #    id: 9
+#    %TaskType{
+#      name: "Device activity supervisor task",
+#      module: "Core.Tasks.DeviceActivitySupervisor",
+#      action: false,
+#      device: true,
+#    }
+#    |> Repo.insert!()
+
+
+    # read integra inputs id: 1
     %Task{
       type_id: 3,
       name: "Odczyt wejść Satel",
@@ -580,7 +641,7 @@ defmodule DB.Init do
     }
     |> Repo.insert!()
 
-    # make sunblinds closed at night
+    # make sunblinds closed at night id:2
     %Task{
       type_id: 1,
       name: "Zamykanie rolet",
@@ -595,12 +656,12 @@ defmodule DB.Init do
     }
     |> Repo.insert!()
 
-    # make sunblinds opened at morning
+    # make sunblinds opened at morning id:3
     %Task{
       type_id: 2,
       name: "Otwieranie rolet",
       status: "waiting",
-      action_id: 1,
+      action_id: 5,
       device: nil,
       frequency: 0,
       execution_time: ~T[06:00:00],
@@ -610,7 +671,7 @@ defmodule DB.Init do
     }
     |> Repo.insert!()
 
-    # make sunblinds opened at morning
+    # make sunblinds opened at morning id:4
     %Task{
       type_id: 4,
       name: "Nasłuchiwanie Arduino MEGA",
@@ -625,7 +686,7 @@ defmodule DB.Init do
     }
     |> Repo.insert!()
 
-    # make sunblinds opened at morning
+    # make sunblinds opened at morning id:5
     %Task{
       type_id: 5,
       name: "Odczyt temperatury Arduino MEGA",
@@ -640,7 +701,7 @@ defmodule DB.Init do
     }
     |> Repo.insert!()
 
-    # make sunblinds opened at morning
+    # make sunblinds opened at morning id:6
     %Task{
       type_id: 6,
       name: "Odczyt watów Arduino MEGA",
@@ -655,8 +716,9 @@ defmodule DB.Init do
     }
     |> Repo.insert!()
 
+    # clear logs id:7
     %Task{
-      type_id: 9,
+      type_id: 8,
       name: "Czyszczenie logów z urządzeń",
       status: "inactive",
       action: nil,
@@ -669,6 +731,7 @@ defmodule DB.Init do
     }
     |> Repo.insert!()
 
+    # read shelly output status id:8
     %Task{
       type_id: 7,
       name: "Odczyt stanu wyjść Shelly2",
@@ -683,31 +746,109 @@ defmodule DB.Init do
     }
     |> Repo.insert!()
 
+    # make sunblinds opened at morning - Przemek's room id:9
+    %Task{
+      type_id: 2,
+      name: "Otwieranie rolet Przemek",
+      status: "waiting",
+      action_id: 6,
+      device: nil,
+      frequency: 0,
+      execution_time: ~T[06:00:00],
+      limit: -1,
+      start_date: nil,
+      end_date: nil
+    }
+    |> Repo.insert!()
+
+
     :ok
   end
 
   def init_pages() do
     %Page{
-      name: "Wszystkie urządzenia",
+      name: "Do testowania",
       order: 1,
-      title: "Przemek",
-      description: "Page about Przemek's Room",
-      lights: get_(Light, [1, 2, 3, 4, 5, 6]),
+      title: "",
+      description: "",
+      lights: [], #get_(Light, [1, 2, 3, 4, 5, 6]),
       ports: [],
-      dimmers: get_(Dimmer, [1, 2, 3]),
-      sunblinds: get_(Sunblind, [1, 2, 3, 4, 5, 6]),
-      actions: get_(Action, [1, 2, 3, 4]),
-      tasks: get_(Task, [1, 2, 3, 4, 5, 6]),
+      dimmers: [], #get_(Dimmer, [1, 2, 3]),
+      sunblinds: [], #get_(Sunblind, [1, 2, 3, 4, 5, 6]),
+      actions: [], #get_(Action, [1, 2, 3, 4]),
+      tasks: [], #get_(Task, [1, 2, 3, 4, 5, 6]),
+      devices: []
+    }
+    |> Repo.insert!()
+    #
+    #    %Page{
+    #      name: "Wszystkie urządzenia",
+    #      order: 1,
+    #      title: "Przemek",
+    #      description: "Page about Przemek's Room",
+    #      lights: get_(Light, [1, 2, 3, 4, 5, 6]),
+    #      ports: [],
+    #      dimmers: get_(Dimmer, [1, 2, 3]),
+    #      sunblinds: get_(Sunblind, [1, 2, 3, 4, 5, 6]),
+    #      actions: get_(Action, [1, 2, 3, 4]),
+    #      tasks: get_(Task, [1, 2, 3, 4, 5, 6]),
+    #      devices: []
+    #    }
+    #    |> Repo.insert!()
+
+
+    %Page{
+      name: "Wszystkie zadania i akcje",
+      order: 2,
+      title: "",
+      description: "",
+      lights: [],
+      ports: [],
+      dimmers: [],
+      sunblinds: [],
+      actions: get_(Action, [1, 2, 3, 4, 5, 6]),
+      tasks: get_(Task, [1, 2, 3, 4, 5, 6, 7, 8, 9]),
       devices: []
     }
     |> Repo.insert!()
 
     %Page{
+      name: "Wszystkie rolety",
+      order: 3,
+      title: "",
+      description: "",
+      lights: [],
+      ports: [],
+      dimmers: [],
+      sunblinds: get_(Sunblind, [1, 2, 3, 4, 5, 6]),
+      actions: [],
+      tasks: [],
+      devices: []
+    }
+    |> Repo.insert!()
+
+    %Page{
+      name: "Poddasze",
+      order: 4,
+      title: "",
+      description: "",
+      lights: [], #get_(Light, [1, 2, 3, 4, 5, 6]),
+      ports: [],
+      dimmers: get_(Dimmer, [4]),
+      sunblinds: [], #get_(Sunblind, [5, 6]),
+      actions: [], #get_(Action, [2, 3, 4]),
+      tasks: [],
+      devices: []
+    }
+    |> Repo.insert!()
+
+
+    %Page{
       name: "Salon",
-      order: 1,
-      title: "Przemek",
-      description: "Page about Przemek's Room",
-      lights: get_(Light, [1, 2, 3, 4, 5, 6]),
+      order: 5,
+      title: "",
+      description: "",
+      lights: [], # get_(Light, [1, 2, 3, 4, 5, 6]),
       ports: [],
       dimmers: get_(Dimmer, [1, 2, 3]),
       sunblinds: get_(Sunblind, [5, 6]),
@@ -718,34 +859,20 @@ defmodule DB.Init do
     |> Repo.insert!()
 
     %Page{
-      name: "Zadania i akcje",
-      order: 1,
-      title: "Przemek",
-      description: "Page about Przemek's Room",
-      lights: [],
+      name: "Pokój Przemka",
+      order: 5,
+      title: "",
+      description: "",
+      lights: [], #get_(Light, [1, 2, 3, 4, 5, 6]),
       ports: [],
-      dimmers: [],
-      sunblinds: [],
-      actions: get_(Action, [1, 2, 3, 4]),
-      tasks: get_(Task, [1, 2, 3, 4, 5, 6]),
+      dimmers: [], #get_(Dimmer, [1, 2, 3]),
+      sunblinds: get_(Sunblind, [2, 3]),
+      actions: get_(Action, [6]),
+      tasks: get_(Task, [9]),
       devices: []
     }
     |> Repo.insert!()
 
-    %Page{
-      name: "Rolety",
-      order: 1,
-      title: "Przemek",
-      description: "Page about Przemek's Room",
-      lights: [],
-      ports: [],
-      dimmers: [],
-      sunblinds: get_(Sunblind, [1, 2, 3, 4, 5, 6]),
-      actions: [],
-      tasks: [],
-      devices: []
-    }
-    |> Repo.insert!()
 
     :ok
   end

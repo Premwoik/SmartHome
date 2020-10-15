@@ -46,11 +46,27 @@ defmodule Core.Controllers.DimmerController do
     :ok
   end
 
+  @spec set_white_brightness(map(), integer()) :: atom()
+  def set_white_brightness(
+        %Dimmer{
+          port: %Port{
+            type: "dimmer_rgb"<>_
+          }
+        } = dimmer,
+        value
+      ) do
+    %{device: dimmer.port.device, port: dimmer.port, white: value}
+    |> Core.Device.do_r(:set_white_brightness)
+    |> process_response(dimmer)
+    :ok
+  end
+
+
   def set_brightness(dimmer, value, deep \\ true)
   def set_brightness(
         %Dimmer{
           port: %Port{
-            type: "dimmer_rgb"
+            type: "dimmer_rgb"<>_
           }
         } = dimmer,
         value,

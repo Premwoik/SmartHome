@@ -284,7 +284,7 @@ defmodule Ui.DashboardAdmin do
       join: c in "page_content_tasks",
       on: c.task_id == t.id,
       where: c.page_id == ^page_id,
-      preload: [:type],
+      preload: [:type, :action, :device],
       select: {c.order, t}
     )
     |> Repo.all()

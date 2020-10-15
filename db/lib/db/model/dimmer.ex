@@ -11,12 +11,12 @@ defmodule DB.Dimmer do
   @derive {Poison.Encoder, except: [:__meta__]}
   schema "dimmers" do
     belongs_to(:port, DB.Port)
-    field(:type, :string, default: "click")
     field(:fill, :integer)
     field(:direction, :integer)
     field(:red, :integer)
     field(:green, :integer)
     field(:blue, :integer)
+    field(:white, :integer)
     field(:time, :integer)
     field(:ref, :integer)
     has_many(:lights, DB.Light)
@@ -25,7 +25,7 @@ defmodule DB.Dimmer do
   def changeset(dimmer, params \\ %{}, all_str \\ false) do
     params_ = inc_ref(dimmer, Enum.into(params, %{}), all_str)
     dimmer
-    |> cast(params_, [:red, :green, :blue, :fill, :port_id, :direction, :time, :type, :ref])
+    |> cast(params_, [:red, :green, :blue, :white, :fill, :port_id, :direction, :time, :ref])
   end
 
   def all() do

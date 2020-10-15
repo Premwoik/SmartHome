@@ -38,6 +38,18 @@ defmodule Core.Device.ShellyRGBW2 do
     |> log("set_brightness", d)
   end
 
+
+  @spec set_white_brightness(map()) :: res()
+  def set_white_brightness(%{device: d, port: p, white: w}) do
+    url_ = url(d.ip, d.port, p.number)
+    query_ = %{"white" => w}
+
+    HTTPotion.get(url_, query: query_)
+    |> default_response_catch()
+    |> log("set_white_brightness", d)
+  end
+
+
   @spec set_rgb(map()) :: res()
   def set_rgb(%{device: d, port: port, fill: fill, red: r, green: g, blue: b}) do
     url_ = url(d.ip, d.port, port.number)

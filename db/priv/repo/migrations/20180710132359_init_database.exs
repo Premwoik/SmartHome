@@ -41,18 +41,13 @@ defmodule DB.Repo.Migrations.InitDatabase do
       add :port_id, references("ports", on_delete: :delete_all)
     end
 
-#    create table(:dimmers_lights, primary_key: false) do
-#      add :dimmer_id, references("dimmers")
-#      add :port_id, references("ports")
-#    end
-
     create table(:dimmers) do
       add :port_id, references("ports", on_delete: :nilify_all)
-      add :type, :string
       add :fill, :integer
       add :red, :integer, default: 0
       add :green, :integer, default: 0
       add :blue, :integer, default: 0
+      add :white, :integer, default: 0
       add :direction, :integer, default: 1
       add :time, :integer, default: 4_500
       add :ref, :integer, default: 1

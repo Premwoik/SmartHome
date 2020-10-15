@@ -111,4 +111,32 @@ defmodule Ui.ActionAdmin do
     Enum.each(port_ids, fn port_id -> DB.ActionArgument.insert(id, port_id) end)
     :ok
   end
+
+  def get_action_items(id) do
+    DB.ActionArgument.get(id)
+    |> Enum.map(
+         fn arg ->
+           case(arg.type) do
+             "sunblind" ->
+               arg_to_item(arg, DB.Sunblind)
+             "dimmer" <> a ->
+               arg_to_item(arg, DB.Dimmer)
+             "light" ->
+               arg_to_item(arg, DB.Light)
+             "port" ->
+               arg_to_item(arg, DB.Port)
+             _ ->
+               %{}
+           end
+         end
+       )
+  end
+
+  defp arg_to_item(arg, db) do
+    "Elixir.DB."<>name = to_string(db)
+    admin = String.to_atom("Elixir.Ui."<>name<>"Admin")
+    db
+    |> Repo.get_by(port_id: arg.port_id)
+    |> admin.preload()
+  end
 end

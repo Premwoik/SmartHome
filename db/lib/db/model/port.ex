@@ -11,6 +11,9 @@ defmodule DB.Port do
   #  - input
   #  - output
   #  - output_pwm
+  #  - dimmer
+  #  - dimmer_rgb
+  #  - dimmer_rgbw
 
   @derive {Poison.Encoder, only: [:name, :state, :id]}
   schema "ports" do

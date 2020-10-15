@@ -52,6 +52,7 @@ defmodule UiWeb.Router do
     post "/actions/set/:id/:state", ActionController, :set
     post "/actions/update_args/:id", ActionController, :update_args
     get "/actions/get_args/:id", ActionController, :get_args
+    get "/actions/get_items/:id", ActionController, :get_items
 
     post "/ports/setOn/:id", PortController, :set_on
     post "/ports/setOff/:id", PortController, :set_off

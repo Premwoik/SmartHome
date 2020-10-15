@@ -10,6 +10,8 @@ defmodule DB.TaskType do
   schema "task_types" do
     field(:name, :string)
     field(:module, :string)
+    field(:action, :boolean)
+    field(:device, :boolean)
   end
 
   def all() do

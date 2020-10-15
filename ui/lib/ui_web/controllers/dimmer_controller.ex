@@ -69,6 +69,7 @@ defmodule UiWeb.DimmerController do
       render(conn, "show.json", dimmer: dim)
     else
       casual_errors ->
+        IO.inspect(casual_errors)
         ErrorHelper.handling_casual_errors(conn, casual_errors)
     end
   end
@@ -89,6 +90,27 @@ defmodule UiWeb.DimmerController do
       render(conn, "show.json", dimmer: dim)
     else
       casual_errors ->
+        IO.inspect(casual_errors)
+        ErrorHelper.handling_casual_errors(conn, casual_errors)
+    end
+  end
+  def set(conn, %{"id" => id, "white" => fill} = o) do
+    fill_ =
+      cond do
+        fill > 100 -> 100
+        fill < 0 -> 0
+        true -> fill
+      end
+
+    with {:ok, dim} <- DimmerAdmin.get_dimmer(id),
+         true <- DB.check_ref(o, dim),
+         :ok <- Benchmark.measure_p fn -> DimmerController.set_white_brightness(dim, fill_) end
+      do
+      dim = DimmerAdmin.get_dimmer!(id)
+      render(conn, "show.json", dimmer: dim)
+    else
+      casual_errors ->
+        IO.inspect(casual_errors)
         ErrorHelper.handling_casual_errors(conn, casual_errors)
     end
   end

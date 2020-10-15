@@ -40,6 +40,23 @@ defmodule UiWeb.ActionView do
     }
   end
 
+  def render("show_items.json", %{items: items}) do
+    render_many(items, ActionView, "action_item.json")
+  end
+
+  def render("action_item.json", %{action: i}) do
+    type = case i do
+      %DB.Port{} -> :port
+      %DB.Sunblind{} -> :sunblind
+      %DB.Dimmer{} -> :dimmer
+      %DB.Light{} -> :light
+    end
+    typeStr = to_string(type)
+    module = String.to_atom("Elixir.UiWeb."<>upcaseFirst(typeStr)<>"View")
+    module.render(to_string(type) <> ".json", %{type => i})
+  end
+  def upcaseFirst(<<first :: utf8, rest :: binary>>), do: String.upcase(<<first :: utf8>>) <> rest
+
   # def render("show.json", %{dash_action: action}) do
   # %{data: render_one(action, ActionView, "dash_action.json")}
   # end
@@ -52,4 +69,6 @@ defmodule UiWeb.ActionView do
   # action: ""
   # }
   # end
+
+
 end

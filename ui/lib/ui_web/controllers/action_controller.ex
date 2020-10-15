@@ -76,4 +76,9 @@ defmodule UiWeb.ActionController do
     args = DB.ActionArgument.get(id)
     render(conn, "show_args.json", %{args: args})
   end
+
+  def get_items(conn, %{"id" => id}) do
+    items = Ui.ActionAdmin.get_action_items(id)
+    render(conn, "show_items.json", %{items: items})
+  end
 end
