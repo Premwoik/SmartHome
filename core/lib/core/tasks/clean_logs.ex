@@ -1,6 +1,7 @@
 defmodule Core.Tasks.CleanLogs do
   @moduledoc false
 
+  @behaviour Core.Tasks.Task
   alias DB.{DeviceJournal}
 
   @impl true

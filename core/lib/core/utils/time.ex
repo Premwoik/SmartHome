@@ -1,12 +1,10 @@
 defmodule Core.Utils.Time do
   @moduledoc false
 
+  @adapter Application.get_env(:core, :time_adapter)
+
   @callback now() :: Time.t
   @callback compare(t1 :: Time.t, t2 :: Time.t) :: atom
-
-
-
-  @adapter Application.get_env(:core, :time_adapter)
 
 
   def now() do

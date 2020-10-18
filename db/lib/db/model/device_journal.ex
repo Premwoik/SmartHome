@@ -12,6 +12,11 @@ defmodule DB.DeviceJournal do
     def timeout, do: "TIMEOUT"
   end
 
+  defmodule Name do
+    def read_active_inputs, do: "read_active_inputs"
+#    def
+  end
+
   schema "device_journals" do
     field(:type, :string)
     field(:name, :string)
@@ -28,15 +33,17 @@ defmodule DB.DeviceJournal do
   end
 
   def log(device_id, name, info, type) do
-    Task.start(fn ->
-      %DeviceJournal{
-        type: type,
-        name: name,
-        info: info,
-        device_id: device_id
-      }
-      |> Repo.insert!()
-    end)
+    Task.start(
+      fn ->
+        %DeviceJournal{
+          type: type,
+          name: name,
+          info: info,
+          device_id: device_id
+        }
+        |> Repo.insert!()
+      end
+    )
   end
 
   def find(device, limit \\ 1000, from \\ nil)
@@ -47,9 +54,12 @@ defmodule DB.DeviceJournal do
 
   def find(device_id, limit, nil) do
     Repo.all(
-      from(d in DeviceJournal,
+      from(
+        d in DeviceJournal,
         where: d.device_id == ^device_id,
-        order_by: [desc: d.inserted_at],
+        order_by: [
+          desc: d.inserted_at
+        ],
         limit: ^limit
       )
     )
@@ -57,9 +67,12 @@ defmodule DB.DeviceJournal do
 
   def find(device_id, limit, from) do
     Repo.all(
-      from(d in DeviceJournal,
+      from(
+        d in DeviceJournal,
         where: d.device_id == ^device_id and d.inserted_at <= ^from,
-        order_by: [desc: d.inserted_at],
+        order_by: [
+          desc: d.inserted_at
+        ],
         limit: ^limit
       )
     )
@@ -77,11 +90,11 @@ defmodule DB.DeviceJournal do
       d in DeviceJournal,
       where:
         d.device_id == ^device_id and
-          fragment(
-            "cast(strftime('%s', ?) as Integer) >= strftime('%s', 'now') - ?",
-            d.inserted_at,
-            ^seconds
-          ),
+        fragment(
+          "cast(strftime('%s', ?) as Integer) >= strftime('%s', 'now') - ?",
+          d.inserted_at,
+          ^seconds
+        ),
       group_by:
         fragment(
           "cast((julianday('2019-01-01T00:00:00') - julianday(?))*24*60 As Integer) / 5",
@@ -107,11 +120,11 @@ defmodule DB.DeviceJournal do
       d in DeviceJournal,
       where:
         d.device_id == ^device_id and
-          fragment(
-            "cast(strftime('%s', ?) as Integer) >= strftime('%s', 'now') - ?",
-            d.inserted_at,
-            ^seconds
-          ),
+        fragment(
+          "cast(strftime('%s', ?) as Integer) >= strftime('%s', 'now') - ?",
+          d.inserted_at,
+          ^seconds
+        ),
       group_by:
         fragment(
           "cast((julianday('2019-01-01T00:00:00') - julianday(?))*24*60 As Integer) / 5",
@@ -128,5 +141,14 @@ defmodule DB.DeviceJournal do
       }
     )
     |> Repo.all()
+  end
+
+  def delete_older_than(hours \\ 3) do
+    seconds = round(hours * 3600)
+    from(
+      d in DeviceJournal,
+      where: fragment("strftime('%s', 'now') - ? < strftime('%s', ?)", ^seconds, d.inserted_at)
+    )
+    |> Repo.delete_all()
   end
 end

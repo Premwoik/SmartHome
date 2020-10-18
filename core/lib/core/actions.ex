@@ -81,12 +81,12 @@ defmodule Core.Actions do
   end
 
   #  Privates
-
+  defp after_invoke(result, amem, errors \\ [])
   defp after_invoke([], amem, errors) do
     {amem, errors}
   end
 
-  defp after_invoke([r | results], amem, errors \\ []) do
+  defp after_invoke([r | results], amem, errors) do
     case r do
       {:ok, {id, mem}} ->
         amem_ = Map.put(amem, id, mem)
