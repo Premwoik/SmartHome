@@ -17,7 +17,7 @@ defmodule DB.Activations do
   end
 
   defp get_prev_hours_list(latest_read_date, current_date, acc \\ [])
-  defp get_prev_hours_list(latest_read_date, current_date, acc) when latest_read_date < current_date do
+  defp get_prev_hours_list(latest_read_date, current_date, acc) when next_date(latest_read_date) < current_date do
     from = next_date(latest_read_date)
     to = next_date(from)
     acc_ = [{from, to} | acc]
