@@ -42,19 +42,11 @@ defmodule DB.Activations do
   end
 
   defp prev_date(dt) do
-    hour_ = case dt.hour do
-      0 -> 23
-      h -> h - 1
-    end
-    %{dt | hour: hour_}
+    Timex.shift(dt, hours: -1)
   end
 
   defp next_date(dt) do
-    hour_ = case dt.hour do
-      23 -> 0
-      h -> h + 1
-    end
-    %{dt | hour: hour_}
+    Timex.shift(dt, hours: 1)
   end
 
   defp clear_to_hour(dt) do
