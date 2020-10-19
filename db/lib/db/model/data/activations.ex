@@ -11,17 +11,17 @@ defmodule DB.Activations do
   def collect_previous_hour_(mod, collector_fn) do
     latest_read_date = get_latest_date(mod)
     current_date = clear_to_hour(NaiveDateTime.utc_now())
-    get_prev_hours_list(latest_read_date, current_date)
+    get_prev_hours_list(next_date(latest_read_date), current_date)
     |> Enum.map(fn {from, to} -> collector_fn.(from, to) end)
     |> Enum.concat()
   end
 
-  defp get_prev_hours_list(latest_read_date, current_date, acc \\ [])
-  defp get_prev_hours_list(latest_read_date, current_date, acc) when next_date(latest_read_date) < current_date do
-    from = next_date(latest_read_date)
+  defp get_prev_hours_list(current_read_date, current_date, acc \\ [])
+  defp get_prev_hours_list(current_read_date, current_date, acc) when current_read_date < current_date do
+    from = current_read_date
     to = next_date(from)
     acc_ = [{from, to} | acc]
-    get_prev_hours_list(from, current_date, acc_)
+    get_prev_hours_list(to, current_date, acc_)
   end
   defp get_prev_hours_list(_, _, acc) do
     Enum.reverse(acc)
