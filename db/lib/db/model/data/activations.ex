@@ -11,7 +11,7 @@ defmodule DB.Activations do
   def collect_previous_hour_(mod, collector_fn) do
     latest_read_date = get_latest_date(mod)
     current_date = clear_to_hour(NaiveDateTime.utc_now())
-    prev_list(latest_read_date, current_date)
+    get_prev_hours_list(latest_read_date, current_date)
     |> Enum.map(fn {from, to} -> collector_fn.(from, to) end)
     |> Enum.concat()
   end
