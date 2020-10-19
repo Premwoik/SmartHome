@@ -23,7 +23,7 @@ defmodule DB.Activations do
     acc_ = [{from, to} | acc]
     get_prev_hours_list(from, current_date, acc_)
   end
-  defp prev_list(_, _, acc) do
+  defp get_prev_hours_list(_, _, acc) do
     Enum.reverse(acc)
   end
 
