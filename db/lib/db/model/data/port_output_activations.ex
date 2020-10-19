@@ -12,7 +12,7 @@ defmodule DB.OutputActivations do
   schema "outputs_activations" do
     belongs_to(:device, DB.Device)
     belongs_to(:port, DB.Port)
-    field(:date, :time)
+    field(:date, :naive_datetime)
     field(:value, :integer)
   end
 
@@ -30,6 +30,7 @@ defmodule DB.OutputActivations do
     )
     |> Repo.all()
     |> Enum.group_by(fn log -> log.device_id end)
+    |> IO.inspect()
     |> Enum.map(
          fn {key, value} ->
            map_numbers(
@@ -63,7 +64,7 @@ defmodule DB.OutputActivations do
 
     from(
       p in DB.Port,
-      where: p.number in ^keys,
+      where: p.number in ^keys and p.device_id == ^device_id,
       select: p.id,
       order_by: p.number
     )

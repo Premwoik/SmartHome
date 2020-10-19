@@ -24,7 +24,7 @@ defmodule DB.InputActivations do
   defp collect_data(from, to) do
     from(
       l in DeviceJournal,
-      where: l.name == "read_active_inputs" and l.inserted_at >= ^from and l.inserted_at < ^to
+      where: l.name == "read_active_inputs" and l.type == "NORMAL" and l.inserted_at >= ^from and l.inserted_at < ^to
     )
     |> Repo.all()
     |> Enum.group_by(fn log -> log.device_id end)
@@ -50,7 +50,7 @@ defmodule DB.InputActivations do
 
     from(
       p in DB.Port,
-      where: p.number in ^keys,
+      where: p.number in ^keys and p.device_id == ^device_id,
       select: p.id,
       order_by: p.number
     )
