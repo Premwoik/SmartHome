@@ -10,12 +10,21 @@ defmodule DB.Activations do
   @spec collect_previous_hour_(mod :: module(), collector_fn :: (DateTime.t(), DateTime.t() -> any())) :: any()
   def collect_previous_hour_(mod, collector_fn) do
     latest_read_date = get_latest_date(mod)
-    current_read_date = next_date(latest_read_date)
-    current_read_date_end = next_date(current_read_date)
-    date = clear_to_hour(NaiveDateTime.utc_now())
-    if date > current_read_date do
-      collector_fn.(current_read_date, current_read_date_end)
-    end
+    current_date = clear_to_hour(NaiveDateTime.utc_now())
+    prev_list(last_read_date, current_date)
+    |> Enum.map(fn {from, to} -> collector_fn.(from, to) end)
+    |> Enum.concat()
+  end
+
+  defp get_prev_hours_list(latest_read_date, current_date, acc \\ [])
+  defp get_prev_hours_list(latest_read_date, current_date, acc) when latest_read_date < current_date do
+    from = next_date(latest_read_date)
+    to = next_date(from)
+    acc_ = [{from, to} | acc]
+    get_prev_hours_list(from, current_date, acc_)
+  end
+  defp prev_list(_, _, acc) do
+    Enum.reverse(acc)
   end
 
   defp get_latest_date(mod) do

@@ -538,7 +538,7 @@ defmodule DB.Init do
   def insert_tasks() do
     #    id: 1
     %TaskType{
-#      name: "Calling action up",
+      #      name: "Calling action up",
       name: "Akcja z wysokim sygnałem",
       module: "Core.Tasks.ExecuteActionUp",
       action: true,
@@ -548,7 +548,7 @@ defmodule DB.Init do
 
     #    id: 2
     %TaskType{
-#      name: "Calling action down",
+      #      name: "Calling action down",
       name: "Akcja z niskim sygnałem",
       module: "Core.Tasks.ExecuteActionDown",
       action: true,
@@ -568,7 +568,7 @@ defmodule DB.Init do
 
     #    id: 4
     %TaskType{
-#      name: "Heartbeat",
+      #      name: "Heartbeat",
       name: "Nasłuchuj urządzenie",
       module: "Core.Tasks.Heartbeat",
       action: false,
@@ -578,7 +578,7 @@ defmodule DB.Init do
 
     #    id: 5
     %TaskType{
-#      name: "Read Wattmeters data",
+      #      name: "Read Wattmeters data",
       name: "Odczytaj watomierze urządzenia",
       module: "Core.Tasks.ReadUsedEnergy",
       action: false,
@@ -588,7 +588,7 @@ defmodule DB.Init do
 
     #    id: 6
     %TaskType{
-#      name: "Read Thermometers data",
+      #      name: "Read Thermometers data",
       name: "Odczytaj termometry urządzenia",
       module: "Core.Tasks.ReadTemperature",
       action: false,
@@ -598,7 +598,7 @@ defmodule DB.Init do
 
     #    id: 7
     %TaskType{
-#      name: "Read Outputs",
+      #      name: "Read Outputs",
       name: "Odczytaj wyjścia urządzenia",
       module: "Core.Tasks.ReadOutputs",
       action: false,
@@ -608,22 +608,30 @@ defmodule DB.Init do
 
     #    id: 8
     %TaskType{
-#      name: "Clean logs",
+      #      name: "Clean logs",
       name: "Wyczyść historię",
       module: "Core.Tasks.CleanLogs",
       action: false,
       device: false,
     }
     |> DB.Repo.insert!()
-
+    # id: 9
+    %TaskType{
+      #      name: "Clean logs",
+      name: "Zbierz logi w godzinne grupy",
+      module: "Core.Tasks.CollectDataHourly",
+      action: false,
+      device: false,
+    }
+    |> DB.Repo.insert!()
     #    id: 9
-#    %TaskType{
-#      name: "Device activity supervisor task",
-#      module: "Core.Tasks.DeviceActivitySupervisor",
-#      action: false,
-#      device: true,
-#    }
-#    |> Repo.insert!()
+    #    %TaskType{
+    #      name: "Device activity supervisor task",
+    #      module: "Core.Tasks.DeviceActivitySupervisor",
+    #      action: false,
+    #      device: true,
+    #    }
+    #    |> Repo.insert!()
 
 
     # read integra inputs id: 1
@@ -760,7 +768,20 @@ defmodule DB.Init do
       end_date: nil
     }
     |> Repo.insert!()
-
+    # id: 10
+    %DB.Task{
+      type_id: 9,
+      name: "Grupwanie logów",
+      status: "inactive",
+      action: nil,
+      device_id: nil,
+      frequency: 3_600_000,
+      execution_time: nil,
+      limit: -1,
+      start_date: nil,
+      end_date: nil
+    }
+    |> DB.Repo.insert!()
 
     :ok
   end
