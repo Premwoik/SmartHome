@@ -64,6 +64,9 @@ defmodule UiWeb.Router do
     get "/stats/device-journal/report/:id", DeviceJournalController, :get_report
     get "/stats/device-journal/report_sec/:id", DeviceJournalController, :get_report_s
     get "/stats/device-journal/logs/:id", DeviceJournalController, :get_logs
+    get "/stats/activations/devices/:id", ActivationsHistoryController, :get_device_activations
+    get "/stats/activations/inputs/:id", ActivationsHistoryController, :get_input_activations
+    get "/stats/activations/outputs/:id", ActivationsHistoryController, :get_output_activations
 
   end
 end

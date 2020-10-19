@@ -6,6 +6,7 @@ defmodule DB.Activations do
   import Ecto.Query
 
   @callback collect_previous_hour() :: any()
+  @callback find(integer(), integer()) :: any()
 
   @spec collect_previous_hour_(mod :: module(), collector_fn :: (DateTime.t(), DateTime.t() -> any())) :: any()
   def collect_previous_hour_(mod, collector_fn) do

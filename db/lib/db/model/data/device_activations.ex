@@ -17,7 +17,18 @@ defmodule DB.DeviceActivations do
     field(:infos, :string)
   end
 
-  @impl true
+  def find(id, limit \\ 24) do
+    from(
+      i in DeviceActivations,
+      where: i.device_id == ^id,
+      order_by: [
+        desc: i.date
+      ],
+      limit: ^limit
+    )
+    |> Repo.all()
+  end
+
   def collect_previous_hour() do
     collect_previous_hour_(DeviceActivations, &collect_data/2)
   end

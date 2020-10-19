@@ -16,7 +16,18 @@ defmodule DB.InputActivations do
     field(:value, :integer)
   end
 
-  @impl true
+  def find(id, limit \\ 24) do
+    from(
+      i in InputActivations,
+      where: i.port_id == ^id,
+      order_by: [
+        desc: i.date
+      ],
+      limit: ^limit
+    )
+    |> Repo.all()
+  end
+
   def collect_previous_hour() do
     collect_previous_hour_(InputActivations, &collect_data/2)
   end
