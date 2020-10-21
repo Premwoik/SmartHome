@@ -195,4 +195,69 @@ defmodule Ui.AdminTest do
       assert %Ecto.Changeset{} = Admin.change_action(action)
     end
   end
+
+  describe "thermometers" do
+    alias Ui.Admin.Thermometer
+
+    @valid_attrs %{address: "some address", device_id: 42, name: "some name", ref: 42}
+    @update_attrs %{address: "some updated address", device_id: 43, name: "some updated name", ref: 43}
+    @invalid_attrs %{address: nil, device_id: nil, name: nil, ref: nil}
+
+    def thermometer_fixture(attrs \\ %{}) do
+      {:ok, thermometer} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Admin.create_thermometer()
+
+      thermometer
+    end
+
+    test "list_thermometers/0 returns all thermometers" do
+      thermometer = thermometer_fixture()
+      assert Admin.list_thermometers() == [thermometer]
+    end
+
+    test "get_thermometer!/1 returns the thermometer with given id" do
+      thermometer = thermometer_fixture()
+      assert Admin.get_thermometer!(thermometer.id) == thermometer
+    end
+
+    test "create_thermometer/1 with valid data creates a thermometer" do
+      assert {:ok, %Thermometer{} = thermometer} = Admin.create_thermometer(@valid_attrs)
+      assert thermometer.address == "some address"
+      assert thermometer.device_id == 42
+      assert thermometer.name == "some name"
+      assert thermometer.ref == 42
+    end
+
+    test "create_thermometer/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Admin.create_thermometer(@invalid_attrs)
+    end
+
+    test "update_thermometer/2 with valid data updates the thermometer" do
+      thermometer = thermometer_fixture()
+      assert {:ok, %Thermometer{} = thermometer} = Admin.update_thermometer(thermometer, @update_attrs)
+      assert thermometer.address == "some updated address"
+      assert thermometer.device_id == 43
+      assert thermometer.name == "some updated name"
+      assert thermometer.ref == 43
+    end
+
+    test "update_thermometer/2 with invalid data returns error changeset" do
+      thermometer = thermometer_fixture()
+      assert {:error, %Ecto.Changeset{}} = Admin.update_thermometer(thermometer, @invalid_attrs)
+      assert thermometer == Admin.get_thermometer!(thermometer.id)
+    end
+
+    test "delete_thermometer/1 deletes the thermometer" do
+      thermometer = thermometer_fixture()
+      assert {:ok, %Thermometer{}} = Admin.delete_thermometer(thermometer)
+      assert_raise Ecto.NoResultsError, fn -> Admin.get_thermometer!(thermometer.id) end
+    end
+
+    test "change_thermometer/1 returns a thermometer changeset" do
+      thermometer = thermometer_fixture()
+      assert %Ecto.Changeset{} = Admin.change_thermometer(thermometer)
+    end
+  end
 end

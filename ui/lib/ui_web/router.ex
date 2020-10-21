@@ -30,6 +30,7 @@ defmodule UiWeb.Router do
     resources "/dashboards", DashboardController, except: [:new, :edit]
     resources "/sunblinds", SunblindController, except: [:new, :edit]
     resources "/tasks", TaskController, except: [:new, :edit]
+    resources "/thermometers", ThermometerController, except: [:new, :edit]
 
     get "/devices/types/all", DeviceController, :get_types
 
@@ -68,5 +69,7 @@ defmodule UiWeb.Router do
     get "/stats/activations/inputs/:id", ActivationsHistoryController, :get_input_activations
     get "/stats/activations/outputs/:id", ActivationsHistoryController, :get_output_activations
 
+    get "/thermometers/get_temperature/:id", ThermometerController, :get_temperature
+    get "/thermometers/get_temperature/:id", ThermometerController, :get_temperature
   end
 end

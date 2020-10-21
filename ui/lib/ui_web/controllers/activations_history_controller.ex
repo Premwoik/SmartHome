@@ -21,6 +21,9 @@ defmodule UiWeb.ActivationsHistoryController do
     json(conn, data)
   end
 
+  def get_temperature(conn, %{"id" => therm_id}) do
+
+  end
 
   defp log_mapper(l) do
     %{

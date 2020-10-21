@@ -14,7 +14,8 @@ defmodule DB.Init do
     Repo,
     Sunblind,
     Page,
-    PageContent
+    PageContent,
+    Thermometer
     }
 
   import Ecto.Query
@@ -32,6 +33,7 @@ defmodule DB.Init do
       :ok = insert_shelly()
       :ok = insert_tasks()
       :ok = init_pages()
+      :ok = init_therm()
       :ok
     end
 
@@ -896,6 +898,56 @@ defmodule DB.Init do
 
 
     :ok
+  end
+
+  def init_therm() do
+    #    id: 1
+    %Thermometer{
+      device_id: 1,
+      name: "Test t1",
+      address: "123",
+      ref: 1
+    }
+    |> Repo.insert!()
+    #    id: 2
+    %Thermometer{
+      device_id: 2,
+      name: "Test t2",
+      address: "124",
+      ref: 1
+    }
+    |> Repo.insert!()
+
+
+    %DB.Thermometer.Read{
+      therm_id: 2,
+      value: 20.0
+    }
+    |> Repo.insert!()
+
+    %DB.Thermometer.Read{
+      therm_id: 1,
+      value: 11.0
+    }
+    |> Repo.insert!()
+
+    %DB.Thermometer.Read{
+      therm_id: 1,
+      value: 10.5
+    }
+    |> Repo.insert!()
+
+    %DB.Thermometer.Read{
+      therm_id: 1,
+      value: 11.0
+    }
+    |> Repo.insert!()
+
+    %DB.Thermometer.Read{
+      therm_id: 1,
+      value: 12.0
+    }
+    |> Repo.insert!()
   end
 
   defp get_(type, ids) do
