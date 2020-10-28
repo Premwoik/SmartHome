@@ -260,4 +260,69 @@ defmodule Ui.AdminTest do
       assert %Ecto.Changeset{} = Admin.change_thermometer(thermometer)
     end
   end
+
+  describe "wattmeters" do
+    alias Ui.Admin.EnergyMeter
+
+    @valid_attrs %{address: 42, device: 42, name: "some name", ref: 42}
+    @update_attrs %{address: 43, device: 43, name: "some updated name", ref: 43}
+    @invalid_attrs %{address: nil, device: nil, name: nil, ref: nil}
+
+    def energy_meter_fixture(attrs \\ %{}) do
+      {:ok, energy_meter} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Admin.create_energy_meter()
+
+      energy_meter
+    end
+
+    test "list_wattmeters/0 returns all wattmeters" do
+      energy_meter = energy_meter_fixture()
+      assert Admin.list_wattmeters() == [energy_meter]
+    end
+
+    test "get_energy_meter!/1 returns the energy_meter with given id" do
+      energy_meter = energy_meter_fixture()
+      assert Admin.get_energy_meter!(energy_meter.id) == energy_meter
+    end
+
+    test "create_energy_meter/1 with valid data creates a energy_meter" do
+      assert {:ok, %EnergyMeter{} = energy_meter} = Admin.create_energy_meter(@valid_attrs)
+      assert energy_meter.address == 42
+      assert energy_meter.device == 42
+      assert energy_meter.name == "some name"
+      assert energy_meter.ref == 42
+    end
+
+    test "create_energy_meter/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Admin.create_energy_meter(@invalid_attrs)
+    end
+
+    test "update_energy_meter/2 with valid data updates the energy_meter" do
+      energy_meter = energy_meter_fixture()
+      assert {:ok, %EnergyMeter{} = energy_meter} = Admin.update_energy_meter(energy_meter, @update_attrs)
+      assert energy_meter.address == 43
+      assert energy_meter.device == 43
+      assert energy_meter.name == "some updated name"
+      assert energy_meter.ref == 43
+    end
+
+    test "update_energy_meter/2 with invalid data returns error changeset" do
+      energy_meter = energy_meter_fixture()
+      assert {:error, %Ecto.Changeset{}} = Admin.update_energy_meter(energy_meter, @invalid_attrs)
+      assert energy_meter == Admin.get_energy_meter!(energy_meter.id)
+    end
+
+    test "delete_energy_meter/1 deletes the energy_meter" do
+      energy_meter = energy_meter_fixture()
+      assert {:ok, %EnergyMeter{}} = Admin.delete_energy_meter(energy_meter)
+      assert_raise Ecto.NoResultsError, fn -> Admin.get_energy_meter!(energy_meter.id) end
+    end
+
+    test "change_energy_meter/1 returns a energy_meter changeset" do
+      energy_meter = energy_meter_fixture()
+      assert %Ecto.Changeset{} = Admin.change_energy_meter(energy_meter)
+    end
+  end
 end

@@ -31,6 +31,7 @@ defmodule DB.Init do
       :ok = insert_ard_mega()
       :ok = insert_integra64()
       :ok = insert_shelly()
+      :ok = insert_sonoff_rf()
       :ok = insert_tasks()
       :ok = init_pages()
       :ok = init_therm()
@@ -53,6 +54,109 @@ defmodule DB.Init do
     #    Repo.delete_all(Device)
     #    Repo.delete_all(TaskType)
     #    Repo.delete_all(Task)
+    :ok
+  end
+
+  def insert_sonoff_rf() do
+    type =
+      %DeviceType{
+        name: "Sonoff Rf Bridge",
+        module: "Core.Device.SonoffRfBridge",
+        process: false
+      }
+      |> Repo.insert!()
+
+
+    p25 = %Port{
+      name: "Rf wolna",
+      type: "light",
+      number: 1,
+      mode: "output",
+      inverted_logic: false,
+      state: false
+    }
+
+    p26 = %Port{
+      name: "Salon w rogu",
+      type: "light",
+      number: 3,
+      mode: "output",
+      inverted_logic: false,
+      state: false
+    }
+
+    p27 = %Port{
+      name: "Salon komoda",
+      type: "light",
+      number: 5,
+      mode: "output",
+      inverted_logic: false,
+      state: false
+    }
+
+    p28 = %Port{
+      name: "Strych lampa stojąca",
+      type: "light",
+      number: 7,
+      mode: "output",
+      inverted_logic: false,
+      state: false
+    }
+    p29 = %Port{
+      name: "Rf wolna",
+      type: "light",
+      number: 9,
+      mode: "output",
+      inverted_logic: false,
+      state: false
+    }
+    p30 = %Port{
+      name: "Rf wolna",
+      type: "light",
+      number: 11,
+      mode: "output",
+      inverted_logic: false,
+      state: false
+    }
+    p31 = %Port{
+      name: "Sypialnia",
+      type: "light",
+      number: 13,
+      mode: "output",
+      inverted_logic: false,
+      state: false
+    }
+    p32 = %Port{
+      name: "Rf wolna",
+      type: "light",
+      number: 15,
+      mode: "output",
+      inverted_logic: false,
+      state: false
+    }
+    dev =
+      %Device{
+        name: "Sonoff Rf Bridge",
+        ip: "192.168.2.122",
+        port: 80,
+        alive: true,
+        type_id: type.id,
+        ports: [p25,p26,p27,p28,p29,p30,p31,p32]
+      }
+      |> Repo.insert!()
+
+    %Light{port_id: 28, dimmer_id: nil}
+    |> Repo.insert!()
+
+    %Light{port_id: 26, dimmer_id: nil}
+    |> Repo.insert!()
+
+    %Light{port_id: 27, dimmer_id: nil}
+    |> Repo.insert!()
+
+    %Light{port_id: 31, dimmer_id: nil}
+    |> Repo.insert!()
+
     :ok
   end
 

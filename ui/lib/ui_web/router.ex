@@ -69,7 +69,7 @@ defmodule UiWeb.Router do
     get "/stats/activations/inputs/:id", ActivationsHistoryController, :get_input_activations
     get "/stats/activations/outputs/:id", ActivationsHistoryController, :get_output_activations
 
-    get "/thermometers/get_temperature/:id", ThermometerController, :get_temperature
-    get "/thermometers/get_temperature/:id", ThermometerController, :get_temperature
+    get "/thermometers/get_temperature/:id", ThermometerReadingsController, :get_temperature
+#    get "/thermometers/get_temperature/:id", ThermometerController, :get_temperature
   end
 end

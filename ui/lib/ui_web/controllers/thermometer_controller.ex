@@ -8,17 +8,16 @@ defmodule UiWeb.ThermometerController do
 
   def get_temperature(conn, %{"id" => id}) do
     data = DB.Thermometer.Read.find(id)
-    |> Enum.map(&therm_read_to_map/1)
-    json(conn, data)
+    render(conn, "index.json", thermometer_readings: data )
   end
 
-  def therm_read_to_map(read) do
-    %{
-      id: read.id,
-      value: read.value,
-      date: read.inserted_at,
-    }
-  end
+#  def therm_read_to_map(read) do
+#    %{
+#      id: read.id,
+#      value: read.value,
+#      date: read.inserted_at,
+#    }
+#  end
 
 
   def index(conn, _params) do
