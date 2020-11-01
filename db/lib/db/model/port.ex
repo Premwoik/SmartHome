@@ -32,6 +32,16 @@ defmodule DB.Port do
     has_one(:sunblind, DB.Sunblind)
   end
 
+  def get_child_struct(port) do
+    case port.type do
+       "light" -> DB.Light
+       "dimmer" -> DB.Dimmer
+       "sunblind" -> DB.Sunblind
+    end
+    |> DB.Repo.get_by(port_id: port.id)
+    |> DB.Repo.preload([port: [:device]])
+  end
+
   def changeset(port, params \\ %{}, all_str \\ false) do
     params_ = inc_ref(port, Enum.into(params, %{}), all_str)
     port

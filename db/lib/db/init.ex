@@ -35,6 +35,7 @@ defmodule DB.Init do
       :ok = insert_tasks()
       :ok = init_pages()
       :ok = init_therm()
+      :ok = init_buttons()
       :ok
     end
 
@@ -141,7 +142,7 @@ defmodule DB.Init do
         port: 80,
         alive: true,
         type_id: type.id,
-        ports: [p25,p26,p27,p28,p29,p30,p31,p32]
+        ports: [p25, p26, p27, p28, p29, p30, p31, p32]
       }
       |> Repo.insert!()
 
@@ -1004,6 +1005,78 @@ defmodule DB.Init do
     :ok
   end
 
+  def init_buttons() do
+    [
+      %DB.RfButton{
+        action_id: nil,
+        key_value: "1198E8",
+        mode: "toggle",
+        name: "8365000A2C-1",
+        port_id: 3,
+        task_id: nil
+      },
+      %DB.RfButton{
+        action_id: nil,
+        key_value: "1198EC",
+        mode: "toggle",
+        name: "8365000A2C-2",
+        port_id: 4,
+        task_id: nil
+      },
+      %DB.RfButton{
+        action_id: nil,
+        key_value: "1198E4",
+        mode: "toggle",
+        name: "8365000A2C-3",
+        port_id: 6,
+        task_id: nil
+      },
+      %DB.RfButton{
+        action_id: nil,
+        key_value: "1198E9",
+        mode: "toggle",
+        name: "8365000A2C-4",
+        port_id: 7,
+        task_id: nil
+      },
+      %DB.RfButton{
+        action_id: nil,
+        key_value: "1198E2",
+        mode: "toggle",
+        name: "8365000A2C-5",
+        port_id: 9,
+        task_id: nil
+      },
+      %DB.RfButton{
+        action_id: nil,
+        key_value: "1198E5",
+        mode: "toggle",
+        name: "8365000A2C-6",
+        port_id: 10,
+        task_id: nil
+      },
+      %DB.RfButton{
+        action_id: nil,
+        key_value: "1198E1",
+        mode: "toggle",
+        name: "8365000A2C-7",
+        port_id: nil,
+        task_id: nil
+      },
+      %DB.RfButton{
+        action_id: nil,
+        key_value: "1198E3",
+        mode: "toggle",
+        name: "8365000A2C-8",
+        port_id: nil,
+        task_id: nil
+      }
+    ]
+    |> Enum.each(&Repo.insert!/1)
+
+    :ok
+  end
+
   def init_therm() do
     #    id: 1
     %Thermometer{
@@ -1052,6 +1125,7 @@ defmodule DB.Init do
       value: 12.0
     }
     |> Repo.insert!()
+    :ok
   end
 
   defp get_(type, ids) do
