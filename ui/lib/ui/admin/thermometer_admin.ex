@@ -23,7 +23,7 @@ defmodule Ui.ThermometerAdmin do
            %Thermometer{therm|
              readings: from(
                          r in DB.Thermometer.Read,
-                         where: r.id == ^therm.id,
+                         where: r.therm_id == ^therm.id,
                          order_by: [
                            desc: r.id
                          ],
