@@ -20,7 +20,7 @@ defmodule Ui.ThermometerAdmin do
     Repo.all(Thermometer)
     |> Enum.map(
          fn therm ->
-           %Thermometer{
+           %Thermometer{therm|
              readings: from(
                          r in DB.Thermometer.Read,
                          where: r.id == ^therm.id,
