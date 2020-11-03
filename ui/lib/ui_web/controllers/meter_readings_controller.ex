@@ -8,12 +8,12 @@ defmodule UiWeb.MeterReadingsController do
 
   def get_temperature(conn, %{"id" => id}) do
     data = DB.Thermometer.Read.find(id)
-    render(conn, "index.json", thermometer_readings: data )
+    render(conn, "index.json", meter_readings: data )
   end
 
   def get_energy(conn, %{"id" => id}) do
     data = DB.Thermometer.Read.find(id)
-    render(conn, "index.json", thermometer_readings: data )
+    render(conn, "index.json", meter_readings: data )
   end
 
 end
