@@ -1,20 +1,24 @@
 defmodule UiWeb.EnergyMeterView do
   use UiWeb, :view
-  alias UiWeb.EnergyMeterView
+  alias UiWeb.{EnergyMeterView, MeterReadingsView}
 
   def render("index.json", %{wattmeters: wattmeters}) do
-    %{data: render_many(wattmeters, EnergyMeterView, "energy_meter.json")}
+    render_many(wattmeters, EnergyMeterView, "energy_meter.json")
   end
 
   def render("show.json", %{energy_meter: energy_meter}) do
-    %{data: render_one(energy_meter, EnergyMeterView, "energy_meter.json")}
+    render_one(energy_meter, EnergyMeterView, "energy_meter.json")
   end
 
   def render("energy_meter.json", %{energy_meter: energy_meter}) do
-    %{id: energy_meter.id,
+    %{
+      id: energy_meter.id,
       device: energy_meter.device,
       name: energy_meter.name,
       address: energy_meter.address,
-      ref: energy_meter.ref}
+      readings: Helper.objs_to_view(MeterReadingsView, :meter_reading, energy_meter.readings),
+      ref: energy_meter.ref,
+      '@type': "thermometer"
+    }
   end
 end

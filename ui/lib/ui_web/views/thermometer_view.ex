@@ -1,6 +1,7 @@
 defmodule UiWeb.ThermometerView do
   use UiWeb, :view
   alias UiWeb.ThermometerView
+  alias UiWeb.MeterReadingsView
   alias UiWeb.View.Helper
 
   def render("index.json", %{thermometers: thermometers}) do
@@ -16,7 +17,7 @@ defmodule UiWeb.ThermometerView do
       name: thermometer.name,
       address: thermometer.address,
       device_id: thermometer.device_id,
-      readings: Helper.objs_to_view(UiWeb.ThermometerReadingsView, :thermometer_reading, thermometer.readings),
+      readings: Helper.objs_to_view(MeterReadingsView, :meter_reading, thermometer.readings),
       ref: thermometer.ref,
       '@type': "thermometer"
     }

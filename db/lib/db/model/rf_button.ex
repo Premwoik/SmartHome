@@ -19,6 +19,13 @@ defmodule DB.RfButton do
   #    |> cast(params_, [:port_id, :open_port_id, :state, :direction, :full_open_time, :type, :position, :ref])
   #
 
+#  @doc false
+#  def changeset(rf_button, attrs) do
+#    rf_button
+#    |> cast(attrs, [:port, :action, :task, :name, :mode, :key_value])
+#    |> validate_required([:port, :action, :task, :name, :mode, :key_value])
+#  end
+
   def get_or_create(key) do
     res = Repo.get_by(RfButton, key_value: key)
           |> Repo.preload([port: [:device], action: [], task: []])

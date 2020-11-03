@@ -1,12 +1,11 @@
-defmodule Ui.Admin do
+defmodule Ui.EnergyMeterAdmin do
   @moduledoc """
   The Admin context.
   """
 
   import Ecto.Query, warn: false
-  alias Ui.Repo
-
-  alias Ui.Admin.EnergyMeter
+  alias DB.Repo
+  alias DB.EnergyMeter
 
   @doc """
   Returns the list of wattmeters.
@@ -19,6 +18,22 @@ defmodule Ui.Admin do
   """
   def list_wattmeters do
     Repo.all(EnergyMeter)
+    |> Enum.map(
+         fn meter ->
+           %EnergyMeter{
+             readings: from(
+                         r in DB.EnergyMeter.Read,
+                         where: r.id == ^meter.id,
+                         order_by: [
+                           desc: r.id
+                         ],
+                         limit: 1
+                       )
+                       |> Repo.one()
+                       |> List.wrap()
+           }
+         end
+       )
   end
 
   @doc """

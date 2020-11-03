@@ -1,4 +1,4 @@
-defmodule DB.Wattmeter do
+defmodule DB.EnergyMeter do
   @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
@@ -9,6 +9,7 @@ defmodule DB.Wattmeter do
     field(:name, :string)
     field(:address, :integer)
     field(:ref, :integer)
+    has_many(:readings, DB.EnergyMeter.Read, foreign_key: :wattmeter_id)
   end
 
   def changeset(wattmeter, params \\ %{}, all_str \\ false) do

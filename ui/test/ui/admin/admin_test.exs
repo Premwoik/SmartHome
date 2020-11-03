@@ -325,4 +325,73 @@ defmodule Ui.AdminTest do
       assert %Ecto.Changeset{} = Admin.change_energy_meter(energy_meter)
     end
   end
+
+  describe "rf_buttons" do
+    alias Ui.Admin.RfButton
+
+    @valid_attrs %{action: "some action", key_value: "some key_value", mode: "some mode", name: "some name", port: "some port", task: "some task"}
+    @update_attrs %{action: "some updated action", key_value: "some updated key_value", mode: "some updated mode", name: "some updated name", port: "some updated port", task: "some updated task"}
+    @invalid_attrs %{action: nil, key_value: nil, mode: nil, name: nil, port: nil, task: nil}
+
+    def rf_button_fixture(attrs \\ %{}) do
+      {:ok, rf_button} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Admin.create_rf_button()
+
+      rf_button
+    end
+
+    test "list_rf_buttons/0 returns all rf_buttons" do
+      rf_button = rf_button_fixture()
+      assert Admin.list_rf_buttons() == [rf_button]
+    end
+
+    test "get_rf_button!/1 returns the rf_button with given id" do
+      rf_button = rf_button_fixture()
+      assert Admin.get_rf_button!(rf_button.id) == rf_button
+    end
+
+    test "create_rf_button/1 with valid data creates a rf_button" do
+      assert {:ok, %RfButton{} = rf_button} = Admin.create_rf_button(@valid_attrs)
+      assert rf_button.action == "some action"
+      assert rf_button.key_value == "some key_value"
+      assert rf_button.mode == "some mode"
+      assert rf_button.name == "some name"
+      assert rf_button.port == "some port"
+      assert rf_button.task == "some task"
+    end
+
+    test "create_rf_button/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Admin.create_rf_button(@invalid_attrs)
+    end
+
+    test "update_rf_button/2 with valid data updates the rf_button" do
+      rf_button = rf_button_fixture()
+      assert {:ok, %RfButton{} = rf_button} = Admin.update_rf_button(rf_button, @update_attrs)
+      assert rf_button.action == "some updated action"
+      assert rf_button.key_value == "some updated key_value"
+      assert rf_button.mode == "some updated mode"
+      assert rf_button.name == "some updated name"
+      assert rf_button.port == "some updated port"
+      assert rf_button.task == "some updated task"
+    end
+
+    test "update_rf_button/2 with invalid data returns error changeset" do
+      rf_button = rf_button_fixture()
+      assert {:error, %Ecto.Changeset{}} = Admin.update_rf_button(rf_button, @invalid_attrs)
+      assert rf_button == Admin.get_rf_button!(rf_button.id)
+    end
+
+    test "delete_rf_button/1 deletes the rf_button" do
+      rf_button = rf_button_fixture()
+      assert {:ok, %RfButton{}} = Admin.delete_rf_button(rf_button)
+      assert_raise Ecto.NoResultsError, fn -> Admin.get_rf_button!(rf_button.id) end
+    end
+
+    test "change_rf_button/1 returns a rf_button changeset" do
+      rf_button = rf_button_fixture()
+      assert %Ecto.Changeset{} = Admin.change_rf_button(rf_button)
+    end
+  end
 end

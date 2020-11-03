@@ -18,12 +18,27 @@ defmodule Ui.ThermometerAdmin do
   """
   def list_thermometers do
     Repo.all(Thermometer)
-    |> Repo.preload([readings: from(r in DB.Thermometer.Read, order_by: [desc: r.id], limit: 1)])
+    |> Enum.map(
+         fn therm ->
+           %Thermometer{
+             readings: from(
+                         r in DB.Thermometer.Read,
+                         where: r.id == ^therm.id,
+                         order_by: [
+                           desc: r.id
+                         ],
+                         limit: 1
+                       )
+                       |> Repo.one()
+                       |> List.wrap()
+           }
+         end
+       )
   end
 
-#  def list_thermometers do
-#    Repo.all(Thermometer)
-#  end
+  #  def list_thermometers do
+  #    Repo.all(Thermometer)
+  #  end
 
   @doc """
   Gets a single thermometer.

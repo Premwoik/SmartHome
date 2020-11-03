@@ -31,6 +31,9 @@ defmodule UiWeb.Router do
     resources "/sunblinds", SunblindController, except: [:new, :edit]
     resources "/tasks", TaskController, except: [:new, :edit]
     resources "/thermometers", ThermometerController, except: [:new, :edit]
+    resources "/energy_meters", EnergyMeterController, except: [:new, :edit]
+    resources "/rf_buttons", RfButtonController, except: [:new, :edit]
+
 
     get "/devices/types/all", DeviceController, :get_types
 
@@ -69,7 +72,8 @@ defmodule UiWeb.Router do
     get "/stats/activations/inputs/:id", ActivationsHistoryController, :get_input_activations
     get "/stats/activations/outputs/:id", ActivationsHistoryController, :get_output_activations
 
-    get "/thermometers/get_temperature/:id", ThermometerReadingsController, :get_temperature
+    get "/thermometers/get_temperature/:id", MeterReadingsController, :get_temperature
+    get "/energy_meters/get_energy/:id", MeterReadingsController, :get_energy
 #    get "/thermometers/get_temperature/:id", ThermometerController, :get_temperature
   end
 end

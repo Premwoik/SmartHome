@@ -1,8 +1,8 @@
 defmodule UiWeb.EnergyMeterController do
   use UiWeb, :controller
 
-  alias Ui.Admin
-  alias Ui.Admin.EnergyMeter
+  alias DB.EnergyMeter, as: EnergyMeter
+  alias Ui.EnergyMeterAdmin, as: Admin
 
   action_fallback UiWeb.FallbackController
 
