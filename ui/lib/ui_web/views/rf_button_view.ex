@@ -3,11 +3,11 @@ defmodule UiWeb.RfButtonView do
   alias UiWeb.RfButtonView
 
   def render("index.json", %{rf_buttons: rf_buttons}) do
-    %{data: render_many(rf_buttons, RfButtonView, "rf_button.json")}
+    render_many(rf_buttons, RfButtonView, "rf_button.json")
   end
 
   def render("show.json", %{rf_button: rf_button}) do
-    %{data: render_one(rf_button, RfButtonView, "rf_button.json")}
+    render_one(rf_button, RfButtonView, "rf_button.json")
   end
 
   def render("rf_button.json", %{rf_button: rf_button}) do
