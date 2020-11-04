@@ -66,7 +66,7 @@ defmodule Ui.EnergyMeterAdmin do
   """
   def create_energy_meter(attrs \\ %{}) do
     %EnergyMeter{}
-    |> EnergyMeter.changeset(attrs)
+    |> EnergyMeter.changeset(attrs, all_str=true)
     |> Repo.insert()
   end
 

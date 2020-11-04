@@ -70,7 +70,7 @@ defmodule Ui.ThermometerAdmin do
   """
   def create_thermometer(attrs \\ %{}) do
     %Thermometer{}
-    |> Thermometer.changeset(attrs)
+    |> Thermometer.changeset(attrs, all_str=true)
     |> Repo.insert()
   end
 

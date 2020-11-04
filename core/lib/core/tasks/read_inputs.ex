@@ -3,6 +3,7 @@ defmodule Core.Tasks.ReadInputs do
 
   @behaviour Core.Tasks.Task
   alias Core.Controllers.BasicController, as: Basics
+  alias UiWeb.InputMonitorChannel, as: Channel
   require Logger
 
 #  @device Application.get_env(:core, :device_helper)
@@ -17,6 +18,7 @@ defmodule Core.Tasks.ReadInputs do
     #IO.puts "Before read inputs #{NaiveDateTime.utc_now()}"
     case Basics.read(task.device) do
       {:ok, read} ->
+        Channel.broadcast_inputs_state(task.device_id, read)
         #IO.puts "After read inputs #{NaiveDateTime.utc_now()}"
         new_up = read -- last_read
         new_down = last_read -- read

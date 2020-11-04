@@ -17,10 +17,10 @@ defmodule Core do
 
   def children() do
     [
-      Core.Mqtt.Supervisor,
-      Core.Device.Supervisor,
-      Core.Actions,
-      Core.Tasks
+#      Core.Mqtt.Supervisor,
+#      Core.Device.Supervisor,
+#      Core.Actions,
+#      Core.Tasks
     ]
   end
 end
