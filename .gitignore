@@ -4,3 +4,5 @@
 db/itHome.sqlite3-shm
 db/itHome.sqlite3-wal
 db/itHome.sqlite3
+projectFilesBackup/*
+rpi3_base/
