@@ -1,0 +1,6 @@
+[submodule "rpi3_base"]
+	path = rpi3_base
+	url = https://github.com/Premwoik/rpi3_base.git
+[submodule "ui/assets/web_app"]
+	path = ui/assets/web_app
+	url = https://github.com/Premwoik/SmartHome-Web-Application.git
