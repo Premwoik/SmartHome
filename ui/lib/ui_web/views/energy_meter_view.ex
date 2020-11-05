@@ -1,6 +1,7 @@
 defmodule UiWeb.EnergyMeterView do
   use UiWeb, :view
   alias UiWeb.{EnergyMeterView, MeterReadingsView}
+  alias UiWeb.View.Helper
 
   def render("index.json", %{wattmeters: wattmeters}) do
     render_many(wattmeters, EnergyMeterView, "energy_meter.json")
