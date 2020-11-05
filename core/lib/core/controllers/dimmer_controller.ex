@@ -13,23 +13,17 @@ defmodule Core.Controllers.DimmerController do
   defmodule Brightness do
     defstruct [:red, :green, :blue, :gain]
   end
-  defp process_response(response, dimmer) do
-    case response do
-      {:ok, %ShellyRGBW2{ison: state, red: r, blue: b, green: g, gain: fill}} ->
-        #      TODO broadcast changes only if it is needed
-        IO.inspect(response)
-        Dimmer.changeset(dimmer, red: r, green: g, blue: b, fill: fill)
-        |> DB.Repo.update()
-        Port.changeset(dimmer.port, state: state)
-        |> DB.Repo.update()
-        DB.Device.changeset(dimmer.port.device, alive: true)
-        |> DB.Repo.update()
 
-        Channel.broadcast_change("dimmer", dimmer.id, dimmer.ref + 1)
-      _ ->
-        DB.Device.changeset(dimmer.port.device, alive: false)
-        |> DB.Repo.update()
-    end
+  def toggle(dimmers) do
+    :ok
+  end
+
+  def turn_on(dimmers) do
+    :ok
+  end
+
+  def turn_off(dimmers) do
+    :ok
   end
 
   def read(dimmer) do
@@ -50,7 +44,7 @@ defmodule Core.Controllers.DimmerController do
   def set_white_brightness(
         %Dimmer{
           port: %Port{
-            type: "dimmer_rgb"<>_
+            type: "dimmer_rgb" <> _
           }
         } = dimmer,
         value
@@ -66,7 +60,7 @@ defmodule Core.Controllers.DimmerController do
   def set_brightness(
         %Dimmer{
           port: %Port{
-            type: "dimmer_rgb"<>_
+            type: "dimmer_rgb" <> _
           }
         } = dimmer,
         value,
@@ -107,6 +101,25 @@ defmodule Core.Controllers.DimmerController do
        end
   end
 
+  defp process_response(response, dimmer) do
+    case response do
+      {:ok, %ShellyRGBW2{ison: state, red: r, blue: b, green: g, gain: fill}} ->
+        #      TODO broadcast changes only if it is needed
+        IO.inspect(response)
+        Dimmer.changeset(dimmer, red: r, green: g, blue: b, fill: fill)
+        |> DB.Repo.update()
+        Port.changeset(dimmer.port, state: state)
+        |> DB.Repo.update()
+        DB.Device.changeset(dimmer.port.device, alive: true)
+        |> DB.Repo.update()
+
+        Channel.broadcast_change("dimmer", dimmer.id, dimmer.ref + 1)
+      _ ->
+        DB.Device.changeset(dimmer.port.device, alive: false)
+        |> DB.Repo.update()
+    end
+  end
+
   defp set_brightness_classic(dimmer, value, deep) do
     if dimmer.fill != value do
       cond do
@@ -138,7 +151,7 @@ defmodule Core.Controllers.DimmerController do
     %Port{DB.Repo.preload(dimmer.port, :device) | timeout: time}
     |> List.wrap()
     |> Core.Device.do_r(:set_time_dimmer)
-#    TODO should I here update also port state???
+      #    TODO should I here update also port state???
     |> IO.inspect()
     |> wrap_direction(dir)
   end

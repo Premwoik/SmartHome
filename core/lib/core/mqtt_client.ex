@@ -2,10 +2,10 @@ defmodule Core.MqttClient do
   @moduledoc false
   use Tortoise.Handler
   alias DB.{RfButton}
-  #  require Record
-  #  Record.defrecord(:storage, )
+  alias Core.Mqtt.RfButtonHandler
+
   def init(args) do
-    {:ok, %{}}
+    {:ok, %{pages: %{}}}
   end
 
   def connection(status, state) do
@@ -26,18 +26,11 @@ defmodule Core.MqttClient do
       }
     } = Poison.decode!(payload)
     btn = RfButton.get_or_create(key_value)
-    cond do
-      !is_nil(btn.port_id) ->
-        DB.Port.get_child_struct(btn.port)
-      !is_nil(btn.action_id) ->
-        btn.action
-      !is_nil(btn.task_id) ->
-        btn.task
-      true -> nil
-    end
-    |> Core.Controllers.UniversalController.toggle()
+    state = RfButtonHandler.handle_button_click(btn)
     {:ok, state}
   end
+
+
 
   def handle_message(topic, payload, state) do
     # unhandled message! You will crash if you subscribe to something

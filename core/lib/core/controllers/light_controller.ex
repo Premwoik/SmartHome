@@ -13,6 +13,11 @@ defmodule Core.Controllers.LightController do
   alias Core.Controllers.DimmerController
   import Core.Controllers.BasicController, only: [flatten_result: 1, prepare_for_basic: 1]
 
+  def toggle([]), do: :ok
+  def toggle ([l | _] = lights) do
+    if l.port.state, do: turn_off(lights), else: turn_on(lights)
+  end
+
   def turn_on(lights) do
     set(lights, true)
   end
@@ -26,17 +31,17 @@ defmodule Core.Controllers.LightController do
     |> prepare_for_basic()
     |> BasicController.set(state)
     |> case do
-      :ok ->
-        case set_dimmer(deep, lights, state) do
-          :ok -> 
-            Light.update(lights)
-            Enum.each(lights, fn %{id: id, ref: ref} -> Channel.broadcast_change("light", id, ref + 1) end)
-            :ok
-          err -> err
-        end
-      err ->
-        err
-    end
+         :ok ->
+           case set_dimmer(deep, lights, state) do
+             :ok ->
+               Light.update(lights)
+               Enum.each(lights, fn %{id: id, ref: ref} -> Channel.broadcast_change("light", id, ref + 1) end)
+               :ok
+             err -> err
+           end
+         err ->
+           err
+       end
   end
 
   def set_brightness(lights, brightness) when is_list(lights) do

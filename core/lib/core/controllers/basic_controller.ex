@@ -26,24 +26,32 @@ defmodule Core.Controllers.BasicController do
     |> set(false, pid)
   end
 
+  def toggle([%{state: state} | _] = ports, pid \\ nil) do
+    if state do
+      turn_off(ports, pid)
+    else
+      turn_on(ports, pid)
+    end
+  end
+
   def set(ports, state, pid \\ nil) do
     ports
     |> Enum.split_with(&(&1.timeout > 0))
     |> (fn {pulse, normal} ->
-          [set_normal_ports(normal, state), set_pulse_ports(pulse, state, pid)]
+      [set_normal_ports(normal, state), set_pulse_ports(pulse, state, pid)]
         end).()
     |> flatten_result()
     |> case do
-      :ok ->
-        DB.Port.update(ports, state: state)
-        :ok
+         :ok ->
+           DB.Port.update(ports, state: state)
+           :ok
 
-      {:error, p, _} = res ->
-        filter_invalid(ports, p)
-        |> DB.Port.update(state: state)
+         {:error, p, _} = res ->
+           filter_invalid(ports, p)
+           |> DB.Port.update(state: state)
 
-        res
-    end
+           res
+       end
   end
 
   def impulse(ports, pid \\ nil) do
@@ -62,16 +70,16 @@ defmodule Core.Controllers.BasicController do
     Enum.map(ports, fn p -> %{p | state: state, pwm_fill: fill} end)
     |> Core.Device.do_r(:set_pwm_outputs)
     |> case do
-      :ok ->
-        DB.Port.update(ports, state: state, pwm_fill: fill)
-        :ok
+         :ok ->
+           DB.Port.update(ports, state: state, pwm_fill: fill)
+           :ok
 
-      {:error, p, _} = res ->
-        filter_invalid(ports, p)
-        |> DB.Port.update(state: state, pwm_fill: fill)
+         {:error, p, _} = res ->
+           filter_invalid(ports, p)
+           |> DB.Port.update(state: state, pwm_fill: fill)
 
-        res
-    end
+           res
+       end
   end
 
   def read(%DB.Device{} = d) do
@@ -87,14 +95,17 @@ defmodule Core.Controllers.BasicController do
     list
     |> Enum.filter(&(&1 != :ok))
     |> case do
-      [] ->
-        :ok
+         [] ->
+           :ok
 
-      list_ ->
-        Enum.reduce(list_, fn {:error, p1, err1}, {:error, p2, err2} ->
-          {:error, p1 ++ p2, err1 ++ err2}
-        end)
-    end
+         list_ ->
+           Enum.reduce(
+             list_,
+             fn {:error, p1, err1}, {:error, p2, err2} ->
+               {:error, p1 ++ p2, err1 ++ err2}
+             end
+           )
+       end
   end
 
   def prepare_for_basic(any) when is_list(any) do

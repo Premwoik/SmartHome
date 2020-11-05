@@ -76,6 +76,11 @@ defmodule DB.Action do
     |> Repo.all()
   end
 
+  def get_ports(action_id) do
+    from(a in "actions_arguments", join: p in Port, on: a.port_id == p.id, where: a.action_id == ^action_id, select: p)
+    |> Repo.all()
+  end
+
   def get_args_ids(action) do
     get_args_ids(action.id)
   end

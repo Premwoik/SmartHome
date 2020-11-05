@@ -1,39 +1,27 @@
 defmodule Core.Controllers.UniversalController do
   @moduledoc false
 
-  alias Core.Controllers.{LightController, DimmerController, SunblindController, BasicController, ActionController, TaskController}
+  alias Core.Controllers.{LightController, DimmerController, SunblindController, BasicController, ActionController,
+                          TaskController}
   alias DB.{Light, Dimmer, Port, Action, Task, Sunblind}
 
-  def toggle(%Light{port: p} = l) do
-    if p.state do
-      LightController.turn_off([l])
-    else
-      LightController.turn_on([l])
-    end
+  #
+  @spec toggle(map()) :: any()
+  def toggle(item)
+  def toggle(%Light{} = l) do
+    LightController.toggle([l])
   end
-  def toggle(%Dimmer{port: p} = d) do
-    if d.fill == 0 do
-      DimmerController.set_brightness(d, 100)
-    else
-      DimmerController.set_brightness(d, 0)
-    end
+  def toggle(%Dimmer{} = d) do
+    DimmerController.toggle([d])
   end
   def toggle(%Sunblind{} = s) do
-      SunblindController.click(s)
+    SunblindController.click(s)
   end
   def toggle(%Port{} = p) do
-    if p.state do
-      BasicController.turn_off([p])
-    else
-      BasicController.turn_on([p])
-    end
+    BasicController.toggle([p])
   end
   def toggle(%Action{} = a) do
-    if a.isAlive do
-      ActionController.turn_off([a])
-    else
-      ActionController.turn_on([a])
-    end
+    Core.Actions.activate_up([a.id])
   end
   def toggle(%Task{} = t) do
     if t.status == "inactive" do
@@ -46,6 +34,12 @@ defmodule Core.Controllers.UniversalController do
     :ok
   end
 
+  def turn_on(item) do
+    :ok
+  end
 
+  def turn_off(item) do
+    :ok
+  end
 
 end

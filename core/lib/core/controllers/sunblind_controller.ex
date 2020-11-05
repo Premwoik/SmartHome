@@ -27,15 +27,11 @@ defmodule Core.Controllers.SunblindController do
   end
 
   @impl true
-  def toggle(sunblinds) do
-    for {state, sunblinds_} <- Enum.group_by(sunblinds, & &1.state) do
-      case state do
-        "open" -> open(sunblinds_)
-        "close" -> close(sunblinds_)
-        _ -> {:error, sunblinds_, "Actual state can't be toggled"}
+  def toggle([s | _ ] = sunblinds) do
+      case s.state do
+        "open" -> open(sunblinds)
+        "close" -> close(sunblinds)
       end
-    end
-    |> flatten_result()
   end
 
   def click(sunblind) do

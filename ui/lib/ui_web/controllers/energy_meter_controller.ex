@@ -8,7 +8,7 @@ defmodule UiWeb.EnergyMeterController do
 
   def index(conn, _params) do
     wattmeters = Admin.list_wattmeters()
-    render(conn, "index.json", wattmeters: wattmeters)
+    render(conn, "index.json", energy_meters: wattmeters)
   end
 
   def create(conn, %{"energy_meter" => energy_meter_params}) do
