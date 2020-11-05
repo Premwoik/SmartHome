@@ -1,7 +1,7 @@
 defmodule UiWeb.InputMonitorChannel do
   use UiWeb, :channel
 
-  def join("input_monitor:lobby", payload, socket) do
+  def join("inputs_monitor:lobby", payload, socket) do
     if authorized?(payload) do
       {:ok, socket}
     else
