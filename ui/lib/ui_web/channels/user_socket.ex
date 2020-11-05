@@ -4,7 +4,7 @@ defmodule UiWeb.UserSocket do
   ## Channels
   # channel "room:*", UiWeb.RoomChannel
   channel "dashboard:lobby", UiWeb.DashboardChannel
-  channel "input_monitor:lobby", UiWeb.InputMonitorChannel
+  channel "inputs_monitor:lobby", UiWeb.InputMonitorChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
