@@ -1,14 +1,14 @@
 defmodule Core.Mqtt.RfButtonHandler do
   @moduledoc false
 
-  def handle_button_click([%DB.RfButton{mode: "page"} = btn], %{page: pages} = data) do
+  def handle_button_click([%DB.RfButton{mode: "page"} = btn], %{pages: pages} = data) do
     controller_id = get_id(btn.name)
     pages_ = Map.update(pages, controller_id, 2, fn i -> next_page_id(i, btn.page_id) end)
 
     %{data | pages: pages_}
   end
 
-  def handle_button_click([%DB.RfButton{name: name} | _] = btns, %{page: pages} = data) do
+  def handle_button_click([%DB.RfButton{name: name} | _] = btns, %{pages: pages} = data) do
     p = get_page_id(name, pages)
     btn = Enum.find(btns, &(&1.page_id == p))
 
@@ -54,9 +54,9 @@ defmodule Core.Mqtt.RfButtonHandler do
   defp execute_in_mode(nil, _), do:
     nil
   defp execute_in_mode(item, "toggle"), do:
-    Core.Controllers.UniversalController.toggle()
+    Core.Controllers.UniversalController.toggle(item)
   defp execute_in_mode(item, "on"), do:
-    Core.Controllers.UniversalController.turn_on()
+    Core.Controllers.UniversalController.turn_on(item)
   defp execute_in_mode(item, "off"), do:
-    Core.Controllers.UniversalController.turn_off()
+    Core.Controllers.UniversalController.turn_off(item)
 end
