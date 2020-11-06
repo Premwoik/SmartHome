@@ -115,7 +115,7 @@ defmodule Core.Actions do
   end
 
   defp proceed_action(on_off, action, amem) do
-    with {:ok, amem_} <- check_activation_freq(15_000, amem),
+    with {:ok, amem_} <- check_activation_freq(action.frequency, amem),
          :ok <- check_activation_time(action.start_time, action.end_time) do
       try do
         result = apply(get_module(action.function), :execute, [on_off, action, amem_])

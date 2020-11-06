@@ -106,7 +106,7 @@ defmodule Core.Device.Default do
     end
   end
 
-  defp wait_for_confirmation(timeout \\ 5_000) do
+  defp wait_for_confirmation(timeout \\ 15_000) do
     receive do
       msg ->
         case @protocol.decode(msg) do

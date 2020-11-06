@@ -26,7 +26,7 @@ defmodule Core.MqttClient do
       }
     } = Poison.decode!(payload)
     btn = RfButton.get_or_create(key_value)
-    state = RfButtonHandler.handle_button_click(btn)
+    state = RfButtonHandler.handle_button_click(btn, state)
     {:ok, state}
   end
 
