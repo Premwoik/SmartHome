@@ -19,11 +19,29 @@ defmodule Core.Mqtt.Supervisor do
           },
 #          handler: {Tortoise.Handler.Logger, []},
           handler: {Core.MqttClient, []},
-          subscriptions: [{"tele/sonoff-rf-bridge/RESULT", 0}]
+          subscriptions: list_of_sonoff_shellies() ++ list_of_sonoff_basic() ++ [{"tele/sonoff-rf-bridge/RESULT", 0}]
         ]
       }
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
   end
+
+  def list_of_sonoff_basic() do
+    dt = DB.Repo.get_by(DB.DeviceType, module: "Core.Device.SonoffBasic")
+
+    DB.Device.get_by_type(dt.id)
+    |> Enum.map(fn d -> {"stat/sonoff_basic/#{d.name}/RESULT", 0} end)
+  end
+
+  def list_of_sonoff_shellies() do
+    dt = DB.Repo.get_by(DB.DeviceType, module: "Core.Device.Shelly")
+
+    DB.Device.get_by_type(dt.id)
+    |> Enum.map(fn d -> {"shellies/#{d.name}/relay/0", 0} end)
+    |> IO.inspect()
+  end
+
+
+
 end

@@ -12,7 +12,7 @@ defmodule Core.Controllers.BasicController do
 
   @callback set_pwm_outputs(device :: %DB.Device{}, ports :: list(%DB.Port{})) :: any
   @callback set_outputs(device :: %DB.Device{}, ports :: list(%DB.Port{})) :: any
-  @callback read_active_inputs(device :: %DB.Device{}) :: any
+  @callback read_inputs(device :: %DB.Device{}) :: any
   @callback read_outputs(device :: %DB.Device{}) :: any
 
   @doc "ports "
@@ -82,8 +82,8 @@ defmodule Core.Controllers.BasicController do
        end
   end
 
-  def read(%DB.Device{} = d) do
-    Core.Device.do_(:read_active_inputs, d)
+  def read_inputs(%DB.Device{} = d) do
+    Core.Device.do_(:read_inputs, d)
   end
 
 

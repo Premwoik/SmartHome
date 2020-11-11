@@ -6,38 +6,34 @@ defmodule Core.Tasks.ReadInputs do
   alias UiWeb.InputMonitorChannel, as: Channel
   require Logger
 
-#  @device Application.get_env(:core, :device_helper)
-#  @actions Application.get_env(:core, :actions_server)
-
   @device Core.Device
   @actions Core.Actions
 
   @impl true
-  def execute(task, %{last_read: last_read} = state) do
-
-    #IO.puts "Before read inputs #{NaiveDateTime.utc_now()}"
-    case Basics.read(task.device) do
-      {:ok, read} ->
-        Channel.broadcast_inputs_state(task.device_id, read)
-        #IO.puts "After read inputs #{NaiveDateTime.utc_now()}"
-        new_up = read -- last_read
-        new_down = last_read -- read
-
-        proceed_up(task.device.id, new_up)
-        proceed_down(task.device.id, new_down)
-        log(new_up, new_down)
-
-        {:ok, %{state | last_read: read}}
-
-      error ->
-        Logger.error("#{task.device.name} read error: #{inspect(error)}")
-        :error
+  def execute(%DB.Task{device: device}, state) do
+    with {:ok, read} <- Basics.read_inputs(device),
+         {:ok, state} <- handle_inputs(device, read, state) do
+      {:ok, state}
+    else
+      e ->
+        Logger.error("[Task|ReadInputs - #{inspect e}")
+        {:ok, state}
     end
   end
 
   @impl true
   def init_state() do
-    %{last_read: []}
+    %{last_inputs: []}
+  end
+
+  def handle_inputs(device, read, %{last_inputs: last_read} = state) do
+    Channel.broadcast_inputs_state(device.id, read)
+    new_up = read -- last_read
+    new_down = last_read -- read
+    proceed_up(device.id, new_up)
+    proceed_down(device.id, new_down)
+    log(new_up, new_down)
+    {:ok, %{state | last_inputs: read}}
   end
 
   ## Privates
@@ -46,26 +42,26 @@ defmodule Core.Tasks.ReadInputs do
   defp proceed_up(_, []), do: :ok
 
   defp proceed_up(d_id, read),
-    do:
-      DB.Action.get_by_activator(d_id, read)
-      |> @actions.activate_up()
+       do:
+         DB.Action.get_by_activator(d_id, read)
+         |> @actions.activate_up()
 
   @spec proceed_down(string, list) :: any
   defp proceed_down(_, []), do: :ok
 
   defp proceed_down(d_id, read),
-    do:
-      DB.Action.get_by_activator(d_id, read)
-      |> @actions.activate_down()
+       do:
+         DB.Action.get_by_activator(d_id, read)
+         |> @actions.activate_down()
 
   defp log(up, down) do
     if length(up) > 0 || length(down) > 0,
-      do:
-        Logger.info(
-          "active outputs - up: #{inspect(up, charlists: :as_lists)}, down: #{
-            inspect(down, charlists: :as_lists)
-          }",
-          ansi_color: :yellow
-        )
+       do:
+         Logger.info(
+           "Active outputs - up: #{inspect(up, charlists: :as_lists)}, down: #{
+             inspect(down, charlists: :as_lists)
+           }",
+           ansi_color: :yellow
+         )
   end
 end

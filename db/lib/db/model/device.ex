@@ -11,6 +11,7 @@ defmodule DB.Device do
     field(:name, :string)
     field(:ip, :string)
     field(:port, :integer)
+    field(:password, :string, virtual: true)
     belongs_to(:type, DB.DeviceType)
     field(:alive, :boolean, default: false)
     field(:ref, :integer)
@@ -28,6 +29,16 @@ defmodule DB.Device do
   def get(id) do
     Repo.get(Device, id)
     |> Repo.preload(:type)
+  end
+
+  def get_by_name(name) do
+    Repo.get_by(Device, name: name)
+    |> Repo.preload(:type)
+  end
+
+  def get_by_type(id) do
+    from(d in Device, where: d.type_id == ^id)
+    |> Repo.all()
   end
 
   def all() do

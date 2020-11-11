@@ -30,7 +30,6 @@ defmodule Core.Device.Default do
 
   @impl true
   def read_active_inputs(device) do
-    DeviceJournal.log(device.id, "read_active_inputs", info = "Odczytanie aktywnych wejść urządzenia")
     cmd = Code.readInputs()
     noreply_send(device, cmd, [])
   end
@@ -39,7 +38,6 @@ defmodule Core.Device.Default do
   def set_outputs(device, ports) do
     cmd = Code.setOutputs()
     data = ports_to_num(ports)
-    DeviceJournal.log(device.id, "set_outputs", info = "Ustawianie portów #{inspect(data)}")
     noreply_send(device, cmd, data)
   end
 
@@ -47,13 +45,11 @@ defmodule Core.Device.Default do
   def set_time_dimmer(device, ports) do
     cmd = Code.setTimeDimmer()
     data = time_ports_to_num(ports)
-    DeviceJournal.log(device.id, "set_time_dimmer", info = "Ustawianie czasowych ściemniaczy #{inspect(data)}")
     noreply_send(device, cmd, data)
   end
 
   @impl true
   def set_pwm_outputs(device, ports) do
-    DeviceJournal.log(device.id, "set_pwm_outputs", info = "")
     cmd = Code.setPwmOutputs()
     data = Enum.flat_map(ports, fn p -> [p.number, p.pwm_fill] end)
     noreply_send(device, cmd, data)
@@ -61,18 +57,15 @@ defmodule Core.Device.Default do
 
   @impl true
   def read_watts(device) do
-    DeviceJournal.log(device.id, "read_watts", info = "")
     noreply_send(device, Code.readWattmeters(), [])
   end
 
   def heartbeat(device) do
-    DeviceJournal.log(device.id, "heartbeat", info = "")
     noreply_send(device, Code.heartbeat(), [])
   end
 
   @impl true
   def read_temperatures(device) do
-    DeviceJournal.log(device.id, "read_temperatures", info = "")
     case noreply_send(device, Code.readTemp(), []) do
       {:ok, val} ->
         {addr, [h, l]} = Enum.split(val, 8)

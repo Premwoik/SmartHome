@@ -33,6 +33,7 @@ defmodule UiWeb.Router do
     resources "/thermometers", ThermometerController, except: [:new, :edit]
     resources "/energy_meters", EnergyMeterController, except: [:new, :edit]
     resources "/rf_buttons", RfButtonController, except: [:new, :edit]
+    resources "/alarm_partitions", AlarmPartitionController, except: [:new, :edit]
 
 
     get "/devices/types/all", DeviceController, :get_types
@@ -75,5 +76,10 @@ defmodule UiWeb.Router do
     get "/thermometers/get_temperature/:id", MeterReadingsController, :get_temperature
     get "/energy_meters/get_energy/:id", MeterReadingsController, :get_energy
 #    get "/thermometers/get_temperature/:id", ThermometerController, :get_temperature
+
+
+    post "/alarm_partitions/arm/:id", AlarmPartitionController, :arm
+    post "/alarm_partitions/disarm/:id", AlarmPartitionController, :disarm
+    post "/alarm_partitions/clear_alarm/:id", AlarmPartitionController, :clear_alarm
   end
 end

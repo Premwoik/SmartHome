@@ -58,6 +58,54 @@ defmodule DB.Init do
     :ok
   end
 
+  def insert_sonoff_basic() do
+    type =
+      %DeviceType{
+        name: "Sonoff Basic",
+        module: "Core.Device.SonoffBasic",
+        process: false
+      }
+      |> Repo.insert!()
+
+    p33 = %Port{
+      name: "Poddasze kinkiet 1",
+      type: "light",
+      number: 0,
+      mode: "output",
+      inverted_logic: false,
+      state: false
+    }
+    %Device{
+      name: "Kinkiet1-5EB49C",
+      ip: "192.168.2.205",
+      port: 80,
+      alive: true,
+      type_id: type.id,
+      ports: [p33]
+    }
+    |> Repo.insert!()
+
+    p34 = %Port{
+      name: "Poddasze kinkiet 2",
+      type: "light",
+      number: 0,
+      mode: "output",
+      inverted_logic: false,
+      state: false
+    }
+      %Device{
+        name: "Kinkiet2-EA3266",
+        ip: "192.168.2.206",
+        port: 80,
+        alive: true,
+        type_id: type.id,
+        ports: [p34]
+      }
+      |> Repo.insert!()
+
+      :ok
+  end
+
   def insert_sonoff_rf() do
     type =
       %DeviceType{

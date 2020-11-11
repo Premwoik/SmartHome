@@ -3,6 +3,9 @@ defmodule Core.MqttClient do
   use Tortoise.Handler
   alias DB.{RfButton}
   alias Core.Mqtt.RfButtonHandler
+  alias Core.Device.{SonoffBasic, Shelly}
+
+  require Logger
 
   def init(args) do
     {:ok, %{pages: %{}}}
@@ -14,6 +17,30 @@ defmodule Core.MqttClient do
     # open or closed; tortoise should be busy reconnecting if you get
     # a `:down`
     {:ok, state}
+  end
+
+  def handle_message(["shellies", name, "relay", "0"], payload, state) do
+    with {:ok, state} <- Shelly.handle_mqtt_result(name, payload, state) do
+      {:ok, state}
+    else
+      :ok ->
+        {:ok, state}
+      _ ->
+        Logger.info("Can not find handler for device: #{name}}")
+        {:ok, state}
+    end
+  end
+
+  def handle_message(["stat", "sonoff_basic", name, "RESULT"], payload, state) do
+    with {:ok, state} <- SonoffBasic.handle_mqtt_result(name, payload, state) do
+      {:ok, state}
+      else
+        :ok ->
+          {:ok, state}
+        _ ->
+          Logger.info("Can not find handler for device: #{name}}")
+          {:ok, state}
+    end
   end
 
   def handle_message(["tele", _, "RESULT"], payload, state) do
@@ -36,7 +63,7 @@ defmodule Core.MqttClient do
     # unhandled message! You will crash if you subscribe to something
     # and you don't have a 'catch all' matcher; crashing on unexpected
     # messages could be a strategy though.
-    Log
+    Logger.error("Not handled topic: #{inspect topic}, with payload: #{payload}")
     {:ok, state}
   end
 

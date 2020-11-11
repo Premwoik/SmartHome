@@ -394,4 +394,69 @@ defmodule Ui.AdminTest do
       assert %Ecto.Changeset{} = Admin.change_rf_button(rf_button)
     end
   end
+
+  describe "alarm_partitions" do
+    alias Ui.Admin.AlarmPartition
+
+    @valid_attrs %{device_id: 42, name: "some name", number: 42, status: 42}
+    @update_attrs %{device_id: 43, name: "some updated name", number: 43, status: 43}
+    @invalid_attrs %{device_id: nil, name: nil, number: nil, status: nil}
+
+    def alarm_partition_fixture(attrs \\ %{}) do
+      {:ok, alarm_partition} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Admin.create_alarm_partition()
+
+      alarm_partition
+    end
+
+    test "list_alarm_partitions/0 returns all alarm_partitions" do
+      alarm_partition = alarm_partition_fixture()
+      assert Admin.list_alarm_partitions() == [alarm_partition]
+    end
+
+    test "get_alarm_partition!/1 returns the alarm_partition with given id" do
+      alarm_partition = alarm_partition_fixture()
+      assert Admin.get_alarm_partition!(alarm_partition.id) == alarm_partition
+    end
+
+    test "create_alarm_partition/1 with valid data creates a alarm_partition" do
+      assert {:ok, %AlarmPartition{} = alarm_partition} = Admin.create_alarm_partition(@valid_attrs)
+      assert alarm_partition.device_id == 42
+      assert alarm_partition.name == "some name"
+      assert alarm_partition.number == 42
+      assert alarm_partition.status == 42
+    end
+
+    test "create_alarm_partition/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Admin.create_alarm_partition(@invalid_attrs)
+    end
+
+    test "update_alarm_partition/2 with valid data updates the alarm_partition" do
+      alarm_partition = alarm_partition_fixture()
+      assert {:ok, %AlarmPartition{} = alarm_partition} = Admin.update_alarm_partition(alarm_partition, @update_attrs)
+      assert alarm_partition.device_id == 43
+      assert alarm_partition.name == "some updated name"
+      assert alarm_partition.number == 43
+      assert alarm_partition.status == 43
+    end
+
+    test "update_alarm_partition/2 with invalid data returns error changeset" do
+      alarm_partition = alarm_partition_fixture()
+      assert {:error, %Ecto.Changeset{}} = Admin.update_alarm_partition(alarm_partition, @invalid_attrs)
+      assert alarm_partition == Admin.get_alarm_partition!(alarm_partition.id)
+    end
+
+    test "delete_alarm_partition/1 deletes the alarm_partition" do
+      alarm_partition = alarm_partition_fixture()
+      assert {:ok, %AlarmPartition{}} = Admin.delete_alarm_partition(alarm_partition)
+      assert_raise Ecto.NoResultsError, fn -> Admin.get_alarm_partition!(alarm_partition.id) end
+    end
+
+    test "change_alarm_partition/1 returns a alarm_partition changeset" do
+      alarm_partition = alarm_partition_fixture()
+      assert %Ecto.Changeset{} = Admin.change_alarm_partition(alarm_partition)
+    end
+  end
 end

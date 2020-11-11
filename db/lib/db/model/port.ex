@@ -7,13 +7,20 @@ defmodule DB.Port do
 
   alias DB.{Repo, Port, Device}
 
-  #  types:
+  #  modes:
   #  - input
   #  - output
-  #  - output_pwm
+  #  - output-pwm
+  #  - output-pulse
+  #  - virtual
+
+  #  types:
   #  - dimmer
   #  - dimmer_rgb
   #  - dimmer_rgbw
+  #  - light
+  #  - sunblind
+  #  - zone
 
   @derive {Poison.Encoder, only: [:name, :state, :id]}
   schema "ports" do
@@ -52,13 +59,25 @@ defmodule DB.Port do
     Keyword.put([], key, Device.preload())
   end
 
-  def update_out_of_date(device_id, data) do
-    query =
-      List.foldr(data, Port, fn {num, state}, acc ->
-        where(acc, [p], p.device_id == ^device_id and p.number == ^num and p.state != ^state)
-      end)
-      |> update([p], [set: [state: not p.state], inc: [ref: 1]])
-      |> Repo.update_all([])
+  def update_low_high(device, high, low) do
+    {x, resX} = update_out_of_date(device.id, high, true)
+    {y, resY} = update_out_of_date(device.id, low, false)
+    {x + y, resX ++ resY}
+  end
+
+  def update_out_of_date(device_id, [], state), do: {0, []}
+  def update_out_of_date(device_id, data, state) do
+    res = from(p in Port,
+      where: p.device_id == ^device_id and p.number in ^data and p.state == ^state,
+    )
+    |> Repo.all()
+    |> Enum.map(fn p -> {p.type, p.id, p.ref+1} end)
+
+    {x, nil} = List.foldr(data, Port, fn num, acc ->
+      where(acc, [p], p.device_id == ^device_id and p.number == ^num and p.state != ^state)
+    end)
+    |> Repo.update_all([set: [state: state], inc: [ref: 1]])
+    {x, res}
   end
 
   def get(ids) do

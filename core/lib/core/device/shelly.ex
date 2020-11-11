@@ -2,8 +2,9 @@ defmodule Core.Device.Shelly do
   @moduledoc false
 
   @behaviour Core.Device
-  alias DB.{DeviceJournal}
+  alias DB.{DeviceJournal, Device}
   alias Core.DeviceMonitor
+  alias Core.Tasks.ReadOutputs
 
   def start_link(host, port, opts, keywords, timeout \\ 5000, length \\ 11) do
     false
@@ -83,6 +84,17 @@ defmodule Core.Device.Shelly do
       %HTTPotion.ErrorResponse{} ->
         DeviceMonitor.connection_error(device, "Cannot connect to device")
         {:error, "cannot connect to device"}
+    end
+  end
+
+  def handle_mqtt_result(name, state, _) do
+    with %Device{} = d <-  Device.get_by_name(name) do
+      if state == "on" do
+        ReadOutputs.handle_outputs(d, [0], %{last_outputs: []})
+      else
+        ReadOutputs.handle_outputs(d, [], %{last_outputs: [0]})
+      end
+      :ok
     end
   end
 end

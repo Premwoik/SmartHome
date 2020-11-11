@@ -40,4 +40,13 @@ defmodule UiWeb.InputMonitorChannel do
     UiWeb.Endpoint.broadcast("inputs_monitor:lobby", "active:inputs", data)
   end
 
+  @spec broadcast_outputs_state(integer(), list()) :: any()
+  def broadcast_outputs_state(device_id, up) do
+    data = %{
+      device_id: device_id,
+      numbers: up
+    }
+    UiWeb.Endpoint.broadcast("inputs_monitor:lobby", "active:outputs", data)
+  end
+
 end

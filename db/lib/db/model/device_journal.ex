@@ -14,7 +14,7 @@ defmodule DB.DeviceJournal do
 
   defmodule Name do
     def read_active_inputs, do: "read_active_inputs"
-#    def
+    #    def
   end
 
   schema "device_journals" do
@@ -23,6 +23,19 @@ defmodule DB.DeviceJournal do
     field(:info, :string)
     belongs_to(:device, DB.Device)
     timestamps
+  end
+
+  @spec log_use(any(), %DB.Device{}, atom()) :: any()
+  def log_use(res, device, name) do
+    name = to_string name
+    case res do
+      {:ok, res} ->
+        log(device, name, "#{res}", "NORMAL")
+      {:error, res} ->
+        log(device, name, "#{res}", "ERROR")
+      _ -> :ok
+    end
+    res
   end
 
   @spec log(%DB.Device{} | integer(), string(), string()) :: any()
