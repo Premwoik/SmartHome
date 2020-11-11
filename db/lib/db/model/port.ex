@@ -49,6 +49,17 @@ defmodule DB.Port do
     |> DB.Repo.preload([port: [:device]])
   end
 
+
+  def get_child_id(port) do
+    mod = case port.type do
+      "light" -> DB.Light
+      "dimmer" -> DB.Dimmer
+      "sunblind" -> DB.Sunblind
+    end
+    from(c in mod, where: c.port_id == ^port.id, select: c.id)
+    |> DB.Repo.one()
+  end
+
   def changeset(port, params \\ %{}, all_str \\ false) do
     params_ = inc_ref(port, Enum.into(params, %{}), all_str)
     port
@@ -65,13 +76,14 @@ defmodule DB.Port do
     {x + y, resX ++ resY}
   end
 
+
   def update_out_of_date(device_id, [], state), do: {0, []}
   def update_out_of_date(device_id, data, state) do
     res = from(p in Port,
       where: p.device_id == ^device_id and p.number in ^data and p.state == ^state,
     )
     |> Repo.all()
-    |> Enum.map(fn p -> {p.type, p.id, p.ref+1} end)
+    |> Enum.map(fn p -> {p.type, get_child_id(p), p.ref+1} end)
 
     {x, nil} = List.foldr(data, Port, fn num, acc ->
       where(acc, [p], p.device_id == ^device_id and p.number == ^num and p.state != ^state)
