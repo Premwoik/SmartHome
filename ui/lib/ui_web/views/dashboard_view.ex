@@ -2,6 +2,7 @@ defmodule UiWeb.DashboardView do
   use UiWeb, :view
   alias UiWeb.DashboardView
   alias Ui.{LightView}
+  alias UiWeb.View.Helper
 
   def render("index.json", %{dashboards: dashboards}) do
     render_many(dashboards, DashboardView, "dashboard.json")
@@ -11,6 +12,10 @@ defmodule UiWeb.DashboardView do
     render_one(dashboard, DashboardView, "dashboard.json")
   end
 
+  defp unwrap(is) do
+    Enum.map(is, fn {_, i} -> i end)
+  end
+
   def render("dashboard.json", %{dashboard: dashboard}) do
     %{
       id: dashboard.id,
@@ -18,13 +23,13 @@ defmodule UiWeb.DashboardView do
       title: dashboard.title,
       order: dashboard.order,
       description: dashboard.description,
-      ports: "#{inspect dashboard.ports}",
-      actions: "#{inspect dashboard.actions}",
-      lights: "#{inspect dashboard.lights}",
-      dimmers: "#{inspect dashboard.dimmers}",
-      tasks: "#{inspect dashboard.tasks}",
-      devices: "[]",
-      sunblinds: "#{inspect dashboard.sunblinds}"
+      ports: Helper.objs_to_view(UiWeb.PortView, :port, unwrap(dashboard.ports)),
+      lights: Helper.objs_to_view(UiWeb.LightView, :light, unwrap(dashboard.lights)),
+      dimmers: Helper.objs_to_view(UiWeb.DimmerView, :dimmer, unwrap(dashboard.dimmers)),
+      sunblinds: Helper.objs_to_view(UiWeb.SunblindView, :sunblind, unwrap(dashboard.sunblinds)),
+      actions: Helper.objs_to_view(UiWeb.ActionView, :action, unwrap(dashboard.actions)),
+      tasks: Helper.objs_to_view(UiWeb.TaskView, :task, unwrap(dashboard.tasks)),
+      devices: Helper.objs_to_view(UiWeb.DeviceView, :device, unwrap(dashboard.devices)),
     }
   end
 
