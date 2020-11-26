@@ -5,3 +5,4 @@ config :db,
        adapter: Sqlite.Ecto2,
        database: "../db/itHome.sqlite3",
        log: false
+

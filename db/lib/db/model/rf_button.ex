@@ -47,8 +47,8 @@ defmodule DB.RfButton do
           ref: 1,
           page_id: 1
         }
+	# |> Repo.insert!() # TODO
       ]
-      #      |> Repo.insert!() % TODO
     else
       res
     end
