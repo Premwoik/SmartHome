@@ -1,0 +1,24 @@
+<html>
+<body>
+    <canvas id="canvas1"></canvas>
+    <canvas id="canvas2"></canvas>
+    <canvas id="canvas3"></canvas>
+    <canvas id="canvas4"></canvas>
+</body>
+<script type="text/javascript" src="jsmpeg.min.js"></script>
+<script type="text/javascript">
+    player1 = new JSMpeg.Player('ws://localhost:9996', {
+      canvas: document.getElementById('canvas1') // Canvas should be a canvas DOM element
+    })	
+
+    player2 = new JSMpeg.Player('ws://localhost:9997', {
+      canvas: document.getElementById('canvas2') // Canvas should be a canvas DOM element
+    })
+    player3 = new JSMpeg.Player('ws://localhost:9998', {
+        canvas: document.getElementById('canvas3') // Canvas should be a canvas DOM element
+    })
+    player4 = new JSMpeg.Player('ws://localhost:9999', {
+        canvas: document.getElementById('canvas4') // Canvas should be a canvas DOM element
+    })
+</script>
+</html>

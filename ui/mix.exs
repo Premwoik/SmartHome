@@ -19,7 +19,7 @@ defmodule Ui.MixProject do
   def application do
     [
       mod: {Ui.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :logger_file_backend]
     ]
   end
 
@@ -41,8 +41,10 @@ defmodule Ui.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:cors_plug, "~> 1.5"},
+      {:logger_file_backend, "~> 0.0.10"},
       {:db, path: "../db"},
-      {:core, path: "../core"}
+      {:core, path: "../core"},
+      {:rstp_to_ws, path: "../rstp_to_ws"}
     ]
   end
 end

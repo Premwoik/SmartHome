@@ -1,0 +1,2776 @@
+20:20:23.994 [info] Already up
+20:20:24.007 [info] Creating data!
+20:20:24.013 [info] Data created!
+20:20:24.114 [info] Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+20:34:12.859 [info] Already up
+20:34:12.871 [info] Creating data!
+20:34:12.876 [info] Data created!
+20:34:12.970 [info] Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+21:31:31.113 application=ecto [info] Already up
+21:31:31.126 application=db [info] Creating data!
+21:31:31.131 application=db [info] Data created!
+21:31:31.230 application=phoenix [info] Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-12T21:47:18.633Z application=ecto [info] Already up
+##### 2020-11-12T21:47:18.643Z application=db [info] Creating data!
+##### 2020-11-12T21:47:18.649Z application=db [info] Data created!
+##### 2020-11-12T21:47:18.751Z application=phoenix [info] Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-12T21:54:01.089Z application=ecto [info] Already up
+##### 2020-11-12T21:54:01.097Z application=db [info] Creating data!
+##### 2020-11-12T21:54:01.104Z application=db [info] Data created!
+##### 2020-11-12T21:54:01.192Z application=phoenix [info] Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-12T21:54:38.921Z application=ecto [info] Already up
+##### 2020-11-12T21:54:38.929Z application=db [info] Creating data!
+##### 2020-11-12T21:54:38.936Z application=db [info] Data created!
+##### 2020-11-12T21:54:39.025Z application=phoenix [info] Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+could not format message: {:info, "Already up", {{2020, 11, 12}, {21, 54, 58, 549}}, [application: :ecto]}
+could not format message: {:info, "Creating data!", {{2020, 11, 12}, {21, 54, 58, 557}}, [application: :db]}
+could not format message: {:info, "Data created!", {{2020, 11, 12}, {21, 54, 58, 567}}, [application: :db]}
+could not format message: {:info, "Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000", {{2020, 11, 12}, {21, 54, 58, 657}}, [application: :phoenix]}
+##### 2020-11-12T21:55:10.021Z application=ecto [info] Already up
+##### 2020-11-12T21:55:10.030Z application=db [info] Creating data!
+##### 2020-11-12T21:55:10.037Z application=db [info] Data created!
+##### 2020-11-12T21:55:10.130Z application=phoenix [info] Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-12T21:56:15.689Z [ecto}] [info] Already up
+##### 2020-11-12T21:56:15.697Z [db}] [info] Creating data!
+##### 2020-11-12T21:56:15.706Z [db}] [info] Data created!
+##### 2020-11-12T21:56:15.803Z [phoenix}] [info] Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+could not format message: {:info, "Already up", {{2020, 11, 12}, {22, 26, 47, 253}}, [application: :ecto]}
+could not format message: {:info, "Creating data!", {{2020, 11, 12}, {22, 26, 47, 262}}, [application: :db]}
+could not format message: {:info, "Data created!", {{2020, 11, 12}, {22, 26, 47, 271}}, [application: :db]}
+could not format message: {:info, "Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000", {{2020, 11, 12}, {22, 26, 47, 365}}, [application: :phoenix]}
+##### {{2020, 11, 12}, {22, 27, 1, 940}} [ecto] [info] Already up
+##### {{2020, 11, 12}, {22, 27, 1, 948}} [db] [info] Creating data!
+##### {{2020, 11, 12}, {22, 27, 1, 955}} [db] [info] Data created!
+##### {{2020, 11, 12}, {22, 27, 2, 52}} [phoenix] [info] Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-12T22:42:09.407Z [ecto] [info] --- Already up
+##### 2020-11-12T22:42:09.417Z [db] [info] --- Creating data!
+##### 2020-11-12T22:42:09.425Z [db] [info] --- Data created!
+##### 2020-11-12T22:42:09.518Z [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-12T23:01:12.781Z  [error] --- 123
+##### 2020-11-12 23:01:37.378 [ecto] [info] --- Already up
+##### 2020-11-12 23:01:37.388 [db] [info] --- Creating data!
+##### 2020-11-12 23:01:37.398 [db] [info] --- Data created!
+##### 2020-11-12 23:01:37.498 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+could not format message: {:info, "Already up", {{2020, 11, 12}, {23, 4, 33, 926}}, [application: :ecto]}
+could not format message: {:info, "Creating data!", {{2020, 11, 12}, {23, 4, 33, 934}}, [application: :db]}
+could not format message: {:info, "Data created!", {{2020, 11, 12}, {23, 4, 33, 946}}, [application: :db]}
+could not format message: {:info, "Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000", {{2020, 11, 12}, {23, 4, 34, 50}}, [application: :phoenix]}
+##### 2020-11-12 23:05:14.263 [ecto] [info] --- Already up
+##### 2020-11-12 23:05:14.272 [db] [info] --- Creating data!
+##### 2020-11-12 23:05:14.280 [db] [info] --- Data created!
+##### 2020-11-12 23:05:14.375 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-21 19:04:52.501 [ecto] [info] --- Already up
+##### 2020-11-21 19:04:52.513 [db] [info] --- Creating data!
+##### 2020-11-21 19:04:52.519 [db] [info] --- Data created!
+##### 2020-11-21 19:04:52.667 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-21 19:04:55.423 [tzdata] [debug] --- Tzdata polling for update.
+##### 2020-11-21 19:04:56.520 [tzdata] [info] --- tzdata release in place is from a file last modified Thu, 03 May 2018 23:55:14 GMT. Release file on server was last modified Wed, 21 Oct 2020 18:40:20 GMT.
+##### 2020-11-21 19:04:56.523 [tzdata] [debug] --- Tzdata downloading new data from https://data.iana.org/time-zones/tzdata-latest.tar.gz
+##### 2020-11-21 19:04:57.046 [tzdata] [debug] --- Tzdata data downloaded. Release version 2020d.
+##### 2020-11-21 19:04:57.583  [error] --- GenServer :tzdata_release_updater terminating
+** (FunctionClauseError) no function clause matching in Tzdata.Util.first_matching_weekday_in_month/4
+    (tzdata) lib/tzdata/util.ex:73: Tzdata.Util.first_matching_weekday_in_month(1932, 4, 7, [])
+    (tzdata) lib/tzdata/util.ex:329: Tzdata.Util.time_for_rule/2
+    (tzdata) lib/tzdata/period_builder.ex:161: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+Last message: :check_if_time_to_update
+State: []
+##### 2020-11-21 19:08:23.924 request_id=2p4pgdnk1oirjcti140004g6 [plug] [info] --- GET /api/dashboards
+##### 2020-11-21 19:08:23.928 request_id=2p4pgdnk1oirjcti140004g6 [phoenix] [debug] --- Processing with UiWeb.DashboardController.index/2
+  Parameters: %{}
+  Pipelines: [:api]
+##### 2020-11-21 19:08:23.984 request_id=2p4pgdnk1oirjcti140004g6 [plug] [info] --- Sent 500 in 59ms
+##### 2020-11-21 19:08:23.991  [error] --- #PID<0.979.0> running UiWeb.Endpoint (connection #PID<0.978.0>, stream id 1) terminated
+Server: localhost:4000 (http)
+Request: GET /api/dashboards
+** (exit) an exception was raised:
+    ** (ArgumentError) argument error
+        :erlang.apply([1, 100], :id, [])
+        (ui) lib/ui_web/views/action_view.ex:15: UiWeb.ActionView.render/2
+        (elixir) lib/enum.ex:1336: Enum."-map/2-lists^map/1-0-"/2
+        (ui) lib/ui_web/views/dashboard_view.ex:27: UiWeb.DashboardView.render/2
+        (elixir) lib/enum.ex:1336: Enum."-map/2-lists^map/1-0-"/2
+        (elixir) lib/enum.ex:1336: Enum."-map/2-lists^map/1-0-"/2
+        (phoenix) lib/phoenix/view.ex:399: Phoenix.View.render_to_iodata/3
+        (phoenix) lib/phoenix/controller.ex:729: Phoenix.Controller.__put_render__/5
+        (phoenix) lib/phoenix/controller.ex:746: Phoenix.Controller.instrument_render_and_send/4
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.action/2
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.phoenix_controller_pipeline/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.instrument/4
+        (phoenix) lib/phoenix/router.ex:275: Phoenix.Router.__call__/1
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.plug_builder_call/2
+        (ui) lib/plug/debugger.ex:122: UiWeb.Endpoint."call (overridable 3)"/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.call/2
+        (phoenix) lib/phoenix/endpoint/cowboy2_handler.ex:33: Phoenix.Endpoint.Cowboy2Handler.init/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_handler.erl:41: :cowboy_handler.execute/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:296: :cowboy_stream_h.execute/3
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:274: :cowboy_stream_h.request_process/3
+##### 2020-11-21 19:08:24.339 [phoenix] [info] --- Replied phoenix:live_reload :ok
+##### 2020-11-21 19:08:24.359 request_id=2p4pgdodvtjffekpfg0003k3 [plug] [info] --- GET /favicon.ico
+##### 2020-11-21 19:08:24.373 request_id=2p4pgdodvtjffekpfg0003k3 [plug] [debug] --- ** (Phoenix.Router.NoRouteError) no route found for GET /favicon.ico (UiWeb.Router)
+    (ui) lib/ui_web/router.ex:1: UiWeb.Router.__match_route__/4
+    (ui) lib/phoenix/router.ex:304: UiWeb.Router.call/2
+    (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.plug_builder_call/2
+    (ui) lib/plug/debugger.ex:122: UiWeb.Endpoint."call (overridable 3)"/2
+    (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.call/2
+    (phoenix) lib/phoenix/endpoint/cowboy2_handler.ex:33: Phoenix.Endpoint.Cowboy2Handler.init/2
+    (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_handler.erl:41: :cowboy_handler.execute/2
+    (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:296: :cowboy_stream_h.execute/3
+    (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:274: :cowboy_stream_h.request_process/3
+    (stdlib) proc_lib.erl:249: :proc_lib.init_p_do_apply/3
+
+##### 2020-11-21 19:08:29.124 request_id=2p4pge1a0h5npndot40003l3 [plug] [info] --- GET /api/dashboards/1
+##### 2020-11-21 19:08:29.125 request_id=2p4pge1a0h5npndot40003l3 [phoenix] [debug] --- Processing with UiWeb.DashboardController.show/2
+  Parameters: %{"id" => "1"}
+  Pipelines: [:api]
+##### 2020-11-21 19:08:29.129 request_id=2p4pge1a0h5npndot40003l3 [plug] [info] --- Sent 200 in 4ms
+##### 2020-11-21 19:08:36.647 request_id=2p4pgefad1s4eebos4000348 [plug] [info] --- GET /api/dashboards/2
+##### 2020-11-21 19:08:36.647 request_id=2p4pgefad1s4eebos4000348 [phoenix] [debug] --- Processing with UiWeb.DashboardController.show/2
+  Parameters: %{"id" => "2"}
+  Pipelines: [:api]
+##### 2020-11-21 19:08:36.678 request_id=2p4pgefad1s4eebos4000348 [plug] [info] --- Sent 500 in 30ms
+##### 2020-11-21 19:08:36.681  [error] --- #PID<0.1004.0> running UiWeb.Endpoint (connection #PID<0.1003.0>, stream id 1) terminated
+Server: localhost:4000 (http)
+Request: GET /api/dashboards/2
+** (exit) an exception was raised:
+    ** (ArgumentError) argument error
+        :erlang.apply({100, %DB.Action{__meta__: #Ecto.Schema.Metadata<:loaded, "actions">, active: true, args: #Ecto.Association.NotLoaded<association :args is not loaded>, end_time: nil, frequency: 15000, function: "CloseSunblinds", id: 1, name: "Cały dom", params: "{}", port: #Ecto.Association.NotLoaded<association :port is not loaded>, port_id: nil, ref: 1, start_time: nil}}, :id, [])
+        (ui) lib/ui_web/views/action_view.ex:15: UiWeb.ActionView.render/2
+        (elixir) lib/enum.ex:1336: Enum."-map/2-lists^map/1-0-"/2
+        (ui) lib/ui_web/views/dashboard_view.ex:27: UiWeb.DashboardView.render/2
+        (phoenix) lib/phoenix/view.ex:399: Phoenix.View.render_to_iodata/3
+        (phoenix) lib/phoenix/controller.ex:729: Phoenix.Controller.__put_render__/5
+        (phoenix) lib/phoenix/controller.ex:746: Phoenix.Controller.instrument_render_and_send/4
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.action/2
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.phoenix_controller_pipeline/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.instrument/4
+        (phoenix) lib/phoenix/router.ex:275: Phoenix.Router.__call__/1
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.plug_builder_call/2
+        (ui) lib/plug/debugger.ex:122: UiWeb.Endpoint."call (overridable 3)"/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.call/2
+        (phoenix) lib/phoenix/endpoint/cowboy2_handler.ex:33: Phoenix.Endpoint.Cowboy2Handler.init/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_handler.erl:41: :cowboy_handler.execute/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:296: :cowboy_stream_h.execute/3
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:274: :cowboy_stream_h.request_process/3
+        (stdlib) proc_lib.erl:249: :proc_lib.init_p_do_apply/3
+##### 2020-11-21 19:08:36.873 [phoenix] [info] --- Replied phoenix:live_reload :ok
+##### 2020-11-21 19:08:40.587 request_id=2p4pgeml88ql23emcg0003n3 [plug] [info] --- GET /api/dashboards/1
+##### 2020-11-21 19:08:40.587 request_id=2p4pgeml88ql23emcg0003n3 [phoenix] [debug] --- Processing with UiWeb.DashboardController.show/2
+  Parameters: %{"id" => "1"}
+  Pipelines: [:api]
+##### 2020-11-21 19:08:40.591 request_id=2p4pgeml88ql23emcg0003n3 [plug] [info] --- Sent 200 in 3ms
+##### 2020-11-21 19:09:09.295 request_id=2p4pggc4cfm1ngssu80003o3 [plug] [info] --- GET /api/dashboards/1
+##### 2020-11-21 19:09:09.295 request_id=2p4pggc4cfm1ngssu80003o3 [phoenix] [debug] --- Processing with UiWeb.DashboardController.show/2
+  Parameters: %{"id" => "1"}
+  Pipelines: [:api]
+##### 2020-11-21 19:09:09.299 request_id=2p4pggc4cfm1ngssu80003o3 [plug] [info] --- Sent 200 in 3ms
+##### 2020-11-21 19:10:04.416 request_id=2p4pgjipqnn03b79h80003m2 [plug] [info] --- GET /api/dashboards/1
+##### 2020-11-21 19:10:04.416 request_id=2p4pgjipqnn03b79h80003m2 [phoenix] [debug] --- Processing with UiWeb.DashboardController.show/2
+  Parameters: %{"id" => "1"}
+  Pipelines: [:api]
+##### 2020-11-21 19:10:04.421 request_id=2p4pgjipqnn03b79h80003m2 [plug] [info] --- Sent 200 in 4ms
+##### 2020-11-21 19:11:12.962 request_id=2p4pgniff6t5m2qm8c0008o1 [plug] [info] --- GET /api/dashboards/2
+##### 2020-11-21 19:11:12.962 request_id=2p4pgniff6t5m2qm8c0008o1 [phoenix] [debug] --- Processing with UiWeb.DashboardController.show/2
+  Parameters: %{"id" => "2"}
+  Pipelines: [:api]
+##### 2020-11-21 19:11:12.991 request_id=2p4pgniff6t5m2qm8c0008o1 [plug] [info] --- Sent 500 in 29ms
+##### 2020-11-21 19:11:12.993  [error] --- #PID<0.1045.0> running UiWeb.Endpoint (connection #PID<0.1044.0>, stream id 1) terminated
+Server: localhost:4000 (http)
+Request: GET /api/dashboards/2
+** (exit) an exception was raised:
+    ** (ArgumentError) argument error
+        :erlang.apply({100, %DB.Action{__meta__: #Ecto.Schema.Metadata<:loaded, "actions">, active: true, args: #Ecto.Association.NotLoaded<association :args is not loaded>, end_time: nil, frequency: 15000, function: "CloseSunblinds", id: 1, name: "Cały dom", params: "{}", port: #Ecto.Association.NotLoaded<association :port is not loaded>, port_id: nil, ref: 1, start_time: nil}}, :id, [])
+        (ui) lib/ui_web/views/action_view.ex:15: UiWeb.ActionView.render/2
+        (elixir) lib/enum.ex:1336: Enum."-map/2-lists^map/1-0-"/2
+        (ui) lib/ui_web/views/dashboard_view.ex:27: UiWeb.DashboardView.render/2
+        (phoenix) lib/phoenix/view.ex:399: Phoenix.View.render_to_iodata/3
+        (phoenix) lib/phoenix/controller.ex:729: Phoenix.Controller.__put_render__/5
+        (phoenix) lib/phoenix/controller.ex:746: Phoenix.Controller.instrument_render_and_send/4
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.action/2
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.phoenix_controller_pipeline/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.instrument/4
+        (phoenix) lib/phoenix/router.ex:275: Phoenix.Router.__call__/1
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.plug_builder_call/2
+        (ui) lib/plug/debugger.ex:122: UiWeb.Endpoint."call (overridable 3)"/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.call/2
+        (phoenix) lib/phoenix/endpoint/cowboy2_handler.ex:33: Phoenix.Endpoint.Cowboy2Handler.init/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_handler.erl:41: :cowboy_handler.execute/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:296: :cowboy_stream_h.execute/3
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:274: :cowboy_stream_h.request_process/3
+        (stdlib) proc_lib.erl:249: :proc_lib.init_p_do_apply/3
+##### 2020-11-21 19:11:13.235 [phoenix] [info] --- Replied phoenix:live_reload :ok
+##### 2020-11-21 19:12:41.040 request_id=2p4pgsmhbjacht0k080003p3 [plug] [info] --- GET /api/dashboards/view/2
+##### 2020-11-21 19:12:41.040 request_id=2p4pgsmhbjacht0k080003p3 [phoenix] [debug] --- Processing with UiWeb.DashboardController.view/2
+  Parameters: %{"id" => "2"}
+  Pipelines: [:api]
+##### 2020-11-21 19:12:41.047 request_id=2p4pgsmhbjacht0k080003p3 [plug] [info] --- Sent 200 in 6ms
+##### 2020-11-21 19:13:51.971 request_id=2p4ph0ql69ui33oq6k000555 [plug] [info] --- GET /api/dashboards/2
+##### 2020-11-21 19:13:51.972 request_id=2p4ph0ql69ui33oq6k000555 [phoenix] [debug] --- Processing with UiWeb.DashboardController.show/2
+  Parameters: %{"id" => "2"}
+  Pipelines: [:api]
+##### 2020-11-21 19:13:51.997 request_id=2p4ph0ql69ui33oq6k000555 [plug] [info] --- Sent 500 in 25ms
+##### 2020-11-21 19:13:52.000  [error] --- #PID<0.1069.0> running UiWeb.Endpoint (connection #PID<0.1068.0>, stream id 1) terminated
+Server: localhost:4000 (http)
+Request: GET /api/dashboards/2
+** (exit) an exception was raised:
+    ** (ArgumentError) argument error
+        :erlang.apply({100, %DB.Action{__meta__: #Ecto.Schema.Metadata<:loaded, "actions">, active: true, args: #Ecto.Association.NotLoaded<association :args is not loaded>, end_time: nil, frequency: 15000, function: "CloseSunblinds", id: 1, name: "Cały dom", params: "{}", port: #Ecto.Association.NotLoaded<association :port is not loaded>, port_id: nil, ref: 1, start_time: nil}}, :id, [])
+        (ui) lib/ui_web/views/action_view.ex:15: UiWeb.ActionView.render/2
+        (elixir) lib/enum.ex:1336: Enum."-map/2-lists^map/1-0-"/2
+        (ui) lib/ui_web/views/dashboard_view.ex:27: UiWeb.DashboardView.render/2
+        (phoenix) lib/phoenix/view.ex:399: Phoenix.View.render_to_iodata/3
+        (phoenix) lib/phoenix/controller.ex:729: Phoenix.Controller.__put_render__/5
+        (phoenix) lib/phoenix/controller.ex:746: Phoenix.Controller.instrument_render_and_send/4
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.action/2
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.phoenix_controller_pipeline/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.instrument/4
+        (phoenix) lib/phoenix/router.ex:275: Phoenix.Router.__call__/1
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.plug_builder_call/2
+        (ui) lib/plug/debugger.ex:122: UiWeb.Endpoint."call (overridable 3)"/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.call/2
+        (phoenix) lib/phoenix/endpoint/cowboy2_handler.ex:33: Phoenix.Endpoint.Cowboy2Handler.init/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_handler.erl:41: :cowboy_handler.execute/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:296: :cowboy_stream_h.execute/3
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:274: :cowboy_stream_h.request_process/3
+        (stdlib) proc_lib.erl:249: :proc_lib.init_p_do_apply/3
+##### 2020-11-21 19:13:52.222 [phoenix] [info] --- Replied phoenix:live_reload :ok
+##### 2020-11-21 19:16:46.407 [phoenix_live_reload] [debug] --- Live reload: lib/ui_web/views/dashboard_view.ex
+##### 2020-11-21 19:16:46.417 [phoenix_live_reload] [debug] --- Live reload: lib/ui_web/views/dashboard_view.ex
+##### 2020-11-21 19:16:46.417 [phoenix_live_reload] [debug] --- Live reload: lib/ui_web/views/dashboard_view.ex
+##### 2020-11-21 19:16:46.644 request_id=2p4phb00ga3heo1c6c0002k7 [plug] [info] --- GET /api/dashboards/2
+##### 2020-11-21 19:16:46.644 request_id=2p4phb00ga3heo1c6c0002k7 [phoenix] [debug] --- Processing with UiWeb.DashboardController.show/2
+  Parameters: %{"id" => "2"}
+  Pipelines: [:api]
+##### 2020-11-21 19:16:46.676 request_id=2p4phb00ga3heo1c6c0002k7 [plug] [info] --- Sent 500 in 31ms
+##### 2020-11-21 19:16:46.678  [error] --- #PID<0.1087.0> running UiWeb.Endpoint (connection #PID<0.1086.0>, stream id 1) terminated
+Server: localhost:4000 (http)
+Request: GET /api/dashboards/2
+** (exit) an exception was raised:
+    ** (Protocol.UndefinedError) protocol Jason.Encoder not implemented for {100, %{"@type": "action", active: true, end_time: nil, frequency: 15000, function: "CloseSunblinds", id: 1, name: "Cały dom", params: "{}", port_id: nil, ref: 1, start_time: nil}} of type Tuple, Jason.Encoder protocol must always be explicitly implemented. This protocol is implemented for the following type(s): Time, Any, Atom, Date, Decimal, Map, Integer, Float, NaiveDateTime, DateTime, BitString, List, Jason.Fragment
+        (jason) lib/jason.ex:199: Jason.encode_to_iodata!/2
+        (phoenix) lib/phoenix/controller.ex:729: Phoenix.Controller.__put_render__/5
+        (phoenix) lib/phoenix/controller.ex:746: Phoenix.Controller.instrument_render_and_send/4
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.action/2
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.phoenix_controller_pipeline/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.instrument/4
+        (phoenix) lib/phoenix/router.ex:275: Phoenix.Router.__call__/1
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.plug_builder_call/2
+        (ui) lib/plug/debugger.ex:122: UiWeb.Endpoint."call (overridable 3)"/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.call/2
+        (phoenix) lib/phoenix/endpoint/cowboy2_handler.ex:33: Phoenix.Endpoint.Cowboy2Handler.init/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_handler.erl:41: :cowboy_handler.execute/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:296: :cowboy_stream_h.execute/3
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:274: :cowboy_stream_h.request_process/3
+        (stdlib) proc_lib.erl:249: :proc_lib.init_p_do_apply/3
+##### 2020-11-21 19:16:46.981 [phoenix] [info] --- Replied phoenix:live_reload :ok
+##### 2020-11-21 19:17:20.160 request_id=2p4phcue6raer282140002o7 [plug] [info] --- GET /api/dashboards/2
+##### 2020-11-21 19:17:20.160 request_id=2p4phcue6raer282140002o7 [phoenix] [debug] --- Processing with UiWeb.DashboardController.show/2
+  Parameters: %{"id" => "2"}
+  Pipelines: [:api]
+##### 2020-11-21 19:18:21.226 request_id=2p4phgg60lq0i6h6o40002p7 [plug] [info] --- GET /api/dashboards/2
+##### 2020-11-21 19:18:21.226 request_id=2p4phgg60lq0i6h6o40002p7 [phoenix] [debug] --- Processing with UiWeb.DashboardController.show/2
+  Parameters: %{"id" => "2"}
+  Pipelines: [:api]
+##### 2020-11-21 19:26:16.355 [ecto] [info] --- Already up
+##### 2020-11-21 19:26:16.363 [db] [info] --- Creating data!
+##### 2020-11-21 19:26:16.375 [db] [info] --- Data created!
+##### 2020-11-21 19:26:16.486 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-21 19:26:24.991 request_id=2p4picl8jr9d3mr5nk0000v1 [plug] [info] --- GET /api/dashboards/2
+##### 2020-11-21 19:26:25.005 request_id=2p4picl8jr9d3mr5nk0000v1 [phoenix] [debug] --- Processing with UiWeb.DashboardController.show/2
+  Parameters: %{"id" => "2"}
+  Pipelines: [:api]
+##### 2020-11-21 19:26:25.060 request_id=2p4picl8jr9d3mr5nk0000v1 [plug] [info] --- Sent 200 in 69ms
+##### 2020-11-21 19:39:22.679 request_id=2p4pjptqeu71g2ih8c0000d4 [plug] [info] --- GET /api/dashboards/2
+##### 2020-11-21 19:39:22.679 request_id=2p4pjptqeu71g2ih8c0000d4 [phoenix] [debug] --- Processing with UiWeb.DashboardController.show/2
+  Parameters: %{"id" => "2"}
+  Pipelines: [:api]
+##### 2020-11-21 19:39:22.683 request_id=2p4pjptqeu71g2ih8c0000d4 [plug] [info] --- Sent 200 in 4ms
+##### 2020-11-26 00:44:42.965 [porcelain] [info] --- [Porcelain]: goon executable not found
+##### 2020-11-26 00:44:42.966 [porcelain] [info] --- [Porcelain]: falling back to the basic driver.
+##### 2020-11-26 00:44:42.966 [porcelain] [info] --- [Porcelain]: (set `config :porcelain, driver: Porcelain.Driver.Basic` or `config :porcelain, goon_warn_if_missing: false` to disable this warning)
+##### 2020-11-26 00:44:42.978  [info] --- Application rstp_to_ws exited: exited in: RstpToWs.start(:normal, [])
+    ** (EXIT) an exception was raised:
+        ** (UndefinedFunctionError) function Rstp.Camera.Converter.start_link/0 is undefined (module Rstp.Camera.Converter is not available)
+            Rstp.Camera.Converter.start_link()
+            (kernel) application_master.erl:277: :application_master.start_it_old/4
+##### 2020-11-26 00:45:02.029 [porcelain] [info] --- [Porcelain]: goon executable not found
+##### 2020-11-26 00:45:02.032 [porcelain] [info] --- [Porcelain]: falling back to the basic driver.
+##### 2020-11-26 00:45:02.032 [porcelain] [info] --- [Porcelain]: (set `config :porcelain, driver: Porcelain.Driver.Basic` or `config :porcelain, goon_warn_if_missing: false` to disable this warning)
+##### 2020-11-26 00:45:02.197 [ecto] [info] --- Already up
+##### 2020-11-26 00:45:02.203 [db] [info] --- Creating data!
+##### 2020-11-26 00:45:02.210 [db] [info] --- Data created!
+##### 2020-11-26 00:45:02.313 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-26 00:45:05.122 [tzdata] [debug] --- Tzdata polling for update.
+##### 2020-11-26 00:45:06.129 [tzdata] [info] --- tzdata release in place is from a file last modified Thu, 03 May 2018 23:55:14 GMT. Release file on server was last modified Wed, 21 Oct 2020 18:40:20 GMT.
+##### 2020-11-26 00:45:06.133 [tzdata] [debug] --- Tzdata downloading new data from https://data.iana.org/time-zones/tzdata-latest.tar.gz
+##### 2020-11-26 00:45:06.615 [tzdata] [debug] --- Tzdata data downloaded. Release version 2020d.
+##### 2020-11-26 00:45:06.922  [error] --- GenServer :tzdata_release_updater terminating
+** (FunctionClauseError) no function clause matching in Tzdata.Util.first_matching_weekday_in_month/4
+    (tzdata) lib/tzdata/util.ex:73: Tzdata.Util.first_matching_weekday_in_month(1932, 4, 7, [])
+    (tzdata) lib/tzdata/util.ex:329: Tzdata.Util.time_for_rule/2
+    (tzdata) lib/tzdata/period_builder.ex:161: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+Last message: :check_if_time_to_update
+State: []
+##### 2020-11-26 00:45:11.024 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 00:45:11.024 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 00:45:11.046 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 00:45:11.048 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 00:45:11.059 [phoenix] [error] --- {:EXIT, {:undef, [{UiWeb.CamerasChannelChannel, :start_link, [{%{}, {#PID<0.642.0>, #Reference<0.1654883743.3480223748.32552>}, %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannelChannel, channel_pid: nil, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: false, private: %{}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.642.0>}}], []}, {:supervisor, :do_start_child_i, 3, [file: 'supervisor.erl', line: 379]}, {:supervisor, :handle_call, 3, [file: 'supervisor.erl', line: 404]}, {:gen_server, :try_handle_call, 4, [file: 'gen_server.erl', line: 661]}, {:gen_server, :handle_msg, 6, [file: 'gen_server.erl', line: 690]}, {:proc_lib, :init_p_do_apply, 3, [file: 'proc_lib.erl', line: 249]}]}}
+##### 2020-11-26 00:45:11.059 [phoenix] [warn] --- Ignoring unmatched topic "cameras:lobby" in UiWeb.UserSocket
+##### 2020-11-26 00:45:20.940 [phoenix] [debug] --- Duplicate channel join for topic "dashboard:lobby" in UiWeb.UserSocket. Closing existing channel for new join.
+##### 2020-11-26 00:45:20.940 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 00:45:20.940 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 00:54:48.271 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 00:54:48.272 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 00:54:48.714 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 00:54:48.714 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 00:54:48.718 [phoenix] [error] --- {:EXIT, {:undef, [{UiWeb.CamerasChannelChannel, :start_link, [{%{}, {#PID<0.657.0>, #Reference<0.1654883743.3480223748.33178>}, %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannelChannel, channel_pid: nil, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: false, private: %{}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.657.0>}}], []}, {:supervisor, :do_start_child_i, 3, [file: 'supervisor.erl', line: 379]}, {:supervisor, :handle_call, 3, [file: 'supervisor.erl', line: 404]}, {:gen_server, :try_handle_call, 4, [file: 'gen_server.erl', line: 661]}, {:gen_server, :handle_msg, 6, [file: 'gen_server.erl', line: 690]}, {:proc_lib, :init_p_do_apply, 3, [file: 'proc_lib.erl', line: 249]}]}}
+##### 2020-11-26 00:54:48.718 [phoenix] [warn] --- Ignoring unmatched topic "cameras:lobby" in UiWeb.UserSocket
+##### 2020-11-26 00:55:13.162 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 00:55:13.163 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 00:55:13.387 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 00:55:13.387 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 00:55:26.825 [phoenix] [error] --- {:EXIT, {:undef, [{UiWeb.CamerasChannelChannel, :start_link, [{%{}, {#PID<0.662.0>, #Reference<0.1654883743.3480223748.33243>}, %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannelChannel, channel_pid: nil, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: false, private: %{}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.662.0>}}], []}, {:supervisor, :do_start_child_i, 3, [file: 'supervisor.erl', line: 379]}, {:supervisor, :handle_call, 3, [file: 'supervisor.erl', line: 404]}, {:gen_server, :try_handle_call, 4, [file: 'gen_server.erl', line: 661]}, {:gen_server, :handle_msg, 6, [file: 'gen_server.erl', line: 690]}, {:proc_lib, :init_p_do_apply, 3, [file: 'proc_lib.erl', line: 249]}]}}
+##### 2020-11-26 00:55:50.035 [phoenix] [warn] --- Ignoring unmatched topic "cameras:lobby" in UiWeb.UserSocket
+##### 2020-11-26 00:59:16.961 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 00:59:16.961 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 00:59:17.198 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 00:59:17.198 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 00:59:17.199 [phoenix] [error] --- {:EXIT, {:undef, [{UiWeb.CamerasChannelChannel, :start_link, [{%{}, {#PID<0.670.0>, #Reference<0.1654883743.3480223748.33524>}, %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannelChannel, channel_pid: nil, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: false, private: %{}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.670.0>}}], []}, {:supervisor, :do_start_child_i, 3, [file: 'supervisor.erl', line: 379]}, {:supervisor, :handle_call, 3, [file: 'supervisor.erl', line: 404]}, {:gen_server, :try_handle_call, 4, [file: 'gen_server.erl', line: 661]}, {:gen_server, :handle_msg, 6, [file: 'gen_server.erl', line: 690]}, {:proc_lib, :init_p_do_apply, 3, [file: 'proc_lib.erl', line: 249]}]}}
+##### 2020-11-26 01:00:24.533 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:00:24.533 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:00:24.862 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:00:24.862 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:00:24.864 [phoenix] [error] --- {:EXIT, {:undef, [{UiWeb.CamerasChannelChannel, :start_link, [{%{}, {#PID<0.680.0>, #Reference<0.1654883743.3480223748.33703>}, %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannelChannel, channel_pid: nil, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: false, private: %{}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.680.0>}}], []}, {:supervisor, :do_start_child_i, 3, [file: 'supervisor.erl', line: 379]}, {:supervisor, :handle_call, 3, [file: 'supervisor.erl', line: 404]}, {:gen_server, :try_handle_call, 4, [file: 'gen_server.erl', line: 661]}, {:gen_server, :handle_msg, 6, [file: 'gen_server.erl', line: 690]}, {:proc_lib, :init_p_do_apply, 3, [file: 'proc_lib.erl', line: 249]}]}}
+##### 2020-11-26 01:01:01.437 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:01:01.437 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:01:01.768 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:01:01.768 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:01:01.771 [phoenix] [error] --- {:EXIT, {:undef, [{UiWeb.CamerasChannelChannel, :start_link, [{%{}, {#PID<0.697.0>, #Reference<0.1654883743.3480223745.48600>}, %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannelChannel, channel_pid: nil, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: false, private: %{}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.697.0>}}], []}, {:supervisor, :do_start_child_i, 3, [file: 'supervisor.erl', line: 379]}, {:supervisor, :handle_call, 3, [file: 'supervisor.erl', line: 404]}, {:gen_server, :try_handle_call, 4, [file: 'gen_server.erl', line: 661]}, {:gen_server, :handle_msg, 6, [file: 'gen_server.erl', line: 690]}, {:proc_lib, :init_p_do_apply, 3, [file: 'proc_lib.erl', line: 249]}]}}
+##### 2020-11-26 01:02:02.891 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:02:02.891 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:02:03.198 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:02:03.198 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:02:03.198 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:02:03.198 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:02:03.198 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:05:33.664 [porcelain] [info] --- [Porcelain]: goon executable not found
+##### 2020-11-26 01:05:33.666 [porcelain] [info] --- [Porcelain]: falling back to the basic driver.
+##### 2020-11-26 01:05:33.666 [porcelain] [info] --- [Porcelain]: (set `config :porcelain, driver: Porcelain.Driver.Basic` or `config :porcelain, goon_warn_if_missing: false` to disable this warning)
+##### 2020-11-26 01:05:33.815 [ecto] [info] --- Already up
+##### 2020-11-26 01:05:33.820 [db] [info] --- Creating data!
+##### 2020-11-26 01:05:33.826 [db] [info] --- Data created!
+##### 2020-11-26 01:05:33.922 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-26 01:05:36.752 [tzdata] [debug] --- Tzdata polling for update.
+##### 2020-11-26 01:05:37.531 [tzdata] [info] --- tzdata release in place is from a file last modified Thu, 03 May 2018 23:55:14 GMT. Release file on server was last modified Wed, 21 Oct 2020 18:40:20 GMT.
+##### 2020-11-26 01:05:37.534 [tzdata] [debug] --- Tzdata downloading new data from https://data.iana.org/time-zones/tzdata-latest.tar.gz
+##### 2020-11-26 01:05:38.005 [tzdata] [debug] --- Tzdata data downloaded. Release version 2020d.
+##### 2020-11-26 01:05:38.325  [error] --- GenServer :tzdata_release_updater terminating
+** (FunctionClauseError) no function clause matching in Tzdata.Util.first_matching_weekday_in_month/4
+    (tzdata) lib/tzdata/util.ex:73: Tzdata.Util.first_matching_weekday_in_month(1932, 4, 7, [])
+    (tzdata) lib/tzdata/util.ex:329: Tzdata.Util.time_for_rule/2
+    (tzdata) lib/tzdata/period_builder.ex:161: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+Last message: :check_if_time_to_update
+State: []
+##### 2020-11-26 01:05:38.676 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:05:38.676 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:05:38.692 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:05:38.693 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:05:38.698 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:05:38.698 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:05:48.630 [phoenix] [debug] --- Duplicate channel join for topic "dashboard:lobby" in UiWeb.UserSocket. Closing existing channel for new join.
+##### 2020-11-26 01:05:48.630 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:05:48.630 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:05:48.637 [phoenix] [debug] --- Duplicate channel join for topic "cameras:lobby" in UiWeb.UserSocket. Closing existing channel for new join.
+##### 2020-11-26 01:05:48.638 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:05:48.638 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:08:52.092 [porcelain] [info] --- [Porcelain]: goon executable not found
+##### 2020-11-26 01:08:52.094 [porcelain] [info] --- [Porcelain]: falling back to the basic driver.
+##### 2020-11-26 01:08:52.094 [porcelain] [info] --- [Porcelain]: (set `config :porcelain, driver: Porcelain.Driver.Basic` or `config :porcelain, goon_warn_if_missing: false` to disable this warning)
+##### 2020-11-26 01:08:52.246 [ecto] [info] --- Already up
+##### 2020-11-26 01:08:52.251 [db] [info] --- Creating data!
+##### 2020-11-26 01:08:52.258 [db] [info] --- Data created!
+##### 2020-11-26 01:08:52.352 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-26 01:08:57.131 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:08:57.131 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:09:07.068 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:09:07.069 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:09:07.087 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:09:07.087 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:09:07.089 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:09:07.089 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:09:22.471 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:09:22.472 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:09:48.619 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:09:48.619  [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:09:48.619 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:10:44.835 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:10:44.835  [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:10:44.835 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 01:12:01.766 [porcelain] [info] --- [Porcelain]: goon executable not found
+##### 2020-11-26 01:12:01.768 [porcelain] [info] --- [Porcelain]: falling back to the basic driver.
+##### 2020-11-26 01:12:01.768 [porcelain] [info] --- [Porcelain]: (set `config :porcelain, driver: Porcelain.Driver.Basic` or `config :porcelain, goon_warn_if_missing: false` to disable this warning)
+##### 2020-11-26 01:12:01.930 [ecto] [info] --- Already up
+##### 2020-11-26 01:12:01.937 [db] [info] --- Creating data!
+##### 2020-11-26 01:12:01.944 [db] [info] --- Data created!
+##### 2020-11-26 01:12:02.039 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-26 01:12:12.066 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:12:12.066 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:12:22.029 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:12:22.031 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:12:22.034 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:12:22.034 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:12:22.041 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:12:22.041 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:12:22.041 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:12:36.217 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.635.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "23", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.631.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 01:12:36.769 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:12:36.770 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:12:37.207 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:12:37.207 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:12:37.207 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:12:37.207 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:12:37.242 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:12:37.242 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:12:37.242 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:12:37.242 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:12:37.242 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:12:37.242 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:12:37.242 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:12:37.242 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:12:42.545 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:12:42.545 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:12:49.697 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:12:49.697 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:12:49.697 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:22:27.953 [ecto] [info] --- Already up
+##### 2020-11-26 01:22:27.964 [db] [info] --- Creating data!
+##### 2020-11-26 01:22:27.975 [db] [info] --- Data created!
+##### 2020-11-26 01:22:28.081 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-26 01:22:30.404 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:22:30.404 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:22:38.819 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:22:38.820 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:22:39.024 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:22:39.026 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:22:39.032 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:22:39.032 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:22:39.111 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:22:39.111 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:22:39.111 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:22:39.111 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:22:39.111 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:22:39.111 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:22:39.111 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:22:39.118 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 01:22:39.123 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:23:20.918 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:23:20.918 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:23:20.918 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 01:23:40.337 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:23:40.337 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:23:40.337 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:29:50.686 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:29:50.687 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:29:51.191 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:29:51.191 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:29:51.192 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:29:51.192 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:29:56.272 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:29:56.272 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:29:56.272 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:30:15.017 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.662.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.658.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 01:30:16.156 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:30:16.156 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:30:17.110 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:30:17.110 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:30:17.115 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:30:17.115 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:30:17.194 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:30:17.194 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:30:17.194 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:30:17.194 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:30:17.194 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:30:17.194 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:30:17.194 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:30:17.194 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:30:43.253 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:30:43.253 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:30:43.253 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:30:43.253 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:30:43.253 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:31:00.617 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:31:00.617 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:31:14.666 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:31:14.666 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:31:14.666 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:32:01.371 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:32:01.371 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:32:12.076 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:32:12.076 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:33:47.323 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.667.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.663.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 01:33:51.955 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:33:51.956 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:34:09.175 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:34:09.175 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:34:09.175 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:34:09.175 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:35:09.221 [ecto] [info] --- Already up
+##### 2020-11-26 01:35:09.232 [db] [info] --- Creating data!
+##### 2020-11-26 01:35:09.242 [db] [info] --- Data created!
+##### 2020-11-26 01:35:09.335 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-26 01:35:15.372 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:35:15.372 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:35:16.456 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:35:16.456 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:35:25.305 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:35:25.306 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:35:25.321 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:35:25.321 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:35:25.322 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:35:25.322 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:35:25.322 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:35:40.081 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:35:40.081 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:35:40.081 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 01:36:01.836 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:36:01.837 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:36:01.837 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:36:01.837 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:36:01.997 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:36:01.997 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:36:01.997 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:36:15.524 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:36:15.524 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:36:15.524 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:36:33.406 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:36:33.406 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:36:38.915 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:36:38.915 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:36:38.915 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 01:37:56.900 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.636.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "20", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.622.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 01:38:28.186 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:38:28.186 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:38:53.711 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:38:53.711 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:38:53.711 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:38:53.711 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:39:41.573 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:39:41.573  [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:39:41.573  [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:39:53.124 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:39:53.124  [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:39:58.338 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:39:58.338  [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:40:02.849 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:40:02.849  [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:43:17.414  [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.658.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "25", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.646.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 01:44:01.607 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:44:01.607  [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:44:01.607  [info] --- Stopping retransmission!
+##### 2020-11-26 01:53:06.840 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:53:06.840  [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:53:06.853  [error] --- GenServer RstpToWs.Camera.Converter terminating
+** (FunctionClauseError) no function clause matching in MapSet.put/2
+    (elixir) lib/map_set.ex:284: MapSet.put(%{cameras: %{"cam1" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=1&stream=0.sdp?real_stream--rtp-caching=100", "9996", nil}, "cam2" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=2&stream=0.sdp?real_stream--rtp-caching=100", "9997", nil}, "cam3" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=3&stream=0.sdp?real_stream--rtp-caching=100", "9998", nil}, "cam4" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=4&stream=0.sdp?real_stream--rtp-caching=100", "9999", nil}}, consumers: 0}, "34")
+    (rstp_to_ws) /home/prw/CODE/SmartHome/rstp_to_ws/lib/rstp_to_ws/camera/converter.ex:107: RstpToWs.Camera.Converter.inc/2
+    (rstp_to_ws) /home/prw/CODE/SmartHome/rstp_to_ws/lib/rstp_to_ws/camera/converter.ex:63: RstpToWs.Camera.Converter.handle_cast/2
+    (stdlib) gen_server.erl:637: :gen_server.try_dispatch/4
+    (stdlib) gen_server.erl:711: :gen_server.handle_msg/6
+    (stdlib) proc_lib.erl:249: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", {:register, "34"}}
+State: %{cameras: %{"cam1" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=1&stream=0.sdp?real_stream--rtp-caching=100", "9996", nil}, "cam2" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=2&stream=0.sdp?real_stream--rtp-caching=100", "9997", nil}, "cam3" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=3&stream=0.sdp?real_stream--rtp-caching=100", "9998", nil}, "cam4" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=4&stream=0.sdp?real_stream--rtp-caching=100", "9999", nil}}, consumers: 0}
+##### 2020-11-26 01:53:06.855  [info] --- Application rstp_to_ws exited: an exception was raised:
+    ** (FunctionClauseError) no function clause matching in MapSet.put/2
+        (elixir) lib/map_set.ex:284: MapSet.put(%{cameras: %{"cam1" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=1&stream=0.sdp?real_stream--rtp-caching=100", "9996", nil}, "cam2" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=2&stream=0.sdp?real_stream--rtp-caching=100", "9997", nil}, "cam3" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=3&stream=0.sdp?real_stream--rtp-caching=100", "9998", nil}, "cam4" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=4&stream=0.sdp?real_stream--rtp-caching=100", "9999", nil}}, consumers: 0}, "34")
+        (rstp_to_ws) /home/prw/CODE/SmartHome/rstp_to_ws/lib/rstp_to_ws/camera/converter.ex:107: RstpToWs.Camera.Converter.inc/2
+        (rstp_to_ws) /home/prw/CODE/SmartHome/rstp_to_ws/lib/rstp_to_ws/camera/converter.ex:63: RstpToWs.Camera.Converter.handle_cast/2
+        (stdlib) gen_server.erl:637: :gen_server.try_dispatch/4
+        (stdlib) gen_server.erl:711: :gen_server.handle_msg/6
+        (stdlib) proc_lib.erl:249: :proc_lib.init_p_do_apply/3
+##### 2020-11-26 01:53:20.835 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:53:20.835  [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:53:53.823 [ecto] [info] --- Already up
+##### 2020-11-26 01:53:53.833 [db] [info] --- Creating data!
+##### 2020-11-26 01:53:53.842 [db] [info] --- Data created!
+##### 2020-11-26 01:53:53.924 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-26 01:53:55.772 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:53:55.772 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:53:59.367 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:53:59.367 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:53:59.784 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:53:59.788 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:53:59.793 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:53:59.793 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:54:03.521 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:54:03.521 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:54:33.581 [ecto] [info] --- Already up
+##### 2020-11-26 01:54:33.601 [db] [info] --- Creating data!
+##### 2020-11-26 01:54:33.614 [db] [info] --- Data created!
+##### 2020-11-26 01:54:33.739 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-26 01:54:33.917 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:54:33.917 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:54:38.855 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:54:38.857 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:54:38.860 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:54:38.860 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:54:38.861 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:54:38.861 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:54:38.861 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 01:54:47.507 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:54:47.507 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:54:47.507 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 01:55:08.464 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:55:08.464 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:55:08.898 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:55:08.898 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:55:08.899 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:55:08.899 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:55:13.443 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:55:13.443 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:55:25.079 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:55:25.079 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:55:27.633 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:55:27.633 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:55:35.313 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.643.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.639.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 01:55:36.433 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 01:55:36.433 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 01:55:37.415 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:55:37.415 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 01:55:37.416 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 01:55:37.416 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 01:55:37.473 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:55:37.473 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:55:37.473 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:55:37.473 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:55:37.473 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:55:37.473 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:56:02.041 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:56:02.041 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 01:56:10.904 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 01:56:10.904 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 01:56:17.183 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.630.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "7", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.626.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 01:56:29.241 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 01:56:29.241 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.648.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.644.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 02:14:15.199 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 02:14:15.199 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 02:14:15.477 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 02:14:15.477 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 02:14:15.479 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 02:14:15.479 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 02:14:49.576 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 02:14:49.576 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 02:14:49.576 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 02:15:56.666 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 02:15:56.666 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 02:15:56.666 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 02:16:00.448 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 02:16:00.449 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 02:16:00.449 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 02:16:36.607 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.662.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.658.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 02:16:36.607 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 02:16:37.370 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 02:16:37.370 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 02:16:37.803 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 02:16:37.803 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 02:16:37.803 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 02:16:37.803 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 02:16:37.835 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 02:16:37.835 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 02:16:37.835 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 02:16:37.835 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 02:16:37.835 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 02:16:37.835 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 02:16:37.835 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 02:16:37.838 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 02:16:37.839 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 02:34:02.304 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 02:34:02.304 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.685.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.681.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 11:32:30.725 [ecto] [info] --- Already up
+##### 2020-11-26 11:32:30.735 [db] [info] --- Creating data!
+##### 2020-11-26 11:32:30.747 [db] [info] --- Data created!
+##### 2020-11-26 11:32:30.859 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-26 11:32:41.368 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 11:32:41.368 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 11:32:41.369 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 11:32:41.369 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 11:32:41.653 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:32:41.656 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 11:32:41.663 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:32:41.663 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 11:32:41.664 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:32:41.664 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 11:32:41.665 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:32:41.665 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 11:32:46.746 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:32:46.746 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:32:46.746 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 11:33:00.773 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 11:33:00.789 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.622.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.615.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 11:33:01.284 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 11:33:01.284 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 11:33:01.629 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:33:01.629 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 11:33:01.630 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:33:01.630 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 11:33:01.657 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:33:01.657 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:33:01.657 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 11:33:01.657 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:33:01.657 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 11:33:01.658 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:33:01.658 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:33:01.663 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 11:33:01.665 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 11:33:48.928 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 11:33:48.929 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.621.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.614.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 11:34:03.103 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:34:03.103 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 11:34:03.103 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 11:34:04.778 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:34:04.778 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:34:04.778 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 11:37:01.153 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 11:37:01.153 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.635.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.631.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 11:37:01.914 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 11:37:01.914 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 11:37:02.236 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:37:02.236 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 11:37:02.237 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:37:02.237 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 11:37:02.273 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:37:02.273 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:37:02.273 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 11:37:02.274 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:37:02.274 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 11:37:02.274 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:37:02.274 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:37:02.279 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 11:37:02.281 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 11:38:08.870 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 11:38:08.870 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.666.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.662.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 11:38:09.404 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 11:38:09.404 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 11:38:09.723 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:38:09.723 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 11:38:09.725 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:38:09.725 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 11:38:09.756 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:38:09.756 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:38:09.756 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 11:38:09.757 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:38:09.757 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 11:38:09.757 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:38:09.757 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:38:09.760 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 11:38:09.762 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 11:38:32.997 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 11:38:32.997 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.687.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.683.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 11:38:33.644 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 11:38:33.644 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 11:38:33.953 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:38:33.954 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 11:38:33.954 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:38:33.954 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 11:38:33.987 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:38:33.987 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:38:33.987 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 11:38:33.987 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:38:33.987 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 11:38:33.987 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:38:33.987 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:38:33.992 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 11:38:33.994 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 11:42:01.700 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:42:01.700 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 11:42:01.700 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 11:43:17.313 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 11:43:17.313 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 11:43:17.440 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:43:17.440 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 11:43:17.440 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:43:17.440 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 11:43:26.092 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.732.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.728.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 11:43:26.092 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 11:44:32.085 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:44:32.085 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:44:32.085  [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 11:46:41.764 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:46:41.764 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 11:46:44.581 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:46:44.581 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:46:47.473 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.709.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.705.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 11:46:48.020 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 11:46:48.021 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 11:46:48.322 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:46:48.322 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 11:46:48.322 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:46:48.322 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 11:46:48.345 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:46:48.345 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:46:48.345 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:46:48.345 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 11:46:48.345 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:46:48.345 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:47:20.371 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:47:20.371 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 11:47:20.371  [info] --- Stopping retransmission!
+##### 2020-11-26 11:47:31.076  [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 11:48:53.475 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:48:53.475 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:49:14.992 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.754.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.750.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 11:49:15.481 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 11:49:15.481 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 11:49:15.807 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:49:15.807 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 11:49:15.808 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:49:15.808 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 11:49:15.835 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:49:15.835 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:49:15.835 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:49:15.835 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 11:49:15.835 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:49:15.835 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:49:50.423 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.774.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.770.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 11:49:50.999 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 11:49:50.999 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 11:49:51.328 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:49:51.328 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 11:49:51.329 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:49:51.329 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 11:49:51.359 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:49:51.359 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:49:51.360 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:49:51.360 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 11:49:51.360 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 11:49:51.361 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 11:50:20.745 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.779.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.775.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 11:50:32.518  [info] --- Stopping retransmission!
+##### 2020-11-26 11:51:48.606 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 11:51:48.606 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 11:51:48.985 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:51:48.985 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 11:51:48.985 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 11:51:48.985 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 12:35:31.129 [ecto] [info] --- Already up
+##### 2020-11-26 12:35:31.140 [db] [info] --- Creating data!
+##### 2020-11-26 12:35:31.150 [db] [info] --- Data created!
+##### 2020-11-26 12:35:31.241 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-26 12:35:33.401 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 12:35:33.402 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 12:35:33.418 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 12:35:33.420 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 12:35:33.424 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 12:35:33.424 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 12:35:34.709 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 12:35:34.716 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.630.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.626.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 12:35:36.543 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 12:35:36.543 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 12:35:36.545 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 12:35:36.545 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 12:35:36.546 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 12:35:36.546 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 12:35:36.559 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 12:35:36.559 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 12:35:36.559 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 12:35:36.559 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 12:35:36.559 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 12:35:36.559 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 12:35:36.559 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 12:35:36.564 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 12:35:36.568 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 13:34:09.820 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 13:34:09.820 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 13:34:10.505 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 13:34:10.505 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 13:34:10.505 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 13:34:10.506 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 13:34:16.155 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 13:34:16.155 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 13:34:16.155 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 13:34:23.953 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 13:34:23.953 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.685.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.681.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 13:34:25.058 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 13:34:25.058 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 13:34:26.236 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 13:34:26.236 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 13:34:26.236 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 13:34:26.237 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 13:34:26.315 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 13:34:26.315 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 13:34:26.315 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 13:34:26.316 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 13:34:26.316 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 13:34:26.316 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 13:34:26.316 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 13:34:26.318 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 13:34:26.319 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 13:35:05.017 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 13:35:05.018 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.690.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.686.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 13:35:06.765 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 13:35:06.765 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 13:35:06.792 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 13:35:06.792 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 13:35:06.792 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 13:35:06.792 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 13:35:06.947 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 13:35:06.948 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 13:35:06.948 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 13:35:06.951 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 13:35:06.951 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 13:35:06.951 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 13:35:06.952 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 13:35:06.954 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 13:35:06.955 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 13:40:01.184 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 13:40:01.184 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 13:40:04.889  [info] --- Stopping retransmission!
+##### 2020-11-26 13:40:04.890 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.711.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.707.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 13:40:11.179 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 13:40:11.179 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 13:40:11.180 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 13:40:11.180 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 13:40:27.972 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 13:40:27.972 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 13:40:27.972  [info] --- Stopping retransmission!
+##### 2020-11-26 13:40:27.972 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 13:40:27.972 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 13:40:27.972  [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 13:40:29.985 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 13:40:29.985 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 13:40:29.985  [info] --- Stopping retransmission!
+##### 2020-11-26 13:40:31.247  [info] --- Stopping retransmission!
+##### 2020-11-26 13:40:31.247 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.745.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "16", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.741.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 13:40:32.957 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 13:40:32.957 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 13:40:34.938 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 13:40:34.939 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 13:40:34.939 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 13:40:34.939 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 13:40:35.006 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 13:40:35.006 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 13:40:35.006  [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 13:40:52.110  [info] --- Stopping retransmission!
+##### 2020-11-26 13:40:52.111 [ui] [debug] --- Client %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannel, channel_pid: #PID<0.758.0>, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "22", joined: true, private: %{log_handle_in: :debug, log_join: :info}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.754.0>} leave with reason {:shutdown, :closed}
+##### 2020-11-26 16:50:19.300 [ecto] [info] --- Already up
+##### 2020-11-26 16:50:19.309 [db] [info] --- Creating data!
+##### 2020-11-26 16:50:19.311 [db] [info] --- Data created!
+##### 2020-11-26 16:50:19.392 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://example.com
+##### 2020-11-26 16:50:19.392 [phoenix] [error] --- Could not find static manifest at "/home/prw/CODE/SmartHome/ui/_build/prod/lib/ui/priv/static/cache_manifest.json". Run "mix phx.digest" after building your static files or remove the configuration from "config/prod.exs".
+##### 2020-11-26 16:50:25.161 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:50:36.312 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:50:47.964 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:50:59.847 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:51:12.283 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:51:27.045 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:51:38.979 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:51:47.459 [ecto] [info] --- Already up
+##### 2020-11-26 16:51:47.471 [db] [info] --- Creating data!
+##### 2020-11-26 16:51:47.477 [db] [info] --- Data created!
+##### 2020-11-26 16:51:47.569 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://192.168.2.105
+##### 2020-11-26 16:51:47.569 [phoenix] [error] --- Could not find static manifest at "/home/prw/CODE/SmartHome/ui/_build/prod/lib/ui/priv/static/cache_manifest.json". Run "mix phx.digest" after building your static files or remove the configuration from "config/prod.exs".
+##### 2020-11-26 16:51:51.078 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:52:02.681 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:52:09.283 request_id=2p5hjbjs039pdpa6ks000474 [plug] [info] --- GET /api/ports/
+##### 2020-11-26 16:52:09.293 request_id=2p5hjbjs039pdpa6ks000474 [plug] [info] --- Sent 200 in 10ms
+##### 2020-11-26 16:52:09.493 request_id=2p5hjbk8hl78v6ivik000484 [plug] [info] --- GET /favicon.ico
+##### 2020-11-26 16:52:09.499 request_id=2p5hjbk8hl78v6ivik000484 [phoenix] [info] --- Converted error Phoenix.Router.NoRouteError to 404 response
+##### 2020-11-26 16:52:09.501 request_id=2p5hjbk8hl78v6ivik000484 [plug] [info] --- Sent 404 in 8ms
+##### 2020-11-26 16:52:16.827 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:52:30.707 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:52:44.808 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:52:59.323 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:53:13.242 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:53:25.111 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:54:07.208 [ecto] [info] --- Already up
+##### 2020-11-26 16:54:07.222 [db] [info] --- Creating data!
+##### 2020-11-26 16:54:07.231 [db] [info] --- Data created!
+##### 2020-11-26 16:54:07.316 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://192.168.2.105
+##### 2020-11-26 16:54:13.944 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:54:25.741 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:54:40.342 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:54:51.531 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:55:05.956 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:55:16.177 [ecto] [info] --- Already up
+##### 2020-11-26 16:55:16.190 [db] [info] --- Creating data!
+##### 2020-11-26 16:55:16.195 [db] [info] --- Data created!
+##### 2020-11-26 16:55:16.287 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://192.168.2.105:4000
+##### 2020-11-26 16:55:17.398 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:55:32.350 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:55:44.561 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:55:57.334 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:56:10.417 [ecto] [info] --- Already up
+##### 2020-11-26 16:56:10.429 [db] [info] --- Creating data!
+##### 2020-11-26 16:56:10.436 [db] [info] --- Data created!
+##### 2020-11-26 16:56:10.529 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:3000
+##### 2020-11-26 16:56:10.781 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 16:56:10.781 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 16:56:10.793 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 16:56:10.795 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 16:56:10.802 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 16:56:10.802 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 16:56:17.337 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 16:56:17.337 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 16:56:17.337 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 16:56:17.337 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 16:57:51.340 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 16:57:51.340 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 16:57:51.345 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 16:57:51.345 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 16:57:51.345 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 16:57:51.345 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 16:59:35.671 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 16:59:35.671 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 16:59:35.673 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 16:59:35.673 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 16:59:35.674 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 16:59:35.674 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 17:00:34.077 [ecto] [info] --- Already up
+##### 2020-11-26 17:00:34.091 [db] [info] --- Creating data!
+##### 2020-11-26 17:00:34.097 [db] [info] --- Data created!
+##### 2020-11-26 17:00:34.197 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:3000
+##### 2020-11-26 17:00:36.229 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 17:00:36.229 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 17:00:37.039 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 17:00:37.040 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 17:00:37.044 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 17:00:37.044 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 17:01:35.859 [ecto] [info] --- Already up
+##### 2020-11-26 17:01:35.873 [db] [info] --- Creating data!
+##### 2020-11-26 17:01:35.879 [db] [info] --- Data created!
+##### 2020-11-26 17:01:35.978 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:4000
+##### 2020-11-26 17:01:46.190 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 17:01:46.191 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 17:01:46.209 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 17:01:46.210 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 17:01:46.214 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 17:01:46.214 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 17:01:46.216 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 17:01:46.216 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 17:01:46.217 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 17:01:46.217 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 17:01:46.217 [phoenix] [debug] --- INCOMING "register" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 17:01:46.217 [ui] [debug] --- Registering of a camera stream consumer.
+##### 2020-11-26 17:01:46.218 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 17:04:00.814 [phoenix] [debug] --- INCOMING "unregister" on "cameras:lobby" to UiWeb.CamerasChannel
+  Parameters: %{}
+##### 2020-11-26 17:04:00.814 [ui] [debug] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 17:04:15.815 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 17:04:29.669 [ecto] [info] --- Already up
+##### 2020-11-26 17:04:29.678 [db] [info] --- Creating data!
+##### 2020-11-26 17:04:29.687 [db] [info] --- Data created!
+##### 2020-11-26 17:04:29.783 [phoenix] [info] --- Running UiWeb.Endpoint with cowboy 2.6.1 at http://localhost:3000
+##### 2020-11-26 17:04:33.919 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 17:04:33.920 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 17:04:34.172 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 17:04:34.178 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 17:04:34.185 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 17:04:34.185 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 17:04:45.266 [ui] [info] --- Registering of a camera stream consumer.
+##### 2020-11-26 17:04:45.266 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 17:04:56.362 [phoenix] [info] --- CONNECT UiWeb.UserSocket
+  Transport: :websocket
+  Connect Info: %{}
+  Parameters: %{"vsn" => "1.0.0"}
+##### 2020-11-26 17:04:56.362 [phoenix] [info] --- Replied UiWeb.UserSocket :ok
+##### 2020-11-26 17:04:56.721 [phoenix] [info] --- JOIN "dashboard:lobby" to UiWeb.DashboardChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 17:04:56.722 [phoenix] [info] --- Replied dashboard:lobby :ok
+##### 2020-11-26 17:04:56.722 [phoenix] [info] --- JOIN "cameras:lobby" to UiWeb.CamerasChannel
+  Transport:  :websocket
+  Serializer: Phoenix.Socket.V1.JSONSerializer
+  Parameters: %{}
+##### 2020-11-26 17:04:56.722 [phoenix] [info] --- Replied cameras:lobby :ok
+##### 2020-11-26 17:04:56.757 [ui] [info] --- Registering of a camera stream consumer.
+##### 2020-11-26 17:04:56.757 [ui] [info] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 17:04:56.757 [ui] [info] --- Registering of a camera stream consumer.
+##### 2020-11-26 17:05:31.840 [ui] [info] --- Unregistering of a camera stream consumer.
+##### 2020-11-26 17:05:46.840 [rstp_to_ws] [info] --- Stopping retransmission!
+##### 2020-11-26 17:06:03.729 [rstp_to_ws] [info] --- Starting retransmitting the rstp to the ws!
+##### 2020-11-26 17:19:28.269 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:19:38.313 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:19:48.466 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:19:58.583 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:20:08.775 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:20:18.908 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:20:29.050 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:20:39.146 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:20:49.273 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:20:59.460 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:21:09.655 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:21:19.790 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:21:29.926 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:21:40.072 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:21:50.211 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:22:00.355 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:22:10.529 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:22:20.703 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:22:31.250 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:22:41.328 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:22:52.465 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:23:02.615 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:23:12.791 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:23:22.951 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:23:33.079 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:23:43.222 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:23:53.381 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+

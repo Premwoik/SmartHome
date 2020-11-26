@@ -1,0 +1,1339 @@
+19:58:25.859 [error] 123
+20:01:30.030 [error] 123
+20:04:39.494 [error] 123
+20:04:56.885 [error] 123
+20:08:25.735 [error] 123
+20:10:30.529 [error] 123
+20:11:11.493 [error] 123
+20:14:49.068 [error] 123
+20:18:52.500 [error] 123
+##### 2020-11-12T23:01:12.781Z  [error] --- 123
+##### 2020-11-21 19:04:57.583  [error] --- GenServer :tzdata_release_updater terminating
+** (FunctionClauseError) no function clause matching in Tzdata.Util.first_matching_weekday_in_month/4
+    (tzdata) lib/tzdata/util.ex:73: Tzdata.Util.first_matching_weekday_in_month(1932, 4, 7, [])
+    (tzdata) lib/tzdata/util.ex:329: Tzdata.Util.time_for_rule/2
+    (tzdata) lib/tzdata/period_builder.ex:161: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+Last message: :check_if_time_to_update
+State: []
+##### 2020-11-21 19:08:23.991  [error] --- #PID<0.979.0> running UiWeb.Endpoint (connection #PID<0.978.0>, stream id 1) terminated
+Server: localhost:4000 (http)
+Request: GET /api/dashboards
+** (exit) an exception was raised:
+    ** (ArgumentError) argument error
+        :erlang.apply([1, 100], :id, [])
+        (ui) lib/ui_web/views/action_view.ex:15: UiWeb.ActionView.render/2
+        (elixir) lib/enum.ex:1336: Enum."-map/2-lists^map/1-0-"/2
+        (ui) lib/ui_web/views/dashboard_view.ex:27: UiWeb.DashboardView.render/2
+        (elixir) lib/enum.ex:1336: Enum."-map/2-lists^map/1-0-"/2
+        (elixir) lib/enum.ex:1336: Enum."-map/2-lists^map/1-0-"/2
+        (phoenix) lib/phoenix/view.ex:399: Phoenix.View.render_to_iodata/3
+        (phoenix) lib/phoenix/controller.ex:729: Phoenix.Controller.__put_render__/5
+        (phoenix) lib/phoenix/controller.ex:746: Phoenix.Controller.instrument_render_and_send/4
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.action/2
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.phoenix_controller_pipeline/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.instrument/4
+        (phoenix) lib/phoenix/router.ex:275: Phoenix.Router.__call__/1
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.plug_builder_call/2
+        (ui) lib/plug/debugger.ex:122: UiWeb.Endpoint."call (overridable 3)"/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.call/2
+        (phoenix) lib/phoenix/endpoint/cowboy2_handler.ex:33: Phoenix.Endpoint.Cowboy2Handler.init/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_handler.erl:41: :cowboy_handler.execute/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:296: :cowboy_stream_h.execute/3
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:274: :cowboy_stream_h.request_process/3
+##### 2020-11-21 19:08:36.681  [error] --- #PID<0.1004.0> running UiWeb.Endpoint (connection #PID<0.1003.0>, stream id 1) terminated
+Server: localhost:4000 (http)
+Request: GET /api/dashboards/2
+** (exit) an exception was raised:
+    ** (ArgumentError) argument error
+        :erlang.apply({100, %DB.Action{__meta__: #Ecto.Schema.Metadata<:loaded, "actions">, active: true, args: #Ecto.Association.NotLoaded<association :args is not loaded>, end_time: nil, frequency: 15000, function: "CloseSunblinds", id: 1, name: "Cały dom", params: "{}", port: #Ecto.Association.NotLoaded<association :port is not loaded>, port_id: nil, ref: 1, start_time: nil}}, :id, [])
+        (ui) lib/ui_web/views/action_view.ex:15: UiWeb.ActionView.render/2
+        (elixir) lib/enum.ex:1336: Enum."-map/2-lists^map/1-0-"/2
+        (ui) lib/ui_web/views/dashboard_view.ex:27: UiWeb.DashboardView.render/2
+        (phoenix) lib/phoenix/view.ex:399: Phoenix.View.render_to_iodata/3
+        (phoenix) lib/phoenix/controller.ex:729: Phoenix.Controller.__put_render__/5
+        (phoenix) lib/phoenix/controller.ex:746: Phoenix.Controller.instrument_render_and_send/4
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.action/2
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.phoenix_controller_pipeline/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.instrument/4
+        (phoenix) lib/phoenix/router.ex:275: Phoenix.Router.__call__/1
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.plug_builder_call/2
+        (ui) lib/plug/debugger.ex:122: UiWeb.Endpoint."call (overridable 3)"/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.call/2
+        (phoenix) lib/phoenix/endpoint/cowboy2_handler.ex:33: Phoenix.Endpoint.Cowboy2Handler.init/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_handler.erl:41: :cowboy_handler.execute/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:296: :cowboy_stream_h.execute/3
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:274: :cowboy_stream_h.request_process/3
+        (stdlib) proc_lib.erl:249: :proc_lib.init_p_do_apply/3
+##### 2020-11-21 19:11:12.993  [error] --- #PID<0.1045.0> running UiWeb.Endpoint (connection #PID<0.1044.0>, stream id 1) terminated
+Server: localhost:4000 (http)
+Request: GET /api/dashboards/2
+** (exit) an exception was raised:
+    ** (ArgumentError) argument error
+        :erlang.apply({100, %DB.Action{__meta__: #Ecto.Schema.Metadata<:loaded, "actions">, active: true, args: #Ecto.Association.NotLoaded<association :args is not loaded>, end_time: nil, frequency: 15000, function: "CloseSunblinds", id: 1, name: "Cały dom", params: "{}", port: #Ecto.Association.NotLoaded<association :port is not loaded>, port_id: nil, ref: 1, start_time: nil}}, :id, [])
+        (ui) lib/ui_web/views/action_view.ex:15: UiWeb.ActionView.render/2
+        (elixir) lib/enum.ex:1336: Enum."-map/2-lists^map/1-0-"/2
+        (ui) lib/ui_web/views/dashboard_view.ex:27: UiWeb.DashboardView.render/2
+        (phoenix) lib/phoenix/view.ex:399: Phoenix.View.render_to_iodata/3
+        (phoenix) lib/phoenix/controller.ex:729: Phoenix.Controller.__put_render__/5
+        (phoenix) lib/phoenix/controller.ex:746: Phoenix.Controller.instrument_render_and_send/4
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.action/2
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.phoenix_controller_pipeline/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.instrument/4
+        (phoenix) lib/phoenix/router.ex:275: Phoenix.Router.__call__/1
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.plug_builder_call/2
+        (ui) lib/plug/debugger.ex:122: UiWeb.Endpoint."call (overridable 3)"/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.call/2
+        (phoenix) lib/phoenix/endpoint/cowboy2_handler.ex:33: Phoenix.Endpoint.Cowboy2Handler.init/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_handler.erl:41: :cowboy_handler.execute/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:296: :cowboy_stream_h.execute/3
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:274: :cowboy_stream_h.request_process/3
+        (stdlib) proc_lib.erl:249: :proc_lib.init_p_do_apply/3
+##### 2020-11-21 19:13:52.000  [error] --- #PID<0.1069.0> running UiWeb.Endpoint (connection #PID<0.1068.0>, stream id 1) terminated
+Server: localhost:4000 (http)
+Request: GET /api/dashboards/2
+** (exit) an exception was raised:
+    ** (ArgumentError) argument error
+        :erlang.apply({100, %DB.Action{__meta__: #Ecto.Schema.Metadata<:loaded, "actions">, active: true, args: #Ecto.Association.NotLoaded<association :args is not loaded>, end_time: nil, frequency: 15000, function: "CloseSunblinds", id: 1, name: "Cały dom", params: "{}", port: #Ecto.Association.NotLoaded<association :port is not loaded>, port_id: nil, ref: 1, start_time: nil}}, :id, [])
+        (ui) lib/ui_web/views/action_view.ex:15: UiWeb.ActionView.render/2
+        (elixir) lib/enum.ex:1336: Enum."-map/2-lists^map/1-0-"/2
+        (ui) lib/ui_web/views/dashboard_view.ex:27: UiWeb.DashboardView.render/2
+        (phoenix) lib/phoenix/view.ex:399: Phoenix.View.render_to_iodata/3
+        (phoenix) lib/phoenix/controller.ex:729: Phoenix.Controller.__put_render__/5
+        (phoenix) lib/phoenix/controller.ex:746: Phoenix.Controller.instrument_render_and_send/4
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.action/2
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.phoenix_controller_pipeline/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.instrument/4
+        (phoenix) lib/phoenix/router.ex:275: Phoenix.Router.__call__/1
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.plug_builder_call/2
+        (ui) lib/plug/debugger.ex:122: UiWeb.Endpoint."call (overridable 3)"/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.call/2
+        (phoenix) lib/phoenix/endpoint/cowboy2_handler.ex:33: Phoenix.Endpoint.Cowboy2Handler.init/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_handler.erl:41: :cowboy_handler.execute/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:296: :cowboy_stream_h.execute/3
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:274: :cowboy_stream_h.request_process/3
+        (stdlib) proc_lib.erl:249: :proc_lib.init_p_do_apply/3
+##### 2020-11-21 19:16:46.678  [error] --- #PID<0.1087.0> running UiWeb.Endpoint (connection #PID<0.1086.0>, stream id 1) terminated
+Server: localhost:4000 (http)
+Request: GET /api/dashboards/2
+** (exit) an exception was raised:
+    ** (Protocol.UndefinedError) protocol Jason.Encoder not implemented for {100, %{"@type": "action", active: true, end_time: nil, frequency: 15000, function: "CloseSunblinds", id: 1, name: "Cały dom", params: "{}", port_id: nil, ref: 1, start_time: nil}} of type Tuple, Jason.Encoder protocol must always be explicitly implemented. This protocol is implemented for the following type(s): Time, Any, Atom, Date, Decimal, Map, Integer, Float, NaiveDateTime, DateTime, BitString, List, Jason.Fragment
+        (jason) lib/jason.ex:199: Jason.encode_to_iodata!/2
+        (phoenix) lib/phoenix/controller.ex:729: Phoenix.Controller.__put_render__/5
+        (phoenix) lib/phoenix/controller.ex:746: Phoenix.Controller.instrument_render_and_send/4
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.action/2
+        (ui) lib/ui_web/controllers/dashboard_controller.ex:1: UiWeb.DashboardController.phoenix_controller_pipeline/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.instrument/4
+        (phoenix) lib/phoenix/router.ex:275: Phoenix.Router.__call__/1
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.plug_builder_call/2
+        (ui) lib/plug/debugger.ex:122: UiWeb.Endpoint."call (overridable 3)"/2
+        (ui) lib/ui_web/endpoint.ex:1: UiWeb.Endpoint.call/2
+        (phoenix) lib/phoenix/endpoint/cowboy2_handler.ex:33: Phoenix.Endpoint.Cowboy2Handler.init/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_handler.erl:41: :cowboy_handler.execute/2
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:296: :cowboy_stream_h.execute/3
+        (cowboy) /home/prw/CODE/SmartHome/ui/deps/cowboy/src/cowboy_stream_h.erl:274: :cowboy_stream_h.request_process/3
+        (stdlib) proc_lib.erl:249: :proc_lib.init_p_do_apply/3
+##### 2020-11-26 00:45:06.922  [error] --- GenServer :tzdata_release_updater terminating
+** (FunctionClauseError) no function clause matching in Tzdata.Util.first_matching_weekday_in_month/4
+    (tzdata) lib/tzdata/util.ex:73: Tzdata.Util.first_matching_weekday_in_month(1932, 4, 7, [])
+    (tzdata) lib/tzdata/util.ex:329: Tzdata.Util.time_for_rule/2
+    (tzdata) lib/tzdata/period_builder.ex:161: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+Last message: :check_if_time_to_update
+State: []
+##### 2020-11-26 00:45:11.059 [phoenix] [error] --- {:EXIT, {:undef, [{UiWeb.CamerasChannelChannel, :start_link, [{%{}, {#PID<0.642.0>, #Reference<0.1654883743.3480223748.32552>}, %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannelChannel, channel_pid: nil, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: false, private: %{}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.642.0>}}], []}, {:supervisor, :do_start_child_i, 3, [file: 'supervisor.erl', line: 379]}, {:supervisor, :handle_call, 3, [file: 'supervisor.erl', line: 404]}, {:gen_server, :try_handle_call, 4, [file: 'gen_server.erl', line: 661]}, {:gen_server, :handle_msg, 6, [file: 'gen_server.erl', line: 690]}, {:proc_lib, :init_p_do_apply, 3, [file: 'proc_lib.erl', line: 249]}]}}
+##### 2020-11-26 00:54:48.718 [phoenix] [error] --- {:EXIT, {:undef, [{UiWeb.CamerasChannelChannel, :start_link, [{%{}, {#PID<0.657.0>, #Reference<0.1654883743.3480223748.33178>}, %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannelChannel, channel_pid: nil, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: false, private: %{}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.657.0>}}], []}, {:supervisor, :do_start_child_i, 3, [file: 'supervisor.erl', line: 379]}, {:supervisor, :handle_call, 3, [file: 'supervisor.erl', line: 404]}, {:gen_server, :try_handle_call, 4, [file: 'gen_server.erl', line: 661]}, {:gen_server, :handle_msg, 6, [file: 'gen_server.erl', line: 690]}, {:proc_lib, :init_p_do_apply, 3, [file: 'proc_lib.erl', line: 249]}]}}
+##### 2020-11-26 00:55:26.825 [phoenix] [error] --- {:EXIT, {:undef, [{UiWeb.CamerasChannelChannel, :start_link, [{%{}, {#PID<0.662.0>, #Reference<0.1654883743.3480223748.33243>}, %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannelChannel, channel_pid: nil, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: false, private: %{}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.662.0>}}], []}, {:supervisor, :do_start_child_i, 3, [file: 'supervisor.erl', line: 379]}, {:supervisor, :handle_call, 3, [file: 'supervisor.erl', line: 404]}, {:gen_server, :try_handle_call, 4, [file: 'gen_server.erl', line: 661]}, {:gen_server, :handle_msg, 6, [file: 'gen_server.erl', line: 690]}, {:proc_lib, :init_p_do_apply, 3, [file: 'proc_lib.erl', line: 249]}]}}
+##### 2020-11-26 00:59:17.199 [phoenix] [error] --- {:EXIT, {:undef, [{UiWeb.CamerasChannelChannel, :start_link, [{%{}, {#PID<0.670.0>, #Reference<0.1654883743.3480223748.33524>}, %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannelChannel, channel_pid: nil, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: false, private: %{}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.670.0>}}], []}, {:supervisor, :do_start_child_i, 3, [file: 'supervisor.erl', line: 379]}, {:supervisor, :handle_call, 3, [file: 'supervisor.erl', line: 404]}, {:gen_server, :try_handle_call, 4, [file: 'gen_server.erl', line: 661]}, {:gen_server, :handle_msg, 6, [file: 'gen_server.erl', line: 690]}, {:proc_lib, :init_p_do_apply, 3, [file: 'proc_lib.erl', line: 249]}]}}
+##### 2020-11-26 01:00:24.864 [phoenix] [error] --- {:EXIT, {:undef, [{UiWeb.CamerasChannelChannel, :start_link, [{%{}, {#PID<0.680.0>, #Reference<0.1654883743.3480223748.33703>}, %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannelChannel, channel_pid: nil, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: false, private: %{}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.680.0>}}], []}, {:supervisor, :do_start_child_i, 3, [file: 'supervisor.erl', line: 379]}, {:supervisor, :handle_call, 3, [file: 'supervisor.erl', line: 404]}, {:gen_server, :try_handle_call, 4, [file: 'gen_server.erl', line: 661]}, {:gen_server, :handle_msg, 6, [file: 'gen_server.erl', line: 690]}, {:proc_lib, :init_p_do_apply, 3, [file: 'proc_lib.erl', line: 249]}]}}
+##### 2020-11-26 01:01:01.771 [phoenix] [error] --- {:EXIT, {:undef, [{UiWeb.CamerasChannelChannel, :start_link, [{%{}, {#PID<0.697.0>, #Reference<0.1654883743.3480223745.48600>}, %Phoenix.Socket{assigns: %{}, channel: UiWeb.CamerasChannelChannel, channel_pid: nil, endpoint: UiWeb.Endpoint, handler: UiWeb.UserSocket, id: nil, join_ref: "2", joined: false, private: %{}, pubsub_server: Ui.PubSub, ref: nil, serializer: Phoenix.Socket.V1.JSONSerializer, topic: "cameras:lobby", transport: :websocket, transport_pid: #PID<0.697.0>}}], []}, {:supervisor, :do_start_child_i, 3, [file: 'supervisor.erl', line: 379]}, {:supervisor, :handle_call, 3, [file: 'supervisor.erl', line: 404]}, {:gen_server, :try_handle_call, 4, [file: 'gen_server.erl', line: 661]}, {:gen_server, :handle_msg, 6, [file: 'gen_server.erl', line: 690]}, {:proc_lib, :init_p_do_apply, 3, [file: 'proc_lib.erl', line: 249]}]}}
+##### 2020-11-26 01:05:38.325  [error] --- GenServer :tzdata_release_updater terminating
+** (FunctionClauseError) no function clause matching in Tzdata.Util.first_matching_weekday_in_month/4
+    (tzdata) lib/tzdata/util.ex:73: Tzdata.Util.first_matching_weekday_in_month(1932, 4, 7, [])
+    (tzdata) lib/tzdata/util.ex:329: Tzdata.Util.time_for_rule/2
+    (tzdata) lib/tzdata/period_builder.ex:161: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:185: Tzdata.PeriodBuilder.calc_periods_for_year/9
+    (tzdata) lib/tzdata/period_builder.ex:180: Tzdata.PeriodBuilder.calc_periods_for_year/9
+Last message: :check_if_time_to_update
+State: []
+##### 2020-11-26 01:53:06.853  [error] --- GenServer RstpToWs.Camera.Converter terminating
+** (FunctionClauseError) no function clause matching in MapSet.put/2
+    (elixir) lib/map_set.ex:284: MapSet.put(%{cameras: %{"cam1" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=1&stream=0.sdp?real_stream--rtp-caching=100", "9996", nil}, "cam2" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=2&stream=0.sdp?real_stream--rtp-caching=100", "9997", nil}, "cam3" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=3&stream=0.sdp?real_stream--rtp-caching=100", "9998", nil}, "cam4" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=4&stream=0.sdp?real_stream--rtp-caching=100", "9999", nil}}, consumers: 0}, "34")
+    (rstp_to_ws) /home/prw/CODE/SmartHome/rstp_to_ws/lib/rstp_to_ws/camera/converter.ex:107: RstpToWs.Camera.Converter.inc/2
+    (rstp_to_ws) /home/prw/CODE/SmartHome/rstp_to_ws/lib/rstp_to_ws/camera/converter.ex:63: RstpToWs.Camera.Converter.handle_cast/2
+    (stdlib) gen_server.erl:637: :gen_server.try_dispatch/4
+    (stdlib) gen_server.erl:711: :gen_server.handle_msg/6
+    (stdlib) proc_lib.erl:249: :proc_lib.init_p_do_apply/3
+Last message: {:"$gen_cast", {:register, "34"}}
+State: %{cameras: %{"cam1" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=1&stream=0.sdp?real_stream--rtp-caching=100", "9996", nil}, "cam2" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=2&stream=0.sdp?real_stream--rtp-caching=100", "9997", nil}, "cam3" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=3&stream=0.sdp?real_stream--rtp-caching=100", "9998", nil}, "cam4" => {"rtsp://192.168.2.130:554/user=admin&password=qqaazzxsw71&channel=4&stream=0.sdp?real_stream--rtp-caching=100", "9999", nil}}, consumers: 0}
+##### 2020-11-26 16:50:19.392 [phoenix] [error] --- Could not find static manifest at "/home/prw/CODE/SmartHome/ui/_build/prod/lib/ui/priv/static/cache_manifest.json". Run "mix phx.digest" after building your static files or remove the configuration from "config/prod.exs".
+##### 2020-11-26 16:50:25.161 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:50:36.312 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:50:47.964 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:50:59.847 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:51:12.283 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:51:27.045 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:51:38.979 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:51:47.569 [phoenix] [error] --- Could not find static manifest at "/home/prw/CODE/SmartHome/ui/_build/prod/lib/ui/priv/static/cache_manifest.json". Run "mix phx.digest" after building your static files or remove the configuration from "config/prod.exs".
+##### 2020-11-26 16:51:51.078 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:52:02.681 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:52:16.827 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:52:30.707 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:52:44.808 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:52:59.323 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:53:13.242 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:53:25.111 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:54:13.944 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:54:25.741 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:54:40.342 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:54:51.531 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:55:05.956 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:55:17.398 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:55:32.350 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:55:44.561 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 16:55:57.334 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://localhost:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:19:28.269 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:19:38.313 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:19:48.466 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:19:58.583 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:20:08.775 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:20:18.908 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:20:29.050 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:20:39.146 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:20:49.273 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:20:59.460 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:21:09.655 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:21:19.790 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:21:29.926 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:21:40.072 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:21:50.211 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:22:00.355 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:22:10.529 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:22:20.703 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:22:31.250 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:22:41.328 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:22:52.465 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:23:02.615 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:23:12.791 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:23:22.951 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:23:33.079 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:23:43.222 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+
+##### 2020-11-26 17:23:53.381 [phoenix] [error] --- Could not check origin for Phoenix.Socket transport.
+
+Origin of the request: http://192.168.2.105:3000
+
+This happens when you are attempting a socket connection to
+a different host than the one configured in your config/
+files. For example, in development the host is configured
+to "localhost" but you may be trying to access it from
+"127.0.0.1". To fix this issue, you may either:
+
+  1. update [url: [host: ...]] to your actual host in the
+     config file for your current environment (recommended)
+
+  2. pass the :check_origin option when configuring your
+     endpoint or when configuring the transport in your
+     UserSocket module, explicitly outlining which origins
+     are allowed:
+
+        check_origin: ["https://example.com",
+                       "//another.com:888", "//other.com"]
+
+

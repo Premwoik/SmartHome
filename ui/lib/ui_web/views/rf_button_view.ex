@@ -17,6 +17,7 @@ defmodule UiWeb.RfButtonView do
       task_id: rf_button.task_id,
       name: rf_button.name,
       mode: rf_button.mode,
+      page_id: rf_button.page_id,
       key_value: rf_button.key_value,
       '@type': "button"}
 
