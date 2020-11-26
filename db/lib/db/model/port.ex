@@ -80,10 +80,11 @@ defmodule DB.Port do
   def update_out_of_date(device_id, [], state), do: {0, []}
   def update_out_of_date(device_id, data, state) do
     res = from(p in Port,
-      where: p.device_id == ^device_id and p.number in ^data and p.state == ^state,
+      where: p.device_id == ^device_id and p.number in ^data and p.state != ^state,
     )
     |> Repo.all()
     |> Enum.map(fn p -> {p.type, get_child_id(p), p.ref+1} end)
+    |> IO.inspect()
 
     {x, nil} = List.foldr(data, Port, fn num, acc ->
       where(acc, [p], p.device_id == ^device_id and p.number == ^num and p.state != ^state)

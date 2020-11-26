@@ -22,7 +22,8 @@ defmodule Core.Device.SonoffBasic do
 
   @spec set_outputs(%Device{}, list(%Port{})) :: res()
   def set_outputs(%{ip: ip, port: port} = device, [%Port{device: d, number: num, state: s} = p]) do
-    url_ = url(ip, port, num) <> "?cmnd=Power#{num} #{s}"
+    state_ = if s, do: 1, else: 0
+    url_ = url(ip, port, num) <> "?cmnd=Power#{num}%20#{state_}"
 
     HTTPotion.get(url_)
     |> default_response_catch()

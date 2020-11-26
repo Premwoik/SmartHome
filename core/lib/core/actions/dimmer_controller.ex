@@ -39,7 +39,7 @@ defmodule Core.Actions.DimmerController do
         DB.Dimmer.get_by_port(args)
         |> Enum.each(
              fn dimmer ->
-               dimmer_ = %{dimmer | fill: 0}
+               dimmer_ = %{dimmer | fill: 0, lights: []}
                fill = if counter > 3, do: 100, else: 25 * counter
                DimmerController.set_brightness(dimmer_, fill)
              end
