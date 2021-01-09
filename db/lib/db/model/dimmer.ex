@@ -24,6 +24,7 @@ defmodule DB.Dimmer do
 
   def changeset(dimmer, params \\ %{}, all_str \\ false) do
     params_ = inc_ref(dimmer, Enum.into(params, %{}), all_str)
+
     dimmer
     |> cast(params_, [:red, :green, :blue, :white, :fill, :port_id, :direction, :time, :ref])
   end
@@ -41,7 +42,6 @@ defmodule DB.Dimmer do
     [res] = get([id])
     res
   end
-
 
   def get_by_port(ids) when is_list(ids) do
     DB.Repo.all(
@@ -119,7 +119,7 @@ defmodule DB.Dimmer do
   end
 
   def update_fill(dim, fill, dir) do
-    #dir = if fill == 0, do: 1, else: dim.direction * -1
+    # dir = if fill == 0, do: 1, else: dim.direction * -1
     changeset(dim, fill: fill, direction: dir)
     |> Repo.update()
   end
@@ -129,28 +129,34 @@ defmodule DB.Dimmer do
     |> Repo.update()
   end
 
+  def fill_to_time2(%{fill: fill, direction: dir, time: time}, new_fill) do
+    res = (new_fill - fill) * dir
+    if res >= 0 do
+      dir = if(res == 0, do: dir, else: dir * -1)
+      {[get_time(time, res)], dir}
+    else
+      {[time, get_time(time, res * -1)], dir}
+    end
+  end
+
   @spec fill_to_time(map, integer) :: integer
   def fill_to_time(%{fill: fill, direction: dir, time: time}, new_fill) do
     res = (new_fill - fill) * dir
-    #IO.puts("fill_to_time, dimmer.fill: #{inspect fill}, new_fill: #{inspect new_fill}, direction: #{inspect dir}")
+
     cond do
       res > 0 ->
-        #good direction
-        #IO.puts ("good direction")
+        # good direction
         {get_time(time, res), dir * -1}
 
       res == 0 ->
-        #IO.puts("NOTHING")
-        #nothing to do 
+        # nothing to do
         {0, dir}
 
       dir > 0 ->
-        #IO.puts("dim inc, but dec")
         # dimmer want to increase brightness, but we want to decrease
         {get_time(time, 200 - fill - new_fill), dir}
 
       true ->
-        #IO.puts("dim dec, but inc")
         # dimmer want to decrease brightness, but we want to increase
         {get_time(time, fill + new_fill), dir}
     end

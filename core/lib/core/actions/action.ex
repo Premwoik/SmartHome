@@ -8,5 +8,4 @@ defmodule Core.Actions.Action do
 
   @doc "Initialize action memory"
   @callback init_memory() :: map
-
 end

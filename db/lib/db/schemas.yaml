@@ -1,0 +1,9 @@
+- object: port
+  id: int
+
+
+- object: dimmer
+  id: int
+  port_id: ref/port
+
+

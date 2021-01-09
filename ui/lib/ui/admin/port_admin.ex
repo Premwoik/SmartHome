@@ -36,14 +36,16 @@ defmodule Ui.PortAdmin do
 
   """
   def get_port!(id),
-      do: Repo.get!(Port, id)
-          |> preload()
+    do:
+      Repo.get!(Port, id)
+      |> preload()
 
   def get_port(id) do
     case Repo.get(Port, id)
          |> preload() do
       nil ->
         {:error, :wrong_id}
+
       p ->
         {:ok, p}
     end
@@ -67,7 +69,7 @@ defmodule Ui.PortAdmin do
   """
   def create_port(attrs \\ %{}) do
     %Port{}
-    |> Port.changeset(attrs, all_str = true)
+    |> Port.changeset(attrs, _all_str = true)
     |> Repo.insert()
   end
 
@@ -85,7 +87,7 @@ defmodule Ui.PortAdmin do
   """
   def update_port(%Port{} = port, attrs) do
     port
-    |> Port.changeset(attrs, all_str = true)
+    |> Port.changeset(attrs, _all_str = true)
     |> Repo.update()
   end
 

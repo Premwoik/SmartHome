@@ -6,7 +6,17 @@ defmodule Ui.DashboardAdmin do
   import Ecto.Query, warn: false
   alias DB.Repo
 
-  alias DB.{Page, PageContent, Repo, Port, Light, Sunblind, Dimmer, Action, Task, TaskType, Device}
+  alias DB.{
+    Repo,
+    Port,
+    Light,
+    Sunblind,
+    Dimmer,
+    Action,
+    Task,
+    Device
+  }
+
   alias DB.Page, as: Dashboard
 
   @doc """
@@ -20,19 +30,18 @@ defmodule Ui.DashboardAdmin do
   """
   def list_dashboards do
     Repo.all(Dashboard)
-    |> Enum.map(
-         fn d -> %{
-                   d |
-                   ports: content_ports(d.id),
-                   actions: content_actions(d.id),
-                   dimmers: content_dimmers(d.id),
-                   lights: content_lights(d.id),
-                   sunblinds: content_sunblinds(d.id),
-                   tasks: content_tasks(d.id),
-                   devices: content_devices(d.id)
-                 }
-         end
-       )
+    |> Enum.map(fn d ->
+      %{
+        d
+        | ports: content_ports(d.id),
+          actions: content_actions(d.id),
+          dimmers: content_dimmers(d.id),
+          lights: content_lights(d.id),
+          sunblinds: content_sunblinds(d.id),
+          tasks: content_tasks(d.id),
+          devices: content_devices(d.id)
+      }
+    end)
   end
 
   def list_dashboards_short do
@@ -56,15 +65,16 @@ defmodule Ui.DashboardAdmin do
   """
   def get_dashboard!(id) do
     d = Repo.get!(Dashboard, id)
+
     %{
-      d |
-      ports: view_format_ports(id),
-      actions: view_format_actions(id),
-      dimmers: view_format_dimmers(id),
-      lights: view_format_lights(id),
-      sunblinds: view_format_sunblinds(id),
-      tasks: view_format_tasks(id),
-      devices: view_format_devices(id)
+      d
+      | ports: view_format_ports(id),
+        actions: view_format_actions(id),
+        dimmers: view_format_dimmers(id),
+        lights: view_format_lights(id),
+        sunblinds: view_format_sunblinds(id),
+        tasks: view_format_tasks(id),
+        devices: view_format_devices(id)
     }
   end
 
@@ -74,15 +84,16 @@ defmodule Ui.DashboardAdmin do
 
   def get_dashboard_admin!(id) do
     d = Repo.get!(Dashboard, id)
+
     %{
-      d |
-      ports: content_ports(id),
-      actions: content_actions(id),
-      dimmers: content_dimmers(id),
-      lights: content_lights(id),
-      sunblinds: content_sunblinds(id),
-      tasks: content_tasks(id),
-      devices: content_devices(id)
+      d
+      | ports: content_ports(id),
+        actions: content_actions(id),
+        dimmers: content_dimmers(id),
+        lights: content_lights(id),
+        sunblinds: content_sunblinds(id),
+        tasks: content_tasks(id),
+        devices: content_devices(id)
     }
   end
 
@@ -99,8 +110,7 @@ defmodule Ui.DashboardAdmin do
 
   """
   def create_dashboard(attrs \\ %{}) do
-
-    update_content 0, attrs
+    update_content(0, attrs)
 
     %Dashboard{}
     |> Dashboard.changeset(attrs)
@@ -122,22 +132,29 @@ defmodule Ui.DashboardAdmin do
   """
   def update_dashboard(dashboard, attrs) do
     id = dashboard.id
-    from(p in DB.PageContentPort, where: p.page_id == ^id)
-    |> Repo.delete_all
-    from(p in DB.PageContentLight, where: p.page_id == ^id)
-    |> Repo.delete_all
-    from(p in DB.PageContentDimmer, where: p.page_id == ^id)
-    |> Repo.delete_all
-    from(p in DB.PageContentSunblind, where: p.page_id == ^id)
-    |> Repo.delete_all
-    from(p in DB.PageContentAction, where: p.page_id == ^id)
-    |> Repo.delete_all
-    from(p in DB.PageContentTask, where: p.page_id == ^id)
-    |> Repo.delete_all
-    from(p in DB.PageContentDevice, where: p.page_id == ^id)
-    |> Repo.delete_all
 
-    update_content dashboard.id, attrs
+    from(p in DB.PageContentPort, where: p.page_id == ^id)
+    |> Repo.delete_all()
+
+    from(p in DB.PageContentLight, where: p.page_id == ^id)
+    |> Repo.delete_all()
+
+    from(p in DB.PageContentDimmer, where: p.page_id == ^id)
+    |> Repo.delete_all()
+
+    from(p in DB.PageContentSunblind, where: p.page_id == ^id)
+    |> Repo.delete_all()
+
+    from(p in DB.PageContentAction, where: p.page_id == ^id)
+    |> Repo.delete_all()
+
+    from(p in DB.PageContentTask, where: p.page_id == ^id)
+    |> Repo.delete_all()
+
+    from(p in DB.PageContentDevice, where: p.page_id == ^id)
+    |> Repo.delete_all()
+
+    update_content(dashboard.id, attrs)
 
     dashboard
     |> Dashboard.changeset(attrs)
@@ -149,17 +166,16 @@ defmodule Ui.DashboardAdmin do
     {
       :ok,
       %{
-        dash |
-        ports: content_ports(id),
-        actions: content_actions(id),
-        dimmers: content_dimmers(id),
-        lights: content_lights(id),
-        sunblinds: content_sunblinds(id),
-        tasks: content_tasks(id)
+        dash
+        | ports: content_ports(id),
+          actions: content_actions(id),
+          dimmers: content_dimmers(id),
+          lights: content_lights(id),
+          sunblinds: content_sunblinds(id),
+          tasks: content_tasks(id)
       }
     }
   end
-
 
   def update_content(
         id,
@@ -173,13 +189,13 @@ defmodule Ui.DashboardAdmin do
           "devices" => devices
         }
       ) do
-    Enum.each(Poison.decode!(ports), &(DB.PageContentPort.insert_or_update(id, &1)))
-    Enum.each(Poison.decode!(lights), &(DB.PageContentLight.insert_or_update(id, &1)))
-    Enum.each(Poison.decode!(dimmers), &(DB.PageContentDimmer.insert_or_update(id, &1)))
-    Enum.each(Poison.decode!(sunblinds), &(DB.PageContentSunblind.insert_or_update(id, &1)))
-    Enum.each(Poison.decode!(actions), &(DB.PageContentAction.insert_or_update(id, &1)))
-    Enum.each(Poison.decode!(tasks), &(DB.PageContentTask.insert_or_update(id, &1)))
-    Enum.each(Poison.decode!(devices), &(DB.PageContentDevice.insert_or_update(id, &1)))
+    Enum.each(Poison.decode!(ports), &DB.PageContentPort.insert_or_update(id, &1))
+    Enum.each(Poison.decode!(lights), &DB.PageContentLight.insert_or_update(id, &1))
+    Enum.each(Poison.decode!(dimmers), &DB.PageContentDimmer.insert_or_update(id, &1))
+    Enum.each(Poison.decode!(sunblinds), &DB.PageContentSunblind.insert_or_update(id, &1))
+    Enum.each(Poison.decode!(actions), &DB.PageContentAction.insert_or_update(id, &1))
+    Enum.each(Poison.decode!(tasks), &DB.PageContentTask.insert_or_update(id, &1))
+    Enum.each(Poison.decode!(devices), &DB.PageContentDevice.insert_or_update(id, &1))
   end
 
   @doc """
@@ -211,7 +227,6 @@ defmodule Ui.DashboardAdmin do
     Dashboard.changeset(dashboard, %{})
   end
 
-
   def view_format_ports(page_id) do
     from(
       p in Port,
@@ -220,7 +235,7 @@ defmodule Ui.DashboardAdmin do
       where: c.page_id == ^page_id,
       select: {c.order, p}
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   def view_format_lights(page_id) do
@@ -235,7 +250,7 @@ defmodule Ui.DashboardAdmin do
       ],
       select: {c.order, l}
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   def view_format_sunblinds(page_id) do
@@ -247,12 +262,10 @@ defmodule Ui.DashboardAdmin do
       preload: :port,
       select: {c.order, s}
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   def view_format_dimmers(page_id) do
-
-
     from(
       d in Dimmer,
       join: c in "page_content_dimmers",
@@ -264,7 +277,7 @@ defmodule Ui.DashboardAdmin do
       ],
       select: {c.order, d}
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   def view_format_actions(page_id) do
@@ -301,34 +314,38 @@ defmodule Ui.DashboardAdmin do
     |> Repo.all()
   end
 
-
   def content_actions(id) do
     from(c in "page_content_actions", where: c.page_id == ^id, select: [c.action_id, c.order])
     |> Repo.all()
   end
+
   def content_ports(id) do
     from(c in "page_content_ports", where: c.page_id == ^id, select: [c.port_id, c.order])
     |> Repo.all()
   end
+
   def content_dimmers(id) do
     from(c in "page_content_dimmers", where: c.page_id == ^id, select: [c.dimmer_id, c.order])
     |> Repo.all()
   end
+
   def content_devices(id) do
     from(c in "page_content_devices", where: c.page_id == ^id, select: [c.device_id, c.order])
     |> Repo.all()
   end
+
   def content_lights(id) do
     from(c in "page_content_lights", where: c.page_id == ^id, select: [c.light_id, c.order])
     |> Repo.all()
   end
+
   def content_sunblinds(id) do
     from(c in "page_content_sunblinds", where: c.page_id == ^id, select: [c.sunblind_id, c.order])
     |> Repo.all()
   end
+
   def content_tasks(id) do
     from(c in "page_content_tasks", where: c.page_id == ^id, select: [c.task_id, c.order])
     |> Repo.all()
   end
-
 end

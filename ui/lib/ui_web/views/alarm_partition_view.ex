@@ -11,7 +11,8 @@ defmodule UiWeb.AlarmPartitionView do
   end
 
   def render("alarm_partition.json", %{alarm_partition: alarm_partition}) do
-    %{id: alarm_partition.id,
+    %{
+      id: alarm_partition.id,
       name: alarm_partition.name,
       number: alarm_partition.number,
       status: alarm_partition.status,

@@ -19,7 +19,7 @@ defmodule UiWeb.EnergyMeterView do
       address: energy_meter.address,
       readings: Helper.objs_to_view(MeterReadingsView, :meter_reading, energy_meter.readings),
       ref: energy_meter.ref,
-      '@type': "energy_meter"
+      "@type": "energy_meter"
     }
   end
 end

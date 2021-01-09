@@ -7,7 +7,13 @@ defmodule Ui.LightAdminTest do
     alias Ui.LightAdmin.Light
 
     @valid_attrs %{device_id: 42, dimmer_id: 42, name: "some name", number: 42, state: true}
-    @update_attrs %{device_id: 43, dimmer_id: 43, name: "some updated name", number: 43, state: false}
+    @update_attrs %{
+      device_id: 43,
+      dimmer_id: 43,
+      name: "some updated name",
+      number: 43,
+      state: false
+    }
     @invalid_attrs %{device_id: nil, dimmer_id: nil, name: nil, number: nil, state: nil}
 
     def light_fixture(attrs \\ %{}) do

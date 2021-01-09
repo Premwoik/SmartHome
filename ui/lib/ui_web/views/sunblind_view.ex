@@ -24,7 +24,7 @@ defmodule UiWeb.SunblindView do
       direction: sunblind.direction,
       state: sunblind.state,
       ref: sunblind.ref,
-      '@type': "sunblind"
+      "@type": "sunblind"
     }
   end
 end

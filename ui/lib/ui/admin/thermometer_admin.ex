@@ -18,22 +18,22 @@ defmodule Ui.ThermometerAdmin do
   """
   def list_thermometers do
     Repo.all(Thermometer)
-    |> Enum.map(
-         fn therm ->
-           %Thermometer{therm|
-             readings: from(
-                         r in DB.Thermometer.Read,
-                         where: r.therm_id == ^therm.id,
-                         order_by: [
-                           desc: r.id
-                         ],
-                         limit: 1
-                       )
-                       |> Repo.one()
-                       |> List.wrap()
-           }
-         end
-       )
+    |> Enum.map(fn therm ->
+      %Thermometer{
+        therm
+        | readings:
+            from(
+              r in DB.Thermometer.Read,
+              where: r.therm_id == ^therm.id,
+              order_by: [
+                desc: r.id
+              ],
+              limit: 1
+            )
+            |> Repo.one()
+            |> List.wrap()
+      }
+    end)
   end
 
   #  def list_thermometers do
@@ -70,7 +70,7 @@ defmodule Ui.ThermometerAdmin do
   """
   def create_thermometer(attrs \\ %{}) do
     %Thermometer{}
-    |> Thermometer.changeset(attrs, all_str=true)
+    |> Thermometer.changeset(attrs, _all_str = true)
     |> Repo.insert()
   end
 

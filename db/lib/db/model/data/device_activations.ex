@@ -1,12 +1,10 @@
 defmodule DB.DeviceActivations do
   use Ecto.Schema
   @moduledoc false
-  import Ecto.Changeset
   import Ecto.Query
   import DB.Activations
 
   alias DB.{DeviceJournal, Device, DeviceActivations, Repo, Activations}
-
 
   @behaviour Activations
 
@@ -40,19 +38,18 @@ defmodule DB.DeviceActivations do
     )
     |> Repo.all()
     |> Enum.group_by(fn log -> log.device_id end)
-    |> Enum.map(
-         fn {key, value} ->
-           num = Enum.count(value)
-           stacked_info = stack_info(value)
-           %DeviceActivations{
-             device_id: key,
-             date: from,
-             value: num,
-             infos: stacked_info
-           }
-           |> Repo.insert()
-         end
-       )
+    |> Enum.map(fn {key, value} ->
+      num = Enum.count(value)
+      stacked_info = stack_info(value)
+
+      %DeviceActivations{
+        device_id: key,
+        date: from,
+        value: num,
+        infos: stacked_info
+      }
+      |> Repo.insert()
+    end)
   end
 
   @spec stack_info(list(%DeviceJournal{})) :: :string

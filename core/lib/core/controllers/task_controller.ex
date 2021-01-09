@@ -1,13 +1,17 @@
 defmodule Core.Controllers.TaskController do
   @moduledoc false
-  @behaviour Core.Controllers.Controller
-  alias UiWeb.DashboardChannel.Helper, as: Channel
+  use Core.Controllers.IOBeh
+  alias Core.Controllers.IOBeh
 
-  def turn_on(tasks) do
+  alias Core.Broadcast, as: Channel
+
+  @impl IOBeh
+  def turn_on(tasks, _ops) do
     set(tasks, "waiting")
   end
 
-  def turn_off(tasks) do
+  @impl IOBeh
+  def turn_off(tasks, _ops) do
     set(tasks, "inactive")
   end
 
@@ -18,7 +22,11 @@ defmodule Core.Controllers.TaskController do
       |> DB.Task.update_status(status)
 
     Core.Tasks.update()
-    Enum.each(tasks, fn %{id: id, ref: ref} -> Channel.broadcast_change("task", id, ref + 1) end)
+
+    Enum.each(tasks, fn %{id: id, ref: ref} ->
+      Channel.broadcast_item_change("task", id, ref + 1)
+    end)
+
     res
   end
 end

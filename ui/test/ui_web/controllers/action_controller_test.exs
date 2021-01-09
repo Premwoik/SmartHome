@@ -22,7 +22,15 @@ defmodule UiWeb.ActionControllerTest do
     port_id: 43,
     start_time: ~T[15:01:01]
   }
-  @invalid_attrs %{active: nil, end_time: nil, frequency: nil, function: nil, params: nil, port_id: nil, start_time: nil}
+  @invalid_attrs %{
+    active: nil,
+    end_time: nil,
+    frequency: nil,
+    function: nil,
+    params: nil,
+    port_id: nil,
+    start_time: nil
+  }
 
   def fixture(:action) do
     {:ok, action} = Admin.create_action(@create_attrs)

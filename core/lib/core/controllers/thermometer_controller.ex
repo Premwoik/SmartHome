@@ -6,5 +6,4 @@ defmodule Core.Controllers.ThermometerController do
   def read(device) do
     Core.Device.do_(:read_temperatures, device)
   end
-
 end

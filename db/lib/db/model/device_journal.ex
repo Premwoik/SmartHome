@@ -1,7 +1,6 @@
 defmodule DB.DeviceJournal do
   use Ecto.Schema
   @moduledoc false
-  import Ecto.Changeset
   import Ecto.Query
   alias DB.{DeviceJournal, Device, Repo}
   alias DB.DeviceJournal.Type
@@ -12,33 +11,33 @@ defmodule DB.DeviceJournal do
     def timeout, do: "TIMEOUT"
   end
 
-  defmodule Name do
-    def read_active_inputs, do: "read_active_inputs"
-    #    def
-  end
-
   schema "device_journals" do
     field(:type, :string)
     field(:name, :string)
     field(:info, :string)
     belongs_to(:device, DB.Device)
-    timestamps
+    timestamps()
   end
 
-  @spec log_use(any(), %DB.Device{}, atom()) :: any()
-  def log_use(res, device, name) do
-    name = to_string name
+  @spec log_use(any(), %DB.Device{}, atom(), any) :: any()
+  def log_use(res, device, name, args \\ nil) do
+    name = to_string(name)
+
     case res do
       {:ok, res} ->
-        log(device, name, "#{res}", "NORMAL")
+        log(device, name, "#{inspect %{args: args, result: res}}", "NORMAL")
+
       {:error, res} ->
-        log(device, name, "#{res}", "ERROR")
-      _ -> :ok
+        log(device, name, "#{inspect %{args: args, result: res}}", "ERROR")
+
+      _ ->
+        :ok
     end
+
     res
   end
 
-  @spec log(%DB.Device{} | integer(), string(), string()) :: any()
+  @spec log(%DB.Device{} | integer(), String.t(), String.t()) :: any()
   def log(device, name, info \\ "", type \\ "NORMAL")
 
   def log(%Device{} = d, name, info, type) do
@@ -46,17 +45,15 @@ defmodule DB.DeviceJournal do
   end
 
   def log(device_id, name, info, type) do
-    Task.start(
-      fn ->
-        %DeviceJournal{
-          type: type,
-          name: name,
-          info: info,
-          device_id: device_id
-        }
-        |> Repo.insert!()
-      end
-    )
+    Task.start(fn ->
+      %DeviceJournal{
+        type: type,
+        name: name,
+        info: info,
+        device_id: device_id
+      }
+      |> Repo.insert!()
+    end)
   end
 
   def find(device, limit \\ 1000, from \\ nil)
@@ -103,11 +100,11 @@ defmodule DB.DeviceJournal do
       d in DeviceJournal,
       where:
         d.device_id == ^device_id and
-        fragment(
-          "cast(strftime('%s', ?) as Integer) >= strftime('%s', 'now') - ?",
-          d.inserted_at,
-          ^seconds
-        ),
+          fragment(
+            "cast(strftime('%s', ?) as Integer) >= strftime('%s', 'now') - ?",
+            d.inserted_at,
+            ^seconds
+          ),
       group_by:
         fragment(
           "cast((julianday('2019-01-01T00:00:00') - julianday(?))*24*60 As Integer) / 5",
@@ -133,11 +130,11 @@ defmodule DB.DeviceJournal do
       d in DeviceJournal,
       where:
         d.device_id == ^device_id and
-        fragment(
-          "cast(strftime('%s', ?) as Integer) >= strftime('%s', 'now') - ?",
-          d.inserted_at,
-          ^seconds
-        ),
+          fragment(
+            "cast(strftime('%s', ?) as Integer) >= strftime('%s', 'now') - ?",
+            d.inserted_at,
+            ^seconds
+          ),
       group_by:
         fragment(
           "cast((julianday('2019-01-01T00:00:00') - julianday(?))*24*60 As Integer) / 5",
@@ -158,6 +155,7 @@ defmodule DB.DeviceJournal do
 
   def delete_older_than(hours \\ 3) do
     seconds = round(hours * 3600)
+
     from(
       d in DeviceJournal,
       where: fragment("strftime('%s', 'now') - ? < strftime('%s', ?)", ^seconds, d.inserted_at)

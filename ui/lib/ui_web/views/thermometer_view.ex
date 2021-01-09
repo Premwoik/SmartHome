@@ -13,13 +13,14 @@ defmodule UiWeb.ThermometerView do
   end
 
   def render("thermometer.json", %{thermometer: thermometer}) do
-    %{id: thermometer.id,
+    %{
+      id: thermometer.id,
       name: thermometer.name,
       address: thermometer.address,
       device_id: thermometer.device_id,
       readings: Helper.objs_to_view(MeterReadingsView, :meter_reading, thermometer.readings),
       ref: thermometer.ref,
-      '@type': "thermometer"
+      "@type": "thermometer"
     }
   end
 end

@@ -39,32 +39,34 @@ defmodule DB.Port do
     has_one(:sunblind, DB.Sunblind)
   end
 
-  def get_child_struct(port) do
-    case port.type do
-       "light" -> DB.Light
-       "dimmer" -> DB.Dimmer
-       "sunblind" -> DB.Sunblind
-    end
-    |> DB.Repo.get_by(port_id: port.id)
-    |> DB.Repo.preload([port: [:device]])
-  end
-
-
-  def get_child_id(port) do
-    mod = case port.type do
-      "light" -> DB.Light
-      "dimmer" -> DB.Dimmer
-      "sunblind" -> DB.Sunblind
-    end
-    from(c in mod, where: c.port_id == ^port.id, select: c.id)
-    |> DB.Repo.one()
-  end
-
   def changeset(port, params \\ %{}, all_str \\ false) do
     params_ = inc_ref(port, Enum.into(params, %{}), all_str)
     port
     |> cast(params_, [:state, :device_id, :number, :name, :type, :mode, :timeout, :pwm_fill, :ref])
   end
+
+  def get_child_struct(port) do
+    case port.type do
+      "light" -> DB.Light
+      "dimmer" -> DB.Dimmer
+      "sunblind" -> DB.Sunblind
+    end
+    |> DB.Repo.get_by(port_id: port.id)
+    |> DB.Repo.preload(port: [:device])
+  end
+
+  def get_child_id(port) do
+    mod =
+      case port.type do
+        "light" -> DB.Light
+        "dimmer" -> DB.Dimmer
+        "sunblind" -> DB.Sunblind
+      end
+
+    from(c in mod, where: c.port_id == ^port.id, select: c.id)
+    |> DB.Repo.one()
+  end
+
 
   def preload(key \\ :port) do
     Keyword.put([], key, Device.preload())
@@ -76,20 +78,22 @@ defmodule DB.Port do
     {x + y, resX ++ resY}
   end
 
+  def update_out_of_date(_device_id, [], _state), do: {0, []}
 
-  def update_out_of_date(device_id, [], state), do: {0, []}
   def update_out_of_date(device_id, data, state) do
-    res = from(p in Port,
-      where: p.device_id == ^device_id and p.number in ^data and p.state != ^state,
-    )
-    |> Repo.all()
-    |> Enum.map(fn p -> {p.type, get_child_id(p), p.ref+1} end)
-    |> IO.inspect()
+    res =
+      from(p in Port,
+        where: p.device_id == ^device_id and p.number in ^data and p.state != ^state
+      )
+      |> Repo.all()
+      |> Enum.map(fn p -> {p.type, get_child_id(p), p.ref + 1} end)
 
-    {x, nil} = List.foldr(data, Port, fn num, acc ->
-      where(acc, [p], p.device_id == ^device_id and p.number == ^num and p.state != ^state)
-    end)
-    |> Repo.update_all([set: [state: state], inc: [ref: 1]])
+    {x, nil} =
+      List.foldr(data, Port, fn num, acc ->
+        where(acc, [p], p.device_id == ^device_id and p.number == ^num and p.state != ^state)
+      end)
+      |> Repo.update_all(set: [state: state], inc: [ref: 1])
+
     {x, res}
   end
 

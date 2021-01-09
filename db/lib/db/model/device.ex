@@ -5,21 +5,22 @@ defmodule DB.Device do
   import Ecto.Query
 
   import DB
-  alias DB.{Device, Repo, DeviceType}
+  alias DB.{Device, Port, Repo, DeviceType}
 
   schema "devices" do
     field(:name, :string)
     field(:ip, :string)
     field(:port, :integer)
     field(:password, :string, virtual: true)
-    belongs_to(:type, DB.DeviceType)
+    belongs_to(:type, DeviceType)
     field(:alive, :boolean, default: false)
     field(:ref, :integer)
-    has_many(:ports, DB.Port)
+    has_many(:ports, Port)
   end
 
   def changeset(device, params \\ %{}, all_str \\ false) do
     params_ = inc_ref(device, Enum.into(params, %{}), all_str)
+
     device
     |> cast(params_, [:name, :ip, :port, :type_id, :alive, :ref])
   end

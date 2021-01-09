@@ -49,7 +49,7 @@ defmodule Ui.RfButtonAdmin do
   """
   def create_rf_button(attrs \\ %{}) do
     %RfButton{}
-    |> RfButton.changeset(attrs, all_str=true)
+    |> RfButton.changeset(attrs, __all_str = true)
     |> Repo.insert()
   end
 
@@ -67,7 +67,7 @@ defmodule Ui.RfButtonAdmin do
   """
   def update_rf_button(%RfButton{} = rf_button, attrs) do
     rf_button
-    |> RfButton.changeset(attrs, all_str=true)
+    |> RfButton.changeset(attrs, _all_str = true)
     |> Repo.update()
   end
 

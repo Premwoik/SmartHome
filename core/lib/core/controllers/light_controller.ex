@@ -1,64 +1,59 @@
 defmodule Core.Controllers.LightController do
   @moduledoc false
 
-  #  @behaviour Core.Controllers.Controller
+  use Core.Controllers.IOBeh
+  alias Core.Controllers.IOBeh
 
-  @callback set_fill() :: any
-  @callback turn_on() :: any
-  @callback turn_off() :: any
+  alias DB.{Light}
+  alias Core.Controllers.{BasicController, DimmerController}
+  alias Core.Broadcast, as: Channel
+  import Core.Controllers.Universal, only: [prepare_for_basic: 1, flatten_result: 1]
 
-  alias DB.{Light, Dimmer, Port}
-  alias UiWeb.DashboardChannel.Helper, as: Channel
-  alias Core.Controllers.BasicController
-  alias Core.Controllers.DimmerController
-  import Core.Controllers.BasicController, only: [flatten_result: 1, prepare_for_basic: 1]
+  @impl IOBeh
+  def toggle([], _ops), do: :ok
 
-  def toggle([]), do: :ok
-  def toggle ([l | _] = lights) do
-    if l.port.state, do: turn_off(lights), else: turn_on(lights)
+  def toggle([l | _] = lights, ops) do
+    if l.port.state, do: turn_off(lights, ops), else: turn_on(lights, ops)
   end
 
-  def turn_on(lights) do
-    set(lights, true)
+  @impl IOBeh
+  def turn_on(lights, ops) do
+    set_state(lights, Keyword.put(ops, :state, true))
   end
 
-  def turn_off(lights) do
-    set(lights, false)
+  @impl IOBeh
+  def turn_off(lights, ops) do
+    set_state(lights, Keyword.put(ops, :state, false))
   end
 
-  def set(lights, state, deep \\ true) do
-    lights
-    |> prepare_for_basic()
-    |> BasicController.set(state)
-    |> case do
-         :ok ->
-           case set_dimmer(deep, lights, state) do
-             :ok ->
-               Light.update(lights)
-               Enum.each(lights, fn %{id: id, ref: ref} -> Channel.broadcast_change("light", id, ref + 1) end)
-               :ok
-             err -> err
-           end
-         err ->
-           err
-       end
+  @impl IOBeh
+  def set_state(lights, ops) do
+    state = Keyword.get(ops, :state, nil)
+    ports = prepare_for_basic(lights)
+
+    with :ok <- BasicController.set_state(ports, ops) do
+      :ok = notify_dimmers(lights, state)
+      Light.update(lights)
+
+      Enum.each(lights, fn %{id: id, ref: ref} ->
+        Channel.broadcast_item_change("light", id, ref + 1)
+      end)
+
+      :ok
+    end
   end
 
-  def set_brightness(lights, brightness) when is_list(lights) do
-    lights
-    |> Enum.map(fn light -> light.dimmer end)
-    |> Enum.uniq()
-    |> Enum.map(fn dimmer -> DimmerController.set_brightness(dimmer, brightness, false) end)
-    |> flatten_result()
+  #  @impl IOBeh
+  def notify_dimmer_change(%{lights: ls} = dimmer) do
+    with true <- Ecto.assoc_loaded?(ls),
+         {:ok, state} <- DimmerController.get_state(dimmer) do
+      set_state(dimmer.lights, state: state)
+    else
+      false -> :ok
+    end
   end
 
   # Privates
-
-  defp split_types(lights) do
-    lights
-    |> DB.Repo.preload(dimmer: [:port])
-    |> Enum.split_with(&Light.dim_light?/1)
-  end
 
   defp get_dimmers(lights) do
     lights
@@ -68,15 +63,9 @@ defmodule Core.Controllers.LightController do
     |> Enum.uniq()
   end
 
-  defp set_dimmer(true, lights, state) do
-    fill = if state, do: 100, else: 0
-
+  defp notify_dimmers(lights, state) do
     get_dimmers(lights)
-    |> Enum.map(fn x -> DimmerController.set_brightness(x, fill, false) end)
+    |> Enum.map(&DimmerController.notify_light_change(&1, state))
     |> flatten_result()
-  end
-
-  defp set_dimmer(_, _, _) do
-    :ok
   end
 end

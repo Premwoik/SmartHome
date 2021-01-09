@@ -10,7 +10,4 @@ defmodule Core.Tasks.ReadInputsTest do
   setup :verify_on_exit!
 
   setup :set_mox_global
-
-
-
 end

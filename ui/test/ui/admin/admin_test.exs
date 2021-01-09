@@ -128,9 +128,33 @@ defmodule Ui.AdminTest do
   describe "actions" do
     alias Ui.Admin.Action
 
-    @valid_attrs %{active: true, end_time: ~T[14:00:00], frequency: 42, function: "some function", params: "some params", port_id: 42, start_time: ~T[14:00:00]}
-    @update_attrs %{active: false, end_time: ~T[15:01:01], frequency: 43, function: "some updated function", params: "some updated params", port_id: 43, start_time: ~T[15:01:01]}
-    @invalid_attrs %{active: nil, end_time: nil, frequency: nil, function: nil, params: nil, port_id: nil, start_time: nil}
+    @valid_attrs %{
+      active: true,
+      end_time: ~T[14:00:00],
+      frequency: 42,
+      function: "some function",
+      params: "some params",
+      port_id: 42,
+      start_time: ~T[14:00:00]
+    }
+    @update_attrs %{
+      active: false,
+      end_time: ~T[15:01:01],
+      frequency: 43,
+      function: "some updated function",
+      params: "some updated params",
+      port_id: 43,
+      start_time: ~T[15:01:01]
+    }
+    @invalid_attrs %{
+      active: nil,
+      end_time: nil,
+      frequency: nil,
+      function: nil,
+      params: nil,
+      port_id: nil,
+      start_time: nil
+    }
 
     def action_fixture(attrs \\ %{}) do
       {:ok, action} =
@@ -200,7 +224,12 @@ defmodule Ui.AdminTest do
     alias Ui.Admin.Thermometer
 
     @valid_attrs %{address: "some address", device_id: 42, name: "some name", ref: 42}
-    @update_attrs %{address: "some updated address", device_id: 43, name: "some updated name", ref: 43}
+    @update_attrs %{
+      address: "some updated address",
+      device_id: 43,
+      name: "some updated name",
+      ref: 43
+    }
     @invalid_attrs %{address: nil, device_id: nil, name: nil, ref: nil}
 
     def thermometer_fixture(attrs \\ %{}) do
@@ -236,7 +265,10 @@ defmodule Ui.AdminTest do
 
     test "update_thermometer/2 with valid data updates the thermometer" do
       thermometer = thermometer_fixture()
-      assert {:ok, %Thermometer{} = thermometer} = Admin.update_thermometer(thermometer, @update_attrs)
+
+      assert {:ok, %Thermometer{} = thermometer} =
+               Admin.update_thermometer(thermometer, @update_attrs)
+
       assert thermometer.address == "some updated address"
       assert thermometer.device_id == 43
       assert thermometer.name == "some updated name"
@@ -301,7 +333,10 @@ defmodule Ui.AdminTest do
 
     test "update_energy_meter/2 with valid data updates the energy_meter" do
       energy_meter = energy_meter_fixture()
-      assert {:ok, %EnergyMeter{} = energy_meter} = Admin.update_energy_meter(energy_meter, @update_attrs)
+
+      assert {:ok, %EnergyMeter{} = energy_meter} =
+               Admin.update_energy_meter(energy_meter, @update_attrs)
+
       assert energy_meter.address == 43
       assert energy_meter.device == 43
       assert energy_meter.name == "some updated name"
@@ -329,8 +364,22 @@ defmodule Ui.AdminTest do
   describe "rf_buttons" do
     alias Ui.Admin.RfButton
 
-    @valid_attrs %{action: "some action", key_value: "some key_value", mode: "some mode", name: "some name", port: "some port", task: "some task"}
-    @update_attrs %{action: "some updated action", key_value: "some updated key_value", mode: "some updated mode", name: "some updated name", port: "some updated port", task: "some updated task"}
+    @valid_attrs %{
+      action: "some action",
+      key_value: "some key_value",
+      mode: "some mode",
+      name: "some name",
+      port: "some port",
+      task: "some task"
+    }
+    @update_attrs %{
+      action: "some updated action",
+      key_value: "some updated key_value",
+      mode: "some updated mode",
+      name: "some updated name",
+      port: "some updated port",
+      task: "some updated task"
+    }
     @invalid_attrs %{action: nil, key_value: nil, mode: nil, name: nil, port: nil, task: nil}
 
     def rf_button_fixture(attrs \\ %{}) do
@@ -422,7 +471,9 @@ defmodule Ui.AdminTest do
     end
 
     test "create_alarm_partition/1 with valid data creates a alarm_partition" do
-      assert {:ok, %AlarmPartition{} = alarm_partition} = Admin.create_alarm_partition(@valid_attrs)
+      assert {:ok, %AlarmPartition{} = alarm_partition} =
+               Admin.create_alarm_partition(@valid_attrs)
+
       assert alarm_partition.device_id == 42
       assert alarm_partition.name == "some name"
       assert alarm_partition.number == 42
@@ -435,7 +486,10 @@ defmodule Ui.AdminTest do
 
     test "update_alarm_partition/2 with valid data updates the alarm_partition" do
       alarm_partition = alarm_partition_fixture()
-      assert {:ok, %AlarmPartition{} = alarm_partition} = Admin.update_alarm_partition(alarm_partition, @update_attrs)
+
+      assert {:ok, %AlarmPartition{} = alarm_partition} =
+               Admin.update_alarm_partition(alarm_partition, @update_attrs)
+
       assert alarm_partition.device_id == 43
       assert alarm_partition.name == "some updated name"
       assert alarm_partition.number == 43
@@ -444,7 +498,10 @@ defmodule Ui.AdminTest do
 
     test "update_alarm_partition/2 with invalid data returns error changeset" do
       alarm_partition = alarm_partition_fixture()
-      assert {:error, %Ecto.Changeset{}} = Admin.update_alarm_partition(alarm_partition, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Admin.update_alarm_partition(alarm_partition, @invalid_attrs)
+
       assert alarm_partition == Admin.get_alarm_partition!(alarm_partition.id)
     end
 

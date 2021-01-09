@@ -11,15 +11,16 @@ config :ui, UiWeb.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: []
-  #watchers: [
-    #node: [
-      #"node_modules/webpack/bin/webpack.js",
-      #"--mode",
-      #"development",
-      #"--watch-stdin",
-      #cd: Path.expand("../assets", __DIR__)
-    #]
-  #]
+
+# watchers: [
+# node: [
+# "node_modules/webpack/bin/webpack.js",
+# "--mode",
+# "development",
+# "--watch-stdin",
+# cd: Path.expand("../assets", __DIR__)
+# ]
+# ]
 #  watchers: [
 #    node: [
 #      "node_modules/webpack/bin/webpack.js",
@@ -66,7 +67,7 @@ config :ui, UiWeb.Endpoint,
   ]
 
 # Do not include metadata nor timestamps in development logs
-#config :logger, :console, format: "[$level] $message\n"
+# config :logger, :console, format: "[$level] $message\n"
 
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.

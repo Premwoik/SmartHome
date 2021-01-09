@@ -1,7 +1,6 @@
 defmodule Core.Actions.AutoLights do
   @moduledoc false
   require Logger
-  alias DB.Dao
   alias Core.Controllers.LightController
   alias Core.Controllers.DimmerController
   @behaviour Core.Actions.Action
@@ -12,21 +11,18 @@ defmodule Core.Actions.AutoLights do
   end
 
   @impl true
-  def execute(on_off, action, %{offPid: pid} = amem) do
-    #IO.puts "AutoLights #{NaiveDateTime.utc_now()}"
-    Benchmark.measure_p(
-      fn ->
-        case alive?(pid) do
-          true ->
-            send(pid, :notified)
-            amem
+  def execute(_on_off, action, %{offPid: pid} = amem) do
+    Benchmark.measure_p(fn ->
+      case alive?(pid) do
+        true ->
+          send(pid, :notified)
+          amem
 
-          false ->
-            turn_on_lights(action)
-            |> update_pid(amem)
-        end
+        false ->
+          turn_on_lights(action)
+          |> update_pid(amem)
       end
-    )
+    end)
   end
 
   #  Privates
@@ -42,7 +38,11 @@ defmodule Core.Actions.AutoLights do
     if any_on?(lights, dimmers) do
       nil
     else
-      res = [LightController.turn_on(lights) | Enum.map(dimmers, &(DimmerController.set_brightness(&1, 100)))]
+      res = [
+        LightController.turn_on(lights)
+        | Enum.map(dimmers, &DimmerController.set_brightness(&1, 100))
+      ]
+
       case Enum.all?(res, &(&1 == :ok)) do
         true ->
           lights_ = DB.Light.get_by_port(args)
@@ -68,7 +68,7 @@ defmodule Core.Actions.AutoLights do
       time ->
         Logger.info("Lights turned off")
         LightController.turn_off(lights)
-        Enum.each(dimmers, &(DimmerController.set_brightness(&1, 0)))
+        Enum.each(dimmers, &DimmerController.set_brightness(&1, 0))
     end
   end
 
@@ -78,5 +78,6 @@ defmodule Core.Actions.AutoLights do
     Map.put(mem, :offPid, pid)
   end
 
-  defp any_on?(lights, dimmers), do: Enum.any?(lights, &(&1.port.state == true)) || Enum.any?(dimmers, &(&1.fill > 0))
+  defp any_on?(lights, dimmers),
+    do: Enum.any?(lights, &(&1.port.state == true)) || Enum.any?(dimmers, &(&1.fill > 0))
 end

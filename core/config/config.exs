@@ -1,6 +1,6 @@
 # This file is responsible for configuring your application
 # and its dependencies with the aid of the Mix.Config module.
-#use Mix.Config
+# use Mix.Config
 import Config
 
 # config :logger,
@@ -26,14 +26,10 @@ import Config
 # config :logger, level: :info
 ##
 
-#config :core, :devices_module, Core.Devices
+# config :core, :devices_module, Core.Devices
 
 config :core, two_way_client: Core.Device.Client.TwoWay
-# config :core, :two_way_client, Core.Device.Client.TwoWayMock
 config :core, one_way_client: Core.Device.Client.OneWay
-
-config :core, basic_controller: Core.Controllers.BasicController
-config :core, light_controller: Core.Controllers.LightController
 
 config :core, actions_server: Core.Actions
 config :core, tasks_server: Core.Tasks
@@ -42,10 +38,13 @@ config :core, device_helper: Core.Device
 config :core, database_module: DB
 
 config :core, time_adapter: Core.Utils.Time.Real
-config :core, date_time_adapter: Core.Utils.DateTime.Native
+config :core, date_time_adapter: Core.Utils.DateTime.Naive
 
 # config :socket_test2,
-# import_config "../../db/config/config.exs"
+if Mix.target() == :core do
+  import_config "../../db/config/config.exs"
+end
+
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
 # by uncommenting the line below and defining dev.exs, test.exs and such.

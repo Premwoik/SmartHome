@@ -13,7 +13,7 @@ defmodule Ui.LogFormatter do
     |> Enum.join(" ")
   end
 
-  defp output_metadata({:application = key, value}), do: "[#{value}]"
+  defp output_metadata({:application, value}), do: "[#{value}]"
   defp output_metadata({key, value}), do: "#{key}=#{value}"
 
   defp fmt_timestamp({date, {hh, mm, ss, ms}}) do
@@ -21,5 +21,4 @@ defmodule Ui.LogFormatter do
       timestamp
     end
   end
-
 end

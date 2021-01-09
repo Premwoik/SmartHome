@@ -14,12 +14,13 @@ defmodule Core.Mqtt.Supervisor do
           client_id: Core.MqttClient,
           server: {
             Tortoise.Transport.Tcp,
-            host: '192.168.2.100',
-            port: 1883
+            host: '192.168.2.100', port: 1883
           },
-#          handler: {Tortoise.Handler.Logger, []},
+          #          handler: {Tortoise.Handler.Logger, []},
           handler: {Core.MqttClient, []},
-          subscriptions: list_of_sonoff_shellies() ++ list_of_sonoff_basic() ++ [{"tele/sonoff-rf-bridge/RESULT", 0}]
+          subscriptions:
+            list_of_sonoff_shellies() ++
+              list_of_sonoff_basic() ++ [{"tele/sonoff-rf-bridge/RESULT", 0}]
         ]
       }
     ]
@@ -39,9 +40,5 @@ defmodule Core.Mqtt.Supervisor do
 
     DB.Device.get_by_type(dt.id)
     |> Enum.map(fn d -> {"shellies/#{d.name}/relay/0", 0} end)
-    |> IO.inspect()
   end
-
-
-
 end

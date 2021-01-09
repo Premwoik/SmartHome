@@ -2,7 +2,6 @@ defmodule UiWeb.DashboardController do
   use UiWeb, :controller
 
   alias Ui.DashboardAdmin
-  alias Ui.DashboardAdmin.Dashboard
   alias DB.Page
 
   action_fallback UiWeb.FallbackController
@@ -13,7 +12,6 @@ defmodule UiWeb.DashboardController do
   end
 
   def create(conn, %{"dashboard" => dashboard_params}) do
-
     with {:ok, dashboard} <- DashboardAdmin.create_dashboard(dashboard_params) do
       conn
       |> put_status(:created)
@@ -37,6 +35,7 @@ defmodule UiWeb.DashboardController do
 
   def delete(conn, %{"id" => id}) do
     dashboard = DashboardAdmin.get_dashboard_short!(id)
+
     with {:ok, %Page{}} <- DashboardAdmin.delete_dashboard(dashboard) do
       send_resp(conn, :no_content, "")
     end
@@ -47,10 +46,8 @@ defmodule UiWeb.DashboardController do
     render(conn, "index.json", dashboards_short: data)
   end
 
-
   def view(conn, %{"id" => id}) do
     d = DashboardAdmin.get_dashboard!(id)
     render(conn, "show.json", dash_dashboard: d)
   end
-
 end

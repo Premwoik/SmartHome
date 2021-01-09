@@ -9,8 +9,8 @@ defmodule DB.Sunblind do
 
   @derive {Poison.Encoder, except: [:__meta__]}
   schema "sunblinds" do
-    belongs_to(:port, DB.Port)
-    belongs_to(:open_port, DB.Port)
+    belongs_to(:port, Port)
+    belongs_to(:open_port, Port)
     field(:position, :integer, default: 0)
     # :only_close | :pulse | :other
     # only_close | pulse | pulse2
@@ -25,8 +25,18 @@ defmodule DB.Sunblind do
 
   def changeset(sunblind, params \\ %{}, all_str \\ false) do
     params_ = inc_ref(sunblind, Enum.into(params, %{}), all_str)
+
     sunblind
-    |> cast(params_, [:port_id, :open_port_id, :state, :direction, :full_open_time, :type, :position, :ref])
+    |> cast(params_, [
+      :port_id,
+      :open_port_id,
+      :state,
+      :direction,
+      :full_open_time,
+      :type,
+      :position,
+      :ref
+    ])
 
     #    |> validate_required([:active])
     #    |> validate_format(:email, ~r/@/)

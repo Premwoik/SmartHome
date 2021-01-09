@@ -12,8 +12,10 @@ defmodule Core.Mqtt.RfButtonHandler do
     p = get_page_id(name, pages)
     btn = Enum.find(btns, &(&1.page_id == p))
 
-    get_item(btn)
-    |> execute_in_mode(btn.mode)
+    _res =
+      get_item(btn)
+      |> execute_in_mode(btn.mode)
+      |> IO.inspect()
 
     data
   end
@@ -39,24 +41,25 @@ defmodule Core.Mqtt.RfButtonHandler do
   end
 
   defp get_item(nil), do: nil
+
   defp get_item(btn) do
     cond do
       !is_nil(btn.port_id) ->
         DB.Port.get_child_struct(btn.port)
+
       !is_nil(btn.action_id) ->
         btn.action
+
       !is_nil(btn.task_id) ->
         btn.task
-      true -> nil
+
+      true ->
+        nil
     end
   end
 
-  defp execute_in_mode(nil, _), do:
-    nil
-  defp execute_in_mode(item, "toggle"), do:
-    Core.Controllers.UniversalController.toggle(item)
-  defp execute_in_mode(item, "on"), do:
-    Core.Controllers.UniversalController.turn_on(item)
-  defp execute_in_mode(item, "off"), do:
-    Core.Controllers.UniversalController.turn_off(item)
+  defp execute_in_mode(nil, _), do: nil
+  defp execute_in_mode(item, "toggle"), do: Core.Controller.toggle([item])
+  defp execute_in_mode(item, "on"), do: Core.Controller.turn_on([item])
+  defp execute_in_mode(item, "off"), do: Core.Controller.turn_off([item])
 end

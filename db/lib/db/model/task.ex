@@ -24,10 +24,21 @@ defmodule DB.Task do
 
   def changeset(task, params \\ %{}, all_str \\ false) do
     params_ = inc_ref(task, Enum.into(params, %{}), all_str)
-    task 
-    |> cast(params_, [:name, :status, :type_id, :action_id, :device_id, :frequency, :execution_time, :limit, :ref])
 
-    # TODO add others parameters to the cast, only when android app will be seting it correctly
+    task
+    |> cast(params_, [
+      :name,
+      :status,
+      :type_id,
+      :action_id,
+      :device_id,
+      :frequency,
+      :execution_time,
+      :limit,
+      :ref
+    ])
+
+    # TODO add others parameters to the cast, only when android app will be setting it correctly
   end
 
   def all() do

@@ -1,12 +1,28 @@
 defmodule Core.Controllers.SunblindController do
   @moduledoc false
 
-  @behaviour Core.Controllers.Controller
+  use Core.Controllers.IOBeh
+  alias Core.Controllers.IOBeh
 
-  alias UiWeb.DashboardChannel.Helper, as: Channel
+  alias Core.Broadcast, as: Channel
   alias DB.{Port, Sunblind}
-  alias Core.Controllers.BasicController
-  import Core.Controllers.BasicController, only: [prepare_for_basic: 1, flatten_result: 1]
+  alias Core.Controllers.{BasicController}
+  import Core.Controllers.Universal
+
+  @impl IOBeh
+  def turn_on(sunblinds, _ops), do: open(sunblinds)
+  @impl IOBeh
+  def turn_off(sunblinds, _ops), do: close(sunblinds)
+
+  @impl IOBeh
+  def toggle([], _ops), do: :ok
+
+  def toggle([s | _] = sunblinds, _ops) do
+    case s.state do
+      "close" -> open(sunblinds)
+      "open" -> close(sunblinds)
+    end
+  end
 
   def close(sunblinds) do
     valid_sunblinds = skip_not(sunblinds, "open")
@@ -26,19 +42,10 @@ defmodule Core.Controllers.SunblindController do
     |> proceed_result(valid_sunblinds, "open")
   end
 
-  @impl true
-  def toggle([s | _ ] = sunblinds) do
-      case s.state do
-        "open" -> open(sunblinds)
-        "close" -> close(sunblinds)
-      end
-  end
-
   def click(sunblind) do
     case sunblind.state do
       "close" -> open([sunblind])
       "open" -> close([sunblind])
-      "position" -> change_position(sunblind)
       "in_move" -> {:error, sunblind, "still is moving"}
     end
   end
@@ -47,21 +54,13 @@ defmodule Core.Controllers.SunblindController do
     Sunblind.update_state(sunblind, state)
   end
 
-  def change_position(sunblind) do
-    sunblind
-    |> to_port("position")
-    |> BasicController.impulse()
-  end
-
   # Privates
-  #
 
   defp skip_not(sunblinds, state) do
-    sunblinds
-    |> Enum.filter(&(&1.state == state))
+    Enum.filter(sunblinds, &(&1.state == state))
   end
 
-  defp to_ports(sunblinds, next_state \\ "") do
+  defp to_ports(sunblinds, next_state) do
     Enum.map(sunblinds, fn s ->
       DB.Repo.preload(s, [Port.preload(), Port.preload(:open_port)]) |> to_port(next_state)
     end)
@@ -75,20 +74,10 @@ defmodule Core.Controllers.SunblindController do
   end
 
   defp proceed_result(res, sunblinds, state) do
-    valid_sunblinds =
-      case res do
-        :ok -> sunblinds
-        {:error, s, _} -> filter_invalid(sunblinds, s)
-      end
-
-    update(valid_sunblinds, "in_move")
-
+    valid_sunblinds = get_passed_items(res, sunblinds)
+    update_state(valid_sunblinds, "in_move")
     Task.start(fn -> unblock_sunblinds(valid_sunblinds, state) end)
     res
-  end
-
-  defp filter_invalid(sunblinds, invalid) do
-    Enum.filter(sunblinds, fn s -> !Enum.any?(invalid, fn i -> i.id == s.port.id end) end)
   end
 
   def unblock_sunblinds(sunblinds, state) do
@@ -99,15 +88,15 @@ defmodule Core.Controllers.SunblindController do
       receive do
       after
         t ->
-          update(ss, state, 2)
+          update_state(ss, state, 2)
       end
     end)
   end
 
-  defp update(sunblinds, state, v \\ 1) do
+  defp update_state(sunblinds, state, v \\ 1) do
     Enum.each(sunblinds, fn %{id: id, ref: ref} = s ->
       Sunblind.update(s, %{state: state})
-      Channel.broadcast_change("sunblind", id, ref + v)
+      Channel.broadcast_item_change("sunblind", id, ref + v)
     end)
   end
 end

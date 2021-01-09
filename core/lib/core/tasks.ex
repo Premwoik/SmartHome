@@ -45,20 +45,19 @@ defmodule Core.Tasks do
     This function is invoke only during initialization, so all running task
     should be threaten as killed - should be add to waiting
   """
-  def init(args) do
+  def init(_args) do
     Logger.debug("Initlializing tasks process with pid #{inspect(self())}")
     waiting = DB.Task.get_active()
     send(self(), :waiting)
     {:ok, %{started: [], waiting: waiting, timer_ref: nil}}
   end
 
-  @impl true
-  @doc """
-
-  """
-  def handle_cast(:update_task, %{timer_ref: ref, started: starded} = s) do
-
-  end
+  #  @impl true
+  #  @doc """
+  #
+  #  """
+  #  def handle_cast(:update_task, %{timer_ref: ref, started: starded} = s) do
+  #  end
 
   @impl true
   @doc """
@@ -104,7 +103,7 @@ defmodule Core.Tasks do
   # Private
 
   defp update_started(actual, new, accu \\ [])
-  defp update_started([], new, accu), do: accu
+  defp update_started([], _new, accu), do: accu
 
   defp update_started([{task, {:ok, pid}} | tail], new, accu) do
     case Enum.find(new, fn %{id: id} -> id == task.id end) do
@@ -147,16 +146,16 @@ defmodule Core.Tasks do
 
       :force_stop ->
         GenServer.cast(__MODULE__, {:finish_task, task})
-      # {:ok, {task, state, num}}
+        # {:ok, {task, state, num}}
     after
       get_wait_time(task) ->
         new_state =
           module(task).execute(task, state)
           |> case do
-               {:ok, state_} -> state_
-               :ok -> state
-               :error -> state
-             end
+            {:ok, state_} -> state_
+            :ok -> state
+            :error -> state
+          end
 
         if next_execution?(task, num) do
           execution_loop(task, new_state, num - 1)
@@ -180,7 +179,7 @@ defmodule Core.Tasks do
        when limit > num or limit == -1,
        do: before_end_date?(end_date)
 
-  defp next_execution?(_), do: false
+  #  defp next_execution?(_), do: false
 
   defp before_end_date?(nil), do: true
   defp before_end_date?(end_date), do: DT.now_before?(end_date)

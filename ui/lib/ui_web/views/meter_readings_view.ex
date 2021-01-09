@@ -11,9 +11,6 @@ defmodule UiWeb.MeterReadingsView do
   end
 
   def render("meter_reading.json", %{meter_readings: r}) do
-    %{id: r.id,
-      date: r.inserted_at,
-      value: r.value
-    }
+    %{id: r.id, date: r.inserted_at, value: r.value}
   end
 end

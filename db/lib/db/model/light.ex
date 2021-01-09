@@ -17,6 +17,7 @@ defmodule DB.Light do
 
   def changeset(light, attrs, all_str \\ false) do
     params_ = inc_ref(light, Enum.into(attrs, %{}), all_str)
+
     light
     |> cast(params_, [:port_id, :dimmer_id, :ref])
   end

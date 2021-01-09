@@ -6,8 +6,18 @@ defmodule Ui.DashboardAdminTest do
   describe "dashboards" do
     alias Ui.DashboardAdmin.Dashboard
 
-    @valid_attrs %{description: "some description", name: "some name", number: 42, title: "some title"}
-    @update_attrs %{description: "some updated description", name: "some updated name", number: 43, title: "some updated title"}
+    @valid_attrs %{
+      description: "some description",
+      name: "some name",
+      number: 42,
+      title: "some title"
+    }
+    @update_attrs %{
+      description: "some updated description",
+      name: "some updated name",
+      number: 43,
+      title: "some updated title"
+    }
     @invalid_attrs %{description: nil, name: nil, number: nil, title: nil}
 
     def dashboard_fixture(attrs \\ %{}) do
@@ -43,7 +53,10 @@ defmodule Ui.DashboardAdminTest do
 
     test "update_dashboard/2 with valid data updates the dashboard" do
       dashboard = dashboard_fixture()
-      assert {:ok, %Dashboard{} = dashboard} = DashboardAdmin.update_dashboard(dashboard, @update_attrs)
+
+      assert {:ok, %Dashboard{} = dashboard} =
+               DashboardAdmin.update_dashboard(dashboard, @update_attrs)
+
       assert dashboard.description == "some updated description"
       assert dashboard.name == "some updated name"
       assert dashboard.number == 43
@@ -52,7 +65,10 @@ defmodule Ui.DashboardAdminTest do
 
     test "update_dashboard/2 with invalid data returns error changeset" do
       dashboard = dashboard_fixture()
-      assert {:error, %Ecto.Changeset{}} = DashboardAdmin.update_dashboard(dashboard, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               DashboardAdmin.update_dashboard(dashboard, @invalid_attrs)
+
       assert dashboard == DashboardAdmin.get_dashboard!(dashboard.id)
     end
 

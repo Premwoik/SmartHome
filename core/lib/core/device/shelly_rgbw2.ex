@@ -2,11 +2,16 @@ defmodule Core.Device.ShellyRGBW2 do
   @moduledoc false
 
   @behaviour Core.Device
-  alias DB.{DeviceJournal}
-  alias Core.DeviceMonitor
-  alias Core.Device.ShellyRGBW2
+  @behaviour Core.Device.RgbW
 
-  def start_link(host, port, opts, keywords, timeout \\ 5000, length \\ 11) do
+  require Logger
+
+  alias Core.Device.ShellyRGBW2
+  # , only: [default_response_catch: 2]
+  import Core.Device.Client.Http
+
+  @impl Core.Device
+  def start_link(_host, _port, _opts, _keywords, _timeout \\ 5000, _length \\ 11) do
     false
   end
 
@@ -14,89 +19,69 @@ defmodule Core.Device.ShellyRGBW2 do
 
   @type res() :: {:ok, %ShellyRGBW2{}} | {:error, integer()} | :conn_error
 
-  @spec url(string(), integer(), integer()) :: string()
+  @spec url(String.t(), integer(), integer()) :: String.t()
   defp url(ip, port, id) do
     "#{ip}:#{port}/color/#{id}"
   end
 
-  @spec status(%DB.Device{}, integer()) :: res()
-  def status(device, port) do
-    url_ = url(device.ip, device.port, port.number)
+  #  @spec status(%DB.Device{}, integer()) :: res()
+  #  def status(device, port) do
+  #    url_ = url(device.ip, device.port, port.number)
+  #
+  #    HTTPotion.get(url_)
+  #    |> default_response_catch(&decode_body/1)
+  #  end
 
-    HTTPotion.get(url_)
-    |> default_response_catch()
-    |> log("status", device)
+  @impl true
+  def set_state(%{port: %{device: d, state: s, number: num}} = dimmer) do
+    url_ = url(d.ip, d.port, num)
+    s = if(s, do: "on", else: "off")
+    query = %{"turn" => s}
+
+    HTTPotion.get(url_, query: query)
+    |> default_response_catch(&decode_body/1)
+    |> skip_response(dimmer)
   end
 
-  @spec set_brightness(map()) :: res()
-  def set_brightness(%{device: d, port: p, fill: fill}) do
-    url_ = url(d.ip, d.port, p.number)
+  @impl true
+  def set_brightness(%{port: %{device: d, number: num}, fill: fill} = dimmer) do
+    IO.inspect(dimmer)
+    url_ = url(d.ip, d.port, num)
     query_ = %{"gain" => fill}
 
     HTTPotion.get(url_, query: query_)
-    |> default_response_catch()
-    |> log("set_brightness", d)
+    |> default_response_catch(&decode_body/1)
+    |> skip_response(dimmer)
   end
 
-
-  @spec set_white_brightness(map()) :: res()
-  def set_white_brightness(%{device: d, port: p, white: w}) do
-    url_ = url(d.ip, d.port, p.number)
+  @impl true
+  def set_white_brightness(%{port: %{device: d, number: num}, white: w} = dimmer) do
+    url_ = url(d.ip, d.port, num)
     query_ = %{"white" => w}
 
     HTTPotion.get(url_, query: query_)
-    |> default_response_catch()
-    |> log("set_white_brightness", d)
+    |> default_response_catch(&decode_body/1)
+    |> skip_response(dimmer)
   end
 
-
-  @spec set_rgb(map()) :: res()
-  def set_rgb(%{device: d, port: port, fill: fill, red: r, green: g, blue: b}) do
-    url_ = url(d.ip, d.port, port.number)
-    query_ = %{"red" => r, "green" => g, "blue" => b, "gain" => fill}
+  @impl true
+  @spec set_color(map()) :: res()
+  def set_color(%{port: %{device: d, number: num}, red: r, green: g, blue: b} = dimmer) do
+    url_ = url(d.ip, d.port, num)
+    query_ = %{"red" => r, "green" => g, "blue" => b}
 
     HTTPotion.get(url_, query: query_)
-    |> default_response_catch()
-    |> log("set_rgb", d)
+    |> default_response_catch(&decode_body/1)
+    |> skip_response(dimmer)
   end
 
-  @spec default_response_catch(%HTTPotion.Response{}) :: res()
-  defp default_response_catch(resp) do
-    case resp do
-      %HTTPotion.Response{status_code: 200, body: body} ->
-        body_ = decode_body(body)
-        {:ok, body_}
-
-      %HTTPotion.Response{status_code: status_code} ->
-        {:error, status_code}
-
-      %HTTPotion.ErrorResponse{} ->
-        :conn_error
-    end
-  end
-
-  @spec decode_body(string()) :: %ShellyRGBW2{}
+  @spec decode_body(String.t()) :: %ShellyRGBW2{}
   defp decode_body(body) do
-    mp = Poison.decode!(body)
-    mp_atoms = for {key, val} <- mp, into: %{}, do: {String.to_atom(key), val}
+    mp_atoms =
+      Poison.decode!(body)
+      |> to_atom_map()
+
+    Logger.debug("ShellyRgbW response = #{inspect(mp_atoms)}")
     struct(ShellyRGBW2, mp_atoms)
   end
-
-  @spec log(res :: res(), func :: string, device :: %DB.Device{}) :: res()
-  defp log(res, func, device) do
-    {info, type} = case res do
-      {:ok, body} -> {"#{inspect(body)}", DeviceJournal.Type.normal()}
-      {:error, code} -> {"#{inspect(code)}", DeviceJournal.Type.error()}
-      :conn_error -> {"Nie udało się połączyć z urządzeniem!", DeviceJournal.Type.timeout()}
-    end
-    DeviceJournal.log(
-      device.id,
-      "set_outputs",
-      info = info,
-      type = type
-    )
-    res
-  end
-
-
 end

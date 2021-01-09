@@ -3,9 +3,8 @@ defmodule Core.Utils.Time do
 
   @adapter Application.get_env(:core, :time_adapter)
 
-  @callback now() :: Time.t
-  @callback compare(t1 :: Time.t, t2 :: Time.t) :: atom
-
+  @callback now() :: Time.t()
+  @callback compare(t1 :: Time.t(), t2 :: Time.t()) :: atom
 
   def now() do
     @adapter.now()
@@ -19,9 +18,12 @@ defmodule Core.Utils.Time do
     case compare(e, s) do
       :lt ->
         compare(n, s) == :gt || compare(e, n) == :gt
+
       :gt ->
         compare(n, s) == compare(e, n)
-      _ -> false
+
+      _ ->
+        false
     end
   end
 end

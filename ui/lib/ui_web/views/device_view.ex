@@ -18,14 +18,15 @@ defmodule UiWeb.DeviceView do
       ip: device.ip,
       port: device.port,
       type_id: device.type_id,
-      #TODO handle not preload 
+      # TODO handle not preload 
       type: Helper.obj_to_view(DeviceView, :device_type, device.type),
       ref: device.ref,
       alive: device.alive,
-      '@type': "device"
+      "@type": "device"
     }
   end
-  #DEVICE TYPE
+
+  # DEVICE TYPE
   # TODO move to new module?
   def render("index.json", %{device_types: device_types}) do
     render_many(device_types, DeviceView, "device_type.json", as: :device_type)

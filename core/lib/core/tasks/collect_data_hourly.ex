@@ -5,7 +5,7 @@ defmodule Core.Tasks.CollectDataHourly do
   alias DB.{DeviceActivations, InputActivations, OutputActivations}
 
   @impl true
-  def execute(task, _) do
+  def execute(_task, _) do
     DeviceActivations.collect_previous_hour()
     InputActivations.collect_previous_hour()
     OutputActivations.collect_previous_hour()

@@ -7,16 +7,20 @@
 # General application configuration
 import Config
 
-
 import_config "../../core/config/config.exs"
 import_config "../../db/config/config.exs"
 import_config "../../rstp_to_ws/config/config.exs"
+
+# Configures broadcast for core
+
+config :core, :broadcast_handler, UiWeb.Broadcast.Handler
 
 # Configures the endpoint
 config :ui,
        UiWeb.Endpoint,
        url: [
-         host: "localhost"
+         host: "localhost",
+         port: 3000
        ],
        secret_key_base: "t+MOWbW7c8396vYNE6cqGM7pRsEgJf/vKo7RrIuDqh0Jg6KbEl6gvpWA9GpqxVDo",
        render_errors: [
@@ -30,18 +34,34 @@ config :ui,
 
 # tell logger to load a LoggerFileBackend processes
 config :logger,
-       backends: [
-         :console,
-         {LoggerFileBackend, :error_log},
-         {LoggerFileBackend, :info_log},
-         {LoggerFileBackend, :debug_log}
-       ]
+  backends: [
+    RingLogger,
+    {LoggerFileBackend, :error_log},
+#    {LoggerFileBackend, :info_log},
+#    {LoggerFileBackend, :debug_log}
+  ]
+
 
 # configuration for the {LoggerFileBackend, :error_log} backend
 
 log_path = "../logs/"
-default_format = {Ui.LogFormatter, :format} #"$time $metadata[$level] $message\n"
+# "$time $metadata[$level] $message\n"
+default_format = {Ui.LogFormatter, :format}
 default_metadata = [:request_id, :application]
+
+
+# Set the number of messages to hold in the circular buffer
+config :logger, RingLogger,
+       max_size: 1024,
+       format: default_format,
+       metadata: default_metadata
+
+# You can also configure RingLogger.Client options to be used
+# with every client by default
+config :ring_logger,
+       application_levels: %{my_app: :error},
+       color: [debug: :yellow],
+       level: :debug
 
 config :logger,
        :error_log,

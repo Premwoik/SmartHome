@@ -1,10 +1,7 @@
 defmodule UiWeb.DimmerView do
   use UiWeb, :view
-  alias UiWeb.DimmerView
   alias UiWeb.PortView
-  alias UiWeb.LightView
   alias UiWeb.View.Helper
-
 
   def render("index.json", %{dimmers: dimmers}) do
     render_many(dimmers, UiWeb.DimmerView, "dimmer.json")
@@ -23,11 +20,14 @@ defmodule UiWeb.DimmerView do
       red: dimmer.red,
       green: dimmer.green,
       blue: dimmer.blue,
+      color: Tint.RGB.to_hex(Tint.RGB.new(dimmer.red, dimmer.green, dimmer.blue)),
+      white: dimmer.white,
       direction: dimmer.direction,
       full_time: dimmer.time,
       ref: dimmer.ref,
       lights: Helper.objs_to_view(UiWeb.LightView, :light, dimmer.lights),
-      '@type': "dimmer"
+      type: dimmer.port.type,
+      "@type": "dimmer"
     }
   end
 end

@@ -65,7 +65,10 @@ defmodule UiWeb.RfButtonControllerTest do
   describe "update rf_button" do
     setup [:create_rf_button]
 
-    test "renders rf_button when data is valid", %{conn: conn, rf_button: %RfButton{id: id} = rf_button} do
+    test "renders rf_button when data is valid", %{
+      conn: conn,
+      rf_button: %RfButton{id: id} = rf_button
+    } do
       conn = put(conn, Routes.rf_button_path(conn, :update, rf_button), rf_button: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 

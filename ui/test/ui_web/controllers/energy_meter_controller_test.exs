@@ -59,8 +59,15 @@ defmodule UiWeb.EnergyMeterControllerTest do
   describe "update energy_meter" do
     setup [:create_energy_meter]
 
-    test "renders energy_meter when data is valid", %{conn: conn, energy_meter: %EnergyMeter{id: id} = energy_meter} do
-      conn = put(conn, Routes.energy_meter_path(conn, :update, energy_meter), energy_meter: @update_attrs)
+    test "renders energy_meter when data is valid", %{
+      conn: conn,
+      energy_meter: %EnergyMeter{id: id} = energy_meter
+    } do
+      conn =
+        put(conn, Routes.energy_meter_path(conn, :update, energy_meter),
+          energy_meter: @update_attrs
+        )
+
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.energy_meter_path(conn, :show, id))
@@ -75,7 +82,11 @@ defmodule UiWeb.EnergyMeterControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, energy_meter: energy_meter} do
-      conn = put(conn, Routes.energy_meter_path(conn, :update, energy_meter), energy_meter: @invalid_attrs)
+      conn =
+        put(conn, Routes.energy_meter_path(conn, :update, energy_meter),
+          energy_meter: @invalid_attrs
+        )
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

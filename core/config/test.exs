@@ -1,8 +1,6 @@
 import Config
 
-
-#config :logger, level: :info
-
+# config :logger, level: :info
 
 # Mocks
 config :core, one_way_client: Core.Device.ClientMock

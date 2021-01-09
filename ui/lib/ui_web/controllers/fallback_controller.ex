@@ -19,4 +19,8 @@ defmodule UiWeb.FallbackController do
     |> put_view(UiWeb.ErrorView)
     |> render(:"404")
   end
+
+  def call(conn, unexpected_error) do
+    send_resp(conn, 500, "Not handled error: #{inspect(unexpected_error)}")
+  end
 end

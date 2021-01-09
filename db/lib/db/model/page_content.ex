@@ -2,11 +2,10 @@ defmodule DB.PageContent do
   # TODO check if it could be removed
   @moduledoc false
   use Ecto.Schema
-  import Ecto.Changeset
 
   import Ecto.Query
 
-  alias DB.{Page, PageContent, Repo, Port, Light, Sunblind, Dimmer, Action, Task, TaskType}
+  alias DB.{Repo, Port, Light, Sunblind, Dimmer, Action, Task}
 
   def preload_all do
     [

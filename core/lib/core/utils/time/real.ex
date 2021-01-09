@@ -3,15 +3,15 @@ defmodule Core.Utils.Time.Real do
 
   @behaviour Core.Utils.Time
 
-  @impl true
-  def after?(a, b) do
-    compare(a, b) == :gt
-  end
-
-  @impl true
-  def before?(a, b) do
-    compare(a, b) == :lt
-  end
+  #  @impl true
+  #  def after?(a, b) do
+  #    compare(a, b) == :gt
+  #  end
+  #
+  #  @impl true
+  #  def before?(a, b) do
+  #    compare(a, b) == :lt
+  #  end
 
   @impl true
   def now() do
@@ -23,9 +23,8 @@ defmodule Core.Utils.Time.Real do
     Time.compare(a, b)
   end
 
-  @impl true
-  def datetime_now() do
-    DateTime.utc_now()
-  end
-
+  #  @impl true
+  #  def datetime_now() do
+  #    DateTime.utc_now()
+  #  end
 end

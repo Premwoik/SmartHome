@@ -1,22 +1,21 @@
 defmodule Core.Tasks.Heartbeat do
   @moduledoc false
   @behaviour Core.Tasks.Task
-  alias Core.Devices
+  #  alias Core.Devices
   require Logger
 
-#  @device Application.get_env(:core, :device_helper)
-#  @actions Application.get_env(:core, :actions_server)
-
+  #  @device Application.get_env(:core, :device_helper)
+  #  @actions Application.get_env(:core, :actions_server)
 
   @device Core.Device
-  @actions Core.Actions
+  #  @actions Core.Actions
 
   @impl true
   def execute(task, _) do
     {time, res} = Benchmark.measure_r(fn -> @device.do_(:heartbeat, task.device) end)
 
     case res do
-      {:ok, _} ->
+      :ok ->
         Logger.debug("Heartbeat to #{inspect(task.device.name)} passed with time: #{time}sec.")
 
       err ->

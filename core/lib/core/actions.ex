@@ -4,8 +4,6 @@ defmodule Core.Actions do
   @callback activate_up(ids :: list(integer), name :: atom) :: any
   @callback activate_down(ids :: list(integer), name :: atom) :: any
 
-  @behaviour Core.Actions
-
   use GenServer
   use Timex
   require Logger
@@ -63,6 +61,7 @@ defmodule Core.Actions do
 
   @impl true
   def handle_call({:activate, up_down, ids}, _from, %{amem: amem} = s) do
+    Logger.debug("Activate actions: #{inspect ids} with state: #{inspect up_down}")
     results = invoke_actions(up_down, ids, s)
     {amem_, errors} = after_invoke(results, amem)
     {:reply, {:ok, errors}, %{s | amem: amem_}}
@@ -80,8 +79,14 @@ defmodule Core.Actions do
     {:reply, :ok, %{s | actions: actions, amem: amem_}}
   end
 
+  def handle_info({:action_result, id, mem}, %{amem: amem} = s) do
+    {}
+    {:noreply, s}
+  end
+
   #  Privates
   defp after_invoke(result, amem, errors \\ [])
+
   defp after_invoke([], amem, errors) do
     {amem, errors}
   end
@@ -98,12 +103,13 @@ defmodule Core.Actions do
   end
 
   @spec invoke_actions(atom, list(integer), map) :: map
-  defp invoke_actions(on_off, ids, %{actions: actions, amem: amem} = s) do
+  defp invoke_actions(on_off, ids, %{actions: actions, amem: amem}) do
     match? = fn id, action -> action.id == id end
 
     for id <- ids,
         action <- actions,
         match?.(id, action) do
+      Logger.debug("[Action|#{action.name}] Invoking action in mode [#{inspect(on_off)}]")
       proceed_action(on_off, action, amem[action.id])
     end
   end

@@ -3,9 +3,8 @@ defmodule Core.Device.Client.TwoWay do
 
   use Connection
   require Logger
-  alias Core.DeviceMonitor
 
-  @behaviour Core.Devices.Client
+  @behaviour Core.Device.Client
 
   def start_link(host, port, opts, keywords, timeout \\ 5000, length \\ 11) do
     Logger.info("Initializing Device.Client #{host}, #{port}")
@@ -14,11 +13,13 @@ defmodule Core.Device.Client.TwoWay do
 
   ## Public
 
+  @impl true
   def send_with_resp(device, msg) do
     device_name(device)
     |> Connection.call({:confirm_send, msg})
   end
 
+  @impl true
   def send_msg(device, msg) do
     device_name(device)
     |> Connection.call({:send, msg})
@@ -61,7 +62,7 @@ defmodule Core.Device.Client.TwoWay do
         {:ok, %{s | sock: sock}}
 
       {:error, _} ->
-        Logger.info("cannot connect")
+        Logger.error("Cannot connect to device #{host}:#{to_string(port)}")
         {:backoff, 1000, s}
     end
   end
@@ -86,13 +87,12 @@ defmodule Core.Device.Client.TwoWay do
   end
 
   @impl true
-  def handle_info({:tcp, port, msg}, %{observers: obsrvs} = s) do
-    # Logger.("Received message: #{inspect(msg, charlists: :as_lists)}")
+  def handle_info({:tcp, _port, msg}, %{observers: obsrvs} = s) do
+    Logger.debug("Received message(host=#{s.host}: #{inspect(msg, charlists: :as_lists)}")
     # TODO add checking message age and identyfying  
     if !:queue.is_empty(obsrvs) do
       {{:value, pid}, obsrvs2} = :queue.out(obsrvs)
       send(pid, msg)
-
       {:noreply, %{s | observers: obsrvs2}}
     else
       {:noreply, s}
@@ -100,7 +100,7 @@ defmodule Core.Device.Client.TwoWay do
   end
 
   @impl true
-  def handle_info({:tcp_closed, port}, s) do
+  def handle_info({:tcp_closed, _port}, s) do
     Logger.info("Tcp port closed")
     {:stop, :normal, s}
   end
@@ -125,7 +125,7 @@ defmodule Core.Device.Client.TwoWay do
   def handle_call(
         {:confirm_send, data},
         {fpid, _},
-        %{sock: sock, length: length, observers: observers} = s
+        %{sock: sock, observers: observers} = s
       ) do
     case :gen_tcp.send(sock, data) do
       :ok ->

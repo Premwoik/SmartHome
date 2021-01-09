@@ -1,7 +1,7 @@
 defmodule Core.Actions.CloseSunblinds do
   @moduledoc false
   require Logger
-  alias DB.{Sunblind}
+  #  alias DB.{Sunblind}
   alias Core.Controllers.SunblindController
 
   @behaviour Core.Actions.Action

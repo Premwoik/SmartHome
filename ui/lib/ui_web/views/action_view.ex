@@ -16,16 +16,15 @@ defmodule UiWeb.ActionView do
       name: action.name,
       function: action.function,
       active: action.active,
-      params: action.params,
+      params: %{}, #action.params,
       frequency: action.frequency,
       start_time: action.start_time,
       end_time: action.end_time,
       port_id: action.port_id,
       ref: action.ref,
-      '@type': "action"
+      "@type": "action"
     }
   end
-
 
   def render("show_args.json", %{args: args}) do
     render_many(args, ActionView, "arg.json")
@@ -45,17 +44,20 @@ defmodule UiWeb.ActionView do
   end
 
   def render("action_item.json", %{action: i}) do
-    type = case i do
-      %DB.Port{} -> :port
-      %DB.Sunblind{} -> :sunblind
-      %DB.Dimmer{} -> :dimmer
-      %DB.Light{} -> :light
-    end
+    type =
+      case i do
+        %DB.Port{} -> :port
+        %DB.Sunblind{} -> :sunblind
+        %DB.Dimmer{} -> :dimmer
+        %DB.Light{} -> :light
+      end
+
     typeStr = to_string(type)
-    module = String.to_atom("Elixir.UiWeb."<>upcaseFirst(typeStr)<>"View")
+    module = String.to_atom("Elixir.UiWeb." <> upcaseFirst(typeStr) <> "View")
     module.render(to_string(type) <> ".json", %{type => i})
   end
-  def upcaseFirst(<<first :: utf8, rest :: binary>>), do: String.upcase(<<first :: utf8>>) <> rest
+
+  def upcaseFirst(<<first::utf8, rest::binary>>), do: String.upcase(<<first::utf8>>) <> rest
 
   # def render("show.json", %{dash_action: action}) do
   # %{data: render_one(action, ActionView, "dash_action.json")}
@@ -69,6 +71,4 @@ defmodule UiWeb.ActionView do
   # action: ""
   # }
   # end
-
-
 end

@@ -1,6 +1,4 @@
-
-
-#use Mix.Config
+# use Mix.Config
 import Config
 
 # This configuration is loaded before any dependency and is restricted
@@ -21,10 +19,8 @@ import Config
 #     config :logger, level: :info
 #
 
-
-
 config :db,
-       ecto_repos: [DB.Repo]
+  ecto_repos: [DB.Repo]
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
@@ -32,4 +28,4 @@ config :db,
 # Configuration from the imported file will override the ones defined
 # here (which is why it is important to import them last).
 #
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

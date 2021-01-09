@@ -14,8 +14,8 @@ defmodule DB.EnergyMeter do
 
   def changeset(wattmeter, params \\ %{}, all_str \\ false) do
     params_ = inc_ref(wattmeter, Enum.into(params, %{}), all_str)
-    wattmeter 
+
+    wattmeter
     |> cast(params_, [:name, :address, :ref])
   end
-
 end

@@ -11,7 +11,8 @@ defmodule UiWeb.RfButtonView do
   end
 
   def render("rf_button.json", %{rf_button: rf_button}) do
-    %{id: rf_button.id,
+    %{
+      id: rf_button.id,
       port_id: rf_button.port_id,
       action_id: rf_button.action_id,
       task_id: rf_button.task_id,
@@ -19,7 +20,7 @@ defmodule UiWeb.RfButtonView do
       mode: rf_button.mode,
       page_id: rf_button.page_id,
       key_value: rf_button.key_value,
-      '@type': "button"}
-
+      "@type": "button"
+    }
   end
 end

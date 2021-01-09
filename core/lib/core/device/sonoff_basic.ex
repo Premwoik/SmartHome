@@ -2,65 +2,69 @@ defmodule Core.Device.SonoffBasic do
   @moduledoc false
 
   @behaviour Core.Device
-  alias DB.{DeviceJournal, Port, Device}
-  alias Core.DeviceMonitor
+  alias DB.{Port, Device}
   alias Core.Device.SonoffBasic, as: Sonoff
   alias Core.Tasks.ReadOutputs
+  import Core.Device.Client.Http
 
-  def start_link(host, port, opts, keywords, timeout \\ 5000, length \\ 11) do
+  @impl Core.Device
+  def start_link(_host, _port, _opts, _keywords, _timeout \\ 5000, _length \\ 11) do
     false
   end
 
-  defstruct [:"RfKey2"]
+  defstruct [:RfKey2]
 
   @type res() :: {:ok, %Sonoff{}} | {:error, integer()} | :conn_error
 
-  @spec url(string(), integer(), integer()) :: string()
-  defp url(ip, port, id) do
+  @spec url(String.t(), integer(), integer()) :: String.t()
+  defp url(ip, port, _id) do
     "#{ip}:#{port}/cm"
   end
 
   @spec set_outputs(%Device{}, list(%Port{})) :: res()
-  def set_outputs(%{ip: ip, port: port} = device, [%Port{device: d, number: num, state: s} = p]) do
+  def set_outputs(%{ip: ip, port: port}, [%Port{number: num, state: s}]) do
     state_ = if s, do: 1, else: 0
     url_ = url(ip, port, num) <> "?cmnd=Power#{num}%20#{state_}"
 
     HTTPotion.get(url_)
-    |> default_response_catch()
+    |> default_response_catch(&decode_body/1)
+    |> skip_response()
   end
 
+  def read_outputs(_) do
+    {:error, "Not implemented"}
+  end
+
+  def read_inputs(_) do
+    {:error, "Not implemented"}
+  end
+
+  def heartbeat(_) do
+    {:error, "Not implemented"}
+  end
+
+  #  Mqtt
+
   def handle_mqtt_result(name, payload, _) do
-    with %Device{} = d <-  Device.get_by_name(name) do
+    with %Device{} = d <- Device.get_by_name(name) do
       %{"POWER" => state} = Poison.decode!(payload)
+
       if state == "ON" do
         ReadOutputs.handle_outputs(d, [0], %{last_outputs: []})
       else
         ReadOutputs.handle_outputs(d, [], %{last_outputs: [0]})
       end
+
       :ok
     end
   end
 
-  @spec default_response_catch(%HTTPotion.Response{}) :: res()
-  defp default_response_catch(resp) do
-    case resp do
-      %HTTPotion.Response{status_code: 200, body: body} ->
-        body_ = decode_body(body)
-        {:ok, []}
+  # Privates
 
-      %HTTPotion.Response{status_code: status_code} ->
-        {:error, status_code}
-
-      %HTTPotion.ErrorResponse{} ->
-        :conn_error
-    end
-  end
-
-  @spec decode_body(string()) :: any()
+  @spec decode_body(String.t()) :: any()
   defp decode_body(body) do
     mp = Poison.decode!(body)
-    mp_atoms = for {key, val} <- mp, into: %{}, do: {String.to_atom(key), val}
-#    struct(Rf, mp_atoms)
+    for {key, val} <- mp, into: %{}, do: {String.to_atom(key), val}
+    #    struct(Rf, mp_atoms)
   end
-
 end

@@ -8,10 +8,7 @@ defmodule Core.Tasks.MonitorDevice do
   import Core.Tasks.ReadOutputs, only: [handle_outputs: 3]
   import Core.Tasks.ReadInputs, only: [handle_inputs: 3]
 
-  alias Core.Controllers.BasicController, as: Basics
-  alias UiWeb.InputMonitorChannel, as: Channel
   alias Core.Device
-
 
   @impl true
   def execute(%DB.Task{device: device}, state) do
@@ -26,5 +23,4 @@ defmodule Core.Tasks.MonitorDevice do
   def init_state() do
     %{last_inputs: [], last_outputs: []}
   end
-
 end

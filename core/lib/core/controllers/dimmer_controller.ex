@@ -1,165 +1,143 @@
 defmodule Core.Controllers.DimmerController do
   @moduledoc false
 
-  alias DB.{Light, Dimmer, Port, Device}
-  alias UiWeb.DashboardChannel.Helper, as: Channel
-  alias Core.Controllers.BasicController
-  alias Core.Controllers.LightController
-  alias Core.Device
-  alias Core.Device.ShellyRGBW2
+  use Core.Controllers.IOBeh
+  alias Core.Controllers.IOBeh
 
-  # import Core.Controllers.BasicController, only: [flatten_result: 1, prepare_for_basic: 1]
+  alias DB.{Dimmer}
+  alias Core.Controllers.DimmerController
+  import Core.Controllers.Universal, only: [flatten_result: 1]
 
-  defmodule Brightness do
-    defstruct [:red, :green, :blue, :gain]
+  defmacro __using__(_) do
+    quote([]) do
+      @behaviour DimmerController
+      def set_state(_, _), do: {:error, "Not implemented yet"}
+      def get_state(_), do: {:error, "Not implemented yet"}
+      def set_brightness(_, _), do: {:error, "Not implemented yet"}
+      def set_white_brightness(_, _), do: {:error, "Not implemented yet"}
+      def set_color(_, _, _, _), do: {:error, "Not implemented yet"}
+      def notify_light_change(_), do: {:error, "Not implemented yet"}
+
+      defoverridable set_state: 2,
+                     get_state: 1,
+                     set_brightness: 2,
+                     set_white_brightness: 2,
+                     set_color: 4,
+                     notify_light_change: 1
+    end
   end
 
-  def toggle(dimmers) do
-    :ok
+  @callback set_state(%Dimmer{}, state :: bool()) :: :ok | {:error, any()}
+  @callback set_brightness(%Dimmer{}, fill :: integer()) :: :ok | {:error, any()}
+  @callback set_white_brightness(%Dimmer{}, fill :: integer()) :: :ok | {:error, any()}
+  @callback set_color(%Dimmer{}, r :: integer(), g :: integer(), b :: integer()) ::
+              :ok | {:error, any()}
+  @callback get_state(%Dimmer{}) :: {:ok, bool()} | {:error, String.t()}
+  @callback notify_light_change(%Dimmer{}) :: :ok | {:error, String.t()}
+
+  #  def read(dimmer) do
+  #    [dimmer.port.device, dimmer.port]
+  #    |> Device.do_r(:status)
+  #    #    |> process_response(dimmer) TODO handle saving response to DB
+  #    :ok
+  #  end
+
+  def get_state(dimmer) do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.get_state(dimmer)
+    end
   end
 
-  def turn_on(dimmers) do
-    :ok
+  @impl IOBeh
+  def toggle(dimmer, _ops) when is_list(dimmer) == false do
+    with {:ok, mod} <- get_module(dimmer),
+         {:ok, state} <- mod.get_state(dimmer) do
+      mod.set_state(dimmer, !state)
+    end
   end
 
-  def turn_off(dimmers) do
-    :ok
+  def toggle(dimmers, _ops),
+    do:
+      Enum.map(dimmers, &toggle(&1))
+      |> flatten_result()
+
+  @impl IOBeh
+  def turn_on(dimmer, _ops) when is_list(dimmer) == false do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.set_state(dimmer, true)
+    end
   end
 
-  def read(dimmer) do
-    [dimmer.port.device, dimmer.port]
-    |> Device.do_r(:status)
-    |> process_response(dimmer)
-    :ok
+  def turn_on(dimmers, _ops),
+    do:
+      Enum.map(dimmers, &turn_on(&1))
+      |> flatten_result()
+
+  @impl IOBeh
+  def turn_off(dimmer, _ops) when is_list(dimmer) == false do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.set_state(dimmer, false)
+    end
   end
 
-  def set_rgb_brightness(dimmer, fill, red, green, blue) do
-    %{device: dimmer.port.device, port: dimmer.port, red: red, green: green, blue: blue, fill: fill}
-    |> Core.Device.do_r(:set_rgb)
-    |> process_response(dimmer)
-    :ok
+  def turn_off(dimmers, _ops),
+    do:
+      Enum.map(dimmers, &turn_off(&1))
+      |> flatten_result()
+
+  def set_color(dimmer, red, green, blue) do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.set_color(dimmer, red, green, blue)
+    end
   end
 
-  @spec set_white_brightness(map(), integer()) :: atom()
-  def set_white_brightness(
-        %Dimmer{
-          port: %Port{
-            type: "dimmer_rgb" <> _
-          }
-        } = dimmer,
-        value
-      ) do
-    %{device: dimmer.port.device, port: dimmer.port, white: value}
-    |> Core.Device.do_r(:set_white_brightness)
-    |> process_response(dimmer)
-    :ok
+  def set_white_brightness(dimmer, fill) do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.set_white_brightness(dimmer, fill)
+    end
   end
 
-
-  def set_brightness(dimmer, value, deep \\ true)
-  def set_brightness(
-        %Dimmer{
-          port: %Port{
-            type: "dimmer_rgb" <> _
-          }
-        } = dimmer,
-        value,
-        _
-      ) do
-    %{device: dimmer.port.device, port: dimmer.port, fill: value}
-    |> Core.Device.do_r(:set_brightness)
-    |> process_response(dimmer)
-    :ok
+  def set_brightness(dimmer, fill) do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.set_brightness(dimmer, fill)
+    end
   end
 
-  def set_brightness(dimmer, value, deep) do
-    dimmer.port.mode
-    |> case do
-         "output" ->
-           set_brightness_classic(dimmer, value, deep)
-
-         "output_pwm" ->
-           set_brightness_pwm(dimmer, value)
-
-         _ ->
-           :error
-       end
-    |> case do
-         {:ok, dir} ->
-           Dimmer.update_fill(dimmer, value, dir)
-           Channel.broadcast_change("dimmer", dimmer.id, dimmer.ref + 1)
-           :ok
-
-         {err, _} ->
-           err
-
-         :nothing ->
-           :ok
-
-         e ->
-           e
-       end
+  def notify_light_change(dimmer, _s \\ nil) do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.notify_light_change(dimmer)
+    end
   end
 
-  defp process_response(response, dimmer) do
-    case response do
-      {:ok, %ShellyRGBW2{ison: state, red: r, blue: b, green: g, gain: fill}} ->
-        #      TODO broadcast changes only if it is needed
-        IO.inspect(response)
-        Dimmer.changeset(dimmer, red: r, green: g, blue: b, fill: fill)
-        |> DB.Repo.update()
-        Port.changeset(dimmer.port, state: state)
-        |> DB.Repo.update()
-        DB.Device.changeset(dimmer.port.device, alive: true)
-        |> DB.Repo.update()
+  # Privates
 
-        Channel.broadcast_change("dimmer", dimmer.id, dimmer.ref + 1)
+  def get_module(%{
+        port: %{
+          type: t,
+          mode: m
+        }
+      }) do
+    case t do
+      "dimmer2" ->
+        {:ok, Core.Controllers.Dimmer.Time2Dimmer}
+
+      "dimmer" ->
+        case m do
+          "output" ->
+            {:ok, Core.Controllers.Dimmer.TimeDimmer}
+
+          "output_pwm" ->
+            {:ok, Core.Controllers.Dimmer.PwmDimmer}
+
+          _ ->
+            {:error, "Wrong mode"}
+        end
+
+      "dimmer_rgb" <> _ ->
+        {:ok, Core.Controllers.Dimmer.RgbDimmer}
+
       _ ->
-        DB.Device.changeset(dimmer.port.device, alive: false)
-        |> DB.Repo.update()
+        {:error, "Wrong type"}
     end
-  end
-
-  defp set_brightness_classic(dimmer, value, deep) do
-    if dimmer.fill != value do
-      cond do
-        deep && dimmer.fill == 0 ->
-          :ok = LightController.set(dimmer.lights, true, false)
-          set_brightness_classic_core(dimmer, value)
-
-        deep && value == 0 ->
-          LightController.set(dimmer.lights, false, false)
-          |> wrap_direction(1)
-
-        value == 0 ->
-          if Dimmer.any_light_on?(dimmer), do: :nothing, else: {:ok, 1}
-
-        true ->
-          set_brightness_classic_core(dimmer, value)
-      end
-    else
-      :nothing
-    end
-  end
-
-  defp wrap_direction(res, dir) do
-    {res, dir}
-  end
-
-  defp set_brightness_classic_core(dimmer, brightness) do
-    {time, dir} = Dimmer.fill_to_time(dimmer, brightness)
-    %Port{DB.Repo.preload(dimmer.port, :device) | timeout: time}
-    |> List.wrap()
-    |> Core.Device.do_r(:set_time_dimmer)
-      #    TODO should I here update also port state???
-    |> IO.inspect()
-    |> wrap_direction(dir)
-  end
-
-  defp set_brightness_pwm(dimmer, brightness) do
-    dimmer.port
-    |> DB.Repo.preload(:device)
-    |> List.wrap()
-    |> BasicController.pwm(brightness)
   end
 end

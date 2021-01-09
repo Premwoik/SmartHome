@@ -18,22 +18,21 @@ defmodule Ui.EnergyMeterAdmin do
   """
   def list_wattmeters do
     Repo.all(EnergyMeter)
-    |> Enum.map(
-         fn meter ->
-           %EnergyMeter{
-             readings: from(
-                         r in DB.EnergyMeter.Read,
-                         where: r.id == ^meter.id,
-                         order_by: [
-                           desc: r.id
-                         ],
-                         limit: 1
-                       )
-                       |> Repo.one()
-                       |> List.wrap()
-           }
-         end
-       )
+    |> Enum.map(fn meter ->
+      %EnergyMeter{
+        readings:
+          from(
+            r in DB.EnergyMeter.Read,
+            where: r.id == ^meter.id,
+            order_by: [
+              desc: r.id
+            ],
+            limit: 1
+          )
+          |> Repo.one()
+          |> List.wrap()
+      }
+    end)
   end
 
   @doc """
@@ -66,7 +65,7 @@ defmodule Ui.EnergyMeterAdmin do
   """
   def create_energy_meter(attrs \\ %{}) do
     %EnergyMeter{}
-    |> EnergyMeter.changeset(attrs, all_str=true)
+    |> EnergyMeter.changeset(attrs, _all_str = true)
     |> Repo.insert()
   end
 

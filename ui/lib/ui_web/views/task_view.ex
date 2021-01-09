@@ -31,8 +31,7 @@ defmodule UiWeb.TaskView do
       start_date: task.start_date,
       end_date: task.end_date,
       ref: task.ref,
-      '@type': "task"
+      "@type": "task"
     }
   end
-
 end

@@ -1,8 +1,8 @@
 defmodule Core.Actions.DimmerController do
-  @moduledoc false
+  @moduledoc """
+    Collect ticks to set dimmer brightness.
+  """
   require Logger
-  alias DB.Dao
-  alias Core.Controllers.LightController
   alias Core.Controllers.DimmerController
   @behaviour Core.Actions.Action
 
@@ -12,7 +12,7 @@ defmodule Core.Actions.DimmerController do
   end
 
   @impl true
-  def execute(on_off, action, %{pid: pid}) do
+  def execute(_on_off, action, %{pid: pid}) do
     if alive?(pid) do
       send(pid, :notified)
       %{pid: pid}
@@ -36,14 +36,13 @@ defmodule Core.Actions.DimmerController do
       5_000 ->
         Logger.info("Executing delayed action!")
         args = DB.Action.get_args_ids(action.id)
+
         DB.Dimmer.get_by_port(args)
-        |> Enum.each(
-             fn dimmer ->
-               dimmer_ = %{dimmer | fill: 0, lights: []}
-               fill = if counter > 3, do: 100, else: 25 * counter
-               DimmerController.set_brightness(dimmer_, fill)
-             end
-           )
+        |> Enum.each(fn dimmer ->
+          dimmer_ = %{dimmer | fill: 0, lights: []}
+          fill = if counter > 3, do: 100, else: 25 * counter
+          DimmerController.set_brightness(dimmer_, fill)
+        end)
     end
   end
 end

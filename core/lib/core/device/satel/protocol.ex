@@ -14,7 +14,7 @@ defmodule Core.Device.Satel.Protocol do
   @spec decode_commands_status(binary(), list(integer())) :: list(integer())
   def decode_commands_status(outputs, monitored_commands) do
     os = :binary.decode_unsigned(outputs, :little)
-    Enum.map(monitored_commands, fn cmd -> is_output_active(cmd+1, os) end)
+    Enum.map(monitored_commands, fn cmd -> is_output_active(cmd + 1, os) end)
   end
 
   @spec encode_outputs(list(integer()), integer()) :: binary()
@@ -30,14 +30,17 @@ defmodule Core.Device.Satel.Protocol do
   @spec decode_outputs(binary(), integer()) :: list(integer())
   def decode_outputs(outputs, num \\ 16) do
     os = :binary.decode_unsigned(outputs, :little)
-    Enum.reduce(1..num*8, [], fn o, acc -> if(is_output_active(o, os), do: [o | acc], else: acc) end)
+
+    Enum.reduce(1..(num * 8), [], fn o, acc ->
+      if(is_output_active(o, os), do: [o | acc], else: acc)
+    end)
   end
 
   defp is_output_active(o, outputs) do
     (1 <<< (o - 1) &&& outputs) > 0
   end
 
-  @spec encode_code(string()) :: binary()
+  @spec encode_code(String.t()) :: binary()
   def encode_code(code) do
     code = Base.decode16!(code)
     s = 8 - :erlang.size(code)
@@ -53,25 +56,25 @@ defmodule Core.Device.Satel.Protocol do
 
     body =
       (command <> checksum_)
-      |> :binary.replace(<<0xFE>>, <<0xFE,0xF0>>, [:global])
+      |> :binary.replace(<<0xFE>>, <<0xFE, 0xF0>>, [:global])
 
     @header <> body <> @footer
   end
 
-  @spec check_response(binary(), binary()) :: binary() | {:error, string()}
+  @spec check_response(binary(), binary()) :: binary() | {:error, String.t()}
   def check_response(resp, cmd) do
-    Logger.log(:debug, "Integra response: #{inspect resp, base: :hex}")
-    with resp_ <- :binary.replace(resp, <<0xFE,0xF0>>, <<0xFE>>, [:global]),
+    Logger.log(:debug, "Integra response: #{inspect(resp, base: :hex)}")
+
+    with resp_ <- :binary.replace(resp, <<0xFE, 0xF0>>, <<0xFE>>, [:global]),
          {:ok, r1} <- check_header(resp_),
          {:ok, r2} <- check_footer(r1),
          {:ok, r4} <- verify_checksum(r2),
          {:ok, to_skip} <- verify_response_code(r2, cmd) do
-    {:ok, if(to_skip > 0, do: :binary.part(r4, to_skip, :erlang.size(r4) - to_skip), else: r4)}
+      {:ok, if(to_skip > 0, do: :binary.part(r4, to_skip, :erlang.size(r4) - to_skip), else: r4)}
     end
   end
 
   # Privates
-
 
   defp check_header(<<header::binary-size(2), tail::binary>>) do
     if(header == @header, do: {:ok, tail}, else: {:error, "Wrong header"})
@@ -90,6 +93,7 @@ defmodule Core.Device.Satel.Protocol do
       {:ok, 2}
     end
   end
+
   defp verify_response_code(<<h::binary-size(1), _::binary>>, cmd) when h == cmd, do: {:ok, 1}
   defp verify_response_code(_, _), do: {:error, "Response cmd does not match request"}
 
@@ -113,7 +117,7 @@ defmodule Core.Device.Satel.Protocol do
     Enum.reduce(byte_array, 0x147A, fn b, crc ->
       crc = (crc <<< 1 &&& 0xFFFF) ||| (crc &&& 0x8000) >>> 15
       crc = crc ^^^ 0xFFFF
-      crc = crc + (crc >>> 8) + b &&& 0xFFFF
+      crc + (crc >>> 8) + b &&& 0xFFFF
     end)
   end
 end

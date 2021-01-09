@@ -16,12 +16,11 @@ defmodule CloseSunblindsTest do
 
     DB.Sunblind.all()
     |> DB.Sunblind.update_state("open")
+
     assert Core.Actions.CloseSunblinds.execute(:up, nil, :ok) == :ok
     assert Enum.all?(DB.Sunblind.all(), fn s -> s.state == "in_move" end) == true
 
     assert Core.Actions.CloseSunblinds.execute(:down, nil, :ok) == :ok
     assert Enum.all?(DB.Sunblind.all(), fn s -> s.state == "in_move" end) == true
-
   end
-
 end

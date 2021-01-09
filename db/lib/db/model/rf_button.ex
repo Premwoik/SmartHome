@@ -5,14 +5,15 @@ defmodule DB.RfButton do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias DB.{Repo, Device, Port, RfButton, Task, Action}
+  alias DB.{Repo, Port, RfButton, Task, Action}
 
   schema "rf_buttons" do
     belongs_to(:port, Port)
     belongs_to(:action, Action)
     belongs_to(:task, Task)
     field(:name, :string)
-    field(:mode, :string) # :on | :off | :toggle | :page
+    # :on | :off | :toggle | :page
+    field(:mode, :string)
     field(:key_value, :string)
     field(:page_id, :integer)
     field(:ref, :integer)
@@ -20,6 +21,7 @@ defmodule DB.RfButton do
 
   def changeset(btn, params \\ %{}, all_str \\ false) do
     params_ = inc_ref(btn, Enum.into(params, %{}), all_str)
+
     btn
     |> cast(params_, [:port_id, :task_id, :action_id, :name, :mode, :key_value, :page_id, :ref])
   end
@@ -32,9 +34,11 @@ defmodule DB.RfButton do
   #  end
 
   def get_or_create(key) do
-    res = from(b in RfButton, where: b.key_value == ^key)
-          |> Repo.all()
-          |> Repo.preload([port: [:device], action: [], task: []])
+    res =
+      from(b in RfButton, where: b.key_value == ^key)
+      |> Repo.all()
+      |> Repo.preload(port: [:device], action: [], task: [])
+
     if res == [] do
       [
         %RfButton{
@@ -47,7 +51,7 @@ defmodule DB.RfButton do
           ref: 1,
           page_id: 1
         }
-	# |> Repo.insert!() # TODO
+        # |> Repo.insert!() # TODO
       ]
     else
       res
@@ -73,5 +77,4 @@ defmodule DB.RfButton do
   #      res
   #    end
   #  end
-
 end

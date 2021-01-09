@@ -5,7 +5,7 @@ defmodule Core.Tasks.CleanLogs do
   alias DB.{DeviceJournal}
 
   @impl true
-  def execute(task, date) do
+  def execute(_task, date) do
     DeviceJournal.delete_older(date)
     {:ok, NaiveDateTime.utc_now()}
   end

@@ -2,10 +2,8 @@ defmodule DB.Page do
   @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
-  import Ecto.Query
-
-  import DB
-  alias DB.{Repo, Light, Port, Dimmer, Page}
+  #  import Ecto.Query
+  #  import DB
 
   @derive {Poison.Encoder, except: [:__meta__]}
   schema "pages" do

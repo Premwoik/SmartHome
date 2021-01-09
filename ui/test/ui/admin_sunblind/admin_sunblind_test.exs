@@ -6,8 +6,20 @@ defmodule Ui.AdminSunblindTest do
   describe "sunblinds" do
     alias Ui.AdminSunblind.Sunblind
 
-    @valid_attrs %{direction: "some direction", full_open_time: 42, position: 42, state: "some state", type: "some type"}
-    @update_attrs %{direction: "some updated direction", full_open_time: 43, position: 43, state: "some updated state", type: "some updated type"}
+    @valid_attrs %{
+      direction: "some direction",
+      full_open_time: 42,
+      position: 42,
+      state: "some state",
+      type: "some type"
+    }
+    @update_attrs %{
+      direction: "some updated direction",
+      full_open_time: 43,
+      position: 43,
+      state: "some updated state",
+      type: "some updated type"
+    }
     @invalid_attrs %{direction: nil, full_open_time: nil, position: nil, state: nil, type: nil}
 
     def sunblind_fixture(attrs \\ %{}) do
@@ -44,7 +56,10 @@ defmodule Ui.AdminSunblindTest do
 
     test "update_sunblind/2 with valid data updates the sunblind" do
       sunblind = sunblind_fixture()
-      assert {:ok, %Sunblind{} = sunblind} = AdminSunblind.update_sunblind(sunblind, @update_attrs)
+
+      assert {:ok, %Sunblind{} = sunblind} =
+               AdminSunblind.update_sunblind(sunblind, @update_attrs)
+
       assert sunblind.direction == "some updated direction"
       assert sunblind.full_open_time == 43
       assert sunblind.position == 43

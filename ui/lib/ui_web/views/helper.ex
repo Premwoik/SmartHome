@@ -1,6 +1,4 @@
 defmodule UiWeb.View.Helper do
-  alias UiWeb.{PortView, DimmerView, ActionView, TaskView, SunblindView, LightView, DeviceView}
-
   @spec obj_to_view(module :: atom, type :: atom, obj :: any) :: any
   def obj_to_view(module, type, obj) do
     if Ecto.assoc_loaded?(obj) do

@@ -1,14 +1,13 @@
 defmodule DB.Thermometer.Read do
   @moduledoc false
   use Ecto.Schema
-  import Ecto.Changeset
   import Ecto.Query
 
   alias DB.{Thermometer, Repo}
   alias DB.Thermometer.Read, as: Read
 
   schema "therm_temp_reads" do
-    belongs_to(:therm, DB.Thermometer)
+    belongs_to(:therm, Thermometer)
     field(:value, :float)
     timestamps()
   end
@@ -24,5 +23,4 @@ defmodule DB.Thermometer.Read do
     )
     |> Repo.all()
   end
-
 end

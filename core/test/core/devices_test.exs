@@ -34,9 +34,7 @@ defmodule Core.DeviceTest do
 
     assert Core.Device.set_outputs_helper(ports, true) == :ok
     assert Core.Device.set_outputs_helper(ports, false) == :ok
-
   end
-
 
   test "invoke set ports helper - error" do
     Core.DeviceMock
@@ -54,21 +52,20 @@ defmodule Core.DeviceTest do
     assert elem(res2, 0) == :error
     assert length(elem(res2, 1)) == 4
     assert elem(res2, 2) == ["cant send", "cant send"]
-
   end
 
   test "invoke set ports helper - partial error" do
     Core.DeviceMock
     |> expect(
-         :set_outputs,
-         2,
-         fn d, ids, state ->
-           case d.id do
-             1 -> {:error, "cant send"}
-             3 -> :ok
-           end
-         end
-       )
+      :set_outputs,
+      2,
+      fn d, ids, state ->
+        case d.id do
+          1 -> {:error, "cant send"}
+          3 -> :ok
+        end
+      end
+    )
 
     DB.Port.update_state([12, 13, 23, 24], false)
     ports = DB.Port.get([12, 13, 23, 24])
@@ -76,8 +73,7 @@ defmodule Core.DeviceTest do
     res1 = Core.Device.set_outputs_helper(ports, true)
 
     assert elem(res1, 0) == :error
-    assert Enum.map(elem(res1, 1), &(&1.id)) == [12, 13]
+    assert Enum.map(elem(res1, 1), & &1.id) == [12, 13]
     assert elem(res1, 2) == ["cant send"]
   end
-
 end

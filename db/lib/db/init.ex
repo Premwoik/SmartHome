@@ -5,7 +5,6 @@ defmodule DB.Init do
     Light,
     Task,
     TaskType,
-    Watcher,
     Dimmer,
     Port,
     Device,
@@ -14,9 +13,9 @@ defmodule DB.Init do
     Repo,
     Sunblind,
     Page,
-    PageContent,
+    #    PageContent,
     Thermometer
-    }
+  }
 
   import Ecto.Query
   require Logger
@@ -27,7 +26,7 @@ defmodule DB.Init do
     Logger.info("Creating data!")
     :ok = delete_all()
 
-    if !exist? do
+    if !exist?() do
       :ok = insert_ard_mega()
       :ok = insert_integra64()
       :ok = insert_shelly()
@@ -75,6 +74,7 @@ defmodule DB.Init do
       inverted_logic: false,
       state: false
     }
+
     %Device{
       name: "Kinkiet1-5EB49C",
       ip: "192.168.2.205",
@@ -93,17 +93,18 @@ defmodule DB.Init do
       inverted_logic: false,
       state: false
     }
-      %Device{
-        name: "Kinkiet2-EA3266",
-        ip: "192.168.2.206",
-        port: 80,
-        alive: true,
-        type_id: type.id,
-        ports: [p34]
-      }
-      |> Repo.insert!()
 
-      :ok
+    %Device{
+      name: "Kinkiet2-EA3266",
+      ip: "192.168.2.206",
+      port: 80,
+      alive: true,
+      type_id: type.id,
+      ports: [p34]
+    }
+    |> Repo.insert!()
+
+    :ok
   end
 
   def insert_sonoff_rf() do
@@ -114,7 +115,6 @@ defmodule DB.Init do
         process: false
       }
       |> Repo.insert!()
-
 
     p25 = %Port{
       name: "Rf wolna",
@@ -151,6 +151,7 @@ defmodule DB.Init do
       inverted_logic: false,
       state: false
     }
+
     p29 = %Port{
       name: "Rf wolna",
       type: "light",
@@ -159,6 +160,7 @@ defmodule DB.Init do
       inverted_logic: false,
       state: false
     }
+
     p30 = %Port{
       name: "Rf wolna",
       type: "light",
@@ -167,6 +169,7 @@ defmodule DB.Init do
       inverted_logic: false,
       state: false
     }
+
     p31 = %Port{
       name: "Sypialnia",
       type: "light",
@@ -175,6 +178,7 @@ defmodule DB.Init do
       inverted_logic: false,
       state: false
     }
+
     p32 = %Port{
       name: "Rf wolna",
       type: "light",
@@ -183,7 +187,8 @@ defmodule DB.Init do
       inverted_logic: false,
       state: false
     }
-    dev =
+
+    _dev =
       %Device{
         name: "Sonoff Rf Bridge",
         ip: "192.168.2.122",
@@ -217,6 +222,7 @@ defmodule DB.Init do
         process: false
       }
       |> Repo.insert!()
+
     type2 =
       %DeviceType{
         name: "ShellyRGBW2",
@@ -242,6 +248,7 @@ defmodule DB.Init do
       inverted_logic: false,
       state: false
     }
+
     p3 = %Port{
       name: "Ledy belka",
       type: "dimmer_rgbw",
@@ -251,7 +258,7 @@ defmodule DB.Init do
       state: false
     }
 
-    dev1 =
+    _dev1 =
       %Device{
         name: "shelly1",
         ip: "192.168.2.138",
@@ -262,7 +269,7 @@ defmodule DB.Init do
       }
       |> Repo.insert!()
 
-    dev2 =
+    _dev2 =
       %Device{
         name: "shelly2",
         ip: "192.168.2.120",
@@ -272,7 +279,8 @@ defmodule DB.Init do
         ports: [p2]
       }
       |> Repo.insert!()
-    dev3 =
+
+    _dev3 =
       %Device{
         name: "shellyRGBW2",
         ip: "192.168.2.122",
@@ -285,7 +293,6 @@ defmodule DB.Init do
 
     %Dimmer{port_id: 24, fill: 0, lights: []}
     |> Repo.insert!()
-
 
     %Light{port_id: 22, dimmer_id: nil}
     |> Repo.insert!()
@@ -472,7 +479,7 @@ defmodule DB.Init do
       }
       |> Repo.insert!()
 
-    dev1 =
+    _dev1 =
       %Device{
         name: "ard_mega",
         ip: "192.168.2.137",
@@ -544,22 +551,22 @@ defmodule DB.Init do
     %Dimmer{port_id: 8, fill: 0, lights: [l5, l6]}
     |> Repo.insert!()
 
-    #%Light{
-    #port_id: 23,
-    #dimmer_id: nil
-    #}
-    #|> Repo.insert!()
+    # %Light{
+    # port_id: 23,
+    # dimmer_id: nil
+    # }
+    # |> Repo.insert!()
 
-    #%Light{
-    #port_id: 22,
-    #dimmer_id: nil
-    #}
-    #|> Repo.insert!()
+    # %Light{
+    # port_id: 22,
+    # dimmer_id: nil
+    # }
+    # |> Repo.insert!()
 
     :ok
   end
 
-  def insert_integra64(test \\ false) do
+  def insert_integra64() do
     # 19
     p8 = %Port{
       name: "CzujkaSalonSchody",
@@ -597,7 +604,7 @@ defmodule DB.Init do
       }
       |> Repo.insert!()
 
-    dev1 =
+    _dev1 =
       %Device{
         name: "integra",
         ip: "192.168.2.136",
@@ -675,7 +682,6 @@ defmodule DB.Init do
     }
     |> Repo.insert!()
 
-
     # Przemek's room sunblinds openening id:6
     %Action{
       name: "Pokój Przemek",
@@ -697,7 +703,7 @@ defmodule DB.Init do
       name: "Akcja z wysokim sygnałem",
       module: "Core.Tasks.ExecuteActionUp",
       action: true,
-      device: false,
+      device: false
     }
     |> Repo.insert!()
 
@@ -707,17 +713,17 @@ defmodule DB.Init do
       name: "Akcja z niskim sygnałem",
       module: "Core.Tasks.ExecuteActionDown",
       action: true,
-      device: false,
+      device: false
     }
     |> Repo.insert!()
 
     #    id: 3
     %TaskType{
-      name: "Read device inputs",
+      #      name: "Read device inputs",
       name: "Odczytaj wejścia urządzenia",
       module: "Core.Tasks.ReadInputs",
       action: false,
-      device: true,
+      device: true
     }
     |> Repo.insert!()
 
@@ -727,7 +733,7 @@ defmodule DB.Init do
       name: "Nasłuchuj urządzenie",
       module: "Core.Tasks.Heartbeat",
       action: false,
-      device: true,
+      device: true
     }
     |> Repo.insert!()
 
@@ -737,7 +743,7 @@ defmodule DB.Init do
       name: "Odczytaj watomierze urządzenia",
       module: "Core.Tasks.ReadUsedEnergy",
       action: false,
-      device: true,
+      device: true
     }
     |> Repo.insert!()
 
@@ -747,7 +753,7 @@ defmodule DB.Init do
       name: "Odczytaj termometry urządzenia",
       module: "Core.Tasks.ReadTemperature",
       action: false,
-      device: true,
+      device: true
     }
     |> Repo.insert!()
 
@@ -757,7 +763,7 @@ defmodule DB.Init do
       name: "Odczytaj wyjścia urządzenia",
       module: "Core.Tasks.ReadOutputs",
       action: false,
-      device: true,
+      device: true
     }
     |> Repo.insert!()
 
@@ -767,18 +773,20 @@ defmodule DB.Init do
       name: "Wyczyść historię",
       module: "Core.Tasks.CleanLogs",
       action: false,
-      device: false,
+      device: false
     }
     |> DB.Repo.insert!()
+
     # id: 9
     %TaskType{
       #      name: "Clean logs",
       name: "Zbierz logi w godzinne grupy",
       module: "Core.Tasks.CollectDataHourly",
       action: false,
-      device: false,
+      device: false
     }
     |> DB.Repo.insert!()
+
     #    id: 9
     #    %TaskType{
     #      name: "Device activity supervisor task",
@@ -787,7 +795,6 @@ defmodule DB.Init do
     #      device: true,
     #    }
     #    |> Repo.insert!()
-
 
     # read integra inputs id: 1
     %Task{
@@ -923,6 +930,7 @@ defmodule DB.Init do
       end_date: nil
     }
     |> Repo.insert!()
+
     # id: 10
     %DB.Task{
       type_id: 9,
@@ -947,15 +955,21 @@ defmodule DB.Init do
       order: 1,
       title: "",
       description: "",
-      lights: [], #get_(Light, [1, 2, 3, 4, 5, 6]),
+      # get_(Light, [1, 2, 3, 4, 5, 6]),
+      lights: [],
       ports: [],
-      dimmers: [], #get_(Dimmer, [1, 2, 3]),
-      sunblinds: [], #get_(Sunblind, [1, 2, 3, 4, 5, 6]),
-      actions: [], #get_(Action, [1, 2, 3, 4]),
-      tasks: [], #get_(Task, [1, 2, 3, 4, 5, 6]),
+      # get_(Dimmer, [1, 2, 3]),
+      dimmers: [],
+      # get_(Sunblind, [1, 2, 3, 4, 5, 6]),
+      sunblinds: [],
+      # get_(Action, [1, 2, 3, 4]),
+      actions: [],
+      # get_(Task, [1, 2, 3, 4, 5, 6]),
+      tasks: [],
       devices: []
     }
     |> Repo.insert!()
+
     #
     #    %Page{
     #      name: "Wszystkie urządzenia",
@@ -971,7 +985,6 @@ defmodule DB.Init do
     #      devices: []
     #    }
     #    |> Repo.insert!()
-
 
     %Page{
       name: "Wszystkie zadania i akcje",
@@ -1008,23 +1021,26 @@ defmodule DB.Init do
       order: 4,
       title: "",
       description: "",
-      lights: [], #get_(Light, [1, 2, 3, 4, 5, 6]),
+      # get_(Light, [1, 2, 3, 4, 5, 6]),
+      lights: [],
       ports: [],
       dimmers: get_(Dimmer, [4]),
-      sunblinds: [], #get_(Sunblind, [5, 6]),
-      actions: [], #get_(Action, [2, 3, 4]),
+      # get_(Sunblind, [5, 6]),
+      sunblinds: [],
+      # get_(Action, [2, 3, 4]),
+      actions: [],
       tasks: [],
       devices: []
     }
     |> Repo.insert!()
-
 
     %Page{
       name: "Salon",
       order: 5,
       title: "",
       description: "",
-      lights: [], # get_(Light, [1, 2, 3, 4, 5, 6]),
+      # get_(Light, [1, 2, 3, 4, 5, 6]),
+      lights: [],
       ports: [],
       dimmers: get_(Dimmer, [1, 2, 3]),
       sunblinds: get_(Sunblind, [5, 6]),
@@ -1039,16 +1055,17 @@ defmodule DB.Init do
       order: 5,
       title: "",
       description: "",
-      lights: [], #get_(Light, [1, 2, 3, 4, 5, 6]),
+      # get_(Light, [1, 2, 3, 4, 5, 6]),
+      lights: [],
       ports: [],
-      dimmers: [], #get_(Dimmer, [1, 2, 3]),
+      # get_(Dimmer, [1, 2, 3]),
+      dimmers: [],
       sunblinds: get_(Sunblind, [2, 3]),
       actions: get_(Action, [6]),
       tasks: get_(Task, [9]),
       devices: []
     }
     |> Repo.insert!()
-
 
     :ok
   end
@@ -1134,6 +1151,7 @@ defmodule DB.Init do
       ref: 1
     }
     |> Repo.insert!()
+
     #    id: 2
     %Thermometer{
       device_id: 2,
@@ -1142,7 +1160,6 @@ defmodule DB.Init do
       ref: 1
     }
     |> Repo.insert!()
-
 
     %DB.Thermometer.Read{
       therm_id: 2,
@@ -1173,6 +1190,7 @@ defmodule DB.Init do
       value: 12.0
     }
     |> Repo.insert!()
+
     :ok
   end
 

@@ -59,8 +59,13 @@ defmodule UiWeb.ThermometerControllerTest do
   describe "update thermometer" do
     setup [:create_thermometer]
 
-    test "renders thermometer when data is valid", %{conn: conn, thermometer: %Thermometer{id: id} = thermometer} do
-      conn = put(conn, Routes.thermometer_path(conn, :update, thermometer), thermometer: @update_attrs)
+    test "renders thermometer when data is valid", %{
+      conn: conn,
+      thermometer: %Thermometer{id: id} = thermometer
+    } do
+      conn =
+        put(conn, Routes.thermometer_path(conn, :update, thermometer), thermometer: @update_attrs)
+
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.thermometer_path(conn, :show, id))
@@ -75,7 +80,9 @@ defmodule UiWeb.ThermometerControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, thermometer: thermometer} do
-      conn = put(conn, Routes.thermometer_path(conn, :update, thermometer), thermometer: @invalid_attrs)
+      conn =
+        put(conn, Routes.thermometer_path(conn, :update, thermometer), thermometer: @invalid_attrs)
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

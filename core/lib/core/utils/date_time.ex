@@ -1,12 +1,11 @@
 defmodule Core.Utils.DateTime do
   @moduledoc false
 
-  @type t :: NaiveDateTime.t
+  @type t :: NaiveDateTime.t()
 
   @callback compare(t1 :: t, t2 :: t) :: atom
   @callback now() :: t
   @callback to_naive(t :: DateTime) :: t
-
 
   @adapter Application.get_env(:core, :date_time_adapter)
 
@@ -33,7 +32,7 @@ defmodule Core.Utils.DateTime do
     @adapter.now()
   end
 
-  def to_naive(t)do
+  def to_naive(t) do
     @adapter.to_naive(t)
   end
 
@@ -41,7 +40,6 @@ defmodule Core.Utils.DateTime do
   def compare(t1, t2) do
     @adapter.compare(t1, t2)
   end
-
 
   @spec before?(t1 :: t, t2 :: t) :: boolean
   def before?(t1, t2) do
@@ -52,6 +50,4 @@ defmodule Core.Utils.DateTime do
   def after?(t1, t2) do
     @adapter.compare(t1, t2) == :gt
   end
-
-
 end

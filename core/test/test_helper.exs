@@ -11,4 +11,4 @@ Mox.defmock(Core.Utils.Time.Mock, for: Core.Utils.Time)
 Mox.defmock(Core.Utils.DateTime.Mock, for: Core.Utils.DateTime)
 Mox.defmock(Core.Tasks.TaskMock, for: Core.Tasks.Task)
 
-#Application.put_env(:core, :calculator, MyApp.CalcMock)
+# Application.put_env(:core, :calculator, MyApp.CalcMock)

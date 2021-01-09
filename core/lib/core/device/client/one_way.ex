@@ -1,7 +1,7 @@
 defmodule Core.Device.Client.OneWay do
   @moduledoc false
   require Logger
-  @behaviour Core.Devices.Client
+  @behaviour Core.Device.Client
 
   # TODO add send in new thread
   @impl true
@@ -38,7 +38,7 @@ defmodule Core.Device.Client.OneWay do
               end
 
             error ->
-              Logger.error "satel recv timeout"
+              Logger.error("satel recv timeout")
               error
           end
 
@@ -46,7 +46,7 @@ defmodule Core.Device.Client.OneWay do
         resp
 
       error ->
-        Logger.error "satel connection timeout"
+        Logger.error("satel connection timeout")
         error
     end
   end

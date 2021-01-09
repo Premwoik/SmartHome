@@ -21,8 +21,8 @@ defmodule BasicControllerTest do
     DB.Port.update_state([12, 13], false)
     ports = DB.Port.get([12, 13])
 
-#    {t, res} = Timex.Duration.measure(fn -> BasicController.turn_on(ports) end)
-#    Logger.info("invoke turn on :: " <> Timex.format_duration(t, :humanized))
+    #    {t, res} = Timex.Duration.measure(fn -> BasicController.turn_on(ports) end)
+    #    Logger.info("invoke turn on :: " <> Timex.format_duration(t, :humanized))
 
     assert BasicController.turn_on(ports) == :ok
 
@@ -30,7 +30,6 @@ defmodule BasicControllerTest do
     [p12, p13] = DB.Port.get([12, 13])
     assert p12.state == true
     assert p13.state == true
-
   end
 
   test "invoke turn on - error from device " do
@@ -41,8 +40,8 @@ defmodule BasicControllerTest do
     DB.Port.update_state([12, 13], false)
     ports = DB.Port.get([12, 13])
 
-#    {t, res} = Timex.Duration.measure(fn -> BasicController.turn_on(ports) end)
-#    Logger.info("invoke turn on :: " <> Timex.format_duration(t, :humanized))
+    #    {t, res} = Timex.Duration.measure(fn -> BasicController.turn_on(ports) end)
+    #    Logger.info("invoke turn on :: " <> Timex.format_duration(t, :humanized))
     res = BasicController.turn_on(ports)
 
     assert elem(res, 0) == :error
@@ -52,68 +51,65 @@ defmodule BasicControllerTest do
     [p12, p13] = DB.Port.get([12, 13])
     assert p12.state == false
     assert p13.state == false
-
   end
 
-    test "invoke turn off - ports are off" do
-#      TODO check this later
-      # zero because ports state is false
-      @device_mock
-      |> expect(:set_outputs, 0, fn d, ids, state -> :ok end)
+  test "invoke turn off - ports are off" do
+    #      TODO check this later
+    # zero because ports state is false
+    @device_mock
+    |> expect(:set_outputs, 0, fn d, ids, state -> :ok end)
 
-      DB.Port.update_state([12,13], false)
-      ports = [p12_, p13_]= DB.Port.get([12, 13])
+    DB.Port.update_state([12, 13], false)
+    ports = [p12_, p13_] = DB.Port.get([12, 13])
 
-#      {t, res} = Timex.Duration.measure(fn -> BasicController.turn_off(ports) end)
-#      Logger.info("invoke turn off - ports are off :: " <> Timex.format_duration(t, :humanized))
+    #      {t, res} = Timex.Duration.measure(fn -> BasicController.turn_off(ports) end)
+    #      Logger.info("invoke turn off - ports are off :: " <> Timex.format_duration(t, :humanized))
 
-      assert BasicController.turn_off(ports) == :ok
+    assert BasicController.turn_off(ports) == :ok
 
-      # verify changes in database
-      [p12, p13] = DB.Port.get([12, 13])
-      assert p12.state == false
-      assert p13.state == false
-    end
+    # verify changes in database
+    [p12, p13] = DB.Port.get([12, 13])
+    assert p12.state == false
+    assert p13.state == false
+  end
 
-    test "invoke turn off" do
-      # second execution is for pulse port
-      @device_mock
-      |> expect(:set_outputs, 2, fn d, ids, state -> :ok end)
+  test "invoke turn off" do
+    # second execution is for pulse port
+    @device_mock
+    |> expect(:set_outputs, 2, fn d, ids, state -> :ok end)
 
-      DB.Port.update_state([12,13], true)
-      ports = DB.Port.get([12, 13])
+    DB.Port.update_state([12, 13], true)
+    ports = DB.Port.get([12, 13])
 
-#      {t, res} = Timex.Duration.measure(fn -> BasicController.turn_off(ports) end)
-#      Logger.info("invoke turn off :: " <> Timex.format_duration(t, :humanized))
-#
-      assert BasicController.turn_off(ports) == :ok
+    #      {t, res} = Timex.Duration.measure(fn -> BasicController.turn_off(ports) end)
+    #      Logger.info("invoke turn off :: " <> Timex.format_duration(t, :humanized))
+    #
+    assert BasicController.turn_off(ports) == :ok
 
-      # verify changes in database
-      [p12, p13] = DB.Port.get([12, 13])
-      assert p12.state == false
-      assert p13.state == false
-    end
+    # verify changes in database
+    [p12, p13] = DB.Port.get([12, 13])
+    assert p12.state == false
+    assert p13.state == false
+  end
 
+  test "invoke toggle" do
+    # second execution is for pulse port
+    @device_mock
+    |> expect(:set_outputs, 2, fn d, ids, state -> :ok end)
 
-    test "invoke toggle" do
-      # second execution is for pulse port
-      @device_mock
-      |> expect(:set_outputs, 2, fn d, ids, state -> :ok end)
+    DB.Port.update_state([12], true)
+    DB.Port.update_state([13], false)
 
-      DB.Port.update_state([12], true)
-      DB.Port.update_state([13], false)
+    ports = DB.Port.get([12, 13])
 
-      ports = DB.Port.get([12, 13])
+    #      {t, res} = Timex.Duration.measure(fn -> BasicController.toggle(ports) end)
+    #      Logger.info("invoke toggle :: " <> Timex.format_duration(t, :humanized))
 
-#      {t, res} = Timex.Duration.measure(fn -> BasicController.toggle(ports) end)
-#      Logger.info("invoke toggle :: " <> Timex.format_duration(t, :humanized))
+    assert BasicController.toggle(ports) == :ok
 
-      assert BasicController.toggle(ports) == :ok
-
-      # verify changes in database
-      [p12, p13] = DB.Port.get([12, 13])
-      assert p12.state == false
-      assert p13.state == true
-    end
-
+    # verify changes in database
+    [p12, p13] = DB.Port.get([12, 13])
+    assert p12.state == false
+    assert p13.state == true
+  end
 end

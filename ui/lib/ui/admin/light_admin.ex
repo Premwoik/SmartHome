@@ -7,8 +7,6 @@ defmodule Ui.LightAdmin do
   alias DB.Repo
 
   alias DB.Light
-  alias DB.Port
-  alias DB.Dimmer
 
   @doc """
   Returns the list of lights.
@@ -39,18 +37,20 @@ defmodule Ui.LightAdmin do
 
   """
   def get_light!(id),
-      do: Repo.get!(Light, id)
-          |> preload()
+    do:
+      Repo.get!(Light, id)
+      |> preload()
 
   def get_light(id) do
-    res = Repo.get(Light, id)
-          |> preload()
+    res =
+      Repo.get(Light, id)
+      |> preload()
+
     case res do
       nil -> {:error, :wrong_id}
       r -> {:ok, r}
     end
   end
-
 
   def preload(light) do
     Repo.preload(light, [:port, dimmer: [:port]])
@@ -70,7 +70,7 @@ defmodule Ui.LightAdmin do
   """
   def create_light(attrs \\ %{}) do
     %Light{}
-    |> Light.changeset(attrs, all_str = true)
+    |> Light.changeset(attrs, _all_str = true)
     |> Repo.insert()
   end
 
@@ -88,7 +88,7 @@ defmodule Ui.LightAdmin do
   """
   def update_light(%Light{} = light, attrs) do
     light
-    |> Light.changeset(attrs, all_str = true)
+    |> Light.changeset(attrs, _all_str = true)
     |> Repo.update()
   end
 

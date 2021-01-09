@@ -1,0 +1,105 @@
+{
+  "ui_schema": {
+    "ui:order": [
+      "id",
+      "name",
+      "function",
+      "active",
+      "frequency",
+      "start_time",
+      "end_time",
+      "port_id",
+      "params"
+    ],
+    "start_time": {
+      "ui:placeholder": "hh:mm:ss"
+    },
+    "end_time": {
+      "ui:placeholder": "hh:mm:ss"
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://192.168.2.100/api/schemas/action_schema.json",
+  "default": {},
+  "description": "Formularz edycujny akcji",
+  "required": [
+    "active",
+    "frequency",
+    "function",
+    "name"
+  ],
+  "title": "Akcja",
+  "type": "object",
+  "properties": {
+    "active": {
+      "$id": "#/properties/active",
+      "default": false,
+      "description": "Tylko kiedy akcja jest aktywny, to może ona zostać wywołana przez przypisane jej wejście (port) lub zadanie. Akcja może być wywołana stanem wysokim albo niskim, co może skutkować przeciwnym działaniem (np. zamknięcie okien na stan wysoki oraz otwarcie na stan niski).",
+      "title": "Czy akcja jest aktywna?",
+      "type": "boolean"
+    },
+    "end_time": {
+      "$id": "#/properties/end_time",
+      "default": "",
+      "description": "Po tej godzinie, akcja nie może być wywoływana.",
+      "title": "Godzina końcowa",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "frequency": {
+      "$id": "#/properties/frequency",
+      "default": 0,
+      "description": "Określa co jaki czas akcja może być wywołana.",
+      "title": "Częstotliwość wywołania.",
+      "type": "integer"
+    },
+    "function": {
+      "$id": "#/properties/function",
+      "default": "",
+      "description": "Można powiedzieć, że jest to taki typ akcji. Funkcja określa działanie, które zostanie podjęte po wywołaniu akcji.",
+      "title": "Nazwa funkcji obsługującej akcję",
+      "enum": ["AutoLights", "DimmerController", "ToggleGroup", "CloseSunblinds"],
+      "type": "string"
+    },
+    "id": {
+      "$id": "#/properties/id",
+      "default": 0,
+      "title": "ID",
+      "type": "integer"
+    },
+    "name": {
+      "$id": "#/properties/name",
+      "default": "",
+      "title": "Nazwa",
+      "type": "string"
+    },
+    "params": {
+      "$id": "#/properties/params",
+      "description": "Dodatkowe parametry",
+      "title": "Parametry",
+      "type": [
+        "object"
+      ],
+      "additionalProperties": true
+    },
+    "port_id": {
+      "$id": "#/properties/port_id",
+      "default": 0,
+      "description": "Przypisany port musi być wejściem. Gdy nastąpi zmiana jego stanum to akcja zostanie wywołana odpowiednia ze stanem wysokim lub niskim. Zależy to od tego jak zmienił się stan wejścia.",
+      "title": "ID portu wywołującego",
+      "type": "integer"
+    },
+    "start_time": {
+      "$id": "#/properties/start_time",
+      "default": "",
+      "description": "Od tej godziny akcja może być wywoływana.",
+      "title": "Godzina startowa",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

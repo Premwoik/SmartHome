@@ -60,36 +60,31 @@ defmodule RstpToWs.Camera.Converter do
 
   @impl true
   def handle_cast({:register, ref}, state) do
+    size_prev = MapSet.size(state.consumers)
     state = inc(state, ref)
-    size = MapSet.size(state.consumers)
-
-    state = if size == 1 do
-      res = Process.read_timer(state.close_timer)
-      if res != false and res > 0 do
-        Process.cancel_timer(state.close_timer)
-        state
-      else
-        start_retransmission(state)
-      end
+    state = if size_prev == 0 do
+      is_running = Process.cancel_timer(state.close_timer) != false
+      if !is_running, do: start_retransmission(state), else: state
     else
       state
     end
-
     {:noreply, state}
   end
 
   @impl true
   def handle_cast({:remove, ref}, state) do
-    state = dec(state, ref)
-    size = MapSet.size(state.consumers)
-
-    state = if size == 0 do
-      ref = Process.send_after(self(), :end_signal, 15_000)
-      %{state | close_timer: ref}
+    state = if MapSet.size(state.consumers) > 0 do
+      state = dec(state, ref)
+      size = MapSet.size(state.consumers)
+      if size == 0 do
+        ref = Process.send_after(self(), :end_signal, 15_000)
+        %{state | close_timer: ref}
+      else
+        state
+      end
     else
       state
     end
-
     {:noreply, state}
   end
 
@@ -126,7 +121,6 @@ defmodule RstpToWs.Camera.Converter do
 
     cameras = Enum.map(cameras, fn {n, data} -> {n, spawn2(data)} end)
               |> Map.new()
-
     %{state | cameras: cameras}
   end
 

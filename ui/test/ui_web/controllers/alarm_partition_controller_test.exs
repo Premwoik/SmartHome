@@ -36,7 +36,9 @@ defmodule UiWeb.AlarmPartitionControllerTest do
 
   describe "create alarm_partition" do
     test "renders alarm_partition when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.alarm_partition_path(conn, :create), alarm_partition: @create_attrs)
+      conn =
+        post(conn, Routes.alarm_partition_path(conn, :create), alarm_partition: @create_attrs)
+
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, Routes.alarm_partition_path(conn, :show, id))
@@ -51,7 +53,9 @@ defmodule UiWeb.AlarmPartitionControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.alarm_partition_path(conn, :create), alarm_partition: @invalid_attrs)
+      conn =
+        post(conn, Routes.alarm_partition_path(conn, :create), alarm_partition: @invalid_attrs)
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -59,8 +63,15 @@ defmodule UiWeb.AlarmPartitionControllerTest do
   describe "update alarm_partition" do
     setup [:create_alarm_partition]
 
-    test "renders alarm_partition when data is valid", %{conn: conn, alarm_partition: %AlarmPartition{id: id} = alarm_partition} do
-      conn = put(conn, Routes.alarm_partition_path(conn, :update, alarm_partition), alarm_partition: @update_attrs)
+    test "renders alarm_partition when data is valid", %{
+      conn: conn,
+      alarm_partition: %AlarmPartition{id: id} = alarm_partition
+    } do
+      conn =
+        put(conn, Routes.alarm_partition_path(conn, :update, alarm_partition),
+          alarm_partition: @update_attrs
+        )
+
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.alarm_partition_path(conn, :show, id))
@@ -75,7 +86,11 @@ defmodule UiWeb.AlarmPartitionControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, alarm_partition: alarm_partition} do
-      conn = put(conn, Routes.alarm_partition_path(conn, :update, alarm_partition), alarm_partition: @invalid_attrs)
+      conn =
+        put(conn, Routes.alarm_partition_path(conn, :update, alarm_partition),
+          alarm_partition: @invalid_attrs
+        )
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

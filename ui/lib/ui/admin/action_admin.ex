@@ -15,7 +15,7 @@ defmodule Ui.ActionAdmin do
 
   """
   def list_actions do
-    Repo.all Action
+    Repo.all(Action)
   end
 
   @doc """
@@ -52,7 +52,7 @@ defmodule Ui.ActionAdmin do
   """
   def create_action(attrs \\ %{}) do
     %Action{}
-    |> Action.changeset(attrs, all_str = true)
+    |> Action.changeset(attrs, _all_str = true)
     |> Repo.insert()
   end
 
@@ -70,7 +70,7 @@ defmodule Ui.ActionAdmin do
   """
   def update_action(%Action{} = action, attrs) do
     action
-    |> Action.changeset(attrs, all_str = true)
+    |> Action.changeset(attrs, _all_str = true)
     |> Repo.update()
   end
 
@@ -87,7 +87,7 @@ defmodule Ui.ActionAdmin do
 
   """
   def delete_action(%Action{} = action) do
-    Repo.delete action
+    Repo.delete(action)
   end
 
   @doc """
@@ -103,10 +103,9 @@ defmodule Ui.ActionAdmin do
     Action.changeset(action, %{})
   end
 
-
   def update_action_args(id, port_ids) do
     from(p in DB.ActionArgument, where: p.action_id == ^id)
-    |> Repo.delete_all
+    |> Repo.delete_all()
 
     Enum.each(port_ids, fn port_id -> DB.ActionArgument.insert(id, port_id) end)
     :ok
@@ -114,27 +113,30 @@ defmodule Ui.ActionAdmin do
 
   def get_action_items(id) do
     DB.ActionArgument.get(id)
-    |> Enum.map(
-         fn arg ->
-           case(arg.type) do
-             "sunblind" ->
-               arg_to_item(arg, DB.Sunblind)
-             "dimmer" <> a ->
-               arg_to_item(arg, DB.Dimmer)
-             "light" ->
-               arg_to_item(arg, DB.Light)
-             "port" ->
-               arg_to_item(arg, DB.Port)
-             _ ->
-               %{}
-           end
-         end
-       )
+    |> Enum.map(fn arg ->
+      case(arg.type) do
+        "sunblind" ->
+          arg_to_item(arg, DB.Sunblind)
+
+        "dimmer" <> _ ->
+          arg_to_item(arg, DB.Dimmer)
+
+        "light" ->
+          arg_to_item(arg, DB.Light)
+
+        "port" ->
+          arg_to_item(arg, DB.Port)
+
+        _ ->
+          %{}
+      end
+    end)
   end
 
   defp arg_to_item(arg, db) do
-    "Elixir.DB."<>name = to_string(db)
-    admin = String.to_atom("Elixir.Ui."<>name<>"Admin")
+    "Elixir.DB." <> name = to_string(db)
+    admin = String.to_atom("Elixir.Ui." <> name <> "Admin")
+
     db
     |> Repo.get_by(port_id: arg.port_id)
     |> admin.preload()

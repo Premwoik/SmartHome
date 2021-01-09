@@ -35,9 +35,7 @@ defmodule Core.Controllers.LightControllerTest do
     assert d2.direction == -1
     assert p3.state == true
     assert p4.state == true
-
   end
-
 
   test "invoke turn off" do
     # second execution is for pulse port
@@ -61,5 +59,4 @@ defmodule Core.Controllers.LightControllerTest do
     assert p3.state == false
     assert p4.state == false
   end
-
 end

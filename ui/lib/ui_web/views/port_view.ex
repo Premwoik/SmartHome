@@ -23,7 +23,7 @@ defmodule UiWeb.PortView do
       pwm_fill: port.pwm_fill,
       device_id: port.device_id,
       ref: port.ref,
-      '@type': "port"
+      "@type": "port"
     }
   end
 

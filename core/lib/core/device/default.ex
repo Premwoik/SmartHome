@@ -3,8 +3,6 @@ defmodule Core.Device.Default do
   require Logger
   use Bitwise
 
-  alias DB.DeviceJournal
-
   defmodule Code do
     @moduledoc false
 
@@ -12,79 +10,96 @@ defmodule Core.Device.Default do
     def setTimeDimmer, do: 102
     def readTemp, do: 110
     def readInputs, do: 112
-    def readWattmeters, do: 111
+    def readWattMeters, do: 111
     def setPwmOutputs, do: 105
     def heartbeat, do: 200
   end
 
-  @behaviour Core.Controllers.PortController
-  @behaviour Core.Controllers.ThermometerController
-  @behaviour Core.Controllers.WattmeterController
+  @behaviour Core.Device
+  @behaviour Core.Device.BasicIO
+  @behaviour Core.Device.PwmOutputs
+  @behaviour Core.Device.Thermometer
+  @behaviour Core.Device.EnergyMeter
+  @behaviour Core.Device.DefaultDev
 
   @client Application.fetch_env!(:core, :two_way_client)
   @protocol Core.Device.Default.Protocol
 
+  import Core.Device.Client.Http, only: [skip_response: 1]
+
+  @impl true
   def start_link(host, port, opts, keywords, timeout \\ 5000, length \\ 11) do
     @client.start_link(host, port, opts, keywords, timeout, length)
   end
 
+  def read_active_inputs(device), do: read_inputs(device)
+
   @impl true
-  def read_active_inputs(device) do
+  def read_inputs(device) do
     cmd = Code.readInputs()
     noreply_send(device, cmd, [])
+  end
+
+  @impl true
+  def read_outputs(_device) do
+    {:error, "Not implemented yet"}
   end
 
   @impl true
   def set_outputs(device, ports) do
     cmd = Code.setOutputs()
     data = ports_to_num(ports)
+
     noreply_send(device, cmd, data)
+    |> skip_response()
   end
 
   @impl true
   def set_time_dimmer(device, ports) do
     cmd = Code.setTimeDimmer()
     data = time_ports_to_num(ports)
+
     noreply_send(device, cmd, data)
+    |> skip_response()
   end
 
   @impl true
   def set_pwm_outputs(device, ports) do
     cmd = Code.setPwmOutputs()
     data = Enum.flat_map(ports, fn p -> [p.number, p.pwm_fill] end)
+
     noreply_send(device, cmd, data)
+    |> skip_response()
   end
 
   @impl true
-  def read_watts(device) do
-    noreply_send(device, Code.readWattmeters(), [])
-  end
-
   def heartbeat(device) do
     noreply_send(device, Code.heartbeat(), [])
+    |> skip_response()
+  end
+
+  @impl true
+  def read_counted_values(device) do
+    noreply_send(device, Code.readWattMeters(), [])
   end
 
   @impl true
   def read_temperatures(device) do
-    case noreply_send(device, Code.readTemp(), []) do
-      {:ok, val} ->
-        {addr, [h, l]} = Enum.split(val, 8)
-        raw = h
-              <<< 8 ||| l
-        {:ok, {to_string(addr), raw}}
-
-      err_ ->
-        err_
+    with {:ok, val} <- noreply_send(device, Code.readTemp(), []) do
+      {addr, [h, l]} = Enum.split(val, 8)
+      raw = h <<< 8 ||| l
+      {:ok, {to_string(addr), raw}}
     end
   end
 
   # Privates
+
   defp noreply_send(device, cmd, args, try_max \\ 5)
 
   defp noreply_send(_, _, _, 0),
-       do: {:error, "All allowed attempts failed. Can't get response!"}
+    do: {:error, "All allowed attempts failed. Can't get response!"}
 
-  defp noreply_send(device, cmd, args, max_try) do
+  defp noreply_send(device, cmd, args, _max_try) do
     msg = @protocol.encode(0, cmd, args)
 
     case @client.send_with_resp(device, msg) do
@@ -103,10 +118,10 @@ defmodule Core.Device.Default do
     receive do
       msg ->
         case @protocol.decode(msg) do
-          {:ok, [cmd, status | args]} ->
+          {:ok, [_cmd, status | args]} ->
             case status == 200 do
               true -> {:ok, args}
-              false -> {:error, "wrong response code"}
+              false -> {:error, "Wrong response code"}
             end
 
           error ->
@@ -119,22 +134,18 @@ defmodule Core.Device.Default do
 
   defp ports_to_num(ports) do
     ports
-    |> Enum.flat_map(
-         fn p ->
-           if p.inverted_logic,
-              do: [p.number, state_to_num(not p.state)],
-              else: [p.number, state_to_num(p.state)]
-         end
-       )
+    |> Enum.flat_map(fn p ->
+      if p.inverted_logic,
+        do: [p.number, state_to_num(not p.state)],
+        else: [p.number, state_to_num(p.state)]
+    end)
   end
 
   defp time_ports_to_num(ports) do
     ports
-    |> Enum.flat_map(
-         fn p ->
-           [p.number, 0, round(p.timeout / 100)]
-         end
-       )
+    |> Enum.flat_map(fn p ->
+      [p.number, 0, round(p.timeout / 100)]
+    end)
   end
 
   defp state_to_num(false), do: 0

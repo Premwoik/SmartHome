@@ -51,7 +51,7 @@ defmodule Ui.AlarmPartitionAdmin do
   """
   def create_alarm_partition(attrs \\ %{}) do
     %AlarmPartition{}
-    |> AlarmPartition.changeset(attrs, all_str=true)
+    |> AlarmPartition.changeset(attrs, _all_str = true)
     |> Repo.insert()
   end
 
@@ -69,7 +69,7 @@ defmodule Ui.AlarmPartitionAdmin do
   """
   def update_alarm_partition(%AlarmPartition{} = alarm_partition, attrs) do
     alarm_partition
-    |> AlarmPartition.changeset(attrs, all_str=true)
+    |> AlarmPartition.changeset(attrs, _all_str = true)
     |> Repo.update()
   end
 
