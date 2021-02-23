@@ -60,7 +60,6 @@ defmodule Core.Device.ShellyRGBW2 do
   end
 
   @impl true
-  @spec set_color(map()) :: res()
   def set_color(%{ip: ip, port: port} = d, [%Port{number: num, more: %{red: r, green: g, blue: b}}] = ports) do
     url_ = url(ip, port, num)
     query_ = %{"red" => r, "green" => g, "blue" => b}
