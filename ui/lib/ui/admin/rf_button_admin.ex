@@ -3,7 +3,6 @@ defmodule Ui.RfButtonAdmin do
   The Admin context.
   """
 
-  import Ecto.Query, warn: false
   alias DB.{Repo, RfButton}
 
   @doc """
@@ -33,7 +32,7 @@ defmodule Ui.RfButtonAdmin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_rf_button!(id), do: Repo.get!(RfButton, id)
+  def get_rf_button!(id), do: Repo.get(RfButton, id)
 
   @doc """
   Creates a rf_button.
@@ -48,8 +47,8 @@ defmodule Ui.RfButtonAdmin do
 
   """
   def create_rf_button(attrs \\ %{}) do
-    %RfButton{}
-    |> RfButton.changeset(attrs, __all_str = true)
+    RfButton.new()
+    |> RfButton.cast(attrs)
     |> Repo.insert()
   end
 
@@ -67,7 +66,7 @@ defmodule Ui.RfButtonAdmin do
   """
   def update_rf_button(%RfButton{} = rf_button, attrs) do
     rf_button
-    |> RfButton.changeset(attrs, _all_str = true)
+    |> RfButton.cast(attrs)
     |> Repo.update()
   end
 
@@ -87,16 +86,4 @@ defmodule Ui.RfButtonAdmin do
     Repo.delete(rf_button)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking rf_button changes.
-
-  ## Examples
-
-      iex> change_rf_button(rf_button)
-      %Ecto.Changeset{source: %RfButton{}}
-
-  """
-  def change_rf_button(%RfButton{} = rf_button) do
-    RfButton.changeset(rf_button, %{})
-  end
 end

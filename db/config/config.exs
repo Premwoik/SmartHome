@@ -18,9 +18,13 @@ import Config
 #
 #     config :logger, level: :info
 #
+# config/config.exs
+config :mnesia,
+  # Notice the single quotes
+  dir: '../db/.mnesia/#{Mix.env()}/#{node()}'
 
 config :db,
-  ecto_repos: [DB.Repo]
+  ecto_repos: [DB.StatsRepo]
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment

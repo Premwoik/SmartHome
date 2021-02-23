@@ -3,9 +3,8 @@ defmodule Ui.DimmerAdmin do
   The DimmerAdmin context.
   """
 
-  import Ecto.Query, warn: false
-  alias DB.Repo
-  alias DB.{Dimmer}
+  alias DB.{Repo, Port}
+  import Ui.Admin
 
   @doc """
   Returns the list of dimmers.
@@ -17,8 +16,7 @@ defmodule Ui.DimmerAdmin do
 
   """
   def list_dimmers do
-    Repo.all(Dimmer)
-    |> preload()
+    Port.dimmers()
   end
 
   @doc """
@@ -36,22 +34,14 @@ defmodule Ui.DimmerAdmin do
 
   """
   def get_dimmer!(id),
-    do:
-      Repo.get!(Dimmer, id)
-      |> preload()
+    do: Repo.get(Port, id)
 
   def get_dimmer(id) do
-    res =
-      Repo.get(Dimmer, id)
-      |> preload()
-
-    case res do
+    case Repo.get(Port, id) do
       nil -> {:error, :wrong_id}
       r -> {:ok, r}
     end
   end
-
-  def preload(dimmer), do: Repo.preload(dimmer, port: [:device], lights: [:port])
 
   @doc """
   Creates a dimmer.
@@ -66,8 +56,9 @@ defmodule Ui.DimmerAdmin do
 
   """
   def create_dimmer(attrs \\ %{}) do
-    %Dimmer{}
-    |> Dimmer.changeset(attrs, _all_str = true)
+    attrs = split_more_fields(attrs, Port, Port.Dimmer)
+    Port.new()
+    |> Port.cast(attrs)
     |> Repo.insert()
   end
 
@@ -83,9 +74,10 @@ defmodule Ui.DimmerAdmin do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_dimmer(%Dimmer{} = dimmer, attrs) do
+  def update_dimmer(%Port{} = dimmer, attrs) do
+    attrs = split_more_fields(attrs, Port, Port.Dimmer)
     dimmer
-    |> Dimmer.changeset(attrs, _all_str = true)
+    |> Port.cast(attrs)
     |> Repo.update()
   end
 
@@ -101,20 +93,7 @@ defmodule Ui.DimmerAdmin do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_dimmer(%Dimmer{} = dimmer) do
+  def delete_dimmer(%Port{} = dimmer) do
     Repo.delete(dimmer)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking dimmer changes.
-
-  ## Examples
-
-      iex> change_dimmer(dimmer)
-      %Ecto.Changeset{source: %Dimmer{}}
-
-  """
-  def change_dimmer(%Dimmer{} = dimmer) do
-    Dimmer.changeset(dimmer, %{})
   end
 end

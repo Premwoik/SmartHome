@@ -49,13 +49,15 @@ defmodule Core.MqttClient do
     # unhandled message! You will crash if you subscribe to something
     # and you don't have a 'catch all' matcher; crashing on unexpected
     # messages could be a strategy though.
+    Logger.info("RfButton handling #{inspect(payload)}")
+
     %{
       "RfReceived" => %{
         "Data" => key_value
       }
     } = Poison.decode!(payload)
 
-    btn = RfButton.get_or_create(key_value)
+    btn = RfButton.identify(key_value)
     state = RfButtonHandler.handle_button_click(btn, state)
     {:ok, state}
   end

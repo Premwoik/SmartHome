@@ -1,26 +1,18 @@
 defmodule Core.Utils.Time do
   @moduledoc false
 
-  @adapter Application.get_env(:core, :time_adapter)
+  use Timex
 
-  @callback now() :: Time.t()
-  @callback compare(t1 :: Time.t(), t2 :: Time.t()) :: atom
+  @spec in_interval?(Date.t(), Date.t()) :: boolean
+  def in_interval?(from, to) do
+    actual = DateTime.to_time(Timex.local())
 
-  def now() do
-    @adapter.now()
-  end
-
-  def compare(a, b) do
-    @adapter.compare(a, b)
-  end
-
-  def in_interval?(n \\ now(), s, e) do
-    case compare(e, s) do
+    case Time.compare(to, from) do
       :lt ->
-        compare(n, s) == :gt || compare(e, n) == :gt
+        Time.compare(actual, from) == :gt || Time.compare(to, actual) == :gt
 
       :gt ->
-        compare(n, s) == compare(e, n)
+        Time.compare(actual, from) == Time.compare(to, actual)
 
       _ ->
         false

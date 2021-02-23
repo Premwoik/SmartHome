@@ -6,9 +6,9 @@ defmodule Core.Device.Satel do
   @behaviour Core.Device
 
   @client Application.fetch_env!(:core, :two_way_client)
+  alias Core.Device.Static.Response
   alias Core.Device.Satel.Protocol
   require Logger
-  import Core.Device.Client.Http
 
   use Bitwise
 
@@ -16,6 +16,9 @@ defmodule Core.Device.Satel do
   def start_link(host, port, _opts, keywords, timeout \\ 5000, length \\ 11) do
     @client.start_link(host, port, [:binary], keywords, timeout, length)
   end
+
+  @impl Core.Device
+  def need_process?(), do: true
 
   ###
   #  AlarmSystem impl
@@ -27,9 +30,8 @@ defmodule Core.Device.Satel do
     body = Protocol.encode_outputs(zones, 4)
     command = cmd <> code <> body
 
-    with {:ok, _resp} <- run_command(device, command) do
-      {:ok, zones}
-    end
+    run_command(device, command)
+    |> Response.wrap(device, zones)
   end
 
   @impl Core.Device.AlarmSystem
@@ -38,9 +40,8 @@ defmodule Core.Device.Satel do
     body = Protocol.encode_outputs(zones, 4)
     command = <<0x84>> <> code <> body
 
-    with {:ok, _resp} <- run_command(device, command) do
-      {:ok, zones}
-    end
+    run_command(device, command)
+    |> Response.wrap(device, zones)
   end
 
   @impl Core.Device.AlarmSystem
@@ -49,9 +50,8 @@ defmodule Core.Device.Satel do
     body = Protocol.encode_outputs(zones, 4)
     command = <<0x85>> <> code <> body
 
-    with {:ok, _resp} <- run_command(device, command) do
-      {:ok, zones}
-    end
+    run_command(device, command)
+    |> Response.wrap(device, zones)
   end
 
   @impl Core.Device.AlarmSystem
@@ -62,6 +62,7 @@ defmodule Core.Device.Satel do
          {:ok, outputs} <- if(outputs_status, do: read_outputs(device), else: {:ok, []}) do
       {:ok, [inputs: inputs, outputs: outputs]}
     end
+    |> Response.wrap(device, device)
   end
 
   ###
@@ -78,7 +79,7 @@ defmodule Core.Device.Satel do
     command = cmd <> code <> body
 
     run_command(device, command)
-    |> skip_response()
+    |> Response.wrap(ports)
   end
 
   @impl Core.Device.BasicIO
@@ -86,6 +87,7 @@ defmodule Core.Device.Satel do
     with {:ok, resp} <- run_command(device, <<0x00>>) do
       {:ok, Protocol.decode_outputs(resp, 8)}
     end
+    |> Response.wrap_with_ports(device)
   end
 
   @impl Core.Device.BasicIO
@@ -93,11 +95,13 @@ defmodule Core.Device.Satel do
     with {:ok, resp} <- run_command(device, <<0x17>>) do
       {:ok, Protocol.decode_outputs(resp, 8)}
     end
+    |> Response.wrap_with_ports(device)
   end
 
   @impl Core.Device.BasicIO
-  def heartbeat(_device) do
-    {:error, "Not implemented"}
+  def heartbeat(device) do
+    {:error, "Not supported!"}
+    |> Response.wrap(device)
   end
 
   ###
@@ -108,36 +112,42 @@ defmodule Core.Device.Satel do
     with {:ok, resp} <- run_command(device, <<0x02>>) do
       {:ok, Protocol.decode_outputs(resp, 8)}
     end
+    |> Response.wrap(device)
   end
 
   def read_zones_alarm_memory(device) do
     with {:ok, resp} <- run_command(device, <<0x04>>) do
       {:ok, Protocol.decode_outputs(resp, 8)}
     end
+    |> Response.wrap(device)
   end
 
   def read_armed_partitions(device, mode) do
     with {:ok, resp} <- run_command(device, <<0x09 + mode>>) do
       {:ok, Protocol.decode_outputs(resp, 4)}
     end
+    |> Response.wrap(device)
   end
 
   def read_partitions_alarm(device) do
     with {:ok, resp} <- run_command(device, <<0x13>>) do
       {:ok, Protocol.decode_outputs(resp, 4)}
     end
+    |> Response.wrap(device)
   end
 
   def read_partitions_alarm_memory(device) do
     with {:ok, resp} <- run_command(device, <<0x15>>) do
       {:ok, Protocol.decode_outputs(resp, 4)}
     end
+    |> Response.wrap(device)
   end
 
   def read_partitions_with_violated_zones(device) do
     with {:ok, resp} <- run_command(device, <<0x25>>) do
       {:ok, Protocol.decode_outputs(resp, 4)}
     end
+    |> Response.wrap(device)
   end
 
   # Privates
@@ -145,11 +155,9 @@ defmodule Core.Device.Satel do
   defp run_command(device, <<cmd_code::binary-size(1), _::binary>> = cmd) do
     with command <- Protocol.prepare_frame(cmd),
          :ok <- @client.send_with_resp(device, command),
-         {:ok, resp} <- wait_for_confirmation(5_000) do
+         {:ok, resp} <- wait_for_confirmation(2_000) do
       Logger.log(:debug, "Send request to integra: #{inspect(command, base: :hex)}")
       Protocol.check_response(resp, cmd_code)
-    else
-      err -> err
     end
   end
 

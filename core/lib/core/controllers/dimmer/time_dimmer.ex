@@ -1,81 +1,74 @@
 defmodule Core.Controllers.Dimmer.TimeDimmer do
   @moduledoc false
 
-  use Core.Controllers.DimmerController
+  use Core.Controllers.DimmerBeh
+  use Witchcraft
 
+  alias Core.Device.Static.Response
   alias Core.Controllers.LightController, as: LC
-  alias Core.Broadcast, as: Channel
+  #  alias Core.Broadcast, as: Channel
 
-  alias DB.{Dimmer, Port, Repo}
-  import Ecto.Changeset, only: [change: 2]
-
-  @impl true
-  def get_state(dimmer) do
-    {:ok, dimmer.fill > 0}
-  end
+  alias DB.{Port}
 
   @impl true
-  def notify_light_change(%{port: %{state: true}} = dimmer) do
-    if !Dimmer.any_light_on?(dimmer) do
-      set_state(dimmer, false)
+  def handle_light_change(%{state: s} = dimmer) do
+    #    !true == false => turn on
+    #    !false == false => nothing
+    #    !true == true => nothing
+    #    !false == true => turn off
+    if !Port.Dimmer.any_light_on?(dimmer) == s do
+      set_state(dimmer, state: !s, deep: false)
     else
-      :ok
-    end
-  end
-
-  def notify_light_change(dimmer) do
-    if Dimmer.any_light_on?(dimmer) do
-      set_state(dimmer, true)
-    else
-      :ok
+      %Response{}
     end
   end
 
   @impl true
-  def set_state(dimmer, s) do
+  def set_state(dimmer, ops) do
+    s = Keyword.get(ops, :state)
     fill = if(s, do: 100, else: 0)
-    set_brightness(dimmer, fill)
+    set_brightness(dimmer, Keyword.put(ops, :fill, fill))
   end
 
   @impl true
-  def set_brightness(%{fill: dfill} = dimmer, fill) when dfill != fill do
-    dimmer_ = %{dimmer | fill: fill, port: %{dimmer.port | state: fill > 0}}
+  def set_brightness(%{state: prev_state} = dimmer, ops) do
+    fill = Keyword.get(ops, :fill)
+    deep = Keyword.get(ops, :deep, true)
+    IO.puts("Set brightness")
+    IO.inspect(dimmer)
+    IO.inspect(fill)
+    IO.inspect(deep)
 
-    cond do
-      dfill == 0 ->
-        :ok = LC.notify_dimmer_change(dimmer_)
-        send_brightness(dimmer, fill)
-
-      fill == 0 ->
-        :ok = LC.notify_dimmer_change(dimmer_)
-        update_object(dimmer, 0, 1)
-
-      true ->
-        send_brightness(dimmer, fill)
+    with {time, dir} <- Port.Dimmer.fill_to_time(dimmer, fill),
+         dimmer <-
+           Port.cast(dimmer, state: fill > 0, timeout: time, more: [fill: fill, direction: dir]),
+         :ok <- notify_lights(dimmer, prev_state, deep),
+         %Response{} = res <- send_brightness(dimmer) do
+      map(res |> IO.inspect(), &Port.update/1)
+    else
+      e ->
+        IO.puts("ERROR #{inspect(e)}")
+        Response.wrap(:ok, Port.device(dimmer), [dimmer])
     end
   end
-
-  def set_brightness(_, _), do: :ok
 
   # Privates
 
-  defp send_brightness(dimmer, brightness) do
-    {time, dir} = Dimmer.fill_to_time(dimmer, brightness)
-    ports = [%Port{DB.Repo.preload(dimmer.port, :device) | timeout: time}]
-
-    with :ok <- Core.Device.do_(:set_time_dimmer, ports) do
-      update_object(dimmer, brightness, dir)
-    end
+  defp send_brightness(%{state: s} = dimmer) when s do
+    Core.Device.do_(:set_time_dimmer, [dimmer])
   end
 
-  defp update_object(dimmer, fill, dir) do
-    {:ok, _} =
-      Repo.transaction(fn ->
-        Repo.update!(change(dimmer, fill: fill, direction: dir))
-        Repo.update!(change(dimmer.port, state: fill > 0))
-      end)
+  defp send_brightness(d) do
+    Response.wrap({:ok, "The actual brightness is correct"}, Port.device(d), [d])
+  end
 
-    Channel.broadcast_item_change("dimmer", dimmer.id, dimmer.ref + 1)
+  def notify_lights(dimmer, prev_state, deep) do
+    if(deep and prev_state != dimmer.state) do
+      LC.handle_dimmer_change(dimmer)
+    else
+      :ok
+    end
+
     :ok
   end
 end

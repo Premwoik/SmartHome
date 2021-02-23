@@ -1,33 +1,45 @@
 defmodule UiWeb.ActivationsHistoryController do
   use UiWeb, :controller
-  alias DB.{DeviceActivations, InputActivations, OutputActivations}
+  alias DB.Stats.{DeviceActivation, InputActivation, OutputActivation}
 
-  def get_input_activations(conn, %{"id" => port_id}) do
+  def get_input_activations(conn, %{"id" => port_id} = o) do
+    precision = Map.get(o, "precision", "hourly") |> String.to_atom()
+    from_date = Map.get(o, "from", nil)
+    to_date = Map.get(o, "to", nil)
+    limit = Map.get(o, "limit", nil)
+
     data =
-      InputActivations.find(port_id, _limit = 50)
+      InputActivation.get(port_id, precision, from: from_date, to: to_date, limit: limit)
       |> Enum.map(&log_mapper/1)
 
     json(conn, data)
   end
 
-  def get_output_activations(conn, %{"id" => port_id}) do
+  def get_output_activations(conn, %{"id" => port_id} = o) do
+    precision = Map.get(o, "precision", "hourly") |> String.to_atom()
+    from_date = Map.get(o, "from", nil)
+    to_date = Map.get(o, "to", nil)
+    limit = Map.get(o, "limit", nil)
+
     data =
-      OutputActivations.find(port_id, _limit = 50)
+      OutputActivation.get(port_id, precision, from: from_date, to: to_date, limit: limit)
       |> Enum.map(&log_mapper/1)
 
     json(conn, data)
   end
 
-  def get_device_activations(conn, %{"id" => device_id}) do
+  def get_device_activations(conn, %{"id" => device_id} = o) do
+    precision = Map.get(o, "precision", "hourly") |> String.to_atom()
+    from_date = Map.get(o, "from", nil)
+    to_date = Map.get(o, "to", nil)
+    limit = Map.get(o, "limit", nil)
+
     data =
-      DeviceActivations.find(device_id, _limit = 50)
+      DeviceActivation.get(device_id, precision, from: from_date, to: to_date, limit: limit)
       |> Enum.map(&log_mapper/1)
 
     json(conn, data)
   end
-
-  #  def get_temperature(conn, %{"id" => therm_id}) do
-  #  end
 
   defp log_mapper(l) do
     %{

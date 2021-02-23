@@ -1,108 +1,76 @@
 defmodule DB.Action do
-  @moduledoc false
-  use Ecto.Schema
-  import Ecto.Changeset
-  import Ecto.Query
-  alias DB.{Repo, Action, Port}
-  import DB
+  alias DB.{CRUD, Action, Port, Device}
 
-  @derive {Poison.Encoder, only: [:id, :function, :active, :params, :port]}
-  schema "actions" do
-    field(:name, :string)
-    field(:function, :string)
-    field(:active, :boolean)
-    field(:params, :string)
-    field(:frequency, :integer)
-    field(:start_time, :time)
-    field(:end_time, :time)
-    field(:ref, :integer)
-    belongs_to(:port, DB.Port)
-    many_to_many(:args, DB.Port, join_through: "actions_arguments")
-  end
+  @type args :: [CRUD.foreign(Port | Device)]
+  @type t :: %Action{
+          id: CRUD.id(),
+          name: String.t(),
+          function: String.t(),
+          active: boolean,
+          port_id: CRUD.foreign(Port),
+          params: map,
+          arguments: args,
+          timeout: integer,
+          start_time: Time.t() | nil,
+          end_time: Time.t() | nil,
+          ref: CRUD.ref()
+        }
 
-  def changeset(action, params \\ %{}, all_str \\ false) do
-    params_ = inc_ref(action, Enum.into(params, %{}), all_str)
-
-    action
-    |> cast(params_, [
+  use Memento.Table,
+    attributes: [
+      :id,
       :name,
       :function,
       :active,
+      :port_id,
       :params,
-      :frequency,
+      :arguments,
+      :timeout,
       :start_time,
       :end_time,
-      :port_id,
       :ref
-    ])
+    ],
+    index: [:name],
+    type: :ordered_set,
+    autoincrement: true
+
+  use CRUD, default: [ref: 1, active: false, name: "", arguments: [], timeout: 0]
+
+  @spec arguments(%Action{}, :up | :down) :: list
+  def arguments(action, state \\ :up)
+  def arguments(%{arguments: nil}, _), do: nil
+
+  def arguments(%{arguments: a}, state) do
+    keys = List.wrap(Keyword.get(a, :up_down, [])) ++ List.wrap(Keyword.get(a, state, []))
+
+    Memento.transaction(fn ->
+      Enum.map(keys, fn {:foreign, mod, id} -> mod.get_q(id) end)
+    end)
+    |> CRUD.unwrap()
   end
 
-  def get(ids) do
-    from(a in Action, where: a.id in ^ids)
-    |> Repo.all()
-    |> Repo.preload(:port)
+  def param(action, name, default \\ nil) do
+    Map.get(action, :params, %{}) |> Map.get(name, default)
   end
 
-  def get_view_format(id) do
-    from(
-      a in Action,
-      where: a.id == ^id,
-      join: c in "page_content_actions",
-      on: c.action_id == a.id,
-      select: %{
-        id: a.id,
-        name: "TODO",
-        order: c.order,
-        function: a.function,
-        state: a.active,
-        action: ""
-      }
-    )
-    |> Repo.all()
-  end
+  def get_by_activator([]), do: []
 
-  def get_by_activator(device_id, numbs) do
-    Repo.all(
-      from(a in Action,
-        join: p in Port,
-        on: a.port_id == p.id,
-        where: p.device_id == ^device_id and p.number in ^numbs,
-        select: a.id
-      )
-    )
-  end
+  def get_by_activator(ports) do
+    ids = Enum.map(ports, &{:foreign, DB.Port, &1.id})
 
-  def get_args_ids(action_id) when is_integer(action_id) do
-    from(a in "actions_arguments", where: a.action_id == ^action_id, select: a.port_id)
-    |> Repo.all()
-  end
+    Enum.filter(all_active(), &(&1.port_id in ids))
+    |> Enum.map(& &1.id)
 
-  def get_args_ids(action) do
-    get_args_ids(action.id)
-  end
-
-  def get_ports(action_id) do
-    from(a in "actions_arguments",
-      join: p in Port,
-      on: a.port_id == p.id,
-      where: a.action_id == ^action_id,
-      select: p
-    )
-    |> Repo.all()
+    #    find_raw(&(&1), Enum.map(ports, & {:==, :"$5", &1.id}), [:"$1"])
   end
 
   def all_active() do
-    Repo.all(from(a in Action, where: a.active == true))
+    find({:==, :active, true})
   end
 
-  def change_state(ids, state) do
-    IO.inspect(ids)
-
-    from(a in Action, where: a.id in ^ids)
-    |> Repo.update_all(
-      set: [
-        active: state
-      ]
-    )
+  def get_active(ids) when is_list(ids) do
+    all_active() |> Enum.filter(&(&1.id in ids))
   end
+
+  def get_active(id), do: get_active([id])
 end

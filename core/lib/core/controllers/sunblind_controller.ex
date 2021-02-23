@@ -5,9 +5,10 @@ defmodule Core.Controllers.SunblindController do
   alias Core.Controllers.IOBeh
 
   alias Core.Broadcast, as: Channel
-  alias DB.{Port, Sunblind}
+  alias DB.{Port, Repo}
   alias Core.Controllers.{BasicController}
   import Core.Controllers.Universal
+  import Witchcraft.Functor
 
   @impl IOBeh
   def turn_on(sunblinds, _ops), do: open(sunblinds)
@@ -19,84 +20,92 @@ defmodule Core.Controllers.SunblindController do
 
   def toggle([s | _] = sunblinds, _ops) do
     case s.state do
-      "close" -> open(sunblinds)
-      "open" -> close(sunblinds)
+      :open -> open(sunblinds)
+      :close -> close(sunblinds)
     end
   end
 
   def close(sunblinds) do
-    valid_sunblinds = skip_not(sunblinds, "open")
-
-    valid_sunblinds
-    |> to_ports("close")
+    skip_not(sunblinds, :open)
+    |> to_ports()
     |> BasicController.turn_on()
-    |> proceed_result(valid_sunblinds, "close")
+    |> map(&lock_sunblinds(&1, :close))
   end
 
   def open(sunblinds) do
-    valid_sunblinds = skip_not(sunblinds, "close")
-
-    valid_sunblinds
-    |> to_ports("open")
+    skip_not(sunblinds, :close)
+    |> to_ports()
     |> BasicController.turn_off()
-    |> proceed_result(valid_sunblinds, "open")
+    |> map(&lock_sunblinds(&1, :open))
   end
 
   def click(sunblind) do
     case sunblind.state do
-      "close" -> open([sunblind])
-      "open" -> close([sunblind])
-      "in_move" -> {:error, sunblind, "still is moving"}
+      :close -> open([sunblind])
+      :open -> close([sunblind])
+      :in_move -> {:error, sunblind, "still is moving"}
     end
   end
 
   def calibrate(sunblind, state) do
-    Sunblind.update_state(sunblind, state)
+    Port.update(sunblind, more: [state: state])
   end
 
   # Privates
 
   defp skip_not(sunblinds, state) do
-    Enum.filter(sunblinds, &(&1.state == state))
+    Enum.filter(sunblinds, &(Port.from_more(&1, :state) == state))
   end
 
-  defp to_ports(sunblinds, next_state) do
-    Enum.map(sunblinds, fn s ->
-      DB.Repo.preload(s, [Port.preload(), Port.preload(:open_port)]) |> to_port(next_state)
-    end)
+  defp to_ports(sunblinds) do
+    Enum.map(sunblinds, &to_port/1)
   end
 
-  defp to_port(%{type: type, port: p, open_port: op}, next_state) do
-    case {type, next_state} do
-      {"pulse2", "open"} -> op
-      _ -> p
+  defp to_port(%{more: %{type: type, state: state}} = p) do
+    #    takes current state and assumes that the next action is change to opposite one eg. :close -> :open
+    case {type, state} do
+      {:pulse2, :close} ->
+        Port.from_more(p, :open_port_id) |> Repo.preload()
+
+      _ ->
+        p
     end
   end
 
-  defp proceed_result(res, sunblinds, state) do
-    valid_sunblinds = get_passed_items(res, sunblinds)
-    update_state(valid_sunblinds, "in_move")
-    Task.start(fn -> unblock_sunblinds(valid_sunblinds, state) end)
-    res
+  defp lock_sunblinds(sunblinds, state) do
+    sunblinds = map(sunblinds, &back_to_main/1) |> update_state(:in_move)
+    Task.start(fn -> unlock_sunblinds(sunblinds, state) end)
+    sunblinds
   end
 
-  def unblock_sunblinds(sunblinds, state) do
+  def back_to_main(port) do
+    case port do
+      %{type: :sunblind_helper} ->
+        IO.puts("ok")
+        Port.from_more(port, :close_port_id) |> Repo.preload()
+
+      _ -> port
+    end
+  end
+
+  def unlock_sunblinds(sunblinds, state) do
     sunblinds
-    |> Enum.group_by(fn s -> s.full_open_time end)
+    |> Enum.group_by(fn s -> Port.from_more(s, :full_open_time) end)
     |> Enum.sort()
     |> Enum.each(fn {t, ss} ->
       receive do
       after
         t ->
-          update_state(ss, state, 2)
+          update_state(ss, state)
       end
     end)
   end
 
-  defp update_state(sunblinds, state, v \\ 1) do
-    Enum.each(sunblinds, fn %{id: id, ref: ref} = s ->
-      Sunblind.update(s, %{state: state})
-      Channel.broadcast_item_change("sunblind", id, ref + v)
+  defp update_state(sunblinds, state) do
+    Enum.map(sunblinds, fn s ->
+      port = Port.update(s, more: [state: state])
+      Channel.broadcast_item_change("sunblind", port.id, port.ref)
+      port
     end)
   end
 end

@@ -1,80 +1,47 @@
 defmodule DB.RfButton do
   @moduledoc false
-  use Ecto.Schema
-  import DB
-  import Ecto.Changeset
-  import Ecto.Query
 
-  alias DB.{Repo, Port, RfButton, Task, Action}
+  alias DB.{RfButton, CRUD, Action, Port}
 
-  schema "rf_buttons" do
-    belongs_to(:port, Port)
-    belongs_to(:action, Action)
-    belongs_to(:task, Task)
-    field(:name, :string)
-    # :on | :off | :toggle | :page
-    field(:mode, :string)
-    field(:key_value, :string)
-    field(:page_id, :integer)
-    field(:ref, :integer)
-  end
-
-  def changeset(btn, params \\ %{}, all_str \\ false) do
-    params_ = inc_ref(btn, Enum.into(params, %{}), all_str)
-
-    btn
-    |> cast(params_, [:port_id, :task_id, :action_id, :name, :mode, :key_value, :page_id, :ref])
-  end
-
-  #  @doc false
-  #  def changeset(rf_button, attrs) do
-  #    rf_button
-  #    |> cast(attrs, [:port, :action, :task, :name, :mode, :key_value])
-  #    |> validate_required([:port, :action, :task, :name, :mode, :key_value])
-  #  end
-
-  def get_or_create(key) do
-    res =
-      from(b in RfButton, where: b.key_value == ^key)
-      |> Repo.all()
-      |> Repo.preload(port: [:device], action: [], task: [])
-
-    if res == [] do
-      [
-        %RfButton{
-          name: "nowy",
-          mode: "toggle",
-          key_value: key,
-          port_id: nil,
-          action_id: nil,
-          task_id: nil,
-          ref: 1,
-          page_id: 1
+  @type mode :: :on | :off | :toggle | :page
+  @type page_id :: integer
+  @type t :: %RfButton{
+          id: CRUD.id(),
+          name: String.t(),
+          mode: mode,
+          key_value: String.t(),
+          page_id: integer,
+          on_click_action: [{page_id, CRUD.foreign(Action) | Crud.foreign(Port)}],
+          ref: CRUD.ref()
         }
-        # |> Repo.insert!() # TODO
-      ]
-    else
-      res
+
+  use Memento.Table,
+    attributes: [
+      :id,
+      :name,
+      :mode,
+      :key_value,
+      :page_id,
+      :on_click_action,
+      :ref
+    ],
+    index: [:name],
+    type: :ordered_set,
+    autoincrement: true
+
+  use CRUD, default: [ref: 1, mode: :toggle, page_id: 1]
+
+  def click_action(button, page) do
+    case Map.get(button, :on_click_action) do
+      nil -> nil
+      actions -> Enum.find(actions, fn {id, _} -> id == page end)
     end
   end
 
-  #  def get_or_create(key, page_id \\ 1) do
-  #    res = Repo.get_by(RfButton, [key_value: key, page_id: page_id])
-  #          |> Repo.preload([port: [:device], action: [], task: []])
-  #    if is_nil(res) do
-  #      %RfButton{
-  #        name: "nowy",
-  #        mode: "toggle",
-  #        key_value: key,
-  #        port_id: nil,
-  #        action_id: nil,
-  #        task_id: nil,
-  #        ref: 1,
-  #        page_id: 1
-  #      }
-  #      #      |> Repo.insert!() % TODO
-  #    else
-  #      res
-  #    end
-  #  end
+  def identify(key_value) do
+    guard = {:==, :key_value, key_value}
+
+    find(guard)
+    |> List.first()
+  end
 end

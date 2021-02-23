@@ -5,20 +5,21 @@ defmodule Core.Actions.DimmerController do
   require Logger
   alias Core.Controllers.DimmerController
   @behaviour Core.Actions.Action
+  alias DB.{Port, Action}
 
   @impl true
-  def init_memory() do
-    %{pid: nil}
+  def init_state() do
+    nil
   end
 
   @impl true
-  def execute(_on_off, action, %{pid: pid}) do
+  def execute(_on_off, action, pid) do
     if alive?(pid) do
       send(pid, :notified)
-      %{pid: pid}
+      {:ok, pid}
     else
       {:ok, pid} = Task.start(fn -> delayed_command_executor(action, 1) end)
-      %{pid: pid}
+      {:ok, pid}
     end
   end
 
@@ -35,13 +36,12 @@ defmodule Core.Actions.DimmerController do
     after
       5_000 ->
         Logger.info("Executing delayed action!")
-        args = DB.Action.get_args_ids(action.id)
 
-        DB.Dimmer.get_by_port(args)
+        Action.arguments(action, :up)
         |> Enum.each(fn dimmer ->
-          dimmer_ = %{dimmer | fill: 0, lights: []}
+          dimmer = Port.cast(dimmer, more: [fill: 0])
           fill = if counter > 3, do: 100, else: 25 * counter
-          DimmerController.set_brightness(dimmer_, fill)
+          DimmerController.set_brightness(dimmer, fill)
         end)
     end
   end

@@ -2,6 +2,7 @@ defmodule Core.Controllers.IOBeh do
   @moduledoc false
 
   alias Core.Controllers.IOBeh
+  alias Core.Device.Static.Response
 
   defmacro __using__(_) do
     quote([]) do
@@ -22,8 +23,8 @@ defmodule Core.Controllers.IOBeh do
     end
   end
 
-  @type def_result() :: :ok | {:error, any(), any()}
-  @type content_result() :: {:ok, any()} | {:error, any(), any()}
+  @type def_result() :: %Response{}
+  @type content_result() :: %Response{}
 
   @callback turn_on(list(any), ops :: keyword()) :: def_result()
   @callback turn_off(list(any), ops :: keyword()) :: def_result()

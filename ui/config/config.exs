@@ -36,11 +36,10 @@ config :ui,
 config :logger,
   backends: [
     RingLogger,
-    {LoggerFileBackend, :error_log},
-#    {LoggerFileBackend, :info_log},
-#    {LoggerFileBackend, :debug_log}
+    {LoggerFileBackend, :error_log}
+    #    {LoggerFileBackend, :info_log},
+    #    {LoggerFileBackend, :debug_log}
   ]
-
 
 # configuration for the {LoggerFileBackend, :error_log} backend
 
@@ -49,19 +48,18 @@ log_path = "../logs/"
 default_format = {Ui.LogFormatter, :format}
 default_metadata = [:request_id, :application]
 
-
 # Set the number of messages to hold in the circular buffer
 config :logger, RingLogger,
-       max_size: 1024,
-       format: default_format,
-       metadata: default_metadata
+  max_size: 1024,
+  format: default_format,
+  metadata: default_metadata
 
 # You can also configure RingLogger.Client options to be used
 # with every client by default
 config :ring_logger,
-       application_levels: %{my_app: :error},
-       color: [debug: :yellow],
-       level: :debug
+  application_levels: %{my_app: :error},
+  color: [debug: :yellow],
+  level: :debug
 
 config :logger,
        :error_log,

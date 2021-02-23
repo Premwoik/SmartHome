@@ -4,16 +4,17 @@ defmodule Core.Controllers.LightController do
   use Core.Controllers.IOBeh
   alias Core.Controllers.IOBeh
 
-  alias DB.{Light}
+  alias DB.{Port, Repo}
   alias Core.Controllers.{BasicController, DimmerController}
   alias Core.Broadcast, as: Channel
-  import Core.Controllers.Universal, only: [prepare_for_basic: 1, flatten_result: 1]
+  import Core.Controllers.Universal, only: [flatten_result: 1]
+  alias Core.Device.Static.Response
 
   @impl IOBeh
   def toggle([], _ops), do: :ok
 
   def toggle([l | _] = lights, ops) do
-    if l.port.state, do: turn_off(lights, ops), else: turn_on(lights, ops)
+    if l.state, do: turn_off(lights, ops), else: turn_on(lights, ops)
   end
 
   @impl IOBeh
@@ -29,43 +30,47 @@ defmodule Core.Controllers.LightController do
   @impl IOBeh
   def set_state(lights, ops) do
     state = Keyword.get(ops, :state, nil)
-    ports = prepare_for_basic(lights)
+    deep_set = Keyword.get(ops, :deep, true)
 
-    with :ok <- BasicController.set_state(ports, ops) do
-      :ok = notify_dimmers(lights, state)
-      Light.update(lights)
+    with %Response{error: [], ok: lights} = resp <- BasicController.set_state(lights, ops) do
+      notify_dimmers(lights, state, deep_set)
 
       Enum.each(lights, fn %{id: id, ref: ref} ->
         Channel.broadcast_item_change("light", id, ref + 1)
       end)
 
-      :ok
+      resp
     end
   end
 
   #  @impl IOBeh
-  def notify_dimmer_change(%{lights: ls} = dimmer) do
-    with true <- Ecto.assoc_loaded?(ls),
-         {:ok, state} <- DimmerController.get_state(dimmer) do
-      set_state(dimmer.lights, state: state)
-    else
-      false -> :ok
-    end
+  def handle_dimmer_change(%{state: d_state} = dimmer) do
+    Port.Dimmer.lights(dimmer)
+    |> Enum.filter(&(&1.state != d_state))
+    |> set_state(state: d_state, deep: false)
   end
 
   # Privates
 
-  defp get_dimmers(lights) do
-    lights
-    |> DB.Repo.preload(dimmer: [:port])
-    |> Enum.map(fn l -> l.dimmer end)
-    |> Enum.filter(fn d -> d != nil end)
-    |> Enum.uniq()
+  defp notify_dimmers(_, _, false) do
+    :ok
   end
 
-  defp notify_dimmers(lights, state) do
-    get_dimmers(lights)
-    |> Enum.map(&DimmerController.notify_light_change(&1, state))
-    |> flatten_result()
+  defp notify_dimmers(lights, state, true) do
+    case get_dimmers(lights) do
+      [] ->
+        :ok
+
+      dimmers ->
+        Enum.map(dimmers, &DimmerController.handle_light_change(&1, state))
+        |> Witchcraft.Foldable.fold()
+    end
+  end
+
+  defp get_dimmers(lights) do
+    Enum.map(lights, fn l -> Port.from_more(l, :dimmer_id) end)
+    |> Enum.filter(fn d -> d != nil end)
+    |> Enum.uniq()
+    |> Repo.preload()
   end
 end

@@ -2,6 +2,7 @@ defmodule Core.Device.Default do
   @moduledoc false
   require Logger
   use Bitwise
+  alias Core.Device.Static.Response
 
   defmodule Code do
     @moduledoc false
@@ -25,24 +26,28 @@ defmodule Core.Device.Default do
   @client Application.fetch_env!(:core, :two_way_client)
   @protocol Core.Device.Default.Protocol
 
-  import Core.Device.Client.Http, only: [skip_response: 1]
-
   @impl true
   def start_link(host, port, opts, keywords, timeout \\ 5000, length \\ 11) do
     @client.start_link(host, port, opts, keywords, timeout, length)
   end
+
+  @impl true
+  def need_process?(), do: true
 
   def read_active_inputs(device), do: read_inputs(device)
 
   @impl true
   def read_inputs(device) do
     cmd = Code.readInputs()
+
     noreply_send(device, cmd, [])
+    |> Response.wrap_with_ports(device)
   end
 
   @impl true
-  def read_outputs(_device) do
+  def read_outputs(device) do
     {:error, "Not implemented yet"}
+    |> Response.wrap_with_ports(device)
   end
 
   @impl true
@@ -51,16 +56,18 @@ defmodule Core.Device.Default do
     data = ports_to_num(ports)
 
     noreply_send(device, cmd, data)
-    |> skip_response()
+    |> Response.wrap(device, ports)
   end
 
   @impl true
   def set_time_dimmer(device, ports) do
+    IO.puts("Default")
+    IO.inspect(ports)
     cmd = Code.setTimeDimmer()
     data = time_ports_to_num(ports)
 
     noreply_send(device, cmd, data)
-    |> skip_response()
+    |> Response.wrap(device, ports)
   end
 
   @impl true
@@ -69,18 +76,19 @@ defmodule Core.Device.Default do
     data = Enum.flat_map(ports, fn p -> [p.number, p.pwm_fill] end)
 
     noreply_send(device, cmd, data)
-    |> skip_response()
+    |> Response.wrap(device, ports)
   end
 
   @impl true
   def heartbeat(device) do
     noreply_send(device, Code.heartbeat(), [])
-    |> skip_response()
+    |> Response.wrap(device)
   end
 
   @impl true
   def read_counted_values(device) do
     noreply_send(device, Code.readWattMeters(), [])
+    |> Response.wrap(device)
   end
 
   @impl true
@@ -88,8 +96,9 @@ defmodule Core.Device.Default do
     with {:ok, val} <- noreply_send(device, Code.readTemp(), []) do
       {addr, [h, l]} = Enum.split(val, 8)
       raw = h <<< 8 ||| l
-      {:ok, {to_string(addr), raw}}
+      {:ok, [{to_string(addr), raw}]}
     end
+    |> Response.wrap_same(device)
   end
 
   # Privates
@@ -105,8 +114,11 @@ defmodule Core.Device.Default do
     case @client.send_with_resp(device, msg) do
       :ok ->
         case wait_for_confirmation() do
-          :timeout -> noreply_send(device, cmd, args)
-          response -> response
+          :timeout ->
+            noreply_send(device, cmd, args)
+
+          response ->
+            response
         end
 
       error ->
@@ -114,7 +126,7 @@ defmodule Core.Device.Default do
     end
   end
 
-  defp wait_for_confirmation(timeout \\ 15_000) do
+  defp wait_for_confirmation(timeout \\ 2_000) do
     receive do
       msg ->
         case @protocol.decode(msg) do

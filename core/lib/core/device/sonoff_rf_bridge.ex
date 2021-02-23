@@ -3,6 +3,7 @@ defmodule Core.Device.SonoffRfBridge do
 
   @behaviour Core.Device
   alias DB.{Port, Device}
+  alias Core.Device.Static.Response
   alias Core.Device.SonoffRfBridge, as: Rf
   import Core.Device.Client.Http
 
@@ -10,6 +11,9 @@ defmodule Core.Device.SonoffRfBridge do
   def start_link(_host, _port, _opts, _keywords, _timeout \\ 5000, _length \\ 11) do
     false
   end
+
+  @impl Core.Device
+  def need_process?(), do: false
 
   defstruct [:RfKey2]
 
@@ -21,14 +25,16 @@ defmodule Core.Device.SonoffRfBridge do
   end
 
   @spec set_outputs(%Device{}, list(%Port{})) :: res()
-  def set_outputs(%{ip: ip, port: port}, [%Port{number: num, state: s}]) do
+  def set_outputs(%{ip: ip, port: port} = d, [%Port{number: num, state: s}] = ports) do
     key = if s, do: num, else: num + 1
     url_ = url(ip, port, num) <> "?cmnd=RfKey" <> to_string(key)
 
     HTTPotion.get(url_)
     |> default_response_catch(&decode_body/1)
-    |> skip_response()
+    |> Response.wrap(d, ports)
   end
+
+  # Privates
 
   @spec decode_body(String.t()) :: %Rf{}
   defp decode_body(body) do

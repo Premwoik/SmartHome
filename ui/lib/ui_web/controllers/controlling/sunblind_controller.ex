@@ -3,8 +3,9 @@ defmodule UiWeb.SunblindController do
 
   alias Ui.SunblindAdmin, as: Admin
 
-  alias DB.{Sunblind}
+  alias DB.Port
   alias Core.Controllers.SunblindController, as: Controller
+  alias Core.Device.Static.Response
 
   action_fallback(UiWeb.FallbackController)
 
@@ -14,7 +15,7 @@ defmodule UiWeb.SunblindController do
   end
 
   def create(conn, %{"sunblind" => sunblind_params}) do
-    with {:ok, %Sunblind{} = sunblind} <- Admin.create_sunblind(sunblind_params) do
+    with {:ok, %Port{} = sunblind} <- Admin.create_sunblind(sunblind_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.sunblind_path(conn, :show, sunblind))
@@ -30,7 +31,7 @@ defmodule UiWeb.SunblindController do
   def update(conn, %{"id" => id, "sunblind" => sunblind_params}) do
     sunblind = Admin.get_sunblind!(id)
 
-    with {:ok, %Sunblind{} = sunblind} <- Admin.update_sunblind(sunblind, sunblind_params) do
+    with {:ok, %Port{} = sunblind} <- Admin.update_sunblind(sunblind, sunblind_params) do
       render(conn, "show.json", sunblind: sunblind)
     end
   end
@@ -38,7 +39,7 @@ defmodule UiWeb.SunblindController do
   def delete(conn, %{"id" => id}) do
     sunblind = Admin.get_sunblind!(id)
 
-    with {:ok, %Sunblind{}} <- Admin.delete_sunblind(sunblind) do
+    with {:ok, %Port{}} <- Admin.delete_sunblind(sunblind) do
       send_resp(conn, :no_content, "")
     end
   end
@@ -46,23 +47,21 @@ defmodule UiWeb.SunblindController do
   # CUSTOM Endpoints
 
   def click(conn, %{"id" => id} = o) do
-    with sunblind <- DB.Sunblind.get(id),
+    with {:ok, sunblind} <- Admin.get_sunblind(id),
          true <- DB.check_ref(o, sunblind),
-         :ok <- Controller.toggle([sunblind]),
-         do: succ_return(conn, id)
+         %Response{ok: [sunblind]} <- Controller.toggle([sunblind]) do
+           render(conn, "show.json", %{sunblind: sunblind})
+   end
   end
 
   def calibrate(conn, %{"id" => id, "state" => state} = o) do
     with {:ok, sunblind} <- Admin.get_sunblind(id),
          true <- DB.check_ref(o, sunblind),
-         :ok <- Controller.calibrate(sunblind, state),
-         do: succ_return(conn, id)
+         %Port{} = sunblind <- Controller.calibrate(sunblind, state) do
+         render(conn, "show.json", %{sunblind: sunblind})
+   end
   end
 
   #  Privates
 
-  defp succ_return(conn, id) do
-    sun = Admin.get_sunblind!(id)
-    render(conn, "show.json", %{sunblind: sun})
-  end
 end

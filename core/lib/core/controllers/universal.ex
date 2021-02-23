@@ -1,11 +1,11 @@
 defmodule Core.Controllers.Universal do
   @moduledoc false
 
-  alias DB.{Sunblind, Light, Dimmer, Port, Repo, Device}
+  alias DB.{Port}
 
   @type port_child :: %{required(:port) => %Port{}}
   @type res :: :ok | {:error, any(), any()}
-  @type item :: %Port{} | %Light{} | %Dimmer{} | %Sunblind{}
+  @type item :: %Port{}
 
   @spec filter_invalid(list(item), list(item)) :: list(item)
   def filter_invalid(items, invalid) do
@@ -31,12 +31,6 @@ defmodule Core.Controllers.Universal do
       :ok
     end
   end
-
-  @spec prepare_for_basic(port_child() | list(port_child())) :: list(%Port{})
-  def prepare_for_basic(any) when is_list(any),
-    do: Enum.map(any, & &1.port) |> Repo.preload(Device.preload())
-
-  def prepare_for_basic(%{port: port}), do: Repo.preload(port, Device.preload())
 
   # Privates
 
