@@ -29,49 +29,45 @@ defmodule Core.Device.ShellyRGBW2 do
   end
 
   @impl true
-  def set_state(%{state: s, number: num} = dimmer) do
-    d = Port.device(dimmer)
-    url_ = url(d.ip, d.port, num)
+  def set_state(%{ip: ip, port: port}, [%Port{state: s, number: num}] = ports) do
+    url_ = url(ip, port, num)
     s = if(s, do: "on", else: "off")
     query = %{"turn" => s}
 
     HTTPotion.get(url_, query: query)
     |> default_response_catch(&decode_body/1)
-    |> Response.wrap(d, [dimmer])
+    |> Response.wrap(d, ports)
   end
 
   @impl true
-  def set_brightness(%{number: num, more: %{fill: fill}} = dimmer) do
-    d = Port.device(dimmer)
-    url_ = url(d.ip, d.port, num)
+  def set_brightness(%{ip: ip, port: port}, [%Port{number: num, more: %{fill: fill}}] = ports) do
+    url_ = url(ip, port, num)
     query_ = %{"gain" => fill}
 
     HTTPotion.get(url_, query: query_)
     |> default_response_catch(&decode_body/1)
-    |> Response.wrap(d, [dimmer])
+    |> Response.wrap(d, ports)
   end
 
   @impl true
-  def set_white_brightness(%{number: num, more: %{white: w}} = dimmer) do
-    d = Port.device(dimmer)
-    url_ = url(d.ip, d.port, num)
+  def set_white_brightness(%{ip: ip, port: port},  [%Port{number: num, more: %{white: w}}] = ports) do
+    url_ = url(ip, port, num)
     query_ = %{"white" => w}
 
     HTTPotion.get(url_, query: query_)
     |> default_response_catch(&decode_body/1)
-    |> Response.wrap(d, [dimmer])
+    |> Response.wrap(d, ports)
   end
 
   @impl true
   @spec set_color(map()) :: res()
-  def set_color(%{number: num, more: %{red: r, green: g, blue: b}} = dimmer) do
-    d = Port.device(dimmer)
-    url_ = url(d.ip, d.port, num)
+  def set_color(%{ip: ip, port: port}, [%Port{number: num, more: %{red: r, green: g, blue: b}}] = ports) do
+    url_ = url(ip, port, num)
     query_ = %{"red" => r, "green" => g, "blue" => b}
 
     HTTPotion.get(url_, query: query_)
     |> default_response_catch(&decode_body/1)
-    |> Response.wrap(d, [dimmer])
+    |> Response.wrap(d, ports)
   end
 
   # Privates
