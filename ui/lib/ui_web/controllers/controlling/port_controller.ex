@@ -4,6 +4,7 @@ defmodule UiWeb.PortController do
   alias Ui.PortAdmin, as: Admin
   alias DB.Port
   alias Core.Controllers.BasicController, as: Controller
+  alias Core.Device.Static.Response
 
   action_fallback(UiWeb.FallbackController)
 
@@ -55,12 +56,9 @@ defmodule UiWeb.PortController do
   def set(conn, %{"id" => id, "state" => state} = o) do
     with {:ok, port} <- Admin.get_port(id),
          true <- DB.check_ref(o, port),
-         :ok <- Controller.set_state([port], state: state),
-         do: succ_return(conn, id)
+         %Response{ok: [port]} <- Controller.set_state([port], state: state) do
+        render(conn, "show.json", port: port)
+      end
   end
 
-  defp succ_return(conn, id) do
-    port = Admin.get_port!(id)
-    render(conn, "show.json", port: port)
-  end
 end

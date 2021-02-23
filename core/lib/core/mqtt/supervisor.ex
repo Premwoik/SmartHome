@@ -1,6 +1,8 @@
 defmodule Core.Mqtt.Supervisor do
   use Supervisor
 
+  alias DB.{Device}
+
   def start_link(opts) do
     Supervisor.start_link(__MODULE__, opts, name: __MODULE__)
   end
@@ -29,16 +31,12 @@ defmodule Core.Mqtt.Supervisor do
   end
 
   def list_of_sonoff_basic() do
-    dt = DB.Repo.get_by(DB.DeviceType, module: "Core.Device.SonoffBasic")
-
-    DB.Device.get_by_type(dt.id)
+    Device.get_by_type("SonoffBasic")
     |> Enum.map(fn d -> {"stat/sonoff_basic/#{d.name}/RESULT", 0} end)
   end
 
   def list_of_sonoff_shellies() do
-    dt = DB.Repo.get_by(DB.DeviceType, module: "Core.Device.Shelly")
-
-    DB.Device.get_by_type(dt.id)
+    Device.get_by_type("Shelly")
     |> Enum.map(fn d -> {"shellies/#{d.name}/relay/0", 0} end)
   end
 end

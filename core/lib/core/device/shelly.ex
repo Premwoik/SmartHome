@@ -3,16 +3,20 @@ defmodule Core.Device.Shelly do
 
   @behaviour Core.Device
   @behaviour Core.Device.BasicIO
-  # , only: [default_response_catch: 2]
+  alias Core.Device.BasicIO
   import Core.Device.Client.Http
+  alias Core.Device.Static.Response
 
   alias DB.{Device}
-  alias Core.Tasks.ReadOutputs
+  alias Core.Actions.ReadOutputs
 
   @impl Core.Device
   def start_link(_, _, _, _, _, _) do
     false
   end
+
+  @impl Core.Device
+  def need_process?(), do: false
 
   defstruct [:ison, :mode, :red, :green, :blue, :white, :gain, :effect, :power, :overpower]
 
@@ -20,32 +24,33 @@ defmodule Core.Device.Shelly do
     "#{ip}:#{port}/relay/#{id}"
   end
 
-  @impl true
-  def set_outputs(%{ip: ip, port: port}, ports) do
+  @impl BasicIO
+  def set_outputs(%{ip: ip, port: port} = device, ports) do
     port_ = List.first(ports)
     state = if port_.state, do: "on", else: "off"
     url_ = url(ip, port, port_.number)
 
     HTTPotion.get(url_, query: %{"turn" => state})
     |> default_response_catch(&decode_body/1)
-    |> skip_response()
+    |> Response.wrap(device, ports)
   end
 
-  @impl true
-  def read_outputs(%{ip: ip, port: port}) do
+  @impl BasicIO
+  def read_outputs(%{ip: ip, port: port} = d) do
     # TODO change hardcoded port (pin) number
     url_ = url(ip, port, 0)
 
     HTTPotion.get(url_)
     |> default_response_catch(&decode_body/1)
     |> format_read_outputs()
+    |> Response.wrap_same(d)
   end
 
-  @impl true
-  def read_inputs(_), do: {:error, "Not implemented"}
+  @impl BasicIO
+  def read_inputs(d), do: {:error, "Not implemented"} |> Response.wrap(d)
 
-  @impl true
-  def heartbeat(_), do: {:error, "Not implemented"}
+  @impl BasicIO
+  def heartbeat(d), do: {:error, "Not implemented"} |> Response.wrap(d)
 
   # Mqtt
 

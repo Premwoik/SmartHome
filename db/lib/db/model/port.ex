@@ -1,11 +1,195 @@
 defmodule DB.Port do
   @moduledoc false
-  use Ecto.Schema
-  import Ecto.Changeset
-  import Ecto.Query
-  import DB
 
-  alias DB.{Repo, Port, Device}
+  alias DB.{Port, Device, CRUD, Repo}
+
+  @type mode :: :input | :output | :output_pwm | :output_pulse | :virtual
+  @type type :: :dimmer | :dimmer2 | :dimmer_rgb | :dimmer_rgbw | :light | :sunblind | :zone
+  @type more :: light | dimmer | sunblind | nil
+  @type light :: %{dimmer_id: CRUD.foreign()}
+  @type dimmer :: %{
+          fill: integer,
+          direction: integer,
+          red: integer,
+          green: integer,
+          blue: integer,
+          white: integer,
+          time: integer
+        }
+  @type sunblind :: %{
+          type: atom,
+          full_open_time: integer,
+          direction: atom,
+          state: atom,
+          open_port_id: CRUD.foreign()
+        }
+
+  @type t :: %Port{
+          id: CRUD.id(),
+          name: String.t(),
+          number: integer,
+          device_id: CRUD.foreign(Device),
+          mode: mode,
+          state: boolean,
+          pwm_fill: integer,
+          inverted_logic: integer,
+          type: type,
+          more: more,
+          timeout: integer,
+          ref: CRUD.ref()
+        }
+
+  @derive {Poison.Encoder, only: [:name, :state, :id]}
+  use CRUD,
+    default: [
+      ref: 1,
+      type: :unknown,
+      inverted_logic: false,
+      state: false,
+      mode: :output,
+      number: 0
+    ]
+
+  use Memento.Table,
+    attributes: [
+      :id,
+      :name,
+      :device_id,
+      :number,
+      :mode,
+      :state,
+      :pwm_fill,
+      :inverted_logic,
+      :type,
+      :more,
+      :timeout,
+      :ref
+    ],
+    index: [:name, :number],
+    type: :ordered_set,
+    autoincrement: true
+
+  def device(%{device_id: {:foreign, Device, id}}) do
+    with {:ok, d} <- Device.get(id), do: d
+  end
+
+  def from_more(%{more: nil}, _), do: nil
+
+  def from_more(%{more: more}, key) when is_map(more) do
+    Map.get(more, key, nil)
+  end
+
+  def from_more(%{more: more}, key) when is_list(more) do
+    Keyword.get(more, key, nil)
+  end
+
+  def sunblind_open_port(%{type: :sunblind, more: %{open_port_id: {:foreign, Port, id}}}) do
+    get(id)
+  end
+
+  def sunblind_open_port(_), do: nil
+
+  def sunblinds() do
+    find(is_type?(:sunblind))
+  end
+
+  def lights() do
+    find(is_type?(:light))
+  end
+
+  def dimmers() do
+    guards = [:dimmer, :dimmer2, :dimmer_rgb, :dimmer_rgbw] |> list_or()
+    find(guards)
+  end
+
+  def identify(_, []), do: []
+
+  def identify(device_id, numbers) when is_list(numbers) do
+    device_id = {:foreign, Device, device_id}
+    match_fn = &:erlang.setelement(4, &1, device_id)
+    guards = [orelse_guard(numbers, &{:==, :"$4", &1})]
+    find_raw(match_fn, guards)
+  end
+
+  def identify(device_id, number) do
+    identify(device_id, List.wrap(number)) |> List.first()
+  end
+
+  def motion_sensors() do
+    find(is_type?(:motion_sensor))
+  end
+
+  def any_on?(ports), do: Enum.any?(ports, & &1.state)
+
+  defp orelse_guard([h | t], comp) do
+    Enum.reduce(t, comp.(h), fn n, acc -> {:orelse, comp.(n), acc} end)
+  end
+
+  defp list_or([h | t], comp \\ &is_type?/1) do
+    Enum.reduce(t, comp.(h), fn i, acc -> {:or, comp.(i), acc} end)
+  end
+
+  defp is_type?(type), do: {:==, :type, type}
+
+  defmodule Light do
+    def __info__(), do: %{attributes: [:dimmer_id]}
+
+    def dimmer(port) do
+      Port.from_more(port, :dimmer_id) |> Repo.preload()
+    end
+  end
+
+  defmodule Sunblind do
+    def __info__(), do: %{attributes: [:full_open_time, :state, :type, :open_port_id, :close_port_id]}
+
+    def open_port(port) do
+      Port.from_more(port, :open_port) |> Repo.preload()
+    end
+  end
+
+  defmodule Dimmer do
+    def __info__(), do: %{attributes: [:fill, :red, :green, :blue, :white, :direction, :time]}
+
+    def lights(dimmer) do
+      Port.lights()
+      |> Enum.filter(fn l -> Repo.match?(Port.from_more(l, :dimmer_id), dimmer) end)
+    end
+
+    def any_light_on?(dimmer) do
+      lights(dimmer)
+      |> Enum.any?(& &1.state)
+    end
+
+    @spec fill_to_time(map, integer) :: integer
+    def fill_to_time(%{more: %{fill: fill, direction: dir, time: time}}, new_fill) when fill != new_fill do
+      res = (new_fill - fill) * dir
+
+      cond do
+        res > 0 ->
+          # good direction
+          {get_time(time, res), dir * -1}
+
+        res == 0 ->
+          # nothing to do
+          {0, dir}
+
+        dir > 0 ->
+          # dimmer want to increase brightness, but we want to decrease
+          {get_time(time, 200 - fill - new_fill), dir}
+
+        true ->
+          # dimmer want to decrease brightness, but we want to increase
+          {get_time(time, fill + new_fill), dir}
+      end
+    end
+
+    def fill_to_time(_, _), do: nil
+
+    @spec get_time(integer, integer) :: integer
+    defp get_time(max_time, fill) do
+      round(max_time * (fill / 100))
+    end
+  end
 
   #  modes:
   #  - input
@@ -21,109 +205,4 @@ defmodule DB.Port do
   #  - light
   #  - sunblind
   #  - zone
-
-  @derive {Poison.Encoder, only: [:name, :state, :id]}
-  schema "ports" do
-    field(:name, :string)
-    field(:number, :integer)
-    field(:mode, :string)
-    field(:state, :boolean)
-    field(:pwm_fill, :integer)
-    field(:inverted_logic, :boolean)
-    field(:type, :string)
-    field(:timeout, :integer)
-    field(:ref, :integer)
-    belongs_to(:device, DB.Device)
-    has_one(:light, DB.Light)
-    has_one(:dimmer, DB.Dimmer)
-    has_one(:sunblind, DB.Sunblind)
-  end
-
-  def changeset(port, params \\ %{}, all_str \\ false) do
-    params_ = inc_ref(port, Enum.into(params, %{}), all_str)
-    port
-    |> cast(params_, [:state, :device_id, :number, :name, :type, :mode, :timeout, :pwm_fill, :ref])
-  end
-
-  def get_child_struct(port) do
-    case port.type do
-      "light" -> DB.Light
-      "dimmer" -> DB.Dimmer
-      "sunblind" -> DB.Sunblind
-    end
-    |> DB.Repo.get_by(port_id: port.id)
-    |> DB.Repo.preload(port: [:device])
-  end
-
-  def get_child_id(port) do
-    mod =
-      case port.type do
-        "light" -> DB.Light
-        "dimmer" -> DB.Dimmer
-        "sunblind" -> DB.Sunblind
-      end
-
-    from(c in mod, where: c.port_id == ^port.id, select: c.id)
-    |> DB.Repo.one()
-  end
-
-
-  def preload(key \\ :port) do
-    Keyword.put([], key, Device.preload())
-  end
-
-  def update_low_high(device, high, low) do
-    {x, resX} = update_out_of_date(device.id, high, true)
-    {y, resY} = update_out_of_date(device.id, low, false)
-    {x + y, resX ++ resY}
-  end
-
-  def update_out_of_date(_device_id, [], _state), do: {0, []}
-
-  def update_out_of_date(device_id, data, state) do
-    res =
-      from(p in Port,
-        where: p.device_id == ^device_id and p.number in ^data and p.state != ^state
-      )
-      |> Repo.all()
-      |> Enum.map(fn p -> {p.type, get_child_id(p), p.ref + 1} end)
-
-    {x, nil} =
-      List.foldr(data, Port, fn num, acc ->
-        where(acc, [p], p.device_id == ^device_id and p.number == ^num and p.state != ^state)
-      end)
-      |> Repo.update_all(set: [state: state], inc: [ref: 1])
-
-    {x, res}
-  end
-
-  def get(ids) do
-    Repo.all(from(p in Port, where: p.id in ^ids, preload: ^Device.preload()))
-  end
-
-  def pulse?(port) do
-    port.timeout > 0
-  end
-
-  def update_state(ids, state) do
-    Repo.update_all(from(p in Port, where: p.id in ^ids),
-      set: [
-        state: state
-      ]
-    )
-  end
-
-  def update_state2(ports, state) do
-    for port <- ports do
-      Ecto.Changeset.change(port, state: state)
-      |> Repo.update()
-    end
-  end
-
-  def update(ports, args \\ %{}) do
-    for port <- ports do
-      changeset(port, args)
-      |> Repo.update()
-    end
-  end
 end

@@ -34,7 +34,9 @@ defmodule DB do
   def check_ref(%{ref: ref}, %{ref: ref2}) do
     ref == ref2
   end
-
+  def check_ref(%{"ref" => ref}, %{ref: ref2}) do
+    ref == ref2
+  end
   def check_ref(_, _) do
     true
   end

@@ -4,15 +4,13 @@ defmodule Core.Controllers.Port.MonoPort do
   @behaviour Core.Controllers.BasicController
 
   alias Core.Controllers.Port.BinaryPort, as: BP
-  import Core.Controllers.Universal, only: [get_passed_items: 2]
 
   @impl true
   def set_state(ports, opts) do
     pid = Keyword.get(opts, :pid)
-    res = BP.set_state(ports, state: true)
+    %{ok: passed} = res = BP.set_state(ports, state: true)
 
-    get_passed_items(res, ports)
-    |> Enum.group_by(& &1.timeout)
+    Enum.group_by(passed, & &1.timeout)
     |> Enum.each(fn {timeout, ps} -> Task.start(fn -> postpone_turn_off(ps, timeout, pid) end) end)
 
     res

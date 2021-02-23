@@ -41,8 +41,4 @@ defmodule UiWeb.DeviceController do
     end
   end
 
-  def get_types(conn, _params) do
-    types = Admin.get_types()
-    render(conn, "index.json", device_types: types)
-  end
 end

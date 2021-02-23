@@ -10,6 +10,8 @@ defmodule Core.Device do
               length :: integer
             ) :: bool()
 
+  @callback need_process?() :: boolean()
+
   defmodule BasicIO do
     alias DB.{Device, Port}
     @type t(res) :: {:ok, res} | {:error, String.t()}
@@ -67,13 +69,13 @@ defmodule Core.Device do
   end
 
   defmodule RgbW do
-    alias DB.{Device, Dimmer}
-    @type result :: {:ok, %Dimmer{}} | {:error, String.t()}
+    alias DB.{Device, Port}
+    @type result :: {:ok, %Port{}} | {:error, String.t()}
 
-    @callback set_state(%Dimmer{}) :: result
-    @callback set_brightness(%Dimmer{}) :: result
-    @callback set_white_brightness(%Dimmer{}) :: result
-    @callback set_color(%Dimmer{}) :: result
+    @callback set_state(%Port{}) :: result
+    @callback set_brightness(%Port{}) :: result
+    @callback set_white_brightness(%Port{}) :: result
+    @callback set_color(%Port{}) :: result
   end
 
   defmodule Thermometer do
@@ -88,9 +90,12 @@ defmodule Core.Device do
     @callback set_time_dimmer(device :: %DB.Device{}, list({integer, integer})) :: any
   end
 
-  alias DB.DeviceJournal, as: DJ
-  alias DB.{Device, Port}
-  import Core.Controllers.Universal, only: [flatten_result: 1]
+  alias DB.Stats.DeviceJournal, as: DJ
+  alias DB.{Device, Port, Repo}
+  alias Core.Device.Static.Response
+
+  use Witchcraft
+  #  use Witchcraft.Semigroup
 
   @type args_t ::
           [%Port{}]
@@ -114,21 +119,18 @@ defmodule Core.Device do
   """
   @spec do_(function :: atom, args :: args_t) :: any
 
-  def do_(function, [%Port{} | _] = ports) do
-    ports
-    |> handle_multiple_devices(fn {d, p} ->
-      execute_function(fn -> apply(module(d), function, [d, p]) end, p)
-      |> DJ.log_use(d, function, p)
-    end)
-  end
-
-  def do_(function, args) do
-    d = get_device(args)
-    args = List.wrap(args)
-
+  def do_(function, [%Device{} = d | t_args] = args) do
     execute_function(fn -> apply(module(d), function, args) end)
-    |> DJ.log_use(d, function, args)
+    |> DJ.log_use(function, t_args)
   end
+
+  def do_(function, [%Port{} | _] = ports) do
+    Enum.group_by(ports, & &1.device_id)
+    |> Enum.map(fn {d, p} -> do_(function, [Repo.preload(d), p]) end)
+    |> fold()
+  end
+
+  def do_(function, %Device{} = d), do: do_(function, [d])
 
   def do_r(args, function) do
     do_(function, args)
@@ -136,61 +138,21 @@ defmodule Core.Device do
 
   # Privates
 
-  defp get_device(args) when is_list(args) do
-    Enum.find(args, fn item ->
-      with false <- item == %Device{},
-           false <- Map.has_key?(item, :device),
-           true <- Map.has_key?(item, :port),
-           do: Map.has_key?(item.port, :device)
-    end)
-    |> get_device()
-  end
-
-  defp get_device(arg) do
-    case arg do
-      %Device{} -> arg
-      nil -> {:error, "Cannot find device!"}
-      %{device: d} -> d
-      %{port: %{device: d}} -> d
-    end
-  end
-
-  defp handle_multiple_devices(ports, func) do
-    ports
-    |> Enum.group_by(& &1.device)
-    |> Enum.map(func)
-    |> flatten_result()
-  end
-
-  defp execute_function(func, o \\ nil)
-
-  defp execute_function(func, nil) do
+  @spec execute_function(function()) :: Response.t()
+  defp execute_function(func) do
     try do
       func.()
     catch
-      :exit, _ ->
-        {:error, "Device don't implement this functionality"}
-    end
-  end
-
-  defp execute_function(func, o) do
-    try do
-      case func.() do
-        # TODO change this, because it looks like no data can be return
-        {:error, err} -> {:error, o, err}
-        ok -> ok
-      end
-    catch
       :exit, {:noproc, {:gen_server, :call, [name | _]}} ->
-        {:error, o, "No running process for device #{inspect(name)}"}
+        Response.error({:error, "No running process for device #{inspect(name)}"})
 
       :exit, _ ->
-        {:error, o, "Device don't implement this functionality"}
+        Response.error({:error, "Device don't implement this functionality"})
     end
   end
 
   defp module(device) do
-    device_ = DB.Repo.preload(device, :type)
-    String.to_existing_atom("Elixir." <> device_.type.module)
+    ("Elixir.Core.Device." <> device.type)
+    |> String.to_existing_atom()
   end
 end

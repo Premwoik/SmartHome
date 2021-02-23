@@ -2,7 +2,6 @@ defmodule UiWeb.SchemaController do
   @moduledoc false
   use UiWeb, :controller
 
-
   def get_port_schema(conn, _ops) do
     with {:ok, schema} <- read_schema("port"),
          {:ok, schema_map} <- Poison.decode(schema) do
@@ -45,17 +44,18 @@ defmodule UiWeb.SchemaController do
     end
   end
 
-  def get_task_schema(conn, _ops) do
-    name = "task"
-    with {:ok, schema} <- read_schema(name),
-         {:ok, schema_map} <- Poison.decode(schema) do
-      ready = preload_instruction(schema_map, name)
-      json(conn, ready)
-    end
-  end
+  #  def get_task_schema(conn, _ops) do
+  #    name = "task"
+  #    with {:ok, schema} <- read_schema(name),
+  #         {:ok, schema_map} <- Poison.decode(schema) do
+  #      ready = preload_instruction(schema_map, name)
+  #      json(conn, ready)
+  #    end
+  #  end
 
   def get_rf_button_schema(conn, _ops) do
     name = "rf_button"
+
     with {:ok, schema} <- read_schema(name),
          {:ok, schema_map} <- Poison.decode(schema) do
       ready = preload_instruction(schema_map, name)
@@ -65,15 +65,13 @@ defmodule UiWeb.SchemaController do
 
   def get_device_schema(conn, _ops) do
     name = "device"
+
     with {:ok, schema} <- read_schema(name),
          {:ok, schema_map} <- Poison.decode(schema) do
       ready = preload_instruction(schema_map, name)
       json(conn, ready)
     end
   end
-
-
-
 
   # Privates
 
@@ -97,11 +95,15 @@ defmodule UiWeb.SchemaController do
     with {:ok, port_schema} <- read_schema("port"),
          {:ok, port_schema_map} <- Poison.decode(port_schema) do
       definitions = %{item => port_schema_map}
-      ui_schema = Enum.reduce(ui_items, parent["ui_schema"],
-        fn item, acc -> Map.put(acc, item, port_schema_map["ui_schema"]) end)
+
+      ui_schema =
+        Enum.reduce(ui_items, parent["ui_schema"], fn item, acc ->
+          Map.put(acc, item, port_schema_map["ui_schema"])
+        end)
+
       %{parent | "definitions" => definitions, "ui_schema" => ui_schema}
     end
   end
-  defp preload_item(parent, _, _, "false"), do: parent
 
+  defp preload_item(parent, _, _, "false"), do: parent
 end

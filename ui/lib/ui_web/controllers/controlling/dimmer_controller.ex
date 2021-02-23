@@ -3,7 +3,8 @@ defmodule UiWeb.DimmerController do
 
   alias Ui.DimmerAdmin, as: Admin
   alias Core.Controllers.DimmerController, as: Controller
-  alias DB.{Dimmer}
+  alias DB.Port, as: Dimmer
+  alias Core.Device.Static.Response
 
   action_fallback(UiWeb.FallbackController)
 
@@ -67,47 +68,45 @@ defmodule UiWeb.DimmerController do
 
   """
 
-
   def set(conn, %{"id" => id, "state" => state} = o) do
     set_state = if(state, do: &Controller.turn_on/1, else: &Controller.turn_off/1)
 
     with {:ok, dim} <- Admin.get_dimmer(id),
          true <- DB.check_ref(o, dim),
-         :ok <- Benchmark.measure_p(fn -> set_state.(dim) end),
-         do: succ_return(conn, id)
+         %Response{ok: [dim]} <- Benchmark.measure_p(fn -> set_state.(dim) end) do
+      render(conn, "show.json", dimmer: dim)
+    end
   end
 
   def set(conn, %{"id" => id, "red" => r, "green" => g, "blue" => b} = o) do
     with {:ok, dim} <- Admin.get_dimmer(id),
          true <- DB.check_ref(o, dim),
-         :ok <- Benchmark.measure_p(fn -> Controller.set_color(dim, r, g, b) end),
-         do: succ_return(conn, id)
+         %Response{ok: [dim]} <- Benchmark.measure_p(fn -> Controller.set_color(dim, r, g, b) end) do
+      render(conn, "show.json", dimmer: dim)
+    end
   end
 
   def set(conn, %{"id" => id, "fill" => fill} = o) do
-#    fill = fill_guard(fill)
+    #    fill = fill_guard(fill)
 
     with {:ok, dim} <- Admin.get_dimmer(id),
          true <- DB.check_ref(o, dim),
-         :ok <- Benchmark.measure_p(fn -> Controller.set_brightness(dim, fill) end),
-         do: succ_return(conn, id)
+         %Response{ok: [dim]}<- Benchmark.measure_p(fn -> Controller.set_brightness(dim, fill) end) do
+      render(conn, "show.json", dimmer: dim)
+    end
   end
 
   def set(conn, %{"id" => id, "white" => fill} = o) do
-#    fill = fill_guard(fill)
+    #    fill = fill_guard(fill)
 
     with {:ok, dim} <- Admin.get_dimmer(id),
          true <- DB.check_ref(o, dim),
-         :ok <- Benchmark.measure_p(fn -> Controller.set_white_brightness(dim, fill) end),
-         do: succ_return(conn, id)
+         %Response{ok: [dim]}<- Benchmark.measure_p(fn -> Controller.set_white_brightness(dim, fill) end) do
+      render(conn, "show.json", dimmer: dim)
+    end
   end
 
   # Privates
-
-  defp succ_return(conn, id) do
-    dim = Admin.get_dimmer!(id)
-    render(conn, "show.json", dimmer: dim)
-  end
 
   defp fill_guard(fill) do
     cond do

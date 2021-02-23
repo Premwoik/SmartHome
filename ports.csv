@@ -1,0 +1,50 @@
+id,device_id,name,type,number,mode,timeout,state,pwm_fill,inverted_logic,ref
+1,1,mock,undef,2,undef,0,,0,0,1
+2,1,Jadalnia,dimmer,18,output,4500,0,0,1,1
+3,1,Schody,light,19,output,0,0,0,1,2854
+4,1,Stół,light,20,output,0,0,0,1,488
+5,1,Kanapa,dimmer2,21,output,100,0,0,1,21
+6,1,Kanapa L,light,22,output,0,0,0,1,499
+7,1,Kanapa P,light,23,output,0,0,0,1,455
+8,1,Tv,dimmer2,24,output,100,0,0,1,24
+9,1,TV L,light,25,output,0,0,0,1,520
+10,1,TV P,light,26,output,0,0,0,1,440
+11,1,Parter open,sunblind_helper,34,output-pulse,1000,1,0,1,99
+12,1,Parter close,sunblind,35,output-pulse,1000,1,0,1,102
+13,1,TarasP,sunblind,36,output,0,1,0,1,250
+14,1,BalkonP,sunblind,37,output,0,1,0,1,234
+15,1,Michał,sunblind,38,output,0,1,0,1,212
+16,1,Salon,sunblind,39,output,0,1,0,1,235
+17,1,TarasSalon,sunblind,40,output,0,1,0,1,183
+18,2,Salon schody,motion_sensor,8,input,0,0,0,0,2
+19,2,Salon stół,motion_sensor,9,input,0,0,0,0,3
+20,2,Salon,motion_sensor,10,input,0,0,0,0,2
+21,2,Sygnal zamkniecia rolet,alarm_input,62,input,0,0,0,0,2
+22,3,Poddasze gablota,light,0,output,0,1,0,0,2782
+23,4,Poddasze główne ,light,0,output,0,0,0,0,370
+24,5,Ledy belka,dimmer_rgbw,0,output,0,1,0,0,64
+25,2,Piętro Przemek,motion_sensor,13,input,0,0,0,0,4
+26,2,Piętro łazienka ,motion_sensor,15,input,0,0,0,0,3
+27,2,Parter,motion_sensor,7,input,0,0,0,0,3
+28,2,Strych,motion_sensor,16,input,0,0,0,0,3
+29,2,Sygnal ciepla woda,alarm_input,60,input,0,0,0,0,3
+30,6,Rf wolna,light,1,output,0,0,0,0,1
+31,6,Salon w rogu,light,3,output,0,0,0,0,188
+32,6,Salon komoda,light,5,output,0,0,0,0,167
+33,6,Strych lampa stojąca,light,7,output,0,0,0,0,169
+34,6,Rf wolna,light,9,output,0,0,0,0,1
+35,6,Rf wolna,light,11,output,0,0,0,0,1
+36,6,Sypialnia,light,13,output,0,0,0,0,603
+37,6,Wiatrak łazienka,light,15,output,0,0,0,0,78
+38,2,Parter sypialnia,motion_sensor,6,input,0,0,0,0,4
+39,2,Parter łazienka,motion_sensor,5,input,0,0,0,0,3
+41,2,Piwnica,motion_sensor,2,input,0,0,0,0,2
+42,2,Salon kuchnia,motion_sensor,11,input,0,0,0,0,3
+43,2,Piwnica przedpokój ,motion_sensor,1,input,0,0,0,0,3
+44,2,Piwnica kotłownia ,motion_sensor,4,input,0,0,0,0,3
+45,2,Salon przedpokój,motion_sensor,12,input,0,0,0,0,3
+46,2,Piwnica kuchnia,motion_sensor,3,input,0,0,0,0,3
+47,2,Piętro Michał ,motion_sensor,14,input,0,0,0,0,2
+48,8,Kinkiet od okna,light,0,output,0,0,0,0,151
+49,7,Kinkiet,light,0,output,0,0,0,0,124
+50,9,Zasilanie led,light,0,output,0,0,0,0,26

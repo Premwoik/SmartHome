@@ -6,14 +6,18 @@ defmodule Core.Device.ShellyRGBW2 do
 
   require Logger
 
+  alias Core.Device.Static.Response
   alias Core.Device.ShellyRGBW2
-  # , only: [default_response_catch: 2]
+  alias DB.Port
   import Core.Device.Client.Http
 
   @impl Core.Device
   def start_link(_host, _port, _opts, _keywords, _timeout \\ 5000, _length \\ 11) do
     false
   end
+
+  @impl Core.Device
+  def need_process?(), do: false
 
   defstruct [:ison, :mode, :red, :green, :blue, :white, :gain, :effect, :power, :overpower]
 
@@ -24,56 +28,53 @@ defmodule Core.Device.ShellyRGBW2 do
     "#{ip}:#{port}/color/#{id}"
   end
 
-  #  @spec status(%DB.Device{}, integer()) :: res()
-  #  def status(device, port) do
-  #    url_ = url(device.ip, device.port, port.number)
-  #
-  #    HTTPotion.get(url_)
-  #    |> default_response_catch(&decode_body/1)
-  #  end
-
   @impl true
-  def set_state(%{port: %{device: d, state: s, number: num}} = dimmer) do
+  def set_state(%{state: s, number: num} = dimmer) do
+    d = Port.device(dimmer)
     url_ = url(d.ip, d.port, num)
     s = if(s, do: "on", else: "off")
     query = %{"turn" => s}
 
     HTTPotion.get(url_, query: query)
     |> default_response_catch(&decode_body/1)
-    |> skip_response(dimmer)
+    |> Response.wrap(d, [dimmer])
   end
 
   @impl true
-  def set_brightness(%{port: %{device: d, number: num}, fill: fill} = dimmer) do
-    IO.inspect(dimmer)
+  def set_brightness(%{number: num, more: %{fill: fill}} = dimmer) do
+    d = Port.device(dimmer)
     url_ = url(d.ip, d.port, num)
     query_ = %{"gain" => fill}
 
     HTTPotion.get(url_, query: query_)
     |> default_response_catch(&decode_body/1)
-    |> skip_response(dimmer)
+    |> Response.wrap(d, [dimmer])
   end
 
   @impl true
-  def set_white_brightness(%{port: %{device: d, number: num}, white: w} = dimmer) do
+  def set_white_brightness(%{number: num, more: %{white: w}} = dimmer) do
+    d = Port.device(dimmer)
     url_ = url(d.ip, d.port, num)
     query_ = %{"white" => w}
 
     HTTPotion.get(url_, query: query_)
     |> default_response_catch(&decode_body/1)
-    |> skip_response(dimmer)
+    |> Response.wrap(d, [dimmer])
   end
 
   @impl true
   @spec set_color(map()) :: res()
-  def set_color(%{port: %{device: d, number: num}, red: r, green: g, blue: b} = dimmer) do
+  def set_color(%{number: num, more: %{red: r, green: g, blue: b}} = dimmer) do
+    d = Port.device(dimmer)
     url_ = url(d.ip, d.port, num)
     query_ = %{"red" => r, "green" => g, "blue" => b}
 
     HTTPotion.get(url_, query: query_)
     |> default_response_catch(&decode_body/1)
-    |> skip_response(dimmer)
+    |> Response.wrap(d, [dimmer])
   end
+
+  # Privates
 
   @spec decode_body(String.t()) :: %ShellyRGBW2{}
   defp decode_body(body) do

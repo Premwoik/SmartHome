@@ -4,25 +4,19 @@ defmodule Core.Controller.Port.PwmPort do
   @behaviour Core.Controllers.BasicController
 
   alias DB.{Port}
-  import Core.Controllers.Universal, only: [get_passed_items: 2]
+  alias Core.Device.Static.Response
+  use Witchcraft
 
   @impl true
   def set_state(ports, fill: fill) do
-    pwm(ports, fill)
+    state = if fill > 0, do: true, else: false
+
+    Port.cast(ports, state: state, pwm_fill: fill)
+    |> Core.Device.do_r(:set_pwm_outputs)
+    |> map(&Port.update/1)
   end
 
-  def set_state(_, _), do: {:error, "Fill parameter is missing."}
+  def set_state(ports, _), do: Response.error({:error, "Fill parameter is missing."}, ports)
 
   #  Privates
-
-  defp pwm(ports, fill) do
-    state = if fill > 0, do: true, else: false
-    ports = Enum.map(ports, fn p -> %{p | state: state, pwm_fill: fill} end)
-    res = Core.Device.do_(:set_pwm_outputs, ports)
-
-    get_passed_items(res, ports)
-    |> Port.update(%{state: state, pwm_fill: fill})
-
-    res
-  end
 end

@@ -16,59 +16,30 @@ defmodule UiWeb.ActionView do
       name: action.name,
       function: action.function,
       active: action.active,
-      params: %{}, #action.params,
-      frequency: action.frequency,
+      params: action.params,
+      arguments: encode_arguments(action.arguments),
+      frequency: action.timeout,
       start_time: action.start_time,
       end_time: action.end_time,
-      port_id: action.port_id,
+      port_id: foreign_view(action.port_id),
       ref: action.ref,
       "@type": "action"
     }
   end
 
-  def render("show_args.json", %{args: args}) do
-    render_many(args, ActionView, "arg.json")
+  def encode_arguments(arguments) do
+    up_down = Keyword.get(arguments, :up_down, [])
+    up = Keyword.get(arguments, :up, [])
+    down = Keyword.get(arguments, :down, [])
+    %{up_down: foreign_view(up_down), up: foreign_view(up), down: foreign_view(down)}
   end
 
-  def render("arg.json", %{action: arg}) do
-    %{
-      action_id: arg.id,
-      port_id: arg.port_id,
-      name: arg.name,
-      type: arg.type
-    }
+  def foreign_view(foreigns) when is_list(foreigns),
+    do: Enum.map(foreigns, &foreign_view/1)
+
+  def foreign_view({:foreign, mod, id}) do
+    %{"@type": "foreign", module: mod, id: id}
   end
 
-  def render("show_items.json", %{items: items}) do
-    render_many(items, ActionView, "action_item.json")
-  end
-
-  def render("action_item.json", %{action: i}) do
-    type =
-      case i do
-        %DB.Port{} -> :port
-        %DB.Sunblind{} -> :sunblind
-        %DB.Dimmer{} -> :dimmer
-        %DB.Light{} -> :light
-      end
-
-    typeStr = to_string(type)
-    module = String.to_atom("Elixir.UiWeb." <> upcaseFirst(typeStr) <> "View")
-    module.render(to_string(type) <> ".json", %{type => i})
-  end
-
-  def upcaseFirst(<<first::utf8, rest::binary>>), do: String.upcase(<<first::utf8>>) <> rest
-
-  # def render("show.json", %{dash_action: action}) do
-  # %{data: render_one(action, ActionView, "dash_action.json")}
-  # end
-
-  # def render("dash_action.json", %{action: action}) do
-  # %{id: action.id,
-  # name: action.name,
-  # function: action.function,
-  # state: action.active,
-  # action: ""
-  # }
-  # end
+  def foreign_view(f), do: f
 end

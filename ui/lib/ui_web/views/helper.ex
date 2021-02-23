@@ -15,4 +15,13 @@ defmodule UiWeb.View.Helper do
       nil
     end
   end
+
+  def foreign_view(foreigns) when is_list(foreigns),
+    do: Enum.map(foreigns, &foreign_view/1)
+
+  def foreign_view({:foreign, mod, id}) do
+    %{"@type": "foreign", module: mod, id: id}
+  end
+
+  def foreign_view(f), do: f
 end

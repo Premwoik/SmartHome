@@ -3,10 +3,8 @@ defmodule Ui.SunblindAdmin do
   The AdminSunblind context.
   """
 
-  import Ecto.Query, warn: false
-  alias DB.Repo
-
-  alias DB.Sunblind
+  alias DB.{Repo, Port}
+  import Ui.Admin
 
   @doc """
   Returns the list of sunblinds.
@@ -18,8 +16,7 @@ defmodule Ui.SunblindAdmin do
 
   """
   def list_sunblinds do
-    Repo.all(Sunblind)
-    |> preload
+    Port.sunblinds()
   end
 
   @doc """
@@ -36,23 +33,14 @@ defmodule Ui.SunblindAdmin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_sunblind!(id),
-    do:
-      Repo.get!(Sunblind, id)
-      |> Repo.preload([:port, :open_port])
+  def get_sunblind!(id), do: Repo.get(Port, id) |> check_type(:sunblind)
 
   def get_sunblind(id) do
-    res =
-      Repo.get!(Sunblind, id)
-      |> preload()
-
-    case res do
+    case get_sunblind!(id) do
       nil -> {:error, :wrong_id}
       r -> {:ok, r}
     end
   end
-
-  def preload(sun), do: Repo.preload(sun, [:port, :open_port])
 
   @doc """
   Creates a sunblind.
@@ -67,8 +55,10 @@ defmodule Ui.SunblindAdmin do
 
   """
   def create_sunblind(attrs \\ %{}) do
-    %Sunblind{}
-    |> Sunblind.changeset(attrs, _all_str = true)
+    attrs = split_more_fields(attrs, Port, Port.Sunblind)
+
+    Port.new()
+    |> Port.cast(attrs)
     |> Repo.insert()
   end
 
@@ -84,9 +74,10 @@ defmodule Ui.SunblindAdmin do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_sunblind(%Sunblind{} = sunblind, attrs) do
+  def update_sunblind(%Port{} = sunblind, attrs) do
+    attrs = split_more_fields(attrs, Port, Port.Sunblind)
     sunblind
-    |> Sunblind.changeset(attrs, _all_str = true)
+    |> Port.cast(attrs)
     |> Repo.update()
   end
 
@@ -102,20 +93,8 @@ defmodule Ui.SunblindAdmin do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_sunblind(%Sunblind{} = sunblind) do
+  def delete_sunblind(%Port{} = sunblind) do
     Repo.delete(sunblind)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking sunblind changes.
-
-  ## Examples
-
-      iex> change_sunblind(sunblind)
-      %Ecto.Changeset{source: %Sunblind{}}
-
-  """
-  def change_sunblind(%Sunblind{} = sunblind) do
-    Sunblind.changeset(sunblind, %{})
-  end
 end

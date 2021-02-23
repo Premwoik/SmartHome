@@ -15,8 +15,8 @@ defmodule Core.MixProject do
   def application do
     [
       mod: {Core, []},
-      applications: [:timex],
-      extra_applications: [:logger, :db, :httpotion, :tortoise]
+      #      applications: [:timex],
+      extra_applications: [:logger, :db, :httpotion, :tortoise, :timex]
     ]
   end
 
@@ -32,10 +32,9 @@ defmodule Core.MixProject do
       {:tortoise, "~> 0.9"},
       {:witchcraft, "~> 1.0"},
       {:algae, "~> 1.2"},
+      {:quantum, "~> 3.0"},
       {:ring_logger, "~> 0.8.1"},
-      #      {:typed_struct, "~> 0.2.1"},
       {:db, path: "../db"}
-      #      {:ui, path: "../ui"}
     ]
   end
 end

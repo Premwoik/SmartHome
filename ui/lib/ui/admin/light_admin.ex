@@ -3,10 +3,8 @@ defmodule Ui.LightAdmin do
   The LightAdmin context.
   """
 
-  import Ecto.Query, warn: false
-  alias DB.Repo
-
-  alias DB.Light
+  alias DB.{Repo, Port}
+  import Ui.Admin
 
   @doc """
   Returns the list of lights.
@@ -18,8 +16,7 @@ defmodule Ui.LightAdmin do
 
   """
   def list_lights do
-    Repo.all(Light)
-    |> preload()
+    Port.lights()
   end
 
   @doc """
@@ -36,24 +33,13 @@ defmodule Ui.LightAdmin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_light!(id),
-    do:
-      Repo.get!(Light, id)
-      |> preload()
+  def get_light!(id), do: Repo.get(Port, id)
 
   def get_light(id) do
-    res =
-      Repo.get(Light, id)
-      |> preload()
-
-    case res do
+    case Repo.get(Port, id) do
       nil -> {:error, :wrong_id}
       r -> {:ok, r}
     end
-  end
-
-  def preload(light) do
-    Repo.preload(light, [:port, dimmer: [:port]])
   end
 
   @doc """
@@ -69,8 +55,9 @@ defmodule Ui.LightAdmin do
 
   """
   def create_light(attrs \\ %{}) do
-    %Light{}
-    |> Light.changeset(attrs, _all_str = true)
+    attrs = split_more_fields(attrs, Port, Port.Light)
+    Port.new()
+    |> Port.cast(attrs)
     |> Repo.insert()
   end
 
@@ -86,9 +73,10 @@ defmodule Ui.LightAdmin do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_light(%Light{} = light, attrs) do
+  def update_light(%Port{} = light, attrs) do
+    attrs = split_more_fields(attrs, Port, Port.Light)
     light
-    |> Light.changeset(attrs, _all_str = true)
+    |> Port.cast(attrs)
     |> Repo.update()
   end
 
@@ -104,20 +92,8 @@ defmodule Ui.LightAdmin do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_light(%Light{} = light) do
+  def delete_light(%Port{} = light) do
     Repo.delete(light)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking light changes.
-
-  ## Examples
-
-      iex> change_light(light)
-      %Ecto.Changeset{source: %Light{}}
-
-  """
-  def change_light(%Light{} = light) do
-    Light.changeset(light, %{})
-  end
 end

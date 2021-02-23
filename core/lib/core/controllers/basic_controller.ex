@@ -14,7 +14,8 @@ defmodule Core.Controllers.BasicController do
 
   alias DB.{Port}
   alias Core.Controllers.Port.{BinaryPort, MonoPort, PwmPort, VirtualPort}
-  import Core.Controllers.Universal
+  alias Core.Device.Static.Response
+  use Witchcraft
 
   @callback set_state(list(), ops :: list()) :: any()
 
@@ -35,10 +36,12 @@ defmodule Core.Controllers.BasicController do
   end
 
   @impl Core.Controllers.IOBeh
+  def set_state([], _), do: %Response{}
+
   def set_state(ports, ops) do
     get_module(ports)
-    |> Enum.map(fn {mod, ports} -> mod.set_state(ports, ops) end)
-    |> flatten_result()
+    |> map(fn {mod, ports} -> mod.set_state(ports, ops) end)
+    |> fold()
   end
 
   # Privates
@@ -51,9 +54,9 @@ defmodule Core.Controllers.BasicController do
 
   defp get_module(mode) do
     case mode do
-      "output" -> BinaryPort
-      "output-pulse" -> MonoPort
-      "output-pwm" -> PwmPort
+      :output -> BinaryPort
+      :output_pulse -> MonoPort
+      :output_pwm -> PwmPort
       _ -> VirtualPort
     end
   end

@@ -3,7 +3,8 @@ defmodule UiWeb.LightController do
 
   alias Ui.LightAdmin, as: Admin
   alias Core.Controllers.LightController, as: Controller
-  alias DB.Light
+  alias DB.Port, as: Light
+  alias Core.Device.Static.Response
 
   action_fallback(UiWeb.FallbackController)
 
@@ -53,8 +54,7 @@ defmodule UiWeb.LightController do
   def set(conn, %{"id" => id, "state" => state} = o) do
     with {:ok, light} <- Admin.get_light(id),
          true <- DB.check_ref(o, light),
-         :ok <- Benchmark.measure_p(fn -> Controller.set_state([light], state: state) end) do
-      light = Admin.get_light!(id)
+         %Response{ok: [light]} <- Controller.set_state([light], state: state) do
       render(conn, "show.json", light: light)
     end
   end

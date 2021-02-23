@@ -1,7 +1,8 @@
 defmodule UiWeb.DashboardView do
   use UiWeb, :view
   alias UiWeb.DashboardView
-  alias UiWeb.View.Helper
+  import UiWeb.View.Helper
+  alias DB.{Port, Action, Device}
 
   def render("index.json", %{dashboards: dashboards}) do
     render_many(dashboards, DashboardView, "dashboard.json")
@@ -15,18 +16,22 @@ defmodule UiWeb.DashboardView do
     %{
       id: dashboard.id,
       name: dashboard.name,
-      title: dashboard.title,
       order: dashboard.order,
+      ref: dashboard.ref,
       description: dashboard.description,
-      ports: Helper.objs_to_view(UiWeb.PortView, :port, unwrap(dashboard.ports)),
-      lights: Helper.objs_to_view(UiWeb.LightView, :light, unwrap(dashboard.lights)),
-      dimmers: Helper.objs_to_view(UiWeb.DimmerView, :dimmer, unwrap(dashboard.dimmers)),
-      sunblinds: Helper.objs_to_view(UiWeb.SunblindView, :sunblind, unwrap(dashboard.sunblinds)),
-      actions: Helper.objs_to_view(UiWeb.ActionView, :action, unwrap(dashboard.actions)),
-      tasks: Helper.objs_to_view(UiWeb.TaskView, :task, unwrap(dashboard.tasks)),
-      devices: Helper.objs_to_view(UiWeb.DeviceView, :device, unwrap(dashboard.devices))
+      content: foreign_view(dashboard.content),
     }
   end
+
+#  def group_conditions({:foreign, mod, _}), do: mod
+#  def group_conditions(%{type: t}), do: t
+#
+#  def standardize_keys({key, value}) do
+#    case key do
+#
+#    end
+#  end
+
 
   def render("index.json", %{dashboards_short: dashboards}) do
     render_many(dashboards, DashboardView, "dashboard_short.json")
@@ -40,7 +45,7 @@ defmodule UiWeb.DashboardView do
     %{
       id: dashboard.id,
       name: dashboard.name,
-      number: dashboard.order
+#      number: dashboard.order
     }
   end
 
@@ -56,10 +61,9 @@ defmodule UiWeb.DashboardView do
     %{
       id: dashboard.id,
       name: dashboard.name,
-      title: dashboard.title,
       order: dashboard.order,
       description: dashboard.description,
-      content: render_content(dashboard)
+      content: Enum.map(dashboard.content, &match_obj_to_view/1)
     }
   end
 
@@ -67,51 +71,24 @@ defmodule UiWeb.DashboardView do
     Enum.map(is, fn {_, i} -> i end)
   end
 
-  def render_content(d) do
-    (render_lights(d.lights) ++
-       render_dimmers(d.dimmers) ++
-       render_sunblinds(d.sunblinds) ++
-       render_actions(d.actions) ++
-       render_ports(d.ports) ++
-       render_tasks(d.tasks) ++
-       render_devices(d.devices))
-    |> Enum.sort_by(fn {o, _} -> o end)
-    |> Enum.map(fn {_, x} -> x end)
+  defp match_obj_to_view(%Port{type: t} = i) do
+    case to_string(t) do
+      "light" <> _ ->
+        obj_to_view(UiWeb.LightView, :light, i)
+      "dimmer" <> _ ->
+        obj_to_view(UiWeb.DimmerView, :dimmer, i)
+      "sunblind" <> _ ->
+        obj_to_view(UiWeb.SunblindView, :sunblind, i)
+      _ ->
+        obj_to_view(UiWeb.PortView, :port, i)
+    end
+  end
+  defp match_obj_to_view(%Device{} = i) do
+    obj_to_view(UiWeb.DeviceView, :device, i)
+
+  end
+  defp match_obj_to_view(%Action{} = i) do
+    obj_to_view(UiWeb.ActionView, :action, i)
   end
 
-  def render_lights(lights) do
-    Enum.map(lights, fn {o, l} -> {o, UiWeb.LightView.render("light.json", %{light: l})} end)
-  end
-
-  def render_dimmers(dimmers) do
-    Enum.map(dimmers, fn {o, d} -> {o, UiWeb.DimmerView.render("dimmer.json", %{dimmer: d})} end)
-  end
-
-  def render_sunblinds(sunblinds) do
-    Enum.map(sunblinds, fn {o, d} ->
-      {o, UiWeb.SunblindView.render("sunblind.json", %{sunblind: d})}
-    end)
-  end
-
-  def render_actions(actions) do
-    Enum.map(actions, fn {o, d} -> {o, UiWeb.ActionView.render("action.json", %{action: d})} end)
-  end
-
-  def render_ports(ports) do
-    Enum.map(ports, fn {o, d} -> {o, UiWeb.PortView.render("port.json", %{port: d})} end)
-  end
-
-  #  def render_sunblinds(sunblinds) do
-  #    Enum.map(sunblinds, fn {o, d} ->
-  #      {o, UiWeb.SunblindView.render("sunblind.json", %{sunblind: d})}
-  #    end)
-  #  end
-
-  def render_tasks(tasks) do
-    Enum.map(tasks, fn {o, d} -> {o, UiWeb.TaskView.render("task.json", %{task: d})} end)
-  end
-
-  def render_devices(devices) do
-    Enum.map(devices, fn {o, d} -> {o, UiWeb.DeviceView.render("device.json", %{device: d})} end)
-  end
 end
