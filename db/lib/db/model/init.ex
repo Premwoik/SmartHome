@@ -102,7 +102,7 @@ defmodule DB.Init do
         inverted_logic: true
       ),
       Port.new(
-        device_id: 1,
+        device_id: foreign(Device,1),
         name: "Kanapa P",
         type: :light,
         number: 23,
