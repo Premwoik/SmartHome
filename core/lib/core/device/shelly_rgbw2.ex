@@ -29,7 +29,7 @@ defmodule Core.Device.ShellyRGBW2 do
   end
 
   @impl true
-  def set_state(%{ip: ip, port: port}, [%Port{state: s, number: num}] = ports) do
+  def set_state(%{ip: ip, port: port} = d, [%Port{state: s, number: num}] = ports) do
     url_ = url(ip, port, num)
     s = if(s, do: "on", else: "off")
     query = %{"turn" => s}
@@ -40,7 +40,7 @@ defmodule Core.Device.ShellyRGBW2 do
   end
 
   @impl true
-  def set_brightness(%{ip: ip, port: port}, [%Port{number: num, more: %{fill: fill}}] = ports) do
+  def set_brightness(%{ip: ip, port: port} = d, [%Port{number: num, more: %{fill: fill}}] = ports) do
     url_ = url(ip, port, num)
     query_ = %{"gain" => fill}
 
@@ -50,7 +50,7 @@ defmodule Core.Device.ShellyRGBW2 do
   end
 
   @impl true
-  def set_white_brightness(%{ip: ip, port: port},  [%Port{number: num, more: %{white: w}}] = ports) do
+  def set_white_brightness(%{ip: ip, port: port}= d,  [%Port{number: num, more: %{white: w}}] = ports) do
     url_ = url(ip, port, num)
     query_ = %{"white" => w}
 
@@ -61,7 +61,7 @@ defmodule Core.Device.ShellyRGBW2 do
 
   @impl true
   @spec set_color(map()) :: res()
-  def set_color(%{ip: ip, port: port}, [%Port{number: num, more: %{red: r, green: g, blue: b}}] = ports) do
+  def set_color(%{ip: ip, port: port} = d, [%Port{number: num, more: %{red: r, green: g, blue: b}}] = ports) do
     url_ = url(ip, port, num)
     query_ = %{"red" => r, "green" => g, "blue" => b}
 
