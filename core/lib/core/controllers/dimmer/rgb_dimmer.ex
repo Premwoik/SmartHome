@@ -17,7 +17,7 @@ defmodule Core.Controllers.Dimmer.RgbDimmer do
 
   @impl true
   def set_brightness(dimmer, fill: fill) do
-    Port.cast(dimmer, fill: fill)
+    Port.cast(dimmer, more: [fill: fill])
     |> List.wrap()
     |> Core.Device.do_r(:set_brightness)
     |> map(&Port.update/1)

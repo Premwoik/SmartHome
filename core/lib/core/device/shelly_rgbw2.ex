@@ -43,6 +43,7 @@ defmodule Core.Device.ShellyRGBW2 do
   def set_brightness(%{ip: ip, port: port} = d, [%Port{number: num, more: %{fill: fill}}] = ports) do
     url_ = url(ip, port, num)
     query_ = %{"gain" => fill}
+    |> IO.inspect()
 
     HTTPotion.get(url_, query: query_)
     |> default_response_catch(&decode_body/1)

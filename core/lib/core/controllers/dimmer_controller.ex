@@ -45,7 +45,7 @@ defmodule Core.Controllers.DimmerController do
 
   def set_color(dimmer, red, green, blue) do
     with {:ok, mod} <- get_module(dimmer) do
-      mod.set_color(dimmer, r: red, g: green, b: blue)
+      mod.set_color(dimmer, red: red, green: green, blue: blue)
     end
   end
 
