@@ -5,7 +5,7 @@ defmodule Configurator do
   @server Application.get_env(:configurator, :server)
 
   def send_fn(fun) do
-    t = Task.Supervisor.async {Configurator.TaskSupervisor, :"server@192.168.2.105"}, fun
+    t = Task.Supervisor.async {Configurator.TaskSupervisor, @server}, fun
     Task.await(t)
   end
 
