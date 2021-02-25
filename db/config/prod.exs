@@ -1,7 +1,9 @@
 import Config
 
-config :db,
-       DB.Repo,
-       adapter: Sqlite.Ecto2,
-       database: "/media/pi/677c332c-d42b-42a5-bddc-f53931aa9c55/itHome.sqlite3",
-       log: false
+config :db, DB.StatsRepo,
+       adapter: Ecto.Adapters.Postgres,
+       database: "smart_home_statistics",
+       username: "sh_admin",
+       password: "mVu93~`G",
+       hostname: "192.168.2.100",
+       port: 5433
