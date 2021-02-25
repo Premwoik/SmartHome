@@ -46,6 +46,7 @@ defmodule Ui.MixProject do
       {:ring_logger, "~> 0.8.1"},
       {:db, path: "../db"},
       {:core, path: "../core"},
+      {:configurator, path: "../configurator"},
       {:rstp_to_ws, path: "../rstp_to_ws"}
     ]
   end
