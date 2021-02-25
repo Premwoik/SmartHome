@@ -51,6 +51,7 @@ config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
 config :core, Core.Scheduler,
   timezone: "Europe/Warsaw",
+  run_strategy: Quantum.RunStrategy.Local,
   jobs: [
     ia_h: [
       schedule: "@hourly",
