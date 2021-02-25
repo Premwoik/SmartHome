@@ -9,7 +9,7 @@ defmodule Core do
     import Supervisor.Spec, warn: false
     opts = [strategy: :one_for_one, name: Core.Supervisor]
     sup_res = Supervisor.start_link(children(), opts)
-    initialize()
+#    initialize()
     sup_res
   end
 
@@ -23,10 +23,10 @@ defmodule Core do
 
   def children() do
     [
-      Core.Scheduler,
-      Core.Actions,
-      Core.Mqtt.Supervisor,
-      Core.Device.Supervisor
+#      Core.Scheduler,
+#      Core.Actions,
+#      Core.Mqtt.Supervisor,
+#      Core.Device.Supervisor
     ]
   end
 end
