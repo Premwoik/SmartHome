@@ -45,8 +45,8 @@ defmodule DB.Stats.DeviceJournal do
   end
 
   def add(device_id, type, name, info, args, result) do
-    e_result = if(is_tuple(result), do: "#{inspect(result)}", else: Poison.encode!(result))
-    e_args = if(is_tuple(args), do: "#{inspect(args)}", else: Poison.encode!(args))
+    e_result = encode(result)
+    e_args = encode(args)
 
     %DeviceJournal{
       type: type,
@@ -57,6 +57,13 @@ defmodule DB.Stats.DeviceJournal do
       device_id: device_id
     }
     |> DB.StatsRepo.insert!()
+  end
+
+  defp encode(data) do
+    case Poison.encode(data) do
+      {:ok, res} -> res
+      _ -> "#{inspect(data, binaries: :as_lists)}"
+    end
   end
 
   def get(device, limit \\ 1000, from \\ nil)
