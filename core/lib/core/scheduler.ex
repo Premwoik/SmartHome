@@ -13,6 +13,14 @@ defmodule Core.Scheduler do
     |> Enum.each(&add_action_job/1)
   end
 
+  def reload(jobs) when is_list(jobs), do: Enum.map(jobs, &reload/1)
+
+  def reload(%{__struct__: ScheduleJob, id: id} = job) do
+    name = String.to_atom("db_#{id}")
+    Core.Scheduler.delete_job(name)
+    add_action_job(job)
+  end
+
   def add_action_job(%{id: id, expr: expr, extended: e} = job) do
     name = String.to_atom("db_#{id}")
     add_new_job(name, expr, e, handle_job(job))

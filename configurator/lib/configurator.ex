@@ -11,7 +11,7 @@ defmodule Configurator do
 
   defmacro send(x) do
     quote do
-      fn -> unquote(x) end |> Configurator.send_fn()
+      fn -> unquote(x) |> Core.handle_update() end |> Configurator.send_fn()
     end
   end
 end

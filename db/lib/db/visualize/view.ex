@@ -13,8 +13,13 @@ defmodule DB.Visualize.View do
   defp print_header_view(attrs, separator, sizes) do
     names = Enum.reduce(attrs, "", fn attr, acc ->
       size = Map.get(sizes, attr)
-      space = String.duplicate(" ", abs(round((size -  String.length(to_string(attr))) / 2)))
-      if acc == "", do: acc <> to_string(attr), else: acc <> separator <> space <> to_string(attr) <> space
+      item_size =String.length(to_string(attr))
+      space = String.duplicate(" ", abs(round((size -  item_size) / 2)))
+      if acc == "" do
+        acc <> to_string(attr)
+      else
+        acc <> separator <> String.slice(space <> to_string(attr) <> space, 0, size)
+      end
     end)
     IO.puts(names)
   end
@@ -22,18 +27,19 @@ defmodule DB.Visualize.View do
   defp print_record_view(item, attrs, separator, sizes) do
     Enum.reduce(attrs, "", fn attr, acc ->
       size = Map.get(sizes, attr)
-      space = String.duplicate(" ", abs(round((size -  col_length(Map.get(item, attr))) / 2)))
+      item_size =col_length(Map.get(item, attr))
+      space = String.duplicate(" ", abs(round((size -  item_size) / 2)))
       view = render_attribute(Map.get(item, attr))
       case acc do
         "" -> acc <> view <> space
-        _ -> acc <> separator <> space <> view <> space
+        _ -> acc <> separator <> String.slice(space <> view <> space, 0, size)
       end
     end)
     |> IO.puts()
   end
 
-  defp render_attribute(x) when is_map(x), do: "%{...}"
   defp render_attribute(x) when is_list(x), do: "[...]"
+  defp render_attribute(x) when is_map(x), do: "#{inspect x}"
   defp render_attribute(x) when is_tuple(x), do: "#{inspect x}"
   defp render_attribute(nil), do: "NULL"
   defp render_attribute(attr), do: to_string(attr)
@@ -58,8 +64,8 @@ defmodule DB.Visualize.View do
     end)
   end
 
-  defp col_length(x) when is_map(x), do: 6
   defp col_length(x) when is_list(x), do: 5
+  defp col_length(x) when is_map(x), do: String.length("#{inspect x}")
   defp col_length(x) when is_tuple(x), do: String.length("#{inspect x}")
   defp col_length(nil), do: 4
   defp col_length(attr), do: String.length(to_string(attr))
