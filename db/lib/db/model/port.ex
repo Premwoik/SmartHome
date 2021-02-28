@@ -73,6 +73,12 @@ defmodule DB.Port do
     with {:ok, d} <- Device.get(id), do: d
   end
 
+  def more(ports) when is_list(ports), do: Enum.map(ports, &more/1)
+  def more(%{more: nil}), do: %{}
+  def more(%{more: more}) when is_list(more), do: Map.new(more)
+  def more(%{more: more}), do: more
+  def more(_), do: nil
+
   def from_more(%{more: nil}, _), do: nil
 
   def from_more(%{more: more}, key) when is_map(more) do

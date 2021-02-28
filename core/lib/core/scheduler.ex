@@ -27,6 +27,8 @@ defmodule Core.Scheduler do
 
     if(!job.active) do
       Core.Scheduler.deactivate_job(name)
+    else
+      :ok
     end
   end
 
