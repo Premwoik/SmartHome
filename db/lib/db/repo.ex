@@ -2,6 +2,7 @@ defmodule DB.Repo do
   @moduledoc false
 
 
+
   def get(mod, id) do
     id = if(is_binary(id), do: String.to_integer(id), else: id)
     mod.get(id)

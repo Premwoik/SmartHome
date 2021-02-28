@@ -82,5 +82,7 @@ defmodule UiWeb.Router do
     get "/schema/action", SchemaController, :get_action_schema
     get "/schema/rf_button", SchemaController, :get_rf_button_schema
     get "/schema/device", SchemaController, :get_device_schema
+
+    post "/configurator/execute", ConfiguratorController, :execute
   end
 end

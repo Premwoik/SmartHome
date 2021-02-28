@@ -23,19 +23,20 @@ defmodule Core do
 
   def children() do
     [
-      Core.Scheduler,
-      Core.Actions,
-      Core.Mqtt.Supervisor,
-      Core.Device.Supervisor
+#      Core.Scheduler,
+#      Core.Actions,
+#      Core.Mqtt.Supervisor,
+#      Core.Device.Supervisor
     ]
   end
-  """
-    handle_update is a function that can be used to notify all processes,
+  @doc"""
+    propagate_item_update is a function that can be used to notify all processes,
       which uses copy of object, that its db version was updated
 
   """
-  def handle_update(%DB.ScheduleJob{} = job) do
-    Core.Scheduler.reload(job)
+  def propagate_item_update(%DB.ScheduleJob{} = job) do
+    :ok = Core.Scheduler.reload(job)
+    job
   end
-  def handle_update(x), do: x
+  def propagate_item_update(job), do: job
 end

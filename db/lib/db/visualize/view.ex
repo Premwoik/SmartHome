@@ -1,14 +1,24 @@
 defmodule DB.Visualize.View do
   @moduledoc false
 
-  def display([%{__struct__: module} | _] = records) do
-    attrs = module.__info__.attributes
+  defmodule Print do
+    def display(records), do: DB.Visualize.View.display(records) |> IO.puts()
+  end
+
+  def display([%{} = sample| _] = records) do
+    attrs = get_attrs(sample)
     separator = " | "
     sizes = get_column_length(attrs, records)
-    print_header_view(attrs, separator, sizes)
-    Enum.map(records, & print_record_view(&1, attrs, separator, sizes))
-    :ok
+    header = print_header_view(attrs, separator, sizes)
+    records = Enum.map(records, & print_record_view(&1, attrs, separator, sizes))
+    [header | records]
+    |> Enum.join("\n")
   end
+
+  defp get_attrs(%{__struct__: module}), do: module.__info__.attributes
+  defp get_attrs(%{} = sample), do: Map.keys(sample)
+
+  def display(record), do: List.wrap(record) |> display()
 
   defp print_header_view(attrs, separator, sizes) do
     names = Enum.reduce(attrs, "", fn attr, acc ->
@@ -16,12 +26,12 @@ defmodule DB.Visualize.View do
       item_size =String.length(to_string(attr))
       space = String.duplicate(" ", abs(round((size -  item_size) / 2)))
       if acc == "" do
-        acc <> to_string(attr)
+        String.slice(space <> to_string(attr) <> space, 0, size)
       else
         acc <> separator <> String.slice(space <> to_string(attr) <> space, 0, size)
       end
     end)
-    IO.puts(names)
+#    IO.puts(names)
   end
 
   defp print_record_view(item, attrs, separator, sizes) do
@@ -31,11 +41,11 @@ defmodule DB.Visualize.View do
       space = String.duplicate(" ", abs(round((size -  item_size) / 2)))
       view = render_attribute(Map.get(item, attr))
       case acc do
-        "" -> acc <> view <> space
+        "" -> String.slice(space <> view <> space, 0, size)
         _ -> acc <> separator <> String.slice(space <> view <> space, 0, size)
       end
     end)
-    |> IO.puts()
+#    |> IO.puts()
   end
 
   defp render_attribute(x) when is_list(x), do: "[...]"
