@@ -1,4 +1,4 @@
-defmodule Core.Controllers.WattmeterController do
+defmodule Core.Controllers.WattMeterController do
   @moduledoc false
 
   @callback read_watts(device :: %DB.Device{}) :: any
@@ -6,5 +6,4 @@ defmodule Core.Controllers.WattmeterController do
   def read(device) do
     Core.Device.do_(:read_watts, device)
   end
-
 end

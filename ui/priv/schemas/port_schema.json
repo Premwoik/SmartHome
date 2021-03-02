@@ -1,0 +1,157 @@
+{
+  "ui_schema": {
+    "ui:order": [
+      "id",
+      "name",
+      "device_id",
+      "mode",
+      "number",
+      "pwm_fill",
+      "state",
+      "timeout",
+      "inverted_logic",
+      "type"
+    ]
+  },
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://192.168.2.100/api/schemas/port_schema.json",
+  "title": "Port",
+  "description": "Szablon konfiguracyjny portu.",
+  "required": [
+    "device_id",
+    "inverted_logic",
+    "mode",
+    "name",
+    "number",
+    "pwm_fill",
+    "state",
+    "timeout",
+    "type"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "$id": "#/properties/id",
+      "default": 0,
+      "title": "ID",
+      "readOnly": true,
+      "type": "integer"
+    },
+    "name": {
+      "$id": "#/properties/name",
+      "default": "",
+      "title": "Nazwa",
+      "type": "string"
+    },
+    "device_id": {
+      "$id": "#/properties/device_id",
+      "default": 0,
+      "description": "ID urządzenia, do którego należy port.",
+      "title": "ID urządzenia",
+      "type": "integer"
+    },
+    "mode": {
+      "$id": "#/properties/mode",
+      "default": "output",
+      "description": "Tryb w jakim działa port np. wejście/wyjście",
+      "title": "Tryb",
+      "enum": [
+        "output",
+        "output-pulse",
+        "output-pwm",
+        "input"
+      ],
+      "type": "string"
+    },
+    "number": {
+      "$id": "#/properties/number",
+      "default": 0,
+      "description": "Numer pinu w urządzeniu.",
+      "title": "Numer",
+      "type": "integer"
+    },
+    "state": {
+      "$id": "#/properties/state",
+      "default": false,
+      "description": "Stan portu, który działa w trybie output - jest bistabilny.",
+      "title": "Stan",
+      "type": "boolean"
+    },
+    "inverted_logic": {
+      "$id": "#/properties/inverted_logic",
+      "default": false,
+      "description": "Stan wysoki jest zamieniony z niskim. Port jest inicjalizowany stanem wysokim.",
+      "title": "Odwrócona logika",
+      "type": "boolean"
+    },
+    "type": {
+      "$id": "#/properties/type",
+      "default": "",
+      "description": "Typ portu odpowiada rodzajowi urządzenia, którym steruje",
+      "enum": [
+        "other",
+        "light",
+        "dimmer",
+        "dimmer2",
+        "dimmer_rgb",
+        "dimmer_rgbw",
+        "sunblind",
+        "sunblind_helper",
+        "alarm_input",
+        "motion_sensor"
+      ],
+      "title": "Typ",
+      "type": "string"
+    }
+  },
+  "dependencies": {
+    "mode": {
+      "oneOf": [
+        {
+          "properties": {
+            "mode": {
+              "enum": [
+                "output-pulse"
+              ]
+            },
+            "timeout": {
+              "$id": "#/properties/timeout",
+              "default": 0,
+              "description": "Długość wysyłanego impulsu, gdy port działa w trybe output-pulse - jest monostabilny.",
+              "title": "Czas impulsu",
+              "type": "integer"
+            }
+          }
+        },
+        {
+          "properties": {
+            "mode": {
+              "enum": [
+                "output-pwm"
+              ]
+            },
+            "pwm_fill": {
+              "$id": "#/properties/pwm_fill",
+              "default": 0,
+              "description": "Pole używane, gdy tryb pracy portu to output-pwm",
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Wypełnienie PWM",
+              "type": "integer"
+            }
+          }
+        },
+        {
+          "properties": {
+            "mode": {
+              "enum": [
+                "output",
+                "input"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

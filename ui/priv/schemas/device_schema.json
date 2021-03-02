@@ -1,0 +1,65 @@
+{
+  "ui_schema": {
+    "ui:order": [
+      "id",
+      "name",
+      "ip",
+      "port",
+      "alive",
+      "type_id"
+    ]
+  },
+  "$id": "http://example.com/example.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "default": {},
+  "required": [
+    "alive",
+    "id",
+    "ip",
+    "name",
+    "port",
+    "type_id"
+  ],
+  "title": "Urządzenie",
+  "type": "object",
+  "properties": {
+    "alive": {
+      "$id": "#/properties/alive",
+      "default": false,
+      "title": "Czy użądzenie jest online?",
+      "type": "boolean"
+    },
+    "id": {
+      "$id": "#/properties/id",
+      "default": 0,
+      "title": "ID",
+      "readOnly": true,
+      "type": "integer"
+    },
+    "ip": {
+      "$id": "#/properties/ip",
+      "default": "",
+      "title": "Adres IP",
+      "type": "string"
+    },
+    "name": {
+      "$id": "#/properties/name",
+      "default": "",
+      "title": "Nazwa",
+      "type": "string"
+    },
+    "port": {
+      "$id": "#/properties/port",
+      "default": 0,
+      "title": "Port",
+      "type": "integer"
+    },
+    "type_id": {
+      "$id": "#/properties/type_id",
+      "default": 0,
+      "description": "Zobacz instrukcję",
+      "title": "ID Typu urządzenia",
+      "type": "integer"
+    }
+  }
+}

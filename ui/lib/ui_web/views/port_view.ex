@@ -1,6 +1,7 @@
 defmodule UiWeb.PortView do
   use UiWeb, :view
   alias UiWeb.PortView
+  import UiWeb.View.Helper
 
   def render("index.json", %{ports: ports}) do
     render_many(ports, PortView, "port.json")
@@ -19,9 +20,11 @@ defmodule UiWeb.PortView do
       state: port.state,
       type: port.type,
       timeout: port.timeout,
-      device_id: port.device_id,
+      inverted_logic: port.inverted_logic,
+      pwm_fill: port.pwm_fill,
+      device_id: foreign_view(port.device_id),
       ref: port.ref,
-      '@type': "port"
+      "@type": "port"
     }
   end
 

@@ -1,0 +1,16 @@
+id,name,active,params,function,port_id,ref,start_time,end_time,frequency,device_id
+1,Cały dom,1,{},CloseSunblinds,,1,,,15000,
+2,Salon schody,0,[30000],AutoLights,18,1,15:00:00.000000,05:00:00.000000,15000,
+3,Salon stół,0,[30000],AutoLights,19,1,15:00:00.000000,05:00:00.000000,15000,
+4,Salon wypoczynek,0,[30000],AutoLights,20,1,15:00:00.000000,05:00:00.000000,15000,
+5,Auto otwieranie,1,{},CloseSunblinds,,1,,,15000,
+6,Pokój Przemek,1,{},CloseSunblinds,,1,,,15000,
+7,Sypialnia światło,0,[30000],AutoLights,38,3,,,15000,
+8,Światło poddasze,1,[180000],AutoLights,28,2,,,15000,
+9,Wiatrak łazienka,0,[10000],AutoLights,25,5,,,1000,
+10,Grupa świateł salon,1,{},ToggleGroup,,1,,,1000,
+11,Sterowanie ściemniaczem TV,1,{},DimmerController,,1,,,0,
+12,Sterowanie ściemniaczem Kanapa,1,{},DimmerController,,1,,,0,
+13,Odczyt wejść satel,1,{},ReadInputs,,1,,,0,2
+14,Odczyt temperatury mega,1,{},ReadTemperature,,1,,,0,1
+15,Heartbeat mega,1,{},Heartbeat,,1,,,0,1

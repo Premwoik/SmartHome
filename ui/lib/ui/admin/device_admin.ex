@@ -3,27 +3,24 @@ defmodule Ui.DeviceAdmin do
   The Admin context.
   """
 
-  import Ecto.Query, warn: false
-  alias DB.Repo
-  alias DB.{Device, DeviceType}
+  alias DB.{Repo, Device}
 
   def list_devices do
-    Repo.all(Device) |> Repo.preload(:type)
+    Repo.all(Device)
   end
 
+  def get_device!(id), do: Repo.get(Device, id)
 
-  def get_device!(id), do: Repo.get!(Device, id) |> Repo.preload(:type)
-
+  def get_device(id), do: Repo.get(Device, id)
 
   def create_device(attrs \\ %{}) do
-    %Device{}
-    |> Device.changeset(attrs, all_str = true)
+    Device.new()
+    |> Device.cast(attrs)
     |> Repo.insert()
   end
 
   def update_device(%Device{} = device, attrs) do
-    device
-    |> Device.changeset(attrs, all_str = true)
+    Device.cast(device, attrs)
     |> Repo.update()
   end
 
@@ -31,14 +28,12 @@ defmodule Ui.DeviceAdmin do
     Repo.delete(device)
   end
 
-
   def change_device(%Device{} = device) do
-    Device.changeset(device, %{})
+    #    TODO
+    Device.cast(device, %{})
   end
 
-  def get_types do
-    Repo.all(DeviceType)
-  end
-
-
+  #  def get_types do
+  #    Repo.all(DeviceType)
+  #  end
 end

@@ -26,7 +26,17 @@ defmodule UiWeb.TaskControllerTest do
     status: "some updated status",
     type_id: 43
   }
-  @invalid_attrs %{action_id: nil, device_id: nil, end_date: nil, execution_time: nil, frequency: nil, limit: nil, start_date: nil, status: nil, type_id: nil}
+  @invalid_attrs %{
+    action_id: nil,
+    device_id: nil,
+    end_date: nil,
+    execution_time: nil,
+    frequency: nil,
+    limit: nil,
+    start_date: nil,
+    status: nil,
+    type_id: nil
+  }
 
   def fixture(:task) do
     {:ok, task} = TaskAdmin.create_task(@create_attrs)

@@ -29,9 +29,10 @@ defmodule UiWeb.Router do
     resources "/devices", DeviceController, except: [:new, :edit]
     resources "/dashboards", DashboardController, except: [:new, :edit]
     resources "/sunblinds", SunblindController, except: [:new, :edit]
-    resources "/tasks", TaskController, except: [:new, :edit]
+    resources "/meters", MeterController, except: [:new, :edit]
+    resources "/rf_buttons", RfButtonController, except: [:new, :edit]
+    resources "/alarm_partitions", AlarmPartitionController, except: [:new, :edit]
 
-    get "/devices/types/all", DeviceController, :get_types
 
     get "/dashboards/view/short", DashboardController, :short
     get "/dashboards/view/:id", DashboardController, :view
@@ -39,7 +40,6 @@ defmodule UiWeb.Router do
     post "/dimmers/setOn/:id", DimmerController, :set_on
     post "/dimmers/setOff/:id", DimmerController, :set_off
     post "/dimmers/setBrightness", DimmerController, :set
-
 
     post "/lights/setOn/:id", LightController, :set_on
     post "/lights/setOff/:id", LightController, :set_off
@@ -51,22 +51,38 @@ defmodule UiWeb.Router do
     post "/actions/setOn/:id", ActionController, :set_on
     post "/actions/setOff/:id", ActionController, :set_off
     post "/actions/set/:id/:state", ActionController, :set
-    post "/actions/update_args/:id", ActionController, :update_args
-    get "/actions/get_args/:id", ActionController, :get_args
+    post "/actions/activate_high/:id", ActionController, :activate_high
+    post "/actions/activate_low/:id", ActionController, :activate_low
+    #    JOBS
+    post "/actions/new_job/", ActionController, :new_job
+    post "/actions/remove_job/:id", ActionController, :remove_job
+    post "/actions/activate_job/:id", ActionController, :activate_job
+    post "/actions/deactivate_job/:id", ActionController, :deactivate_job
 
     post "/ports/setOn/:id", PortController, :set_on
     post "/ports/setOff/:id", PortController, :set_off
 
-    post "/tasks/setOn/:id", TaskController, :set_on
-    post "/tasks/setOff/:id", TaskController, :set_off
-    get "/tasks/types/all", TaskController, :get_types
-
     get "/stats/device-journal/report/:id", DeviceJournalController, :get_report
     get "/stats/device-journal/report_sec/:id", DeviceJournalController, :get_report_s
-
     get "/stats/device-journal/logs/:id", DeviceJournalController, :get_logs
+    get "/stats/activations/devices/:id", ActivationsHistoryController, :get_device_activations
+    get "/stats/activations/inputs/:id", ActivationsHistoryController, :get_input_activations
+    get "/stats/activations/outputs/:id", ActivationsHistoryController, :get_output_activations
 
+    get "/meters/get_readings/:id", MeterController, :get_temperature
+
+    post "/alarm_partitions/arm/:id", AlarmPartitionController, :arm
+    post "/alarm_partitions/disarm/:id", AlarmPartitionController, :disarm
+    post "/alarm_partitions/clear_alarm/:id", AlarmPartitionController, :clear_alarm
+
+    get "/schema/port", SchemaController, :get_port_schema
+    get "/schema/light", SchemaController, :get_light_schema
+    get "/schema/dimmer", SchemaController, :get_dimmer_schema
+    get "/schema/sunblind", SchemaController, :get_sunblind_schema
+    get "/schema/action", SchemaController, :get_action_schema
+    get "/schema/rf_button", SchemaController, :get_rf_button_schema
+    get "/schema/device", SchemaController, :get_device_schema
+
+    post "/configurator/execute", ConfiguratorController, :execute
   end
-
-
 end

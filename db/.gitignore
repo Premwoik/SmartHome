@@ -22,3 +22,8 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 db-*.tar
 
+itHome.sqlite3-wal
+itHome.sqlite3
+itHome.sqlite3-shm
+/.mnesia
+

@@ -1,0 +1,121 @@
+{
+  "ui_schema": {
+    "ui:order": [
+      "id",
+      "state",
+      "type",
+      "full_open_time",
+      "position",
+      "direction",
+      "port",
+      "open_port"
+    ]
+  },
+  "definitions": {
+    "port": {}
+  },
+  "$id": "http://192.168.2.100/api/schemas/sunblind_schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Konfiguracja rolety",
+  "required": [
+    "direction",
+    "full_open_time",
+    "id",
+    "port",
+    "position",
+    "state",
+    "type"
+  ],
+  "title": "Roleta",
+  "type": "object",
+  "properties": {
+
+    "full_open_time": {
+      "$id": "#/properties/full_open_time",
+      "default": 0,
+      "description": "Używane do blokowania sterowaniem rolety, kiedy jest w ruchu.",
+      "title": "Czas pełnego odsunięcia",
+      "type": "integer"
+    },
+    "id": {
+      "$id": "#/properties/id",
+      "default": 0,
+      "title": "ID",
+      "type": "integer"
+    },
+
+    "port": {
+      "$ref": "#/definitions/port",
+      "title": "Port"
+    },
+
+    "state": {
+      "$id": "#/properties/state",
+      "default": "",
+      "enum": [
+        "open",
+        "in_move",
+        "close"
+      ],
+      "title": "Stan",
+      "type": "string"
+    },
+    "type": {
+      "$id": "#/properties/type",
+      "default": "",
+      "enum": [
+        "pulse2",
+        "only_close",
+        "unused"
+      ],
+      "title": "Typ",
+      "type": "string"
+    }
+  },
+  "dependencies": {
+    "type": {
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "enum": ["pulse2"]
+            },
+            "open_port": {
+              "$ref": "#/definitions/port",
+              "type": ["object", "null"],
+              "title": "Otwarty port"
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "enum": ["only_close"]
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "enum": ["unused"]
+            },
+            "position": {
+              "$id": "#/properties/position",
+              "default": 0,
+              "description": "Nie używane jak na razie. Miało być używane w celu precyzyjnego sterowanie pozycją.",
+              "title": "Pozycja rolety",
+              "type": "integer"
+            },
+            "direction": {
+              "$id": "#/properties/direction",
+              "default": "",
+              "description": "Nie używane. Kierunek w którym poruszy się roleta w kolejnym sterowaniu",
+              "title": "Kierunek",
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

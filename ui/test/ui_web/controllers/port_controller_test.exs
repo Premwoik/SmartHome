@@ -22,7 +22,15 @@ defmodule UiWeb.PortControllerTest do
     timeout: 43,
     type: "some updated type"
   }
-  @invalid_attrs %{device_id: nil, mode: nil, name: nil, number: nil, state: nil, timeout: nil, type: nil}
+  @invalid_attrs %{
+    device_id: nil,
+    mode: nil,
+    name: nil,
+    number: nil,
+    state: nil,
+    timeout: nil,
+    type: nil
+  }
 
   def fixture(:port) do
     {:ok, port} = PortAdmin.create_port(@create_attrs)

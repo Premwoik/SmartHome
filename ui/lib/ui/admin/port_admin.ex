@@ -3,10 +3,7 @@ defmodule Ui.PortAdmin do
   The PortAdmin context.
   """
 
-  import Ecto.Query, warn: false
-  alias DB.Repo
-
-  alias DB.Port
+  alias DB.{Repo, Port}
 
   @doc """
   Returns the list of ports.
@@ -35,19 +32,16 @@ defmodule Ui.PortAdmin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_port!(id), do: Repo.get!(Port, id) |> preload()
+  def get_port!(id), do: Repo.get(Port, id)
 
-  def get_port(id) do 
-    case Repo.get(Port, id) |> preload() do
-      nil -> 
+  def get_port(id) do
+    case Repo.get(Port, id) do
+      nil ->
         {:error, :wrong_id}
+
       p ->
         {:ok, p}
     end
-  end
-
-  def preload(p) do
-    DB.Repo.preload(p, :device)
   end
 
   @doc """
@@ -63,8 +57,8 @@ defmodule Ui.PortAdmin do
 
   """
   def create_port(attrs \\ %{}) do
-    %Port{}
-    |> Port.changeset(attrs, all_str = true)
+    Port.new()
+    |> Port.cast(attrs)
     |> Repo.insert()
   end
 
@@ -82,7 +76,7 @@ defmodule Ui.PortAdmin do
   """
   def update_port(%Port{} = port, attrs) do
     port
-    |> Port.changeset(attrs, all_str = true)
+    |> Port.cast(attrs)
     |> Repo.update()
   end
 
@@ -102,16 +96,4 @@ defmodule Ui.PortAdmin do
     Repo.delete(port)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking port changes.
-
-  ## Examples
-
-      iex> change_port(port)
-      %Ecto.Changeset{source: %Port{}}
-
-  """
-  def change_port(%Port{} = port) do
-    Port.changeset(port, %{})
-  end
 end

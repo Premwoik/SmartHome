@@ -6,9 +6,33 @@ defmodule Ui.PortAdminTest do
   describe "ports" do
     alias Ui.PortAdmin.Port
 
-    @valid_attrs %{device_id: 42, mode: "some mode", name: "some name", number: 42, state: true, timeout: 42, type: "some type"}
-    @update_attrs %{device_id: 43, mode: "some updated mode", name: "some updated name", number: 43, state: false, timeout: 43, type: "some updated type"}
-    @invalid_attrs %{device_id: nil, mode: nil, name: nil, number: nil, state: nil, timeout: nil, type: nil}
+    @valid_attrs %{
+      device_id: 42,
+      mode: "some mode",
+      name: "some name",
+      number: 42,
+      state: true,
+      timeout: 42,
+      type: "some type"
+    }
+    @update_attrs %{
+      device_id: 43,
+      mode: "some updated mode",
+      name: "some updated name",
+      number: 43,
+      state: false,
+      timeout: 43,
+      type: "some updated type"
+    }
+    @invalid_attrs %{
+      device_id: nil,
+      mode: nil,
+      name: nil,
+      number: nil,
+      state: nil,
+      timeout: nil,
+      type: nil
+    }
 
     def port_fixture(attrs \\ %{}) do
       {:ok, port} =

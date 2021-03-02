@@ -1,0 +1,177 @@
+{
+  "ui_schema": {
+    "ui:order": [
+      "id",
+      "fill",
+      "color",
+      "white",
+      "direction",
+      "full_time",
+      "port",
+      "lights",
+      "*"
+    ],
+    "color": {
+      "ui:widget": "color"
+    },
+    "type": {
+      "ui:widget": "hidden"
+    },
+    "fill": {
+      "ui:widget": "range"
+    },
+    "white": {
+      "ui:widget": "range"
+    }
+  },
+  "definitions": {
+    "port": {}
+  },
+  "$id": "http://192.168.2.100/api/schemas/dimmer_schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "default": {},
+  "description": "Szablon konfiguracyjny ściemniacza.",
+  "required": [
+    "id",
+    "fill",
+    "color",
+    "white",
+    "direction",
+    "full_time",
+    "port",
+    "lights"
+  ],
+  "title": "Ściemniacz",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$id": "#/properties/id",
+      "default": 0,
+      "description": "ID ściemniacza",
+      "title": "ID",
+      "readOnly": true,
+      "type": "integer"
+    },
+    "fill": {
+      "$id": "#/properties/fill",
+      "default": 0,
+      "description": "Jasność w zakresie 0-100",
+      "title": "Jasność",
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+
+    "port": {
+      "$ref": "#/definitions/port"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["dimmer", "dimmer2", "dimmer_rgb","dimmer_rgbw"],
+      "title": ""
+    },
+    "lights": {
+      "$id": "#/properties/lights",
+      "format": "hidden",
+      "description": "Światła, które są sterowane tym ściemniaczem",
+      "title": "Światła zależne",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$id": "#/properties/lights/items",
+        "anyOf": [
+          {
+            "$id": "#/properties/lights/items/anyOf/0",
+            "type": "integer",
+            "title": "Id światła",
+            "description": "",
+            "default": 0
+          },
+          {
+            "$id": "#/properties/lights/items/anyOf/1",
+            "type": "object",
+            "title": "Światło",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "title": "ID"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "type": {
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "enum": ["dimmer", "dimmer2"]
+            },
+            "direction": {
+              "$id": "#/properties/direction",
+              "default": 0,
+              "description": "Potrzebne dla ściemniaczy w salonie",
+              "enum": [-1, 1],
+              "title": "Kierynek zmiany jasności",
+              "type": "integer"
+            },
+            "full_time": {
+              "$id": "#/properties/full_time",
+              "default": 0,
+              "description": "Potrzebne w ściemniaczach w salonie",
+              "title": "Czas osiągnięcia pełnej jasności.",
+              "type": "integer"
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "enum": [
+                "dimmer_rgb"
+              ]
+            },
+            "color": {
+              "$id": "#/properties/color",
+              "default": "#00000",
+              "description": "",
+              "title": "Kolor",
+              "type": "string"
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "enum": [
+                "dimmer_rgbw"
+              ]
+            },
+            "color": {
+              "$id": "#/properties/color",
+              "default": "#00000",
+              "description": "",
+              "title": "Kolor",
+              "type": "string"
+            },
+
+            "white": {
+              "$id": "#/properties/white",
+              "default": 0,
+              "description": "",
+              "title": "Kolor biały",
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,37 +1,42 @@
 defmodule DB.Device do
-  use Ecto.Schema
-  @moduledoc false
-  import Ecto.Changeset
-  import Ecto.Query
+  alias DB.{CRUD, Device}
 
-  import DB
-  alias DB.{Device, Repo, DeviceType}
+  @type t :: %Device{
+          name: String.t(),
+          ip: String.t(),
+          port: integer,
+          type: String.t(),
+          alive: boolean,
+          ref: CRUD.ref()
+        }
 
-  schema "devices" do
-    field(:name, :string)
-    field(:ip, :string)
-    field(:port, :integer)
-    belongs_to(:type, DB.DeviceType)
-    field(:alive, :boolean, default: false)
-    field(:ref, :integer)
-    has_many(:ports, DB.Port)
+  use CRUD, default: [alive: false, type: "Default", port: 80, ref: 1]
+
+  use Memento.Table,
+    attributes: [
+      :id,
+      :name,
+      :ip,
+      :port,
+      :type,
+      :alive,
+      :ref
+    ],
+    index: [:name],
+    type: :ordered_set,
+    autoincrement: true
+
+  def get_by_type(type) do
+    find({:==, :type, type})
   end
 
-  def changeset(device, params \\ %{}, all_str \\ false) do
-    params_ = inc_ref(device, Enum.into(params, %{}), all_str)
-    device
-    |> cast(params_, [:name, :ip, :port, :type_id, :alive, :ref])
+  def get_by_name(name) do
+    find({:==, :name, name}) |> List.first()
   end
 
-  def preload, do: [device: :type]
-
-  def get(id) do
-    Repo.get(Device, id)
-    |> Repo.preload(:type)
+  def get_from_foreign(%{device_id: {:foreign, DB.Device, id}}) do
+    get(id)
   end
 
-  def all() do
-    Repo.all(Device)
-    |> Repo.preload(:type)
-  end
+  def get_from_foreign(_), do: nil
 end

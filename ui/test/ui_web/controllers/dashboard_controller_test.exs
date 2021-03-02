@@ -59,7 +59,10 @@ defmodule UiWeb.DashboardControllerTest do
   describe "update dashboard" do
     setup [:create_dashboard]
 
-    test "renders dashboard when data is valid", %{conn: conn, dashboard: %Dashboard{id: id} = dashboard} do
+    test "renders dashboard when data is valid", %{
+      conn: conn,
+      dashboard: %Dashboard{id: id} = dashboard
+    } do
       conn = put(conn, Routes.dashboard_path(conn, :update, dashboard), dashboard: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 

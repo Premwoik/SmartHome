@@ -6,9 +6,39 @@ defmodule Ui.TaskAdminTest do
   describe "tasks" do
     alias Ui.TaskAdmin.Task
 
-    @valid_attrs %{action_id: 42, device_id: 42, end_date: ~D[2010-04-17], execution_time: ~T[14:00:00], frequency: 42, limit: 42, start_date: ~D[2010-04-17], status: "some status", type_id: 42}
-    @update_attrs %{action_id: 43, device_id: 43, end_date: ~D[2011-05-18], execution_time: ~T[15:01:01], frequency: 43, limit: 43, start_date: ~D[2011-05-18], status: "some updated status", type_id: 43}
-    @invalid_attrs %{action_id: nil, device_id: nil, end_date: nil, execution_time: nil, frequency: nil, limit: nil, start_date: nil, status: nil, type_id: nil}
+    @valid_attrs %{
+      action_id: 42,
+      device_id: 42,
+      end_date: ~D[2010-04-17],
+      execution_time: ~T[14:00:00],
+      frequency: 42,
+      limit: 42,
+      start_date: ~D[2010-04-17],
+      status: "some status",
+      type_id: 42
+    }
+    @update_attrs %{
+      action_id: 43,
+      device_id: 43,
+      end_date: ~D[2011-05-18],
+      execution_time: ~T[15:01:01],
+      frequency: 43,
+      limit: 43,
+      start_date: ~D[2011-05-18],
+      status: "some updated status",
+      type_id: 43
+    }
+    @invalid_attrs %{
+      action_id: nil,
+      device_id: nil,
+      end_date: nil,
+      execution_time: nil,
+      frequency: nil,
+      limit: nil,
+      start_date: nil,
+      status: nil,
+      type_id: nil
+    }
 
     def task_fixture(attrs \\ %{}) do
       {:ok, task} =

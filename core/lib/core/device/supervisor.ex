@@ -2,7 +2,7 @@ defmodule Core.Device.Supervisor do
   @moduledoc false
   use Supervisor
 
-  alias DB.{Device, DeviceType}
+  alias DB.{Device}
 
   def start_link(arg) do
     Supervisor.start_link(__MODULE__, arg, name: __MODULE__)
@@ -10,37 +10,29 @@ defmodule Core.Device.Supervisor do
 
   @impl true
   def init(_arg) do
-    DB.Repo.all(DB.Device)
-    |> DB.Repo.preload(:type)
-    |> Enum.map(&(get_specs &1))
-    |> Enum.filter(&(&1 != %{})) #remove empty
+    Device.all()
+    |> Enum.map(&get_specs(&1))
+    # remove empty
+    |> Enum.filter(&(&1 != nil))
     |> Supervisor.init(strategy: :one_for_one)
   end
 
-  defp get_specs(%Device{type: %DeviceType{process: false}}), do: %{}
+  defp get_specs(%Device{name: name, ip: ip, port: port, type: type}) do
+    mod = module(type)
 
-  defp get_specs(%Device{type: type} = device) do
-    get_specs(device, (get_type_info type))
+    if mod.need_process?() do
+      %{
+        id: String.to_atom(name),
+        start:
+          {mod, :start_link, [String.to_charlist(ip), port, [], [name: String.to_atom(name)]]}
+      }
+    else
+      nil
+    end
   end
 
-
-  #  defp get_specs(%Device{type: type, name: name, ip: ip, port: port} = device, {:watcher, module}) do
-  #    %{
-  #      id: (String.to_atom name),
-  #      start: {module, :start_link, [(String.to_charlist ip), port, [], [name: (String.to_atom name)]]}
-  #    }
-  #  end
-
-  defp get_specs(%Device{name: name, ip: ip, port: port}, module) do
-    %{
-      id: (String.to_atom name),
-      start: {module, :start_link, [(String.to_charlist ip), port, [], [name: (String.to_atom name)]]}
-    }
+  defp module(type) do
+    ("Elixir.Core.Device." <> type)
+    |> String.to_existing_atom()
   end
-
-
-  defp get_type_info(type) do
-    module = String.to_atom "Elixir." <> type.module
-  end
-
 end

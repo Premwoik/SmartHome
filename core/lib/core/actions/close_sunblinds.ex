@@ -1,38 +1,28 @@
-defmodule Core.Actions.CloseSunblinds do
+defmodule Core.Actions.CloseSunblind do
   @moduledoc false
   require Logger
-  alias DB.{Sunblind}
+  #  alias DB.{Sunblind}
   alias Core.Controllers.SunblindController
 
   @behaviour Core.Actions.Action
 
   @impl true
-  def init_memory() do
-    %{}
+  def init_state() do
+    :empty
   end
 
   @impl true
-  def execute(:up, action, amem) do
-    Benchmark.measure_p(fn ->
-      DB.Action.get_args_ids(action)
-      |> DB.Sunblind.get_by_port()
-      |> SunblindController.close()
-    end)
+  def execute(:up, action, _state) do
+    DB.Action.arguments(action, :up)
+    |> SunblindController.close()
 
-    # Sunblind.get_type("only_close")
-    # |> SunblindController.close()
-    amem
+    :ok
   end
 
-  def execute(:down, action, amem) do
-    Benchmark.measure_p(fn ->
-      DB.Action.get_args_ids(action)
-      |> DB.Sunblind.get_by_port()
-      |> SunblindController.open()
-    end)
+  def execute(:down, action, _state) do
+    DB.Action.arguments(action, :down)
+    |> SunblindController.open()
 
-    # Sunblind.get_type("only_close")
-    # |> SunblindController.open()
-    amem
+    :ok
   end
 end

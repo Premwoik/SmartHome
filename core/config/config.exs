@@ -1,6 +1,7 @@
 # This file is responsible for configuring your application
 # and its dependencies with the aid of the Mix.Config module.
-use Mix.Config
+# use Mix.Config
+import Config
 
 # config :logger,
 #       backends: [:console],
@@ -25,26 +26,135 @@ use Mix.Config
 # config :logger, level: :info
 ##
 
-#config :core, :devices_module, Core.Devices
+# config :core, :devices_module, Core.Devices
 
-config :core, :two_way_client, Core.Device.Client.TwoWay
-# config :core, :two_way_client, Core.Device.Client.TwoWayMock
-config :core, :one_way_client, Core.Device.Client.OneWay
+config :core, two_way_client: Core.Device.Client.TwoWay
+config :core, one_way_client: Core.Device.Client.OneWay
 
-config :core, :basic_controller, Core.Controllers.BasicController
-config :core, :light_controller, Core.Controllers.LightController
+config :core, actions: Core.Actions
+config :core, device_helper: Core.Device
 
-config :core, :actions_server, Core.Actions
-config :core, :tasks_server, Core.Tasks
-config :core, :device_helper, Core.Device
-
-config :core, :database_module, DB
-
-config :core, :time_adapter, Core.Utils.Time.Real
-config :core, :date_time_adapter, Core.Utils.DateTime.Native
+config :core, database_module: DB
 
 # config :socket_test2,
-# import_config "../../db/config/config.exs"
+if Mix.target() == :core do
+  import_config "../../db/config/config.exs"
+end
+
+if Mix.target() == :coret do
+  import_config "../../db/config/config.exs"
+
+  config :core, actions: Core.Utils.Mock.Actions
+end
+
+config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
+
+config :core, Core.Scheduler,
+  timezone: "Europe/Warsaw",
+  run_strategy: Quantum.RunStrategy.Local,
+  jobs: [
+    ia_h: [
+      schedule: "@hourly",
+      task: {DB.Stats.InputActivation, :collect, [:hourly]},
+      timezone: "Europe/Warsaw"
+    ],
+    ia_d: [
+      schedule: "@daily",
+      task: {DB.Stats.InputActivation, :collect, [:daily]},
+      timezone: "Europe/Warsaw"
+    ],
+    ia_w: [
+      schedule: "@weekly",
+      task: {DB.Stats.InputActivation, :collect, [:weekly]},
+      timezone: "Europe/Warsaw"
+    ],
+    ia_m: [
+      schedule: "@monthly",
+      task: {DB.Stats.InputActivation, :collect, [:monthly]},
+      timezone: "Europe/Warsaw"
+    ],
+    oa_h: [
+      schedule: "@hourly",
+      task: {DB.Stats.OutputActivation, :collect, [:hourly]},
+      timezone: "Europe/Warsaw"
+    ],
+    oa_d: [
+      schedule: "@daily",
+      task: {DB.Stats.OutputActivation, :collect, [:daily]},
+      timezone: "Europe/Warsaw"
+    ],
+    oa_w: [
+      schedule: "@weekly",
+      task: {DB.Stats.OutputActivation, :collect, [:weekly]},
+      timezone: "Europe/Warsaw"
+    ],
+    oa_m: [
+      schedule: "@monthly",
+      task: {DB.Stats.OutputActivation, :collect, [:monthly]},
+      timezone: "Europe/Warsaw"
+    ],
+    da_h: [
+      schedule: "@hourly",
+      task: {DB.Stats.DeviceActivation, :collect, [:hourly]},
+      timezone: "Europe/Warsaw"
+    ],
+    da_d: [
+      schedule: "@daily",
+      task: {DB.Stats.DeviceActivation, :collect, [:daily]},
+      timezone: "Europe/Warsaw"
+    ],
+    da_w: [
+      schedule: "@weekly",
+      task: {DB.Stats.DeviceActivation, :collect, [:weekly]},
+      timezone: "Europe/Warsaw"
+    ],
+    da_m: [
+      schedule: "@monthly",
+      task: {DB.Stats.DeviceActivation, :collect, [:monthly]},
+      timezone: "Europe/Warsaw"
+    ],
+    ta_h: [
+      schedule: "@hourly",
+      task: {DB.Stats.Temperature, :collect, [:hourly]},
+      timezone: "Europe/Warsaw"
+    ],
+    ta_d: [
+      schedule: "@daily",
+      task: {DB.Stats.Temperature, :collect, [:daily]},
+      timezone: "Europe/Warsaw"
+    ],
+    ta_w: [
+      schedule: "@weekly",
+      task: {DB.Stats.Temperature, :collect, [:weekly]},
+      timezone: "Europe/Warsaw"
+    ],
+    ta_m: [
+      schedule: "@monthly",
+      task: {DB.Stats.Temperature, :collect, [:monthly]},
+      timezone: "Europe/Warsaw"
+    ],
+    ea_h: [
+      schedule: "@hourly",
+      task: {DB.Stats.Energy, :collect, [:hourly]},
+      timezone: "Europe/Warsaw"
+    ],
+    ea_d: [
+      schedule: "@daily",
+      task: {DB.Stats.Energy, :collect, [:daily]},
+      timezone: "Europe/Warsaw"
+    ],
+    ea_w: [
+      schedule: "@weekly",
+      task: {DB.Stats.Energy, :collect, [:weekly]},
+      timezone: "Europe/Warsaw"
+    ],
+    ea_m: [
+      schedule: "@monthly",
+      task: {DB.Stats.Energy, :collect, [:monthly]},
+      timezone: "Europe/Warsaw"
+    ]
+  ]
+
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
 # by uncommenting the line below and defining dev.exs, test.exs and such.

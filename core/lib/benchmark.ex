@@ -18,7 +18,7 @@ defmodule Benchmark do
     |> :timer.tc()
     |> (fn {time, res} ->
           IO.inspect(time / 1_000_000)
-          res
+          IO.inspect(res)
         end).()
   end
 end

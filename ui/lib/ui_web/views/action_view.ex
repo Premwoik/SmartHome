@@ -17,39 +17,29 @@ defmodule UiWeb.ActionView do
       function: action.function,
       active: action.active,
       params: action.params,
-      frequency: action.frequency,
+      arguments: encode_arguments(action.arguments),
+      frequency: action.timeout,
       start_time: action.start_time,
       end_time: action.end_time,
-      port_id: action.port_id,
+      port_id: foreign_view(action.port_id),
       ref: action.ref,
-      '@type': "action"
-    }
-  end
-  
-
-  def render("show_args.json", %{args: args}) do
-    render_many(args, ActionView, "arg.json")
-  end
-
-  def render("arg.json", %{action: arg}) do
-    %{
-      action_id: arg.id,
-      port_id: arg.port_id,
-      name: arg.name,
-      type: arg.type
+      "@type": "action"
     }
   end
 
-  # def render("show.json", %{dash_action: action}) do
-  # %{data: render_one(action, ActionView, "dash_action.json")}
-  # end
+  def encode_arguments(arguments) do
+    up_down = Keyword.get(arguments, :up_down, [])
+    up = Keyword.get(arguments, :up, [])
+    down = Keyword.get(arguments, :down, [])
+    %{up_down: foreign_view(up_down), up: foreign_view(up), down: foreign_view(down)}
+  end
 
-  # def render("dash_action.json", %{action: action}) do
-  # %{id: action.id,
-  # name: action.name,
-  # function: action.function,
-  # state: action.active,
-  # action: ""
-  # }
-  # end
+  def foreign_view(foreigns) when is_list(foreigns),
+    do: Enum.map(foreigns, &foreign_view/1)
+
+  def foreign_view({:foreign, mod, id}) do
+    %{"@type": "foreign", module: mod, id: id}
+  end
+
+  def foreign_view(f), do: f
 end

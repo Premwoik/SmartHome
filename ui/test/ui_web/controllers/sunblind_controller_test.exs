@@ -62,7 +62,10 @@ defmodule UiWeb.SunblindControllerTest do
   describe "update sunblind" do
     setup [:create_sunblind]
 
-    test "renders sunblind when data is valid", %{conn: conn, sunblind: %Sunblind{id: id} = sunblind} do
+    test "renders sunblind when data is valid", %{
+      conn: conn,
+      sunblind: %Sunblind{id: id} = sunblind
+    } do
       conn = put(conn, Routes.sunblind_path(conn, :update, sunblind), sunblind: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 

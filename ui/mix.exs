@@ -19,7 +19,7 @@ defmodule Ui.MixProject do
   def application do
     [
       mod: {Ui.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :logger_file_backend]
     ]
   end
 
@@ -32,6 +32,7 @@ defmodule Ui.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      #    {:credo, "~> 1.2", only: [:dev, :test], runtime: false},
       {:phoenix, "~> 1.4.0"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_html, "~> 2.11"},
@@ -40,8 +41,13 @@ defmodule Ui.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:cors_plug, "~> 1.5"},
+      {:logger_file_backend, "~> 0.0.10"},
+      {:tint, "~> 1.1"},
+      {:ring_logger, "~> 0.8.1"},
       {:db, path: "../db"},
-      {:core, path: "../core"}
+      {:core, path: "../core"},
+      {:configurator, path: "../configurator"},
+      {:rstp_to_ws, path: "../rstp_to_ws"}
     ]
   end
 end

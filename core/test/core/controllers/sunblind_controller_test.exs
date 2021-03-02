@@ -10,7 +10,6 @@ defmodule Core.Controllers.SunblindControllerTest do
 
   setup :verify_on_exit!
 
-
   test "invoke close - check only 'only_close'" do
     @device_mock
     |> expect(:set_outputs, 1, fn d, ids, state -> :ok end)
@@ -28,7 +27,6 @@ defmodule Core.Controllers.SunblindControllerTest do
     assert s14.port.state == true
     assert s14.state == "in_move"
   end
-
 
   test "invoke open - check only 'only_close'" do
     @device_mock
@@ -48,5 +46,4 @@ defmodule Core.Controllers.SunblindControllerTest do
     assert s14.state == "in_move"
     :ok
   end
-
 end

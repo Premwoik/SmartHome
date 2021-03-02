@@ -1,29 +1,26 @@
 defmodule Core.Actions.AutoLights do
   @moduledoc false
   require Logger
-  alias DB.Dao
-  alias Core.Controllers.LightController
+  alias Core.{Controller}
   @behaviour Core.Actions.Action
+  alias DB.{Action, Port}
 
   @impl true
-  def init_memory() do
-    %{lastInvoke: 0, offPid: nil}
+  def init_state() do
+    nil
   end
 
   @impl true
-  def execute(on_off, action, %{offPid: pid} = amem) do
-    #IO.puts "AutoLights #{NaiveDateTime.utc_now()}"
-    Benchmark.measure_p(fn ->
-      case alive?(pid) do
-        true ->
-          send(pid, :notified)
-          amem
+  def execute(_on_off, action, pid) do
+    case alive?(pid) do
+      true ->
+        send(pid, :notified)
+        :ok
 
-        false ->
-          turn_on_lights(action)
-          |> update_pid(amem)
-      end
-    end)
+      false ->
+        pid = turn_on_lights(action)
+        {:ok, pid}
+    end
   end
 
   #  Privates
@@ -32,47 +29,26 @@ defmodule Core.Actions.AutoLights do
   defp alive?(pid), do: Process.alive?(pid)
 
   defp turn_on_lights(action) do
-    lights =
-      DB.Action.get_args_ids(action)
-      |> DB.Light.get_by_port()
+    ports = Action.arguments(action)
 
-    if any_on?(lights) do
-      nil
-    else
-      case LightController.turn_on(lights) do
-        :ok ->
-          # TODO should i load again or maybe manual change values? 
-          lights2 =
-            DB.Action.get_args_ids(action)
-            |> DB.Light.get_by_port()
-
-          [time | _] = Poison.decode!(action.params)
-          {:ok, pid} = Task.start(fn -> turn_off_after(lights2, time) end)
-          pid
-
-        error ->
-          nil
-      end
+    if length(ports) > 0 and !Port.any_on?(ports) do
+      %{ok: passed} = Controller.turn_on(ports)
+      time = Action.param(action, :on_timeout, 10_000)
+      {:ok, pid} = Task.start(fn -> turn_off_after(passed, time) end)
+      pid
     end
   end
 
-  defp turn_off_after(lights, time) do
+  defp turn_off_after(ports, time) do
+
     receive do
       :notified ->
         Logger.info("Turning lights delayed")
-        turn_off_after(lights, time)
+        turn_off_after(ports, time)
     after
       time ->
         Logger.info("Lights turned off")
-        LightController.turn_off(lights)
+        Controller.turn_off(ports)
     end
   end
-
-  defp update_pid(nil, mem), do: mem
-
-  defp update_pid(pid, mem) do
-    Map.put(mem, :offPid, pid)
-  end
-
-  defp any_on?(lights), do: Enum.any?(lights, &(&1.port.state == true))
 end

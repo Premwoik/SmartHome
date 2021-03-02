@@ -1,107 +1,177 @@
 defmodule Core.Device.Satel do
   @moduledoc false
 
+  @behaviour Core.Device.BasicIO
+  @behaviour Core.Device.AlarmSystem
   @behaviour Core.Device
 
-  @client Application.get_env(:core, :two_way_client)
-  # @client Core.Device.Client.OneWay
-  @protocol Core.Devices.Satel.Protocol
-
-  alias DB.DeviceJournal
+  @client Application.fetch_env!(:core, :two_way_client)
+  alias Core.Device.Static.Response
+  alias Core.Device.Satel.Protocol
+  require Logger
 
   use Bitwise
 
-  def start_link(host, port, opts, keywords, timeout \\ 5000, length \\ 11) do
+  @impl Core.Device
+  def start_link(host, port, _opts, keywords, timeout \\ 5000, length \\ 11) do
     @client.start_link(host, port, [:binary], keywords, timeout, length)
   end
 
-  @impl true
-  def set_outputs(device, ids, state) do
-    {:error, :not_implement}
+  @impl Core.Device
+  def need_process?(), do: true
+
+  ###
+  #  AlarmSystem impl
+  ###
+  @impl Core.Device.AlarmSystem
+  def arm(device, mode, zones) do
+    cmd = <<0xA0 + mode>>
+    code = Protocol.encode_code(device.password)
+    body = Protocol.encode_outputs(zones, 4)
+    command = cmd <> code <> body
+
+    run_command(device, command)
+    |> Response.wrap(device, zones)
   end
 
-  @impl true
-  def read_active_inputs(device) do
-    case i_violation(device) do
-      {:ok, r} = resp ->
-        DeviceJournal.log(device.id, "read_active_inputs", info = "#{inspect r, charlists: :as_lists}")
-        resp
+  @impl Core.Device.AlarmSystem
+  def disarm(device, zones) do
+    code = Protocol.encode_code("***REMOVED***")
+    body = Protocol.encode_outputs(zones, 4)
+    command = <<0x84>> <> code <> body
 
-      {:error, err} = err_ ->
-        DeviceJournal.log(
-          device.id,
-          "read_active_inputs",
-          type = DeviceJournal.Type.error(),
-          info = "#{err}"
-        )
+    run_command(device, command)
+    |> Response.wrap(device, zones)
+  end
 
-        err
+  @impl Core.Device.AlarmSystem
+  def clear_alarm(device, zones) do
+    code = Protocol.encode_code("***REMOVED***")
+    body = Protocol.encode_outputs(zones, 4)
+    command = <<0x85>> <> code <> body
 
-      err ->
-        err
+    run_command(device, command)
+    |> Response.wrap(device, zones)
+  end
+
+  @impl Core.Device.AlarmSystem
+  def monitor_changes(device, commands \\ [0x00, 0x17]) do
+    with {:ok, resp} <- run_command(device, <<0x7F>>),
+         [inputs_status, outputs_status] <- Protocol.decode_commands_status(resp, commands),
+         {:ok, inputs} <- if(inputs_status, do: read_inputs(device), else: {:ok, []}),
+         {:ok, outputs} <- if(outputs_status, do: read_outputs(device), else: {:ok, []}) do
+      {:ok, [inputs: inputs, outputs: outputs]}
     end
+    |> Response.wrap(device, device)
   end
 
-  @impl true
+  ###
+  # BasicIO impl
+  ###
+
+  @impl Core.Device.BasicIO
+  def set_outputs(device, ports) do
+    outputs = Enum.map(ports, & &1.number)
+    state = List.first(ports).state
+    code = Protocol.encode_code("***REMOVED***")
+    cmd = <<if(state, do: 0x88, else: 0x89)>>
+    body = Protocol.encode_outputs(outputs)
+    command = cmd <> code <> body
+
+    run_command(device, command)
+    |> Response.wrap(ports)
+  end
+
+  @impl Core.Device.BasicIO
+  def read_inputs(device) do
+    with {:ok, resp} <- run_command(device, <<0x00>>) do
+      {:ok, Protocol.decode_outputs(resp, 8)}
+    end
+    |> Response.wrap_with_ports(device)
+  end
+
+  @impl Core.Device.BasicIO
   def read_outputs(device) do
-    {:error, :not_implement}
+    with {:ok, resp} <- run_command(device, <<0x17>>) do
+      {:ok, Protocol.decode_outputs(resp, 8)}
+    end
+    |> Response.wrap_with_ports(device)
+  end
+
+  @impl Core.Device.BasicIO
+  def heartbeat(device) do
+    {:error, "Not supported!"}
+    |> Response.wrap(device)
+  end
+
+  ###
+  # No impl
+  ###
+
+  def read_zones_alarm(device) do
+    with {:ok, resp} <- run_command(device, <<0x02>>) do
+      {:ok, Protocol.decode_outputs(resp, 8)}
+    end
+    |> Response.wrap(device)
+  end
+
+  def read_zones_alarm_memory(device) do
+    with {:ok, resp} <- run_command(device, <<0x04>>) do
+      {:ok, Protocol.decode_outputs(resp, 8)}
+    end
+    |> Response.wrap(device)
+  end
+
+  def read_armed_partitions(device, mode) do
+    with {:ok, resp} <- run_command(device, <<0x09 + mode>>) do
+      {:ok, Protocol.decode_outputs(resp, 4)}
+    end
+    |> Response.wrap(device)
+  end
+
+  def read_partitions_alarm(device) do
+    with {:ok, resp} <- run_command(device, <<0x13>>) do
+      {:ok, Protocol.decode_outputs(resp, 4)}
+    end
+    |> Response.wrap(device)
+  end
+
+  def read_partitions_alarm_memory(device) do
+    with {:ok, resp} <- run_command(device, <<0x15>>) do
+      {:ok, Protocol.decode_outputs(resp, 4)}
+    end
+    |> Response.wrap(device)
+  end
+
+  def read_partitions_with_violated_zones(device) do
+    with {:ok, resp} <- run_command(device, <<0x25>>) do
+      {:ok, Protocol.decode_outputs(resp, 4)}
+    end
+    |> Response.wrap(device)
   end
 
   # Privates
 
-  defp i_violation(device) do
-    case run_command(device, "00") do
-      {:ok, resp} ->
-        :erlang.binary_to_list(resp)
-        |> unpack_bytes
-        |> (fn x -> {:ok, x} end).()
-
-      error ->
-        error
-    end
-  end
-
-  defp unpack_bytes(data, i \\ 0, res \\ [])
-  defp unpack_bytes(_, 8, res), do: res
-
-  defp unpack_bytes([h | t], i, res) do
-    unpack_bytes(t, i + 1, unpack_byte(h, i, res))
-  end
-
-  defp unpack_byte(h, i, res, j \\ 0)
-  defp unpack_byte(_, _, res, 8), do: res
-
-  defp unpack_byte(h, i, res, j) do
-    if (:math.pow(2, j) |> round &&& h) != 0 do
-      unpack_byte(h, i, [8 * i + j + 1 | res], j + 1)
-    else
-      unpack_byte(h, i, res, j + 1)
-    end
-  end
-
-  defp run_command(device, cmd) do
-    with command <- @protocol.prepare_frame(cmd),
+  defp run_command(device, <<cmd_code::binary-size(1), _::binary>> = cmd) do
+    with command <- Protocol.prepare_frame(cmd),
          :ok <- @client.send_with_resp(device, command),
          {:ok, resp} <- wait_for_confirmation(2_000) do
-      @protocol.check_resp(resp)
-    else
-      err -> err
+      Logger.log(:debug, "Send request to integra: #{inspect(command, base: :hex)}")
+      Protocol.check_response(resp, cmd_code)
     end
   end
 
   defp wait_for_confirmation(timeout) do
     receive do
       resp ->
-        if String.slice(resp, 0..8) == "\x10\x42\x75\x73\x79\x21\x0D\x0A" do
-          # Process.sleep(100)
-          # send_cmd(addr, command, max_attempts - 1)
-          {:error, :busy}
-        else
-          {:ok, resp}
-        end
+        if(
+          String.slice(resp, 0..8) == "\x10\x42\x75\x73\x79\x21\x0D\x0A",
+          do: {:error, "Busy"},
+          else: {:ok, resp}
+        )
     after
       timeout ->
-        {:error, :timeout}
+        {:error, "Timeout"}
     end
   end
 end

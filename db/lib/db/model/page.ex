@@ -1,38 +1,31 @@
 defmodule DB.Page do
   @moduledoc false
-  use Ecto.Schema
-  import Ecto.Changeset
-  import Ecto.Query
 
-  import DB
-  alias DB.{Repo, Light, Port, Dimmer, Page}
+  alias DB.{CRUD, Action, Port, Meter, Page}
 
-  @derive {Poison.Encoder, except: [:__meta__]}
-  schema "pages" do
-    field(:name, :string)
-    field(:order, :integer)
-    field(:title, :string)
-    field(:description, :string)
-    many_to_many(:lights, DB.Light, join_through: "page_content_lights", on_delete: :delete_all)
+  @type t :: %Page{
+          id: CRUD.id(),
+          name: String.t(),
+          description: String.t(),
+          order: integer,
+          content: [
+            CRUD.foreign(Port) | CRUD.foreign(Action) | CRUD.foreign(Device) | CRUD.foreign(Meter)
+          ],
+          ref: CRUD.ref()
+        }
 
-    many_to_many(:sunblinds, DB.Sunblind,
-      join_through: "page_content_sunblinds",
-      on_delete: :delete_all
-    )
+  use Memento.Table,
+    attributes: [
+      :id,
+      :name,
+      :description,
+      :order,
+      :content,
+      :ref
+    ],
+    index: [:name],
+    type: :ordered_set,
+    autoincrement: true
 
-    many_to_many(:dimmers, DB.Dimmer, join_through: "page_content_dimmers", on_delete: :delete_all)
-
-    many_to_many(:ports, DB.Port, join_through: "page_content_ports", on_delete: :delete_all)
-
-    many_to_many(:actions, DB.Action, join_through: "page_content_actions", on_delete: :delete_all)
-
-    many_to_many(:tasks, DB.Task, join_through: "page_content_tasks", on_delete: :delete_all)
-
-    many_to_many(:devices, DB.Device, join_through: "page_content_devices", on_delete: :delete_all)
-  end
-
-  def changeset(page, attrs) do
-    page
-    |> cast(attrs, [:name, :order, :title, :description])
-  end
+  use CRUD, default: [ref: 1, mode: :toggle, page_id: 1]
 end

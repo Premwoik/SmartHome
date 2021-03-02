@@ -4,9 +4,8 @@ defmodule Core.Actions.Action do
   @type state :: :on | :off
 
   @doc "Execute defined action"
-  @callback execute(on_off :: state, action :: map, amem :: map) :: map
+  @callback execute(on_off :: state, action :: map, state :: any) :: map
 
   @doc "Initialize action memory"
-  @callback init_memory() :: map
-
+  @callback init_state() :: any()
 end

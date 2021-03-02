@@ -1,7 +1,8 @@
 defmodule UiWeb.LightView do
   use UiWeb, :view
-  alias UiWeb.{PortView, DimmerView, LightView}
-  alias UiWeb.View.Helper
+  alias UiWeb.{PortView, LightView}
+  import DB.Port, only: [from_more: 2]
+  import UiWeb.View.Helper
 
   def render("index.json", %{lights: lights}) do
     render_many(lights, LightView, "light.json")
@@ -12,15 +13,8 @@ defmodule UiWeb.LightView do
   end
 
   def render("light.json", %{light: light}) do
-    %{
-      id: light.id,
-      port_id: light.port_id,
-      dimmer_id: light.dimmer_id,
-      port: Helper.obj_to_view(PortView, :port, light.port),
-      dimmer: Helper.obj_to_view(DimmerView, :dimmer, light.dimmer),
-      ref: light.ref,
-      '@type': "light"
-      
-    }
+    port = obj_to_view(PortView, :port, light)
+    light = %{"@type": "light", dimmer_id: from_more(light, :dimmer_id) |> foreign_view()}
+    Map.merge(port, light)
   end
 end

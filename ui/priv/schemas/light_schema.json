@@ -1,0 +1,43 @@
+{
+  "ui_schema": {
+    "ui:order": [
+      "id",
+      "dimmer_id",
+      "port"
+    ]
+  },
+  "definitions": {
+    "port": {}
+  },
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://192.168.2.100/api/schemas/light_schema.json",
+  "type": "object",
+  "title": "Światło",
+  "description": "Szablon konfiguracyjny światła",
+  "default": {},
+  "required": [
+    "port"
+  ],
+  "properties": {
+    "id": {
+      "$id": "#/properties/id",
+      "default": 0,
+      "title": "ID",
+      "readOnly": true,
+      "type": "integer"
+    },
+    "port": {
+      "$ref": "#/definitions/port"
+    },
+
+    "dimmer_id": {
+      "$id": "#/properties/dimmer_id",
+      "default": null,
+      "title": "ID Ściemniacza",
+      "type": [
+        "null",
+        "integer"
+      ]
+    }
+  }
+}

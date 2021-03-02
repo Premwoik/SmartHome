@@ -1,9 +1,12 @@
 defmodule UiWeb.UserSocket do
   use Phoenix.Socket
+  require Logger
 
   ## Channels
   # channel "room:*", UiWeb.RoomChannel
   channel "dashboard:lobby", UiWeb.DashboardChannel
+  channel "inputs_monitor:lobby", UiWeb.InputMonitorChannel
+  channel "cameras:lobby", UiWeb.CamerasChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -22,7 +25,7 @@ defmodule UiWeb.UserSocket do
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
   #
-#def id(socket), do: "user_socket:#{socket.assigns.user_id}"
+  # def id(socket), do: "user_socket:#{socket.assigns.user_id}"
   #
   # Would allow you to broadcast a "disconnect" event and terminate
   # all active sockets and channels for a given user:

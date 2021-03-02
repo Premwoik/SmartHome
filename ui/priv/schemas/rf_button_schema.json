@@ -1,0 +1,93 @@
+{
+  "ui_schema": {
+    "ui:order": [
+      "id",
+      "name",
+      "key_value",
+      "mode",
+      "page_id",
+      "port_id",
+      "action_id",
+      "task_id"
+    ]
+  },
+  "$id": "http://example.com/example.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "default": {},
+  "description": "The root schema comprises the entire JSON document.",
+  "required": [
+    "id",
+    "key_value",
+    "mode",
+    "name",
+    "page_id"
+  ],
+  "title": "The root schema",
+  "type": "object",
+  "properties": {
+    "action_id": {
+      "$id": "#/properties/action_id",
+      "default": null,
+      "description": "Akcja zostanie uruchomiona po kliknięciu",
+      "title": "ID Akcji",
+      "type": [
+        "null",
+        "integer"
+      ]
+    },
+    "id": {
+      "$id": "#/properties/id",
+      "default": 0,
+      "title": "ID",
+      "readOnly": true,
+      "type": "integer"
+    },
+    "key_value": {
+      "$id": "#/properties/key_value",
+      "default": "",
+      "description": "Kod wysyłany po naciśnięciu przycisku",
+      "title": "Kod",
+      "type": "string"
+    },
+    "mode": {
+      "$id": "#/properties/mode",
+      "default": "",
+      "description": "Rodzaj instrukcji po naciśnięciu przycisku",
+      "title": "Tryb",
+      "enum": [
+        "toggle",
+        "on",
+        "off",
+        "page"
+      ],
+      "type": "string"
+    },
+    "name": {
+      "$id": "#/properties/name",
+      "default": "",
+      "title": "Nazwa",
+      "type": "string"
+    },
+    "page_id": {
+      "$id": "#/properties/page_id",
+      "default": 1,
+      "description": "Pilot może mieć więcej niż jedną stronę przycisków",
+      "title": "Nr. strony",
+      "type": "integer"
+    },
+    "port_id": {
+      "$id": "#/properties/port_id",
+      "default": null,
+      "description": "Port będzie sterowany po naciśnieciu przycisku",
+      "title": "ID Portu",
+      "type": ["integer", "null"]
+    },
+    "task_id": {
+      "$id": "#/properties/task_id",
+      "default": null,
+      "description": "Zadanie, które zostanie zasterowane po naciśnięciu przycisku",
+      "title": "ID Zadania",
+      "type": ["integer", "null"]
+    }
+  }
+}

@@ -1,141 +1,158 @@
 defmodule Core.Device do
   @moduledoc false
 
-  @callback set_outputs(device :: %DB.Device{}, list({integer, integer})) :: any
-  @callback set_pwm_outputs(device :: %DB.Device{}, list({integer, integer})) :: any
-  @callback read_outputs(device :: %DB.Device{}) :: list({integer, boolean})
-  @callback read_active_inputs(device :: map) :: list(integer)
-  @callback read_temperatures(device :: %DB.Device{}) :: list({list, integer})
-  @callback read_counted_values(device :: %DB.Device{}) :: list(integer)
-  @callback heartbeat(device :: %DB.Device{}) :: any
+  @callback start_link(
+              ip :: String.t(),
+              port :: integer(),
+              opts :: any(),
+              keywords :: any(),
+              timeout :: integer,
+              length :: integer
+            ) :: bool()
 
-  alias DB.{Repo, Port}
+  @callback need_process?() :: boolean()
 
-  @type args_t :: list(%DB.Port{}) | %DB.Device{}
+  defmodule BasicIO do
+    alias DB.{Device, Port}
+    @type t(res) :: {:ok, res} | {:error, String.t()}
+    @type def_t :: :ok | {:error, String.t()}
+    @type active_ports :: [integer]
 
+    @doc """
+      Sets the device's outputs.
+
+      Returns :ok if instruction was executed correctly.
+    """
+    @callback set_outputs(%Device{}, [%DB.Port{}]) :: def_t
+
+    @doc """
+      Reads the device's outputs.
+
+      Returns list of the actually active outputs.
+    """
+    @callback read_outputs(%Device{}) :: t(active_ports)
+
+    @doc """
+      Reads the device's inputs.
+
+      Returns list of the actually active inputs.
+    """
+    @callback read_inputs(%Device{}) :: t(active_ports)
+
+    @doc """
+      Sends heartbeat message to the device.
+
+      Returns :ok if receive response from device.
+    """
+    @callback heartbeat(%Device{}) :: def_t
+  end
+
+  defmodule PwmOutputs do
+    @doc """
+      Sets pwm outputs
+
+    """
+    @callback set_pwm_outputs(%DB.Device{}, [%DB.Port{}]) :: any
+  end
+
+  defmodule AlarmSystem do
+    @type device :: %DB.Device{}
+    @type t(res) :: {:ok, res} | {:error, String.t()}
+    @type mode :: 0 | 1 | 2 | 3
+    @type zones :: [integer]
+    @type commands :: [integer]
+
+    @callback arm(device(), mode(), zones()) :: t(any())
+    @callback disarm(device(), zones()) :: t(any())
+    @callback clear_alarm(device, zones()) :: t(any())
+    @callback monitor_changes(device(), commands()) :: t(any())
+  end
+
+  defmodule RgbW do
+    alias DB.{Device, Port}
+    @type result :: {:ok, %Port{}} | {:error, String.t()}
+
+    @callback set_state(%Port{}) :: result
+    @callback set_brightness(%Port{}) :: result
+    @callback set_white_brightness(%Port{}) :: result
+    @callback set_color(%Port{}) :: result
+  end
+
+  defmodule Thermometer do
+    @callback read_temperatures(device :: %DB.Device{}) :: list({list, integer})
+  end
+
+  defmodule EnergyMeter do
+    @callback read_counted_values(device :: %DB.Device{}) :: list(integer)
+  end
+
+  defmodule DefaultDev do
+    @callback set_time_dimmer(device :: %DB.Device{}, list({integer, integer})) :: any
+  end
+
+  alias DB.Stats.DeviceJournal, as: DJ
+  alias DB.{Device, Port, Repo}
+  alias Core.Device.Static.Response
+
+  use Witchcraft
+  #  use Witchcraft.Semigroup
+
+  @type args_t ::
+          [%Port{}]
+          | [any]
+
+  @doc """
+  Calls the device's function.
+
+  The
+
+  ## Parameters
+
+    - function: Atom that represents function name.
+    - args: Structure that contains argument that will be passed to function.
+
+  ## Examples
+
+    device = DB.Repo.get(DB.Device, 1)
+    Core.Device.do_(:read_inputs, device)
+
+  """
   @spec do_(function :: atom, args :: args_t) :: any
-  def do_(function, %DB.Device{} = d) do
-    execute_function(fn -> apply(module(d), function, [d]) end)
+
+  def do_(function, [%Device{} = d | t_args] = args) do
+    execute_function(fn -> apply(module(d), function, args) end)
+    |> DJ.log_use(function, t_args)
   end
 
-  def do_(function, ports) do
-    ports
-    |> handle_multiple_devices(fn {d, p} ->
-      execute_function(fn -> apply(module(d), function, [d, p]) end, p)
-    end)
+  def do_(function, [%Port{} | _] = ports) do
+    Enum.group_by(ports, & &1.device_id)
+    |> Enum.map(fn {d, p} -> do_(function, [Repo.preload(d), p]) end)
+    |> fold()
   end
+
+  def do_(function, %Device{} = d), do: do_(function, [d])
 
   def do_r(args, function) do
     do_(function, args)
   end
 
-  def synchronize(%DB.Device{} = d) do
-    Repo.preload(d, :ports).ports
-    |> Enum.group_by(fn port -> port.state end, fn {_, port} -> port end)
-    |> Enum.each(fn {state, ports} -> Core.Controllers.BasicController.set(ports, state) end)
-  end
-
-  @deprecated "use do_/2 or do_r/2 instead"
-  def set_outputs_helper(ports, state) do
-    ports
-    |> Enum.map(fn p -> %{p | state: state} end)
-    |> handle_multiple_devices(fn {d, p} ->
-      execute_function(fn -> module(d).set_outputs(d, ports_to_num(p)) end, p)
-    end)
-  end
-
-  @deprecated "use do_/2 or do_r/2 instead"
-  def set_pwm_outputs(ports) do
-    ports
-    |> handle_multiple_devices(fn {d, p} ->
-      arg = Enum.map(p, fn p_ -> {p_.number, p_.pwm_fill} end)
-      execute_function(fn -> module(d).set_pwm_outputs(d, arg) end, p)
-    end)
-  end
-
-  @deprecated "use do_/2 or do_r/2 instead"
-  def read_active_inputs(device) do
-    execute_function(fn -> module(device).read_active_inputs(device) end)
-  end
-
-  @deprecated "use do_/2 or do_r/2 instead"
-  def read_temperatures(device) do
-    execute_function(fn -> module(device).read_temperatures(device) end)
-  end
-
-  @deprecated "use do_/2 or do_r/2 instead"
-  def read_counted_values(device) do
-    execute_function(fn -> module(device).read_counted_values(device) end)
-  end
-
-  @deprecated "use do_/2 or do_r/2 instead"
-  def send_heartbeat(device) do
-    execute_function(fn -> module(device).heartbeat(device) end)
-  end
-
   # Privates
 
-  defp handle_multiple_devices(ports, func) do
-    ports
-    |> Enum.group_by(& &1.device)
-    |> Enum.map(func)
-    |> Enum.filter(fn x -> x != :ok end)
-    |> case do
-      [] ->
-        :ok
-
-      errors ->
-        errors
-        |> Enum.reduce(
-          {:error, [], []},
-          fn {:error, p1, err}, {:error, p2, err_list} ->
-            {:error, p1 ++ p2, [err | err_list]}
-          end
-        )
-    end
-  end
-
-  defp execute_function(func, o \\ nil)
-
-  defp execute_function(func, nil) do
+  @spec execute_function(function()) :: Response.t()
+  defp execute_function(func) do
     try do
       func.()
     catch
+      :exit, {:noproc, {:gen_server, :call, [name | _]}} ->
+        Response.error({:error, "No running process for device #{inspect(name)}"})
+
       :exit, _ ->
-        {:error, "Device don't implement this functionality"}
+        Response.error({:error, "Device don't implement this functionality"})
     end
   end
-
-  defp execute_function(func, o) do
-    try do
-      case func.() do
-        # TODO change this, becouse it looks like no data can be return 
-        {:ok, []} -> :ok
-        {:error, err} -> {:error, o, err}
-      end
-    catch
-      :exit, _ ->
-        {:error, o, "Device don't implement this functionality"}
-    end
-  end
-
-  defp build_pwm_fun_args(ports) do
-  end
-
-  defp ports_to_num(ports) do
-    ports
-    |> Enum.flat_map(fn p ->
-      if p.inverted_logic,
-        do: [p.number, state_to_num(not p.state)],
-        else: [p.number, state_to_num(p.state)]
-    end)
-  end
-
-  defp state_to_num(false), do: 0
-  defp state_to_num(_), do: 1
 
   defp module(device) do
-    device_ = DB.Repo.preload(device, :type)
-    String.to_existing_atom("Elixir." <> device_.type.module)
+    ("Elixir.Core.Device." <> device.type)
+    |> String.to_existing_atom()
   end
 end

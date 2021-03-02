@@ -7,5 +7,4 @@ defmodule Core.Device.Client do
 
   @callback send_msg(device :: device_t, msg :: msg_t) :: resp_t
   @callback send_with_resp(device :: device_t, msg :: msg_t) :: resp_t
-
 end

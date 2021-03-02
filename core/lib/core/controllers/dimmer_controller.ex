@@ -1,79 +1,96 @@
 defmodule Core.Controllers.DimmerController do
   @moduledoc false
 
-  alias DB.{Light, Dimmer, Port}
-  alias UiWeb.DashboardChannel.Helper, as: Channel
-  alias Core.Controllers.BasicController
-  alias Core.Controllers.LightController
-  # import Core.Controllers.BasicController, only: [flatten_result: 1, prepare_for_basic: 1]
+  import Witchcraft.Functor
+  import Witchcraft.Foldable
 
-  def set_brightness(dimmer, value, deep \\ true) do
-    dimmer.port.mode
-    |> case do
-      "output" ->
-        set_brightness_classic(dimmer, value, deep)
+  use Core.Controllers.IOBeh
+  alias Core.Controllers.IOBeh
 
-      "output_pwm" ->
-        set_brightness_pwm(dimmer, value)
+  @impl IOBeh
+  def toggle(dimmers, _ops) when is_list(dimmers),
+    do:
+      map(dimmers, &toggle/1)
+      |> fold()
+
+  def toggle(dimmer, _ops) do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.set_state(dimmer, !dimmer.state)
+    end
+  end
+
+  @impl IOBeh
+  def turn_on(dimmers, _ops) when is_list(dimmers),
+    do:
+      map(dimmers, &turn_on/1)
+      |> fold()
+
+  def turn_on(dimmer, _ops) do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.set_state(dimmer, state: true)
+    end
+  end
+
+  @impl IOBeh
+  def turn_off(dimmers, _ops) when is_list(dimmers),
+    do:
+      map(dimmers, &turn_off/1)
+      |> fold()
+
+  def turn_off(dimmer, _ops) do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.set_state(dimmer, state: false)
+    end
+  end
+
+  def set_color(dimmer, red, green, blue) do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.set_color(dimmer, red: red, green: green, blue: blue)
+    end
+  end
+
+  def set_white_brightness(dimmer, fill) do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.set_white_brightness(dimmer, fill: fill)
+    end
+  end
+
+  def set_brightness(dimmer, fill) do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.set_brightness(dimmer, fill: fill)
+    end
+  end
+
+  def handle_light_change(dimmer, _s \\ nil) do
+    with {:ok, mod} <- get_module(dimmer) do
+      mod.handle_light_change(dimmer)
+    end
+  end
+
+  # Privates
+
+  def get_module(%{type: t, mode: m} = d) do
+    case to_string(t) do
+      "dimmer2" ->
+        {:ok, Core.Controllers.Dimmer.Time2Dimmer}
+
+      "dimmer" ->
+        case to_string(m) do
+          "output" ->
+            {:ok, Core.Controllers.Dimmer.TimeDimmer}
+
+          "output_pwm" ->
+            {:ok, Core.Controllers.Dimmer.PwmDimmer}
+
+          _ ->
+            {:error, "Wrong mode"}
+        end
+
+      "dimmer_rgb" <> _ ->
+        {:ok, Core.Controllers.Dimmer.RgbDimmer}
 
       _ ->
-        :error
+        {:error, "Wrong type"}
     end
-    |> case do
-      {:ok, dir} ->
-        Dimmer.update_fill(dimmer, value, dir)
-        Channel.broadcast_change("dimmer", dimmer.id, dimmer.ref + 1)
-        :ok
-
-      {err, _} ->
-        err
-
-      :nothing ->
-        :ok
-
-      e ->
-        e
-    end
-  end
-
-  defp set_brightness_classic(dimmer, value, deep) do
-    if dimmer.fill != value do
-      cond do
-        deep && dimmer.fill == 0 ->
-          :ok = LightController.set(dimmer.lights, true, false)
-          set_brightness_classic_core(dimmer, value)
-
-        deep && value == 0 ->
-          LightController.set(dimmer.lights, false, false)
-          |> wrap_direction(1)
-
-        value == 0 ->
-          if Dimmer.any_light_on?(dimmer), do: :nothing, else: {:ok, 1}
-
-        true ->
-          set_brightness_classic_core(dimmer, value)
-      end
-    else
-      :nothing
-    end
-  end
-
-  defp wrap_direction(res, dir) do
-    {res, dir}
-  end
-
-  defp set_brightness_classic_core(dimmer, brightness) do
-    {time, dir} = Dimmer.fill_to_time(dimmer, brightness)
-    %Port{DB.Repo.preload(dimmer.port, :device) | timeout: time}
-    |> List.wrap()
-    |> BasicController.turn_on()
-    |> wrap_direction(dir)
-  end
-
-  defp set_brightness_pwm(dimmer, brightness) do
-    dimmer.port
-    |> DB.Repo.preload(:device)
-    |> List.wrap()
-    |> BasicController.pwm(brightness)
   end
 end
