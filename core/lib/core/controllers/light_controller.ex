@@ -31,14 +31,11 @@ defmodule Core.Controllers.LightController do
   def set_state(lights, ops) do
     state = Keyword.get(ops, :state, nil)
     deep_set = Keyword.get(ops, :deep, true)
+    ops = Keyword.put(ops, :propagate, false)
 
     with %Response{error: [], ok: lights} = resp <- BasicController.set_state(lights, ops) do
       notify_dimmers(lights, state, deep_set)
-
-      Enum.each(lights, fn %{id: id, ref: ref} ->
-        Channel.broadcast_item_change("light", id, ref + 1)
-      end)
-
+      broadcast(lights)
       resp
     end
   end
@@ -51,6 +48,12 @@ defmodule Core.Controllers.LightController do
   end
 
   # Privates
+
+  defp broadcast(lights) do
+    Enum.each(lights, fn %{id: id, ref: ref} ->
+      Channel.broadcast_item_change("light", id, ref + 1)
+    end)
+  end
 
   defp notify_dimmers(_, _, false) do
     :ok

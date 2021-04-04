@@ -28,14 +28,14 @@ defmodule Core.Controllers.SunblindController do
   def close(sunblinds) do
     skip_not(sunblinds, :open)
     |> to_ports()
-    |> BasicController.turn_on()
+    |> BasicController.turn_on(propagate: false)
     |> map(&lock_sunblinds(&1, :close))
   end
 
   def open(sunblinds) do
     skip_not(sunblinds, :close)
     |> to_ports()
-    |> BasicController.turn_off()
+    |> BasicController.turn_off(propagate: false)
     |> map(&lock_sunblinds(&1, :open))
   end
 
@@ -81,9 +81,7 @@ defmodule Core.Controllers.SunblindController do
   def back_to_main(port) do
     case port do
       %{type: :sunblind_helper} ->
-        IO.puts("ok")
         Port.from_more(port, :close_port_id) |> Repo.preload()
-
       _ -> port
     end
   end

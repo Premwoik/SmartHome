@@ -6,6 +6,8 @@ defmodule Core.Controllers.DimmerController do
 
   use Core.Controllers.IOBeh
   alias Core.Controllers.IOBeh
+  alias Core.Device.Static.Response
+  alias Core.Broadcast, as: Channel
 
   @impl IOBeh
   def toggle(dimmers, _ops) when is_list(dimmers),
@@ -16,6 +18,7 @@ defmodule Core.Controllers.DimmerController do
   def toggle(dimmer, _ops) do
     with {:ok, mod} <- get_module(dimmer) do
       mod.set_state(dimmer, !dimmer.state)
+      |> broadcast()
     end
   end
 
@@ -28,6 +31,7 @@ defmodule Core.Controllers.DimmerController do
   def turn_on(dimmer, _ops) do
     with {:ok, mod} <- get_module(dimmer) do
       mod.set_state(dimmer, state: true)
+      |> broadcast()
     end
   end
 
@@ -40,34 +44,43 @@ defmodule Core.Controllers.DimmerController do
   def turn_off(dimmer, _ops) do
     with {:ok, mod} <- get_module(dimmer) do
       mod.set_state(dimmer, state: false)
+      |> broadcast()
     end
   end
 
   def set_color(dimmer, red, green, blue) do
     with {:ok, mod} <- get_module(dimmer) do
       mod.set_color(dimmer, red: red, green: green, blue: blue)
+      |> broadcast()
     end
   end
 
   def set_white_brightness(dimmer, fill) do
     with {:ok, mod} <- get_module(dimmer) do
       mod.set_white_brightness(dimmer, fill: fill)
+      |> broadcast()
     end
   end
 
   def set_brightness(dimmer, fill) do
     with {:ok, mod} <- get_module(dimmer) do
       mod.set_brightness(dimmer, fill: fill)
+      |> broadcast()
     end
   end
 
   def handle_light_change(dimmer, _s \\ nil) do
     with {:ok, mod} <- get_module(dimmer) do
       mod.handle_light_change(dimmer)
+      |> broadcast()
     end
   end
 
   # Privates
+
+  def broadcast(%Response{ok: oks}) do
+    Channel.broadcast_item_change(oks, "dimmer")
+  end
 
   def get_module(%{type: t, mode: m} = d) do
     case to_string(t) do

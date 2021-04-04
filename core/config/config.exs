@@ -41,12 +41,6 @@ if Mix.target() == :core do
   import_config "../../db/config/config.exs"
 end
 
-if Mix.target() == :coret do
-  import_config "../../db/config/config.exs"
-
-  config :core, actions: Core.Utils.Mock.Actions
-end
-
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
 config :core, Core.Scheduler,

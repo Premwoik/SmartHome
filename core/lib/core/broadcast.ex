@@ -21,6 +21,12 @@ defmodule Core.Broadcast do
   @broadcast Application.get_env(:core, :broadcast_handler, Core.Broadcast.BroadcastHandlerMock)
 
   def broadcast_item_change(type, id, ref), do: @broadcast.broadcast_item_change(type, id, ref)
+  def broadcast_item_change(items, type) do
+    Enum.each(items, fn %{id: id, ref: ref} ->
+      @broadcast.broadcast_item_change(type, id, ref)
+    end)
+    items
+  end
 
   def broadcast_inputs_change(device_id, up),
     do: @broadcast.broadcast_inputs_change(device_id, up)

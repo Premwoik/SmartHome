@@ -15,6 +15,7 @@ defmodule Core.Controllers.BasicController do
   alias DB.{Port}
   alias Core.Controllers.Port.{BinaryPort, MonoPort, PwmPort, VirtualPort}
   alias Core.Device.Static.Response
+  alias Core.Broadcast, as: Channel
   use Witchcraft
 
   @callback set_state(list(), ops :: list()) :: any()
@@ -39,12 +40,20 @@ defmodule Core.Controllers.BasicController do
   def set_state([], _), do: %Response{}
 
   def set_state(ports, ops) do
+    propagate? = Keyword.get(ops, :propagate, true)
     get_module(ports)
     |> map(fn {mod, ports} -> mod.set_state(ports, ops) end)
     |> fold()
+    |> broadcast(propagate?)
   end
 
   # Privates
+
+  def broadcast(response, false), do: response
+  def broadcast(%Response{ok: oks} = resp, true) do
+     Enum.map(oks, fn %{id: id, ref: ref} -> Channel.broadcast_item_change("port", id, ref) end)
+     resp
+  end
 
   @spec get_module(list(%Port{}) | String.t()) :: list({module(), list(%Port{})}) | module()
   defp get_module(ports) when is_list(ports) do

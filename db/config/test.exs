@@ -1,9 +1,11 @@
 import Config
 
-config :db,
-       DB.Repo,
-       adapter: Sqlite.Ecto2,
-       database: "itHome_test1.sqlite3",
-       size: 1,
-       max_overflow: 0,
-       loggers: [{Ecto.LogEntry, :log, [:info]}]
+config :db, DB.StatsRepo,
+       adapter: Ecto.Adapters.Postgres,
+       database: "smart_home_statistics_test",
+       username: "sh_admin",
+       password: "mVu93~`G",
+       hostname: "192.168.2.100",
+       port: 5433,
+       pool: Ecto.Adapters.SQL.Sandbox
+

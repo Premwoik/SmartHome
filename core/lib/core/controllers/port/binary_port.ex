@@ -9,6 +9,6 @@ defmodule Core.Controllers.Port.BinaryPort do
   def set_state(ports, state: state) do
     Port.cast(ports, state: state)
     |> Core.Device.do_r(:set_outputs)
-    |> map(&Port.update(&1, state: state))
+    |> map(&Port.update/1)
   end
 end

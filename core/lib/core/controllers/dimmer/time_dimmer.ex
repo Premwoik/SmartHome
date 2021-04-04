@@ -34,17 +34,13 @@ defmodule Core.Controllers.Dimmer.TimeDimmer do
   def set_brightness(%{state: prev_state} = dimmer, ops) do
     fill = Keyword.get(ops, :fill)
     deep = Keyword.get(ops, :deep, true)
-    IO.puts("Set brightness")
-    IO.inspect(dimmer)
-    IO.inspect(fill)
-    IO.inspect(deep)
 
     with {time, dir} <- Port.Dimmer.fill_to_time(dimmer, fill),
          dimmer <-
            Port.cast(dimmer, state: fill > 0, timeout: time, more: [fill: fill, direction: dir]),
          :ok <- notify_lights(dimmer, prev_state, deep),
          %Response{} = res <- send_brightness(dimmer) do
-      map(res |> IO.inspect(), &Port.update/1)
+      map(res, &Port.update/1)
     else
       e ->
         IO.puts("ERROR #{inspect(e)}")

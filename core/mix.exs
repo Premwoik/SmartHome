@@ -15,7 +15,6 @@ defmodule Core.MixProject do
   def application do
     [
       mod: {Core, []},
-      #      applications: [:timex],
       extra_applications: [:logger, :db, :httpotion, :tortoise, :timex]
     ]
   end
@@ -23,17 +22,15 @@ defmodule Core.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:mock, "~> 0.3.0", only: :test},
-      {:mox, "~> 0.4", only: :test},
       {:poison, "~> 3.1"},
       {:httpotion, "~> 3.1.0"},
       {:connection, "~> 1.0.4"},
       {:timex, "~> 3.6"},
       {:tortoise, "~> 0.9"},
       {:witchcraft, "~> 1.0"},
-      {:algae, "~> 1.2"},
+      {:bypass, "~> 2.1", only: :test},
       {:quantum, "~> 3.0"},
-      {:ring_logger, "~> 0.8.1"},
+      {:ring_logger, "~> 0.8.1", only: :dev},
       {:db, path: "../db"}
     ]
   end
