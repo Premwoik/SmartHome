@@ -52,7 +52,7 @@ defmodule Core.Device do
       Sets pwm outputs
 
     """
-    @callback set_pwm_outputs(%DB.Device{}, [%DB.Port{}]) :: any
+    @callback set_fill(%DB.Device{}, [%DB.Port{}]) :: any
   end
 
   defmodule AlarmSystem do

@@ -1,0 +1,4 @@
+# SmartHomeBackend
+
+**TODO: Add description**
+

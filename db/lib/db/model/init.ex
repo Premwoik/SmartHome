@@ -86,7 +86,7 @@ defmodule DB.Init do
       Port.new(
         device_id: foreign(Device, 1),
         name: "Kanapa",
-        type: :dimmer2,
+        type: :dimmer,
         number: 21,
         mode: :output,
         timeout: 100,
@@ -99,6 +99,7 @@ defmodule DB.Init do
         type: :light,
         number: 22,
         mode: :output,
+        more: %{dimmer_id: foreign(Port, 4)},
         inverted_logic: true
       ),
       Port.new(
@@ -107,12 +108,13 @@ defmodule DB.Init do
         type: :light,
         number: 23,
         mode: :output,
+        more: %{dimmer_id: foreign(Port, 4)},
         inverted_logic: true
       ),
       Port.new(
         device_id: foreign(Device, 1),
         name: "TV",
-        type: :dimmer2,
+        type: :dimmer,
         number: 24,
         mode: :output,
         timeout: 100,
@@ -126,6 +128,7 @@ defmodule DB.Init do
         type: :light,
         number: 25,
         mode: :output,
+        more: %{dimmer_id: foreign(Port, 7)},
         inverted_logic: true
       ),
       Port.new(
@@ -134,6 +137,7 @@ defmodule DB.Init do
         type: :light,
         number: 26,
         mode: :output,
+        more: %{dimmer_id: foreign(Port, 7)},
         inverted_logic: true
       ),
       Port.new(
@@ -691,8 +695,7 @@ defmodule DB.Init do
         name: "Salon",
         order: 3,
         content:
-          foreign(Port, [1, 2, 3, 4, 5, 6, 7, 8, 9, 18, 19, 15, 16, 40, 41, 42, 43, 44]) ++
-            foreign(Action, [2, 3, 4, 9, 10, 11])
+          foreign(Port, [1, 4, 7, 18, 19, 15, 16, 40, 41, 42, 43, 44]) ++ foreign(Action, [2, 3, 4, 9, 10, 11])
       ),
       Page.new(
         name: "Piętro",
@@ -709,4 +712,18 @@ defmodule DB.Init do
 
   def houses do
   end
+
+  def test_data_for_orginal_arduino() do
+    dev = Device.new(ip: "192.168.2.107", name: "OriginalArduinoTest", type: "OriginalArduino") |> Device.insert()
+      Port.new(
+        device_id: foreign(Device, dev.id),
+        name: "Test light1",
+        type: :light,
+        number: 18,
+        mode: :output,
+        inverted_logic: true
+      )
+      |> Port.insert()
+  end
+
 end

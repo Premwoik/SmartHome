@@ -15,7 +15,7 @@ defmodule Core.Controllers.DimmerController do
 
   def toggle(dimmer, _ops) do
     with {:ok, mod} <- get_module(dimmer) do
-      mod.set_state(dimmer, !dimmer.state)
+      mod.set_state(dimmer, state: !dimmer.state)
     end
   end
 
@@ -69,25 +69,19 @@ defmodule Core.Controllers.DimmerController do
 
   # Privates
 
-  def get_module(%{type: t, mode: m} = d) do
+  def get_module(%{type: t, mode: m}) do
     case to_string(t) do
-      "dimmer2" ->
-        {:ok, Core.Controllers.Dimmer.Time2Dimmer}
-
-      "dimmer" ->
-        case to_string(m) do
-          "output" ->
-            {:ok, Core.Controllers.Dimmer.TimeDimmer}
-
-          "output_pwm" ->
-            {:ok, Core.Controllers.Dimmer.PwmDimmer}
-
-          _ ->
-            {:error, "Wrong mode"}
-        end
 
       "dimmer_rgb" <> _ ->
         {:ok, Core.Controllers.Dimmer.RgbDimmer}
+
+      "dimmer" <> _ ->
+        case to_string(m) do
+          "output" <> _ ->
+            {:ok, Core.Controllers.Dimmer.SimpleDimmer}
+          _ ->
+            {:error, "Wrong mode"}
+        end
 
       _ ->
         {:error, "Wrong type"}

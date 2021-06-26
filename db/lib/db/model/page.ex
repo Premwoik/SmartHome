@@ -28,4 +28,33 @@ defmodule DB.Page do
     autoincrement: true
 
   use CRUD, default: [ref: 1, mode: :toggle, page_id: 1]
+
+
+  def lights(page) do
+    Enum.filter(page.content, fn
+      %Port{type: :light} -> true
+      _ -> false
+    end)
+  end
+
+  def dimmers(page) do
+    Enum.filter(page.content, fn
+      %Port{type: t} -> t in [:dimmer, :dimmer2, :dimmer_rgb, :dimmer_rgbw] 
+      _ -> false
+    end)
+  end
+
+  def sunblinds(page) do
+    Enum.filter(page.content, fn
+      %Port{type: :sunblind} -> true
+      _ -> false
+    end)
+  end
+  
+  def sensors(page) do
+    Enum.filter(page.content, fn
+      %Port{type: :motion_sensor} -> true
+      _ -> false
+    end)
+  end
 end
