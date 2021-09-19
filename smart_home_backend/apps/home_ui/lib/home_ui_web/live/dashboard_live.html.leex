@@ -1,0 +1,64 @@
+<section>
+  <nav class="container w-auto">
+    <ul>
+      <%= for %{id: id, name: name} <- @pages_short do %>
+      <li class="sm:inline-block p-2 text-blue-500 hover:text-gray-500">
+        <%= live_patch name, to: Routes.dashboard_path(@socket, :show, id) %>
+      </li>
+      <% end %>
+    </ul>
+  </nav>
+  <div class="container p-1 w-auto">
+    <div class="grid sm:grid-cols-3 gap-1">
+      <div class="col-span-2 max-w-3xl overflow-hidden rounded shadow-lg my-2">
+        <h1 class="mx-2">Plan pomieszczenia</h1>
+        <hr>
+        <div class="max-h-full max-w bg-white p-5">
+          <%= PhoenixInlineSvg.Helpers.svg_image(@socket.endpoint, @plan) %>
+        </div>
+      </div>
+      <div class="max-w-xs rounded overflow-hidden shadow-lg my-2">
+        <h1 class="mx-2">Czujki ruchu</h1>
+        <hr>
+        <div class="max-h-full overflow-scroll">
+          <%= for s <- @sensors do %>
+            <%= render(HomeUiWeb.DashboardView, "sensor_item.html", sensor: s, socket: @socket)%>
+          <% end %>
+        </div>
+      </div>
+      <%= if length(@lights) > 0 do %>
+        <div class="max-w-xs rounded overflow-hidden shadow-lg my-2">
+          <h1 class="mx-2">Światła</h1>
+          <hr>
+          <div class="max-h-80 overflow-scroll">
+            <%= for light <- @lights do %>
+              <%= render(HomeUiWeb.DashboardView, "light_item.html", light: light, socket: @socket)%>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <%= if length(@dimmers) > 0 do %>
+        <div class="max-w-xs rounded overflow-hidden shadow-lg my-2">
+          <h1 class="mx-2">Ściemniacze</h1>
+          <hr>
+          <div class="max-h-80 overflow-scroll">
+            <%= for d <- @dimmers do %>
+              <%= render(HomeUiWeb.DashboardView, "dimmer_item.html", dimmer: d, socket: @socket)%>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <%= if length(@sunblinds) > 0 do %>
+        <div class="max-w-xs rounded overflow-hidden shadow-lg my-2">
+          <h1 class="mx-2">Rolety</h1>
+          <hr>
+          <div class="max-h-80 overflow-scroll">
+            <%= for s <- @sunblinds do %>
+              <%= render(HomeUiWeb.DashboardView, "sunblind_item.html", sunblind: s, socket: @socket)%>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

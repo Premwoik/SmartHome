@@ -6,8 +6,14 @@ defmodule SmartHomeBackend.MixProject do
       apps_path: "apps",
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases(),
+      dialyzer: [plt_add_deps: :transitive]
     ]
+  end
+
+  def application do
+    []
   end
 
   # Dependencies listed here are available only for this
@@ -16,6 +22,15 @@ defmodule SmartHomeBackend.MixProject do
   #
   # Run "mix help deps" for examples and options.
   defp deps do
-    []
+    [
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:gradualizer_ex, github: "Premwoik/gradualizer-ex", ref: "master"}
+    ]
+  end
+
+  defp aliases do
+    [
+      test: "test --no-start"
+    ]
   end
 end

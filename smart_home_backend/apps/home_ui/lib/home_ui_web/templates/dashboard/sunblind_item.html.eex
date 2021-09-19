@@ -1,0 +1,16 @@
+<div class="grid grid-cols-3 gap-3 max-w-xs rounded overflow-hidden shadow-sm my-2 p-2">
+  <%= if @sunblind.state do %>
+    <img class="w-12 h-12" src="<%= Routes.static_path(@socket, "/images/icons/icons8_sunblind_close_96.png") %>"/>
+  <% else %>
+    <img class="w-12 h-12" src="<%= Routes.static_path(@socket, "/images/icons/icons8_sunblind_open_96.png") %>"/>
+  <% end %>
+  <h2 class="inline"><%= @sunblind.name %></h2>
+  <button class="inline mt-2 rounded bg-blue-400 hover:bg-blue-500 text-white p-2" 
+    phx-click="toggle_sunblind" value="<%= @sunblind.id%>">
+    <%= case :open do %> 
+      <% :open -> %> Zamknij 
+      <% :close -> %> Otwórz
+      <% :in_move -> %> Czekaj
+    <% end %>
+  </button>
+</div>

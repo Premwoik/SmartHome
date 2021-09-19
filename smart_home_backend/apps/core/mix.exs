@@ -5,11 +5,7 @@ defmodule Core.MixProject do
     [
       app: :core,
       version: "0.1.0",
-      build_path: "../../_build",
-      config_path: "../../config/config.exs",
-      deps_path: "../../deps",
-      lockfile: "../../mix.lock",
-      elixir: "~> 1.11",
+      elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -18,16 +14,26 @@ defmodule Core.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      mod: {Core, []},
+      extra_applications: [:logger, :httpotion, :tortoise, :timex]
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
-      # {:sibling_app_in_umbrella, in_umbrella: true}
+      {:telemetry_metrics, "~> 0.4"},
+      {:telemetry_poller, "~> 0.4"},
+
+      {:mock, "~> 0.3.0", only: :test},
+      {:mox, "~> 0.4", only: :test},
+      {:poison, "~> 3.1"},
+      {:httpotion, "~> 3.1.0"},
+      {:connection, "~> 1.0.4"},
+      {:timex, "~> 3.6"},
+      {:tortoise, "~> 0.9"},
+      {:quantum, "~> 3.0"},
+      {:db, in_umbrella: true}
     ]
   end
 end
