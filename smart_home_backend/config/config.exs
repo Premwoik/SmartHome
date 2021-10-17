@@ -72,6 +72,12 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :kaffy,
+  otp_app: :db,
+  hide_dashboard: true,
+  ecto_repo: DB.MainRepo,
+  router: HomeUiWeb.Router
+
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
 # by uncommenting the line below and defining dev.exs, test.exs and such.
