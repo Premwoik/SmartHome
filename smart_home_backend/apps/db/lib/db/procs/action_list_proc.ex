@@ -28,6 +28,14 @@ defmodule DB.Proc.ActionListProc do
     GenServer.call(__MODULE__, {:not_persistent_update, action_id, params})
   end
 
+  @spec get!(integer()) :: Action.t() | nil
+  def get!(action_id) do
+    case get(action_id) do
+      {:ok, action} -> action
+      nil -> nil
+    end
+  end
+
   @spec get(integer()) :: {:ok, Action.t()} | {:error, term()}
   def get(action_id) do
     GenServer.call(__MODULE__, {:get, action_id})
@@ -48,15 +56,19 @@ defmodule DB.Proc.ActionListProc do
     GenServer.call(__MODULE__, :all)
   end
 
+  def force_read_all() do
+    GenServer.cast(__MODULE__, {:force_read, :all})
+  end
+
+  def force_read_id(id) do
+    GenServer.cast(__MODULE__, {:force_read, {:id, id}})
+  end
+
   @type state_t() :: %{actions: [Action]}
 
   @impl true
   def init(_init_arg) do
-    actions =
-      Action.list_all()
-      |> Enum.map(&{&1.id, &1})
-      |> Enum.into(%{})
-
+    actions = read_all_from_db()
     {:ok, %{actions: actions}}
   end
 
@@ -133,6 +145,18 @@ defmodule DB.Proc.ActionListProc do
     end
   end
 
+  @impl true
+  def handle_cast({:force_read, :all}, state) do
+    actions = read_all_from_db()
+    {:noreply, %{state | actions: actions}}
+  end
+
+  @impl true
+  def handle_cast({:force_read, {:id, id}}, state) do
+    {:ok, action} = Map.fetch(read_all_from_db(), id)
+    {:noreply, put_action(state, action)}
+  end
+
   defp get_action(%{actions: actions}, action_id) do
     case Map.get(actions, action_id) do
       nil -> {:error, :not_found}
@@ -142,5 +166,12 @@ defmodule DB.Proc.ActionListProc do
 
   defp put_action(%{actions: actions} = state, action) do
     %{state | actions: Map.put(actions, action.id, action)}
+  end
+
+  @spec read_all_from_db() :: map()
+  defp read_all_from_db() do
+    Action.list_all()
+    |> Enum.map(&{&1.id, &1})
+    |> Enum.into(%{})
   end
 end

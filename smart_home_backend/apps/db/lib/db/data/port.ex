@@ -61,7 +61,59 @@ defmodule DB.Data.Port do
     |> foreign_key_constraint(:device_id)
   end
 
-  @spec list_all() :: [%Port{}]
+  @common_valid_keys ["value"]
+  @common_required %{"value" => false}
+
+  @spec normalize_state(type :: atom(), params :: map()) :: map()
+  def normalize_state(:light, params) do
+    valid_keys = ["dimmer_id"]
+    requested = %{"dimmer_id" => nil}
+    normalize_state2(valid_keys, requested, params)
+  end
+
+  def normalize_state(:dimmer, params) do
+    valid_keys = ["light_ids", "brightness", "white", "red", "green", "blue", "subtype"]
+    requested = %{"light_ids" => []}
+    normalize_state2(valid_keys, requested, params)
+  end
+
+  def normalize_state(:sunblind, params) do
+    valid_keys = ["move_duration", "position"]
+    requested = %{"move_duration" => 30_000, "position" => "open"}
+    normalize_state2(valid_keys, requested, params)
+  end
+
+  def normalize_state(_, params) do
+    normalize_state2([], %{}, params)
+  end
+
+  def normalize_state2(valid_keys, requested, params) do
+    valid_keys = valid_keys ++ @common_valid_keys
+    requested = Map.merge(@common_required, requested)
+
+    params =
+      params
+      |> Enum.filter(fn {key, _} -> key in valid_keys end)
+      |> Map.new()
+
+    requested
+    |> Map.keys()
+    |> Enum.reduce(params, fn key, acc ->
+      if Map.has_key?(acc, key) do
+        acc
+      else
+        Map.put(acc, key, Map.get(acc, key))
+      end
+    end)
+  end
+
+  @spec put_state(Port.t(), String.t(), any()) :: Port.t()
+  def put_state(port, key, value) do
+    state = Map.put(port.state, key, value)
+    Map.put(port, :state, state)
+  end
+
+  @spec list_all() :: [Port.t()]
   def list_all() do
     MainRepo.all(Port) |> MainRepo.preload([:device])
   end
@@ -73,8 +125,22 @@ defmodule DB.Data.Port do
 
   @spec update(%Port{}, map()) :: {:ok, Port.t()} | {:error, Ecto.Changeset.t()}
   def update(port, params) do
-    changeset(port, params)
+    state0 = Map.get(params, :state, %{})
+    state = normalize_state(port.type, state0)
+    params2 = Map.put(params, :state, state)
+
+    changeset(port, params2)
     |> MainRepo.update()
+    |> merge_untracked_state(state0)
+  end
+
+  defp merge_untracked_state({:ok, port}, state) do
+    new_state = Map.merge(state, port.state)
+    {:ok, %{port | state: new_state}}
+  end
+
+  defp merge_untracked_state(error, _state) do
+    error
   end
 
   @spec insert(map()) :: {:ok, Port.t()} | {:error, Ecto.Changeset.t()}

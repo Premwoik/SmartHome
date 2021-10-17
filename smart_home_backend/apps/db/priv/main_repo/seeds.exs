@@ -150,13 +150,18 @@ if [] == Port.list_all() do
   }
   |> Repo.insert()
 
+  sunblid_default_state = 
+    %{"value" => false, 
+      "position" => "open", 
+      "move_duration" => 30_000}
+
   %Port{
     id: 11,
     name: "Parter",
     number: 35,
     mode: :output,
     type: :sunblind,
-    state: %{"value" => false},
+    state: sunblid_default_state,
     device_id: 1
   }
   |> Repo.insert()
@@ -167,7 +172,7 @@ if [] == Port.list_all() do
     number: 36,
     mode: :output,
     type: :sunblind,
-    state: %{"value" => false},
+    state: sunblid_default_state,
     device_id: 1
   }
   |> Repo.insert()
@@ -178,7 +183,7 @@ if [] == Port.list_all() do
     number: 37,
     mode: :output,
     type: :sunblind,
-    state: %{"value" => false},
+    state: sunblid_default_state,
     device_id: 1
   }
   |> Repo.insert()
@@ -189,7 +194,7 @@ if [] == Port.list_all() do
     number: 38,
     mode: :output,
     type: :sunblind,
-    state: %{"value" => false},
+    state: sunblid_default_state,
     device_id: 1
   }
   |> Repo.insert()
@@ -200,7 +205,7 @@ if [] == Port.list_all() do
     number: 39,
     mode: :output,
     type: :sunblind,
-    state: %{"value" => false},
+    state: sunblid_default_state,
     device_id: 1
   }
   |> Repo.insert()
@@ -211,7 +216,7 @@ if [] == Port.list_all() do
     number: 40,
     mode: :output,
     type: :sunblind,
-    state: %{"value" => false},
+    state: sunblid_default_state,
     device_id: 1
   }
   |> Repo.insert()
@@ -738,7 +743,7 @@ if [] == ScheduleJob.list_all!() do
     id: 3,
     name: "",
     expr: "* 8 * * * *",
-    task: %{"action_id" => 1}
+    task: %{"action_id" => 1, "state" => "down"}
   }
   |> Repo.insert()
 

@@ -5,6 +5,8 @@ defmodule DB.Data.RfButton do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias DB.Data.Action
+  alias DB.Data.Port
   alias DB.Data.RfButton
   alias DB.MainRepo
 
@@ -33,6 +35,23 @@ defmodule DB.Data.RfButton do
     schema
     |> cast(params, __schema__(:fields))
     |> validate_required([:name, :mode, :key_value, :on_click_action])
+  end
+
+  @spec click_action(RfButton.t(), integer()) :: Port.t() | Action.t() | nil
+  def click_action(btn, page) do
+    page_str = Integer.to_string(page)
+    data = Map.get(btn, :on_click_action, %{"pages" => %{}})
+
+    case Map.get(data["pages"], page_str) do
+      %{"id" => id, "type" => "action"} ->
+        DB.Proc.ActionListProc.get!(id)
+
+      %{"id" => id, "type" => "port"} ->
+        DB.Proc.PortListProc.get!(id)
+
+      _ ->
+        nil
+    end
   end
 
   def identify(key_value) do

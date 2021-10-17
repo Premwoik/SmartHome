@@ -19,6 +19,16 @@ defmodule DB.Proc.PortListProc do
     add(params) |> get_just()
   end
 
+  @spec update_state(integer(), map()) :: {:ok, Port.t()} | {:error, Ecto.Changeset.t()}
+  def update_state(port_id, params) do
+    GenServer.call(__MODULE__, {:update_state, port_id, params})
+  end
+
+  @spec update!(integer(), map()) :: nil | Port.t()
+  def update_state!(port_id, params) do
+    update_state(port_id, params) |> get_just()
+  end
+
   @spec update(integer(), map() | Port.t()) :: {:ok, Port.t()} | {:error, Ecto.Changeset.t()}
   def update(port_id, params) do
     GenServer.call(__MODULE__, {:update, port_id, params})
@@ -37,6 +47,22 @@ defmodule DB.Proc.PortListProc do
   @spec fast_update!(integer(), map() | Port.t()) :: nil | Port.t()
   def fast_update!(port_id, params) do
     fast_update(port_id, params) |> get_just()
+  end
+
+  @spec fast_update_state(integer(), map() | Port.t()) ::
+          {:ok, Port.t()} | {:error, Ecto.Changeset.t()}
+  def fast_update_state(port_id, params) do
+    GenServer.call(__MODULE__, {:not_persistent_state_update, port_id, params})
+  end
+
+  @spec fast_update_state!(integer(), map() | Port.t()) :: nil | Port.t()
+  def fast_update_state!(port_id, params) do
+    fast_update_state(port_id, params) |> get_just()
+  end
+
+  @spec fast_update_inputs([integer()], map()) :: [Port.t()]
+  def fast_update_inputs(port_ids, params) do
+    GenServer.call(__MODULE__, {:not_persistent_inputs_update, port_ids, params})
   end
 
   @spec get(integer()) :: {:ok, Port.t()} | {:error, term()}
@@ -60,7 +86,7 @@ defmodule DB.Proc.PortListProc do
 
   @spec identify!(integer(), integer() | [integer()]) :: nil | Port.t()
   def identify!(device_id, number) do
-    identify(device_id, number) |> get_just()
+    identify(device_id, number) |> get_just([])
   end
 
   @spec get_ids([integer()]) :: {:ok, [Port.t()]} | {:error, term()}
@@ -83,15 +109,19 @@ defmodule DB.Proc.PortListProc do
     list_all() |> get_just([])
   end
 
+  def force_read_all() do
+    GenServer.cast(__MODULE__, {:force_read, :all})
+  end
+
+  def force_read_id(id) do
+    GenServer.cast(__MODULE__, {:force_read, {:id, id}})
+  end
+
   @type state_t() :: %{ports: [Port]}
 
   @impl true
   def init(_init_arg) do
-    ports =
-      Port.list_all()
-      |> Enum.map(&{&1.id, &1})
-      |> Enum.into(%{})
-
+    ports = read_all_from_db()
     {:ok, %{ports: ports}}
   end
 
@@ -125,9 +155,25 @@ defmodule DB.Proc.PortListProc do
 
   @impl true
   def handle_call({:get_ids, ids}, _from, %{ports: ports} = state) do
-    return = {:ok, Enum.filter(ports, fn p -> p.id in ids end)}
+    ports =
+      ports
+      |> Enum.filter(fn {id, _} -> id in ids end)
+      |> Enum.map(fn {_, p} -> p end)
 
-    {:reply, return, state}
+    {:reply, {:ok, ports}, state}
+  end
+
+  @impl true
+  def handle_call({:update_state, port_id, state_params}, _from, state) do
+    with {:ok, port} <- get_port(state, port_id),
+         params <- %{state: Map.merge(port.state, state_params)},
+         {:ok, updated_port} <- Port.update(port, params) do
+      new_state = put_port(state, updated_port)
+      {:reply, {:ok, updated_port}, new_state}
+    else
+      {:error, _} = error ->
+        {:reply, error, state}
+    end
   end
 
   @impl true
@@ -155,6 +201,39 @@ defmodule DB.Proc.PortListProc do
   end
 
   @impl true
+  def handle_call({:not_persistent_state_update, port_id, state_params}, _from, state) do
+    with {:ok, port} <- get_port(state, port_id),
+         params <- %{state: Map.merge(port.state, state_params)},
+         {:ok, updated_port} <- Port.virtual_update(port, params) do
+      new_state = put_port(state, updated_port)
+      {:reply, {:ok, updated_port}, new_state}
+    else
+      {:error, _} = error ->
+        {:reply, error, state}
+    end
+  end
+
+  @impl true
+  def handle_call(
+        {:not_persistent_inputs_update, port_ids, state_params},
+        _from,
+        %{ports: ports} = state
+      ) do
+    new_ports =
+      Enum.map(ports, fn {id, port} ->
+        if id in port_ids do
+          params = %{state: Map.merge(port.state, state_params)}
+          {:ok, updated_port} = Port.virtual_update(port, params)
+          {id, updated_port}
+        else
+          {id, port}
+        end
+      end)
+
+    {:reply, {:ok, new_ports}, %{state | ports: new_ports}}
+  end
+
+  @impl true
   def handle_call({:insert, params}, _from, state) do
     with {:ok, port} <- Port.insert(params) do
       {:reply, {:ok, port}, put_port(state, port)}
@@ -162,6 +241,18 @@ defmodule DB.Proc.PortListProc do
       {:error, _} = error ->
         {:reply, error, state}
     end
+  end
+
+  @impl true
+  def handle_cast({:force_read, :all}, state) do
+    ports = read_all_from_db()
+    {:noreply, %{state | ports: ports}}
+  end
+
+  @impl true
+  def handle_cast({:force_read, {:id, id}}, state) do
+    {:ok, port} = Map.fetch(read_all_from_db(), id)
+    {:noreply, put_port(state, port)}
   end
 
   defp get_port(%{ports: ports}, port_id) do
@@ -180,5 +271,11 @@ defmodule DB.Proc.PortListProc do
       {:ok, res} -> res
       _ -> def_
     end
+  end
+
+  defp read_all_from_db() do
+    Port.list_all()
+    |> Enum.map(&{&1.id, &1})
+    |> Enum.into(%{})
   end
 end

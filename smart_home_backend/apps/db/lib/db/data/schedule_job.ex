@@ -36,11 +36,27 @@ defmodule DB.Data.ScheduleJob do
     |> validate_required([:name, :expr, :task])
   end
 
+  def get!(id) do
+    MainRepo.get(ScheduleJob, id)
+  end
+
   def list_all() do
     {:ok, list_all!()}
   end
 
   def list_all!() do
     MainRepo.all(ScheduleJob)
+  end
+
+  def update(id, params) do
+    job = get!(id)
+    cs = changeset(job, params)
+    case cs do
+      %{changes: ch} when ch == %{} ->
+        :ok
+
+      _ ->
+        MainRepo.update(cs)
+    end
   end
 end

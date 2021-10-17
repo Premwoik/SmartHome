@@ -61,7 +61,8 @@ defmodule DB.Data.Page do
   end
 
   def get(page_id) do
-    MainRepo.get(Page, page_id) |> MainRepo.preload([ports: [:device], actions: [], devices: [], meters: []])
+    MainRepo.get(Page, page_id)
+    |> MainRepo.preload(ports: [:device], actions: [], devices: [], meters: [])
   end
 
   def lights(%{ports: ports}) do
@@ -69,11 +70,28 @@ defmodule DB.Data.Page do
   end
 
   def dimmers(%{ports: ports}) do
-    # FIXME preload lights
     Enum.filter(ports, fn p -> p.type == :dimmer end)
+    |> Enum.map(fn p ->
+      case p.state["light_ids"] do
+        nil ->
+          p
+
+        ids ->
+          {:ok, lights} = DB.Proc.PortListProc.get_ids(ids)
+          DB.Data.Port.put_state(p, "lights", lights)
+      end
+    end)
   end
 
   def sunblinds(%{ports: ports}) do
     Enum.filter(ports, fn p -> p.type == :sunblind end)
+  end
+
+  def motion_sensors(%{ports: ports}) do
+    Enum.filter(ports, fn p -> p.type == :motion_sensor end)
+  end
+
+  def others(%{ports: ports}) do
+    Enum.filter(ports, fn p -> p.type == :custom end)
   end
 end

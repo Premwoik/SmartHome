@@ -20,28 +20,27 @@ defmodule DB.Stats.DeviceJournal do
   end
 
   @spec log_use(map(), atom(), any) :: any()
-  def log_use(res, name, args \\ nil) do
-    {device_id, dev_res} = res.result |> List.first()
+  def log_use(device_id, res, name, args \\ nil) do
     name = to_string(name)
 
-    case dev_res do
-      {:ok, res} ->
+    case res.result do
+      [{_, {:ok, res}} | _] ->
         add(device_id, "NORMAL", name, "", args, res)
 
-      :ok ->
+      [{_, :ok} | _] ->
         add(device_id, "NORMAL", name, "", args, nil)
 
-      {:error, res} ->
+      [{_, {:error, res}} | _] ->
         add(device_id, "ERROR", name, "", args, res)
 
-      :timeout ->
+      [{_, :timeout} | _] ->
         add(device_id, "TIMEOUT", name, "", args, nil)
 
-      _ ->
-        :ok
+      res ->
+        add(device_id, "UNKNOWN", name, "", args, res)
     end
 
-    res
+    :ok
   end
 
   def add(device_id, type, name, info, args, result) do
