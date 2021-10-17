@@ -18,14 +18,18 @@ defmodule Core.Broadcast do
   @callback broadcast_outputs_change(integer, list(integer)) :: any
   @callback broadcast_item_change(String.t(), struct()) :: any
 
-  @broadcast Application.get_env(:core, :broadcast_handler, Core.Broadcast.BroadcastHandlerMock)
-             |> IO.inspect()
+  def broadcast_item_change(type, item) do
+    Core.HandyConfig.get_broadcast_handlers()
+    |> Enum.each(& &1.broadcast_item_change(type, item))
+  end
 
-  def broadcast_item_change(type, item), do: @broadcast.broadcast_item_change(type, item)
+  def broadcast_inputs_change(device_id, up) do
+    Core.HandyConfig.get_broadcast_handlers()
+    |> Enum.each(& &1.broadcast_inputs_change(device_id, up))
+  end
 
-  def broadcast_inputs_change(device_id, up),
-    do: @broadcast.broadcast_inputs_change(device_id, up)
-
-  def broadcast_outputs_change(device_id, up),
-    do: @broadcast.broadcast_outputs_change(device_id, up)
+  def broadcast_outputs_change(device_id, up) do
+    Core.HandyConfig.get_broadcast_handlers()
+    |> Enum.each(& &1.broadcast_outputs_change(device_id, up))
+  end
 end

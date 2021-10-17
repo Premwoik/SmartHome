@@ -1,4 +1,4 @@
-defmodule Core.Broadcast.BroadcastHandlerMock do
+defmodule Core.Broadcast.BroadcastHandler do
   @moduledoc false
 
   use Core.Broadcast
