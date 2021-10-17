@@ -5,7 +5,7 @@ defmodule Core.Actions.CloseSunblind do
 
   require Logger
 
-  alias Core.Controllers.SunblindController
+  alias Core.SunblindController
   alias DB.Data.Action
 
   @impl true
@@ -15,14 +15,16 @@ defmodule Core.Actions.CloseSunblind do
 
   @impl true
   def execute(:up, action, _state) do
-    Action.arguments(action, :up)
+    action
+    |> Action.arguments(:up)
     |> SunblindController.close()
 
     :ok
   end
 
   def execute(:down, action, _state) do
-    Action.arguments(action, :up)
+    action
+    |> Action.arguments(:down)
     |> SunblindController.open()
 
     :ok

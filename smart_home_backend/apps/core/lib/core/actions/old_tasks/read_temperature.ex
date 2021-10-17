@@ -5,14 +5,15 @@ defmodule Core.Actions.ReadTemperature do
 
   require Logger
 
-  alias Core.Controllers.ThermometerController, as: Thermometers
+  alias Core.ThermometerController
   alias DB.Data.{Meter, Action}
 
   @impl true
   def execute(_on_off, action, _state) do
+    Logger.error("FIXME")
     device = Action.get_device(action)
 
-    with {:ok, {addr, raw_temp}} <- Thermometers.read(device) do
+    with {:ok, {addr, raw_temp}} <- ThermometerController.read(device) do
       case Meter.identify(device.id, addr) do
         nil ->
           add_new_thermometer(device, addr)

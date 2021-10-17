@@ -6,7 +6,7 @@ defmodule Core.Actions.ReadInputs do
   require Logger
 
   alias Core.Broadcast, as: Channel
-  alias Core.Controllers.DeviceController, as: DeviceC
+  alias Core.DeviceController
   alias Core.Device.Static.Response
   alias DB.Data.Device
   alias DB.Proc.ActionListProc
@@ -14,7 +14,7 @@ defmodule Core.Actions.ReadInputs do
   @impl true
   def execute(_on_off, action, state) do
     with {:ok, device} <- action.attributes["device_id"] |> Device.find(),
-         %Response{error: [], ok: read} <- DeviceC.read_inputs(device),
+         %Response{error: [], ok: read} <- DeviceController.read_inputs(device),
          {:ok, state} <- handle_inputs(device, read, state) do
       {:ok, state}
     else
@@ -46,8 +46,11 @@ defmodule Core.Actions.ReadInputs do
 
   defp proceed_up(_, read) do
     case ActionListProc.get_by_activator(read) do
-      {:ok, actions} -> 
-        Core.Actions.activate_up(actions)
+      {:ok, actions} ->
+        actions
+        |> Enum.map(& &1.id)
+        |> Core.Actions.activate_up()
+
       {:error, :not_found} ->
         :ok
     end
@@ -58,8 +61,11 @@ defmodule Core.Actions.ReadInputs do
 
   defp proceed_down(_, read) do
     case ActionListProc.get_by_activator(read) do
-      {:ok, actions} -> 
-        Core.Actions.activate_down(actions)
+      {:ok, actions} ->
+        actions
+        |> Enum.map(& &1.id)
+        |> Core.Actions.activate_down()
+
       {:error, :not_found} ->
         :ok
     end
@@ -72,9 +78,7 @@ defmodule Core.Actions.ReadInputs do
     if length(up) > 0 || length(down) > 0,
       do:
         Logger.info(
-          "Active outputs - up: #{inspect(up, charlists: :as_lists)}, down: #{
-            inspect(down, charlists: :as_lists)
-          }",
+          "Active outputs - up: #{inspect(up, charlists: :as_lists)}, down: #{inspect(down, charlists: :as_lists)}",
           ansi_color: :yellow
         )
   end

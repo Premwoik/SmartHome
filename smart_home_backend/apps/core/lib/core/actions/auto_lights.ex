@@ -15,16 +15,19 @@ defmodule Core.Actions.AutoLights do
   end
 
   @impl true
-  def execute(_on_off, action, pid) do
+  def execute(:up, action, pid) do
     case alive?(pid) do
       true ->
         send(pid, :notified)
         :ok
 
       false ->
-        pid = turn_on_lights(action)
-        {:ok, pid}
+        turn_on_lights(action)
     end
+  end
+
+  def execute(:down, _action, _pid) do
+    :ok
   end
 
   #  Privates
@@ -35,23 +38,34 @@ defmodule Core.Actions.AutoLights do
   defp turn_on_lights(action) do
     ports = Action.get_ports(action, "lights")
 
-    if length(ports) > 0 and !Port.any_on?(ports) do
-      %{ok: passed} = Controller.turn_on(ports)
-      time = Map.get(action.attributes, "on_timeout", 10_000)
-      {:ok, pid} = Task.start(fn -> turn_off_after(passed, time) end)
-      pid
+    with true <- all_lights_off(ports),
+         {:ok, duration} <- Map.fetch(action.attributes, "duration"),
+         %{ok: passed} = Controller.turn_on(ports) do
+      Task.start(fn -> turn_off_after(passed, duration) end)
+    else
+      _ ->
+        {:ok, nil}
     end
   end
 
-  defp turn_off_after(ports, time) do
+  @spec all_lights_off([Port.t()]) :: boolean()
+  defp all_lights_off(ports) do
+    length(ports) > 0 and !Port.any_on?(ports)
+  end
+
+  defp turn_off_after(ports, duration) do
     receive do
       :notified ->
-        Logger.info("Turning lights delayed")
-        turn_off_after(ports, time)
+        Logger.info("Delay turning off lights [ids=#{get_ids(ports)}]")
+        turn_off_after(ports, duration)
     after
-      time ->
-        Logger.info("Lights turned off")
+      duration ->
+        Logger.info("Turn off lights [ids=#{get_ids(ports)}]")
         Controller.turn_off(ports)
     end
+  end
+
+  defp get_ids(ports) do
+    Enum.map(ports, & &1.id) |> Enum.join(", ")
   end
 end

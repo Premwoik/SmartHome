@@ -16,7 +16,7 @@ defmodule Core.Actions.ToggleGroup do
 
   @impl true
   def execute(_on_off, action, _state) do
-    ports = Action.arguments(action, :up)
+    ports = Action.get_ports(action, "ports")
 
     if Port.any_on?(ports) do
       Controller.turn_off(ports)

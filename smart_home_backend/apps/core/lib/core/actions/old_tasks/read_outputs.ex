@@ -6,14 +6,14 @@ defmodule Core.Actions.ReadOutputs do
   require Logger
 
   alias Core.Broadcast, as: Channel
-  alias Core.Controllers.DeviceController, as: DeviceC
+  alias Core.DeviceController
   alias DB.Data.Device
   alias DB.Proc.PortListProc
 
   @impl true
   def execute(_on_off, action, state) do
     with {:ok, device} <- Device.find(action.attributes["device_id"]),
-         {:ok, data} <- DeviceC.read_outputs(device) do
+         {:ok, data} <- DeviceController.read_outputs(device) do
       handle_outputs(device, data, state)
     else
       e ->
@@ -45,18 +45,18 @@ defmodule Core.Actions.ReadOutputs do
   defp update_out_of_date(device, high, low) do
     high_ports =
       PortListProc.identify!(device.id, high)
-      |> Enum.map(&PortListProc.update!(&1.id, %{state: true}))
+      |> Enum.map(&PortListProc.update_state!(&1.id, %{"value" => true}))
 
     low_ports =
       PortListProc.identify!(device.id, low)
-      |> Enum.map(&PortListProc.update!(&1.id, %{state: false}))
+      |> Enum.map(&PortListProc.update_state!(&1.id, %{"value" => false}))
 
     res = high_ports ++ low_ports
     len = length(res)
 
     if len == 0 do
       Logger.debug(
-        "[Task|ReadOutputs] All outputs are up to date! device: #{device.name}, id: #{device.id}"
+        "[action=ReadOutputs] All outputs are up to date! [device_id=#{device.id}, device_name=#{device.name}]"
       )
     else
       Enum.each(res, fn %{type: type} = item ->
@@ -64,9 +64,7 @@ defmodule Core.Actions.ReadOutputs do
       end)
 
       Logger.info(
-        "Updated '#{len}' ports belonging to the device with id: '#{device.id}', name: '#{
-          device.name
-        }'"
+        "[action=ReadOutputs] Updated '#{len}' outputs belonging to the device [device_id=#{device.id}, device_name=#{device.name}]"
       )
     end
   end

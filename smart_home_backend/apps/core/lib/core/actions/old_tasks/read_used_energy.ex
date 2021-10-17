@@ -5,14 +5,15 @@ defmodule Core.Actions.ReadUsedEnergy do
 
   require Logger
 
-  alias Core.Controllers.WattMeterController, as: WattMeters
+  alias Core.WattMeterController
   alias DB.Data.Action
 
   @impl true
   def execute(_on_off, action, _state) do
+    Logger.error("FIXME")
     device = Action.get_device(action)
 
-    WattMeters.read(device)
+    WattMeterController.read(device)
     |> case do
       {:ok, val} ->
         Logger.info("Read energy #{inspect(val)}")

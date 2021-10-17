@@ -30,7 +30,9 @@ defmodule Core.Actions do
     try do
       GenServer.call(name, {:activate, :up, ids})
     catch
-      :exit, _ -> :ok
+      :exit, _ -> :error
+    rescue
+      _ -> :error
     end
   end
 
@@ -38,7 +40,9 @@ defmodule Core.Actions do
     try do
       GenServer.call(name, {:activate, :down, ids})
     catch
-      :exit, _ -> :ok
+      :exit, _ -> :error
+    rescue
+      _ -> :error
     end
   end
 
@@ -60,11 +64,11 @@ defmodule Core.Actions do
 
   @impl true
   def handle_cast({:action_result, action_id, action_state}, state) do
-    {:noreply, put_action_state(state,  action_id, action_state)}
+    {:noreply, put_action_state(state, action_id, action_state)}
   end
 
   ##   Privates
-  
+
   @spec put_action_state(state(), integer(), full_action_state()) :: state()
   defp put_action_state(server_state, action_id, action_state) do
     put_in(server_state, [:actions_state, action_id], action_state)
@@ -84,7 +88,6 @@ defmodule Core.Actions do
     {:ok, actions} = ActionListProc.list_active()
 
     for action <- Enum.filter(actions, &(&1.id in ids)) do
-      Logger.debug("[Action|#{action.name}] Invoking action in mode [#{inspect(on_off)}]")
       proceed_action(on_off, action, get_memory(action, state))
     end
   end
@@ -141,12 +144,21 @@ defmodule Core.Actions do
     module = get_module(action.module)
 
     try do
+      {duration, result} =
+        Benchmark.measure_r(fn -> apply(module, :execute, [on_off, action, memory.state]) end)
+
       memory =
-        case apply(module, :execute, [on_off, action, memory.state]) do
+        case result do
           {:ok, state} -> Map.put(memory, :state, state)
-          # FIXME log error 
           _otherwise -> memory
         end
+
+      :ok =
+        :telemetry.execute(
+          [:core, :action, :run],
+          %{duration: duration},
+          %{action: action, mode: on_off}
+        )
 
       GenServer.cast(__MODULE__, {:action_result, action.id, memory})
     rescue

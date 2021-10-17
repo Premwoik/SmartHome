@@ -3,7 +3,7 @@ defmodule Core.Actions.DimmerController do
     Collect ticks to set dimmer brightness.
   """
   require Logger
-  alias Core.Controllers.DimmerController
+  alias Core.DimmerController
   @behaviour Core.Actions.Action
   alias DB.Data.Action
 
@@ -14,6 +14,8 @@ defmodule Core.Actions.DimmerController do
 
   @impl true
   def execute(_on_off, action, pid) do
+    Logger.error("FIXME")
+
     if alive?(pid) do
       send(pid, :notified)
       {:ok, pid}
