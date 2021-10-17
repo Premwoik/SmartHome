@@ -24,7 +24,7 @@ defmodule Core.MixProject do
     [
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
-
+      {:phoenix_pubsub, "~> 2.0"},
       {:mock, "~> 0.3.0", only: :test},
       {:mox, "~> 0.4", only: :test},
       {:poison, "~> 3.1"},
