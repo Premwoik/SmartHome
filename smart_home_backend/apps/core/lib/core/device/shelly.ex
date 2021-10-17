@@ -6,13 +6,15 @@ defmodule Core.Device.Shelly do
 
   import Core.Device.Client.Http
 
-  # alias Core.Actions.ReadOutputs
+  alias Core.Broadcast, as: Channel
   alias Core.Device.BasicIO
   alias Core.Device.Static.Response
   alias DB.Data.Device
+  alias DB.Data.Port
+  alias DB.Proc.PortListProc
 
   @impl Core.Device
-  def start_link(_, _, _, _, _, _) do
+  def start_link(_, _) do
     false
   end
 
@@ -28,7 +30,7 @@ defmodule Core.Device.Shelly do
   @impl BasicIO
   def set_outputs(%Device{ip: ip, port: port} = device, ports) do
     port_ = List.first(ports)
-    state = if port_.state, do: "on", else: "off"
+    state = if port_.state["value"], do: "on", else: "off"
     url_ = url(ip, port, port_.number)
 
     HTTPotion.get(url_, query: %{"turn" => state})
@@ -55,18 +57,18 @@ defmodule Core.Device.Shelly do
 
   # Mqtt
 
-  def handle_mqtt_result(_name, _payload, _state) do
-    # FIXME add implementation
-    :ok
-    # with %Device{} = d <- Device.get_by_name(name) do
-    # if state == "on" do
-    # ReadOutputs.handle_outputs(d, [0], %{last_outputs: []})
-    # else
-    # ReadOutputs.handle_outputs(d, [], %{last_outputs: [0]})
-    # end
+  def handle_mqtt_result(name, payload, _state) do
+    with {:ok, device} <- Device.get_by_name(name),
+         [%Port{} = port] = PortListProc.identify!(device.id, [0]) do
+      state = payload == "on"
 
-    # :ok
-    # end
+      if port.state["value"] != state do
+        port = PortListProc.update_state!(port.id, %{"value" => state})
+        Channel.broadcast_item_change(port.type, port)
+      end
+    end
+
+    :ok
   end
 
   #  Privates

@@ -11,7 +11,7 @@ defmodule Core.Device.Arduino do
   alias Core.Device.Static.Response
 
   @impl Core.Device
-  def start_link(_, _, _, _, _, _) do
+  def start_link(_, _) do
     false
   end
 
@@ -20,7 +20,9 @@ defmodule Core.Device.Arduino do
 
   @impl BasicIO
   def set_outputs(device, ports) do
-    pairs = Enum.map(ports, fn p -> %{pin: p.number, state: p.state} end) |> Poison.encode!()
+    pairs =
+      Enum.map(ports, fn p -> %{pin: p.number, state: p.state["value"]} end) |> Poison.encode!()
+
     path = "#{device.ip}:#{device.port}/write"
 
     HTTPotion.post(path, headers: ["Content-Type": "application/json"], body: pairs)

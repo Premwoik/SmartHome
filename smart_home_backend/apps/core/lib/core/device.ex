@@ -101,7 +101,6 @@ defmodule Core.Device do
     @callback set_time_dimmer(device :: Device.t(), list({integer, integer})) :: Response.t()
   end
 
-  alias DB.Stats.DeviceJournal, as: DJ
   alias DB.Data.{Device, Port}
   alias Core.Device.Static.Response
 
@@ -128,8 +127,17 @@ defmodule Core.Device do
   @spec do_(function :: atom, args :: args_t) :: Response.t()
 
   def do_(function, [%Device{} = d | t_args] = args) do
-    execute_function(fn -> apply(module(d), function, args) end)
-    #|> DJ.log_use(function, t_args)
+    {duration, res} =
+      Benchmark.measure_r(fn -> execute_function(fn -> apply(module(d), function, args) end) end)
+
+    :ok =
+      :telemetry.execute(
+        [:core, :device, :do],
+        %{duration: duration, args: t_args, result: res},
+        %{function: function, device: d}
+      )
+
+    res
   end
 
   def do_(function, [%Port{} | _] = ports) do

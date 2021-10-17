@@ -9,7 +9,7 @@ defmodule Core.Device.Satel do
   @behaviour AlarmSystem
   @behaviour Device
 
-  @client Application.fetch_env!(:core, :two_way_client)
+  @client Core.Device.Client.Soc
   alias Core.Device.Static.Response
   alias Core.Device.Satel.Protocol
   require Logger
@@ -17,8 +17,8 @@ defmodule Core.Device.Satel do
   use Bitwise
 
   @impl Device
-  def start_link(host, port, _opts, keywords, timeout \\ 5000, length \\ 11) do
-    @client.start_link(host, port, [:binary], keywords, timeout, length)
+  def start_link(host, port, opts) do
+    @client.start_link(host, port, [:binary], 5000, opts)
   end
 
   @impl Device
@@ -158,10 +158,14 @@ defmodule Core.Device.Satel do
 
   defp run_command(device, <<cmd_code::binary-size(1), _::binary>> = cmd) do
     with command <- Protocol.prepare_frame(cmd),
-         :ok <- @client.send_with_resp(device, command),
-         {:ok, resp} <- wait_for_confirmation(2_000) do
+         :ok <- @client.send(device, command),
+         {:ok, resp} <- @client.recv(device, 0, 2_000) do
       Logger.log(:debug, "Send request to integra: #{inspect(command, base: :hex)}")
       Protocol.check_response(resp, cmd_code)
+    else
+      {:error, "Timeout"} = error ->
+        Supervisor.stop(Core.Device.Supervisor, :normal)
+        error
     end
   end
 

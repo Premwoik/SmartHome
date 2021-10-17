@@ -11,6 +11,11 @@ defmodule Core.Device.Client.TwoWay do
 
   ## Public
 
+  def restart(device) do
+    device_name(device)
+    |> Connection.call(:restart_connection)
+  end
+
   def send_with_resp(device, msg) do
     device_name(device)
     |> Connection.call({:confirm_send, msg})
@@ -44,7 +49,7 @@ defmodule Core.Device.Client.TwoWay do
 
   @impl true
   def connect(
-        _,
+        x,
         %{
           sock: nil,
           host: host,
@@ -53,6 +58,9 @@ defmodule Core.Device.Client.TwoWay do
           timeout: timeout
         } = s
       ) do
+    if x == :reconnect do
+    end
+
     case :gen_tcp.connect(host, port, opts, timeout) do
       {:ok, sock} ->
         {:ok, %{s | sock: sock}}
@@ -79,6 +87,7 @@ defmodule Core.Device.Client.TwoWay do
         :error_logger.format("Connection error: ~s~n", [reason])
     end
 
+    :timer.sleep(500)
     {:connect, :reconnect, %{s | sock: nil}}
   end
 
@@ -99,6 +108,10 @@ defmodule Core.Device.Client.TwoWay do
   def handle_info({:tcp_closed, _port}, s) do
     Logger.info("Tcp port closed")
     {:stop, :normal, s}
+  end
+
+  def handle_call(:restart_connection, from, s) do
+    {:disconnect, {:close, from}, s}
   end
 
   @impl true

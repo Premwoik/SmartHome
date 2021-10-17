@@ -12,7 +12,7 @@ defmodule Core.Device.ShellyRGBW2 do
   alias DB.Data.Port
 
   @impl Core.Device
-  def start_link(_host, _port, _opts, _keywords, _timeout \\ 5000, _length \\ 11) do
+  def start_link(_host, _port) do
     false
   end
 
@@ -46,9 +46,7 @@ defmodule Core.Device.ShellyRGBW2 do
       ) do
     url_ = url(ip, port, num)
 
-    query_ =
-      %{"gain" => fill}
-      |> IO.inspect()
+    query_ = %{"gain" => fill}
 
     HTTPotion.get(url_, query: query_)
     |> default_response_catch(&decode_body/1)

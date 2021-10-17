@@ -6,13 +6,14 @@ defmodule Core.Device.SonoffBasic do
 
   import Core.Device.Client.Http
 
-  alias Core.Actions.ReadOutputs
+  alias Core.Broadcast, as: Channel
   alias Core.Device.SonoffBasic, as: Sonoff
   alias Core.Device.Static.Response
   alias DB.Data.{Port, Device}
+  alias DB.Proc.PortListProc
 
   @impl Core.Device
-  def start_link(_host, _port, _opts, _keywords, _timeout \\ 5000, _length \\ 11) do
+  def start_link(_host, _port) do
     false
   end
 
@@ -30,7 +31,7 @@ defmodule Core.Device.SonoffBasic do
 
   @impl true
   def set_outputs(%{ip: ip, port: port} = d, [%Port{number: num, state: s}] = ports) do
-    state_ = if s, do: 1, else: 0
+    state_ = if s["value"], do: 1, else: 0
     url_ = url(ip, port, num) <> "?cmnd=Power#{num}%20#{state_}"
 
     HTTPotion.get(url_)
@@ -59,17 +60,18 @@ defmodule Core.Device.SonoffBasic do
   #  Mqtt
 
   def handle_mqtt_result(name, payload, _) do
-    with {:ok, d} <- Device.get_by_name(name) do
+    with {:ok, device} <- Device.get_by_name(name),
+         [%Port{} = port] = PortListProc.identify!(device.id, [0]) do
       %{"POWER" => state} = Poison.decode!(payload)
+      state = state == "ON"
 
-      if state == "ON" do
-        ReadOutputs.handle_outputs(d, [0], %{last_outputs: []})
-      else
-        ReadOutputs.handle_outputs(d, [], %{last_outputs: [0]})
+      if port.state["value"] != state do
+        port = PortListProc.update_state!(port.id, %{"value" => state})
+        Channel.broadcast_item_change(port.type, port)
       end
-
-      :ok
     end
+
+    :ok
   end
 
   # Privates
