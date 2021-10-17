@@ -20,7 +20,6 @@ defmodule Core.Mqtt.Supervisor do
             Tortoise.Transport.Tcp,
             host: @mqtt_ip, port: 1883
           },
-          #          handler: {Tortoise.Handler.Logger, []},
           handler: {Core.MqttClient, []},
           subscriptions:
             list_of_sonoff_shellies() ++
@@ -28,6 +27,10 @@ defmodule Core.Mqtt.Supervisor do
         ]
       }
     ]
+
+    # FIXME check if mqtt_prefix is the same as device name. The best solutnion 
+    # should be add new column `mqtt_prefix` do the server table. It sounds
+    # stupid to use name for it.
 
     Supervisor.init(children, strategy: :one_for_one)
   end

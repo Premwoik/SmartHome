@@ -10,14 +10,11 @@ defmodule Core.Mqtt.RfButtonHandler do
     %{data | pages: pages_}
   end
 
-  def handle_button_click(%RfButton{name: name} = _btn, %{pages: pages} = data) do
-    _p = get_current_page(name, pages)
+  def handle_button_click(%RfButton{name: name} = btn, %{pages: pages} = data) do
+    page = get_current_page(name, pages)
 
-    # FIXME add executing action
-    # with {_, foreign} <- RfButton.click_action(btn, p) do
-    # Repo.preload(foreign)
-    # |> execute_in_mode(btn.mode)
-    # end
+    RfButton.click_action(btn, page)
+    |> execute_in_mode(btn.mode)
 
     data
   end
@@ -44,8 +41,9 @@ defmodule Core.Mqtt.RfButtonHandler do
     Map.get(pages, name, 1)
   end
 
-  # defp execute_in_mode(nil, _), do: :ok
-  # defp execute_in_mode(item, :toggle), do: Core.Controller.toggle([item])
-  # defp execute_in_mode(item, :on), do: Core.Controller.turn_on([item])
-  # defp execute_in_mode(item, :off), do: Core.Controller.turn_off([item])
+  defp execute_in_mode(nil, _), do: :ok
+  defp execute_in_mode(item, nil), do: Core.Controller.toggle([item])
+  defp execute_in_mode(item, :toggle), do: Core.Controller.toggle([item])
+  defp execute_in_mode(item, :on), do: Core.Controller.turn_on([item])
+  defp execute_in_mode(item, :off), do: Core.Controller.turn_off([item])
 end
