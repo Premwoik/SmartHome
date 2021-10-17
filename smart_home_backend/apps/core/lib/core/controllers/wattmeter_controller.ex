@@ -1,4 +1,4 @@
-defmodule Core.Controllers.WattMeterController do
+defmodule Core.WattMeterController do
   @moduledoc false
 
   def read(device) do

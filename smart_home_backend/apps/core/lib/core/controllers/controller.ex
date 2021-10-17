@@ -1,10 +1,10 @@
 defmodule Core.Controller do
   @moduledoc false
 
-  alias Core.Controllers.ActionController
-  alias Core.Controllers.DimmerController
-  alias Core.Controllers.PortController
-  alias Core.Controllers.SunblindController
+  alias Core.ActionController
+  alias Core.DimmerController
+  alias Core.PortController
+  alias Core.SunblindController
   alias Core.Device.Static.Response
   alias DB.Data.{Port, Action}
 
@@ -56,9 +56,9 @@ defmodule Core.Controller do
   """
   @callback read(items :: [item()], ops :: keyword()) :: Response.t()
 
-  def toggle(items, ops \\ []) do
+  def toggle(items, opts \\ []) do
     group_by_controller(items)
-    |> Enum.map(&run_controller(&1, :toggle, ops))
+    |> Enum.map(&run_controller(&1, :toggle, opts))
     |> Response.fold()
   end
 
@@ -123,9 +123,9 @@ defmodule Core.Controller do
       @impl true
       def toggle(items, ops \\ [])
 
-      def toggle([d | _] = dimmers, ops) do
-        state = d.state["value"]
-        set_state(dimmers, !state, ops)
+      def toggle([i | _] = items, opts) do
+        state = i.state["value"]
+        set_state(items, !state, opts)
       end
 
       @impl true

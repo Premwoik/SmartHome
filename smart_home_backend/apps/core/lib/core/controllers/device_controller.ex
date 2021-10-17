@@ -1,4 +1,4 @@
-defmodule Core.Controllers.DeviceController do
+defmodule Core.DeviceController do
   @moduledoc false
 
   import Core.Device, only: [do_: 2]

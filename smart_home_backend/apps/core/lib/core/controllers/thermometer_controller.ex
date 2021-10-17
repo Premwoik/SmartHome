@@ -1,4 +1,4 @@
-defmodule Core.Controllers.ThermometerController do
+defmodule Core.ThermometerController do
   @moduledoc false
 
   def read(device) do

@@ -1,11 +1,12 @@
-defmodule Core.Controllers.SunblindController do
+defmodule Core.SunblindController do
   @moduledoc false
 
   use Core.Controller
 
   alias Core.Broadcast, as: Channel
-  alias Core.Controllers.PortController
   alias Core.Device.Static.Response
+  alias Core.PortController
+  alias DB.Proc.PortListProc
 
   @impl true
   def turn_on(sunblinds, _ops), do: open(sunblinds)
@@ -47,7 +48,7 @@ defmodule Core.Controllers.SunblindController do
   # Privates
 
   defp skip_not(sunblinds, position) do
-    Enum.filter(sunblinds, &(&1[:state]["position"] == position))
+    Enum.filter(sunblinds, &(&1.state["position"] == position))
   end
 
   defp lock_sunblinds(sunblinds, state) do
@@ -58,23 +59,23 @@ defmodule Core.Controllers.SunblindController do
 
   def unlock_sunblinds(sunblinds, state) do
     sunblinds
-    |> Enum.group_by(fn s -> s[:state]["full_open_time"] end)
+    |> Enum.group_by(fn s -> s.state["move_duration"] end)
     |> Enum.sort()
-    |> Enum.each(fn {t, ss} ->
+    |> Enum.each(fn {delay, sunblinds} ->
       receive do
       after
-        t ->
-          update_state(ss, state, true)
+        delay ->
+          update_state(sunblinds, state, true)
       end
     end)
   end
 
   defp update_state(sunblinds, state, broadcast \\ false) do
     Enum.map(sunblinds, fn s ->
-      port = update_in(s[:state]["position"], state)
+      {:ok, port} = PortListProc.update_state(s.id, %{"position" => state})
 
       if broadcast do
-        Channel.broadcast_item_change(:sunblind, port)
+        :ok = Channel.broadcast_item_change(:sunblind, port)
       end
 
       port

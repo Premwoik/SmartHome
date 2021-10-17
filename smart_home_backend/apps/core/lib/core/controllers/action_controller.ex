@@ -1,10 +1,10 @@
-defmodule Core.Controllers.ActionController do
+defmodule Core.ActionController do
   @moduledoc false
 
   use Core.Controller
 
+  alias Core.Actions
   alias Core.Device.Static.Response
-  alias DB.Proc.ActionListProc
 
   @impl true
   def toggle(items, ops) do
@@ -16,37 +16,29 @@ defmodule Core.Controllers.ActionController do
   end
 
   @impl true
-  def set_state(items, state, _ops) do
-    Enum.map(items, fn i ->
-      with {:ok, action} <- ActionListProc.update(i.id, Map.put(i, :state, state)) do
-        Response.ok(action)
+  def set_state(actions, state, _ops) do
+    ids = Enum.map(actions, fn x -> x.id end)
+
+    res =
+      if state do
+        Actions.activate_up(ids)
       else
-        error -> Response.error(error, i)
+        Actions.activate_down(ids)
       end
-    end)
-    |> Response.fold()
+
+    case res do
+      :error ->
+        Response.error({:error, :fatal}, actions)
+
+      {:ok, []} ->
+        Response.ok(actions)
+
+      {:ok, errors} ->
+        errors = Enum.map(errors, fn {:error, pair} -> pair end)
+        err_ids = Enum.map(errors, fn {id, _} -> id end)
+        oks = Enum.filter(actions, fn a -> a.id not in err_ids end)
+
+        %Response{ok: oks, error: errors, result: [:error]}
+    end
   end
-
-  # defmodule Activate do
-  # use Core.Controller
-  # alias Core.Actions
-
-  # @impl true
-  # def turn_on(actions, _ops) do
-  # actions = Enum.map(actions, fn x -> x.id end)
-  # Actions.activate_up(actions)
-  # end
-
-  # @impl true
-  # def turn_off(actions, _ops) do
-  # actions = Enum.map(actions, fn x -> x.id end)
-  # Actions.activate_down(actions)
-  # end
-
-  # @impl true
-  # def toggle(actions, _ops) do
-  # actions = Enum.map(actions, fn x -> x.id end)
-  # Actions.activate_up(actions)
-  # end
-  # end
 end
