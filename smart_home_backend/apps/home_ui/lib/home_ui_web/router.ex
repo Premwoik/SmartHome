@@ -1,6 +1,8 @@
 defmodule HomeUiWeb.Router do
   use HomeUiWeb, :router
 
+  use Kaffy.Routes, scope: "/admin", pipe_through: []
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -21,6 +23,8 @@ defmodule HomeUiWeb.Router do
 
     live "/dash", DashboardLive, :index
     live "/dash/:page_id", DashboardLive, :show
+
+    live "/settings", SettingsLive, :index
   end
 
   # Other scopes may use custom stacks.

@@ -1,0 +1,40 @@
+<section>
+  <div class="container w-auto">
+    <div class="p-2">
+      <h1>Zadania</h1>
+      <%= for j <- @jobs do %>
+        <form id="<%="job_form_#{j.id}"%>" method="POST" action="#" phx-submit="save"></form>
+      <% end %>
+      <table class="table-auto shadow-lg">
+        <thead>
+          <tr>
+          <th>Nazwa</th>
+          <th>Status</th>
+          <th>CRON</th>
+          <th>Format rozszerzony</th>
+          <th>Akcje</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= for {j, index} <- Enum.with_index(@jobs) do %>
+            <%= if rem(index, 2) == 0 do %>
+              <tr>
+            <% else %>
+              <tr class="bg-gray-50">
+            <% end %>
+              <%= hidden_input :job, :id, value: j.id, id: "job_id_#{j.id}", form: "job_form_#{j.id}"%>
+                <td class="px-4 border"><%= j.name %></td>
+                <td class="px-4 border"><%= checkbox :job, :status, value: j.status, id: "job_status_#{j.id}", form: "job_form_#{j.id}" %></td>
+                <td class="px-4 border"><%= text_input :job, :expr, value: j.expr, class: "border", id: "job_expr_#{j.id}", form: "job_form_#{j.id}"%></td>
+                <td class="px-4 border"><%= checkbox :job, :extended, value: j.extended, id: "job_extended_#{j.id}", form: "job_form_#{j.id}"%></td>
+                <td class="px-4 border">
+                  <%= submit "Zapisz", class: "inline rounded bg-blue-400 hover:bg-blue-500 text-white p-2", form: "job_form_#{j.id}"%>
+                  <button type="button" class="inline rounded bg-blue-400 hover:bg-blue-500 text-white p-2" value="<%= j.id %>" phx-click="run" onclick="return confirm('Czy na pewno chcesz wywołać zadanie?');">Wywołaj</button>
+                </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

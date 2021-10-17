@@ -1,8 +1,12 @@
 defmodule HomeUiWeb.DashboardLive do
   use HomeUiWeb, :live_view
 
-  alias Core.Controllers.{SunblindController, DimmerController, PortController}
+  alias Core.DimmerController
+  alias Core.PortController
+  alias Core.SunblindController
   alias DB.Data.Page
+  alias DB.Data.Port
+  alias DB.Proc.PortListProc
 
   @topic "dashboard:lobby"
   @monitor_topic "monitor:lobby"
@@ -10,7 +14,7 @@ defmodule HomeUiWeb.DashboardLive do
   def mount(_params, _session, socket) do
     HomeUiWeb.Endpoint.subscribe(@topic)
     HomeUiWeb.Endpoint.subscribe(@monitor_topic)
-    pages = Page.short_info() 
+    pages = Page.short_info()
 
     {:ok,
      assign(socket,
@@ -19,6 +23,7 @@ defmodule HomeUiWeb.DashboardLive do
        dimmers: [],
        sunblinds: [],
        sensors: [],
+       others: [],
        plan: "attic"
      )}
   end
@@ -31,7 +36,8 @@ defmodule HomeUiWeb.DashboardLive do
       lights = Page.lights(page)
       dimmers = Page.dimmers(page)
       sunblinds = Page.sunblinds(page)
-      sensors = []
+      sensors = Page.motion_sensors(page)
+      others = Page.others(page)
       plan = get_plan(id)
 
       {:noreply,
@@ -40,6 +46,7 @@ defmodule HomeUiWeb.DashboardLive do
          dimmers: dimmers,
          sunblinds: sunblinds,
          sensors: sensors,
+         others: others,
          plan: plan
        )}
     else
@@ -76,15 +83,31 @@ defmodule HomeUiWeb.DashboardLive do
       Enum.map(lights, fn port ->
         if(port.id == id) do
           %{ok: [light]} = PortController.toggle([port])
-          broadcast_from_self!(%{type: :light, item: light})
           light
         else
           port
         end
       end)
 
-    # HomeUiWeb.Endpoint.broadcast_from!(self(), @topic, "port_update", id)
     {:noreply, assign(socket, lights: lights)}
+  end
+
+  def handle_event("toggle_other", %{"value" => id}, socket) do
+    {id, _} = Integer.parse(id)
+
+    others = socket.assigns[:others]
+
+    others =
+      Enum.map(others, fn port ->
+        if(port.id == id) do
+          %{ok: [port]} = PortController.toggle([port])
+          port
+        else
+          port
+        end
+      end)
+
+    {:noreply, assign(socket, others: others)}
   end
 
   def handle_event("toggle_dimmer", %{"value" => id}, socket) do
@@ -95,9 +118,20 @@ defmodule HomeUiWeb.DashboardLive do
     items =
       Enum.map(items, fn port ->
         if(port.id == id) do
-          %{ok: [dimmer]} = DimmerController.toggle([port])
-          broadcast_from_self!(%{type: :dimmer, item: dimmer})
-          dimmer
+          %{ok: [dimmer]} = DimmerController.toggle([port], broadcast: false)
+
+          if not is_nil(dimmer.state["lights"]) do
+            lights =
+              Enum.map(dimmer.state["lights"], fn light ->
+                PortListProc.update_state!(light.id, %{"value" => dimmer.state["value"]})
+                |> broadcast_from_self!()
+              end)
+
+            Port.put_state(dimmer, "lights", lights)
+            |> broadcast_from_self!()
+          else
+            dimmer
+          end
         else
           port
         end
@@ -116,25 +150,22 @@ defmodule HomeUiWeb.DashboardLive do
       Enum.map(items, fn port ->
         if(port.id == dimmer_id) do
           lights =
-            Enum.map(port.more.lights, fn light ->
+            Enum.map(port.state["lights"], fn light ->
               if(light.id == id) do
                 %{ok: [light]} = PortController.toggle([light])
-                broadcast(%{type: :light, item: light})
                 light
               else
                 light
               end
             end)
 
-          dimmer = put_in(port.state.lights, lights)
-          broadcast_from_self!(%{type: :dimmer, item: dimmer})
-          dimmer
+          Port.put_state(port, "lights", lights)
+          |> broadcast_from_self!()
         else
           port
         end
       end)
 
-    # socket = put_flash(socket, :error, "It worked!")
     {:noreply, assign(socket, dimmers: items)}
   end
 
@@ -148,7 +179,6 @@ defmodule HomeUiWeb.DashboardLive do
       Enum.map(items, fn port ->
         if(port.id == id) do
           %{ok: [dimmer]} = DimmerController.set_brightness(port, fill)
-          broadcast_from_self!(%{type: :dimmer, item: dimmer})
           dimmer
         else
           port
@@ -168,7 +198,6 @@ defmodule HomeUiWeb.DashboardLive do
       Enum.map(items, fn port ->
         if(port.id == id) do
           %{ok: [dimmer]} = DimmerController.set_white_brightness(port, fill)
-          broadcast_from_self!(%{type: :dimmer, item: dimmer})
           dimmer
         else
           port
@@ -186,7 +215,6 @@ defmodule HomeUiWeb.DashboardLive do
       |> Enum.map(fn port ->
         if(port.id == id) do
           %{ok: [sunblind]} = SunblindController.toggle([port])
-          broadcast_from_self!(%{type: :sunblind, item: sunblind})
           sunblind
         else
           port
@@ -207,11 +235,8 @@ defmodule HomeUiWeb.DashboardLive do
     sensors =
       socket.assigns[:sensors]
       |> Enum.map(fn s ->
-        if s.id in Enum.map(up, & &1.id) do
-          %{s | state: true}
-        else
-          %{s | state: false}
-        end
+        value = s.id in Enum.map(up, & &1.id)
+        Port.put_state(s, "value", value)
       end)
 
     {:noreply, assign(socket, :sensors, sensors)}
@@ -236,14 +261,16 @@ defmodule HomeUiWeb.DashboardLive do
       :dimmer -> :dimmers
       :sunblind -> :sunblinds
       :sensor -> :sensors
+      :custom -> :others
     end
   end
 
-  defp broadcast_from_self!(data) do
-    HomeUiWeb.Endpoint.broadcast_from!(self(), @topic, "object:updated", data)
+  defp broadcast_from_self!(port) do
+    HomeUiWeb.Endpoint.broadcast_from!(self(), @topic, "object:updated", {port.type, port})
+    port
   end
 
-  defp broadcast(data) do
-    HomeUiWeb.Endpoint.broadcast!(@topic, "object:updated", data)
-  end
+  # defp broadcast(data) do
+  # HomeUiWeb.Endpoint.broadcast!(@topic, "object:updated", data)
+  # end
 end

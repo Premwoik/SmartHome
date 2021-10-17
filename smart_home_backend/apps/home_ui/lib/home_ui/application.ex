@@ -6,6 +6,9 @@ defmodule HomeUi.Application do
   use Application
 
   def start(_type, _args) do
+    # Setup core handy config
+    setup_core_handy_config()
+
     children = [
       # Start the Ecto repository
       # HomeUi.Repo,
@@ -30,5 +33,9 @@ defmodule HomeUi.Application do
   def config_change(changed, _new, removed) do
     HomeUiWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  def setup_core_handy_config() do
+    Core.HandyConfig.register_broadcast_handler(HomeUiWeb.Channels.BroadcastHandler)
   end
 end

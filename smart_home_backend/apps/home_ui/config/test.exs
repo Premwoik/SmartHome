@@ -9,9 +9,7 @@ import Config
 if System.get_env("CI") do
   config :home_ui, HomeUi.Repo,
     url:
-      "postgres://postgres:postgres@postgres:5432/utility_test#{
-        System.get_env("MIX_TEST_PARTITION")
-      }",
+      "postgres://postgres:postgres@postgres:5432/utility_test#{System.get_env("MIX_TEST_PARTITION")}",
     pool: Ecto.Adapters.SQL.Sandbox
 else
   config :home_ui, HomeUi.Repo,

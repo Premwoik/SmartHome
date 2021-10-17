@@ -1,5 +1,5 @@
 <div class="grid grid-cols-3 gap-3 max-w-xs rounded overflow-hidden shadow-sm my-2 p-2">
-  <%= if @sensor.state do %>
+  <%= if @sensor.state["value"] do %>
     <img class="w-12 h-12" src="<%= Routes.static_path(@socket, "/images/active_sensor.png") %>"/>
   <% else %>
     <img class="w-12 h-12" src="<%= Routes.static_path(@socket, "/images/sensor.png") %>"/>

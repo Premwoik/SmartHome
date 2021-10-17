@@ -48,6 +48,7 @@ defmodule HomeUi.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
+      {:kaffy, "~> 0.9.0"},
       {:phoenix_inline_svg, "~> 1.4"},
       {:ring_logger, "~> 0.8.1"},
       {:db, in_umbrella: true},
