@@ -9,13 +9,15 @@
 # move said applications out of the umbrella.
 import Config
 
+server_ip = "192.168.2.100"
+
 config :core, two_way_client: Core.Device.Client.TwoWay
 config :core, one_way_client: Core.Device.Client.OneWay
 
 config :core, actions: Core.Actions
 config :core, device_helper: Core.Device
 
-config :core, mqtt_ip: "192.168.2.140"
+config :core, mqtt_ip: server_ip
 
 config :core, database_module: DB
 
@@ -33,7 +35,7 @@ config :db, DB.StatsRepo,
   database: "smart_home_statistics",
   username: "postgres",
   password: "postgres",
-  hostname: "192.168.2.118",
+  hostname: server_ip,
   port: 5433
 
 config :db, DB.MainRepo,
@@ -41,7 +43,7 @@ config :db, DB.MainRepo,
   database: "smart_home",
   username: "postgres",
   password: "postgres",
-  hostname: "192.168.2.118",
+  hostname: server_ip,
   port: 5433
 
 # TODO add PubSub deps to the core
@@ -59,6 +61,10 @@ config :home_ui, HomeUiWeb.Endpoint,
   live_view: [signing_salt: "tail8oyy"]
 
 # Configures Elixir's Logger
+#
+config :logger,
+  level: :info
+
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
