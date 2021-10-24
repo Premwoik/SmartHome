@@ -126,6 +126,10 @@ defmodule Core.Device do
   """
   @spec do_(function :: atom, args :: args_t) :: Response.t()
 
+  def do_(function, []) do
+    Response.ok([])
+  end
+
   def do_(function, [%Device{} = d | t_args] = args) do
     {duration, res} =
       Benchmark.measure_r(fn -> execute_function(fn -> apply(module(d), function, args) end) end)

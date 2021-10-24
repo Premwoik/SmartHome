@@ -72,7 +72,7 @@ defmodule DB.Data.Port do
   end
 
   def normalize_state(:dimmer, params) do
-    valid_keys = ["light_ids", "brightness", "white", "red", "green", "blue", "subtype"]
+    valid_keys = ["light_ids", "brightness", "white", "color", "subtype"]
     requested = %{"light_ids" => []}
     normalize_state2(valid_keys, requested, params)
   end
@@ -113,6 +113,10 @@ defmodule DB.Data.Port do
     Map.put(port, :state, state)
   end
 
+  def state_value_changed(port, key, value) do
+    Map.get(port.state, key) != value
+  end
+
   @spec list_all() :: [Port.t()]
   def list_all() do
     MainRepo.all(Port) |> MainRepo.preload([:device])
@@ -127,7 +131,10 @@ defmodule DB.Data.Port do
   def update(port, params) do
     state0 = Map.get(params, :state, %{})
     state = normalize_state(port.type, state0)
-    params2 = Map.put(params, :state, state)
+
+    params2 =
+      Map.put(params, :state, state)
+      |> Map.delete(:__struct__)
 
     changeset(port, params2)
     |> MainRepo.update()

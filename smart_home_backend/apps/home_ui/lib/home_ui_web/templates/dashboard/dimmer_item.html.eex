@@ -41,22 +41,35 @@
 
   <%= if @dimmer.state["subtype"] not in ["mono"] do %>
     <div class="mt-4">
-      <label class="text-sm" for="fill_bar">Jasność</label>
-          <input class="w-full" type="range"  value="<%= 0 %>" name="fill_bar" min="0" max="100" phx-value-dimmer_id="<%= @dimmer.id %>" phx-keyup="fill_changed" phx-click="fill_changed">
+      <form id="form-fill-dimmer-<%=@dimmer.id%>" action="#" phx-change="fill_changed">
+        <%= hidden_input :dimmer, :id, id: "dimmer-fill-id-#{@dimmer.id}", value: @dimmer.id%>
+        <label class="text-sm">Jasność        
+          <input id="dimmer-brightness-<%=@dimmer.id%>" class="w-full" type="range"  value="<%= @dimmer.state["brightness"] %>" name="dimmer[fill]" min="0" max="100">
+        </label>
+
+      </form>
     </div>
   <% end %>
 
   <%= if @dimmer.state["subtype"] in ["rgb", "rgbw"] do %>
     <div class="mt-2 float-right">
-      <label class="inline text-sm" for="color_picker">Kolor<label>
-      <input class="inline" type="color" name="color_picker">
+      <form id="form-color-dimmer-<%=@dimmer.id%>" action="#" phx-change="color_changed">
+        <%= hidden_input :dimmer, :id, id: "dimmer-color-id-#{@dimmer.id}", value: @dimmer.id%>
+        <label class="inline text-sm">Kolor
+          <input id="dimmer-color-<%=@dimmer.id%>" class="inline" type="color" name="dimmer[color]" value="<%= @dimmer.state["color"] %>">
+        <label>
+      </form>
     </div>
   <% end %>
 
   <%= if @dimmer.state["subtype"] == "rgbw" do %>
     <div class="">
-      <label class="text-sm" for="white_bar">Biały</label>
-      <input class="w-full" type="range" value="<%= 0 %>" name="white_bar" min="0" max="255" phx-value-dimmer_id="<%= @dimmer.id %>" phx-keyup="white_fill_changed" phx-click="white_fill_changed">
+      <form id="form-white-dimmer-<%=@dimmer.id%>" action="#" phx-change="white_fill_changed">
+        <%= hidden_input :dimmer, :id, id: "dimmer-white-id-#{@dimmer.id}", value: @dimmer.id%>
+        <label class="text-sm">Biały        
+          <input id="dimmer-white-<%=@dimmer.id%>" class="w-full" type="range" value="<%= @dimmer.state["white"] %>" name="dimmer[white]" min="0" max="255">
+        </label>
+      </form>
     </div>
   <% end %>
 

@@ -51,6 +51,7 @@ defmodule DB.Data.ScheduleJob do
   def update(id, params) do
     job = get!(id)
     cs = changeset(job, params)
+
     case cs do
       %{changes: ch} when ch == %{} ->
         :ok

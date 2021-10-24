@@ -28,13 +28,15 @@ defmodule Core.Device.ShellyRGBW2 do
     "#{ip}:#{port}/color/#{id}"
   end
 
-  # FIXME change to set_outputs from BasicIO
-  def set_state(%{ip: ip, port: port} = d, [%Port{state: s, number: num}] = ports) do
+  def set_outputs(
+        %{ip: ip, port: port} = d,
+        [%Port{state: %{"value" => value}, number: num}] = ports
+      ) do
     url_ = url(ip, port, num)
-    s = if(s, do: "on", else: "off")
+    s = if(value, do: "on", else: "off")
     query = %{"turn" => s}
 
-    HTTPotion.get(url_, query: query)
+    HTTPotion.get(url_, query: query, timeout: 1_000)
     |> default_response_catch(&decode_body/1)
     |> Response.wrap(d, ports)
   end
@@ -48,7 +50,7 @@ defmodule Core.Device.ShellyRGBW2 do
 
     query_ = %{"gain" => fill}
 
-    HTTPotion.get(url_, query: query_)
+    HTTPotion.get(url_, query: query_, timeout: 1_000)
     |> default_response_catch(&decode_body/1)
     |> Response.wrap(d, ports)
   end
@@ -61,7 +63,7 @@ defmodule Core.Device.ShellyRGBW2 do
     url_ = url(ip, port, num)
     query_ = %{"white" => w}
 
-    HTTPotion.get(url_, query: query_)
+    HTTPotion.get(url_, query: query_, timeout: 1_000)
     |> default_response_catch(&decode_body/1)
     |> Response.wrap(d, ports)
   end
@@ -69,18 +71,28 @@ defmodule Core.Device.ShellyRGBW2 do
   @impl true
   def set_color(
         %{ip: ip, port: port} = d,
-        [%Port{number: num, state: %{"color" => %{"red" => r, "green" => g, "blue" => b}}}] =
-          ports
+        [%Port{number: num, state: %{"color" => color}}] = ports
       ) do
     url_ = url(ip, port, num)
+    {r, g, b} = hex_to_rgb(color)
     query_ = %{"red" => r, "green" => g, "blue" => b}
 
-    HTTPotion.get(url_, query: query_)
+    HTTPotion.get(url_, query: query_, timeout: 1_000)
     |> default_response_catch(&decode_body/1)
     |> Response.wrap(d, ports)
   end
 
   # Privates
+  def hex_to_rgb(<<"#", hex::binary>>) do
+    hex_to_rgb(hex)
+  end
+
+  def hex_to_rgb(<<hex_red::binary-size(2), hex_green::binary-size(2), hex_blue::binary-size(2)>>) do
+    {red, ""} = Integer.parse(hex_red, 16)
+    {green, ""} = Integer.parse(hex_green, 16)
+    {blue, ""} = Integer.parse(hex_blue, 16)
+    {red, green, blue}
+  end
 
   @spec decode_body(String.t()) :: %ShellyRGBW2{}
   defp decode_body(body) do

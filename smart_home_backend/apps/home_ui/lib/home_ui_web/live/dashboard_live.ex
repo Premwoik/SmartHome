@@ -1,6 +1,7 @@
 defmodule HomeUiWeb.DashboardLive do
   use HomeUiWeb, :live_view
 
+  alias Core.Device.Static.Response
   alias Core.DimmerController
   alias Core.PortController
   alias Core.SunblindController
@@ -77,151 +78,117 @@ defmodule HomeUiWeb.DashboardLive do
   def handle_event("toggle_light", %{"value" => id}, socket) do
     {id, _} = Integer.parse(id)
 
-    lights = socket.assigns[:lights]
-
-    lights =
-      Enum.map(lights, fn port ->
-        if(port.id == id) do
-          %{ok: [light]} = PortController.toggle([port])
-          light
-        else
-          port
-        end
+    socket =
+      update_resource(:lights, id, socket, fn port, s ->
+        {s, PortController.toggle([port])}
       end)
 
-    {:noreply, assign(socket, lights: lights)}
+    {:noreply, socket}
   end
 
   def handle_event("toggle_other", %{"value" => id}, socket) do
     {id, _} = Integer.parse(id)
 
-    others = socket.assigns[:others]
-
-    others =
-      Enum.map(others, fn port ->
-        if(port.id == id) do
-          %{ok: [port]} = PortController.toggle([port])
-          port
-        else
-          port
-        end
+    socket =
+      update_resource(:others, id, socket, fn port, s ->
+        {s, PortController.toggle([port])}
       end)
 
-    {:noreply, assign(socket, others: others)}
+    {:noreply, socket}
   end
 
   def handle_event("toggle_dimmer", %{"value" => id}, socket) do
     {id, _} = Integer.parse(id)
 
-    items = socket.assigns[:dimmers]
-
-    items =
-      Enum.map(items, fn port ->
-        if(port.id == id) do
-          %{ok: [dimmer]} = DimmerController.toggle([port], broadcast: false)
-
-          if not is_nil(dimmer.state["lights"]) do
+    socket =
+      update_resource(:dimmers, id, socket, fn port, s ->
+        case DimmerController.toggle([port], broadcast: false) do
+          %{ok: [dimmer]} = res ->
             lights =
-              Enum.map(dimmer.state["lights"], fn light ->
+              dimmer.state
+              |> Map.get("lights", [])
+              |> Enum.map(fn light ->
                 PortListProc.update_state!(light.id, %{"value" => dimmer.state["value"]})
                 |> broadcast_from_self!()
               end)
 
             Port.put_state(dimmer, "lights", lights)
             |> broadcast_from_self!()
-          else
-            dimmer
-          end
-        else
-          port
+            |> (fn d -> {s, %{res | ok: [d]}} end).()
+
+          res ->
+            {s, res}
         end
       end)
 
-    {:noreply, assign(socket, dimmers: items)}
+    {:noreply, socket}
   end
 
   def handle_event("toggle_dimmer_light", %{"value" => id, "dimmer_id" => dimmer_id}, socket) do
     {id, _} = Integer.parse(id)
     {dimmer_id, _} = Integer.parse(dimmer_id)
 
-    items = socket.assigns[:dimmers]
+    socket =
+      update_resource(:dimmers, dimmer_id, socket, fn port, s ->
+        {s, lights} =
+          update_resource(port.state["lights"], id, s, fn light, s ->
+            {s, PortController.toggle([light])}
+          end)
 
-    items =
-      Enum.map(items, fn port ->
-        if(port.id == dimmer_id) do
-          lights =
-            Enum.map(port.state["lights"], fn light ->
-              if(light.id == id) do
-                %{ok: [light]} = PortController.toggle([light])
-                light
-              else
-                light
-              end
-            end)
-
+        dimmer =
           Port.put_state(port, "lights", lights)
           |> broadcast_from_self!()
-        else
-          port
-        end
+
+        {s, Response.ok([dimmer])}
       end)
 
-    {:noreply, assign(socket, dimmers: items)}
+    {:noreply, socket}
   end
 
-  def handle_event("fill_changed", %{"dimmer_id" => id, "value" => fill}, socket) do
+  def handle_event("color_changed", %{"dimmer" => %{"id" => id, "color" => color}}, socket) do
+    {id, _} = Integer.parse(id)
+
+    socket =
+      update_resource(:dimmers, id, socket, fn port, s ->
+        {s, DimmerController.set_color([port], color)}
+      end)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("fill_changed", %{"dimmer" => %{"id" => id, "fill" => fill}}, socket) do
     {fill, _} = Integer.parse(fill)
     {id, _} = Integer.parse(id)
 
-    items = socket.assigns[:dimmers]
-
-    items =
-      Enum.map(items, fn port ->
-        if(port.id == id) do
-          %{ok: [dimmer]} = DimmerController.set_brightness(port, fill)
-          dimmer
-        else
-          port
-        end
+    socket =
+      update_resource(:dimmers, id, socket, fn port, s ->
+        {s, DimmerController.set_brightness([port], fill)}
       end)
 
-    {:noreply, assign(socket, dimmers: items)}
+    {:noreply, socket}
   end
 
-  def handle_event("white_fill_changed", %{"dimmer_id" => id, "value" => fill}, socket) do
+  def handle_event("white_fill_changed", %{"dimmer" => %{"id" => id, "white" => fill}}, socket) do
     {fill, _} = Integer.parse(fill)
     {id, _} = Integer.parse(id)
 
-    items = socket.assigns[:dimmers]
-
-    items =
-      Enum.map(items, fn port ->
-        if(port.id == id) do
-          %{ok: [dimmer]} = DimmerController.set_white_brightness(port, fill)
-          dimmer
-        else
-          port
-        end
+    socket =
+      update_resource(:dimmers, id, socket, fn port, s ->
+        {s, DimmerController.set_white_brightness([port], fill)}
       end)
 
-    {:noreply, assign(socket, dimmers: items)}
+    {:noreply, socket}
   end
 
   def handle_event("toggle_sunblind", %{"value" => id}, socket) do
     {id, _} = Integer.parse(id)
 
-    items =
-      socket.assigns[:sunblinds]
-      |> Enum.map(fn port ->
-        if(port.id == id) do
-          %{ok: [sunblind]} = SunblindController.toggle([port])
-          sunblind
-        else
-          port
-        end
+    socket =
+      update_resource(:sunblinds, id, socket, fn port, s ->
+        {s, SunblindController.toggle([port])}
       end)
 
-    {:noreply, assign(socket, sunblinds: items)}
+    {:noreply, socket}
   end
 
   def handle_info(
@@ -266,8 +233,40 @@ defmodule HomeUiWeb.DashboardLive do
   end
 
   defp broadcast_from_self!(port) do
-    HomeUiWeb.Endpoint.broadcast_from!(self(), @topic, "object:updated", {port.type, port})
+    HomeUiWeb.Endpoint.broadcast_from!(self(), @topic, "object:updated", %{
+      type: port.type,
+      item: port
+    })
+
     port
+  end
+
+  @spec update_resource(atom(), integer(), any(), (Port.t(), map() -> {any(), Response.t()})) ::
+          any()
+  def update_resource(resource, id, socket, fun) when is_atom(resource) do
+    items = socket.assigns[resource]
+    {socket, items} = update_resource(items, id, socket, fun)
+    assign(socket, resource, items)
+  end
+
+  def update_resource(resource, id, socket, fun) do
+    List.foldl(resource, {socket, []}, fn p, {socket, items} ->
+      if p.id == id do
+        case fun.(p, socket) do
+          {socket, %{ok: []}} ->
+            socket = put_flash(socket, :error, "Nie udało się nawiązać połączenia z urządzeniem!")
+            {socket, [p | items]}
+
+          {socket, %{ok: [p]}} ->
+            {socket, [p | items]}
+        end
+      else
+        {socket, [p | items]}
+      end
+    end)
+    |> (fn {socket, items} ->
+          {socket, Enum.reverse(items)}
+        end).()
   end
 
   # defp broadcast(data) do

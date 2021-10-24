@@ -25,6 +25,39 @@ defmodule Core.Device.Static.Response do
     end
   end
 
+  @spec map(Response.t(), (any() -> any())) :: :ok
+  def on_error(resp, fun) do
+    case resp do
+      %{ok: [], error: err} ->
+        fun.(err)
+
+      _ ->
+        :ok
+    end
+
+    :ok
+  end
+
+  @spec map(Response.t(), (any() -> any())) :: :ok
+  def on_success(resp, fun) do
+    case resp do
+      %{ok: ok, error: []} ->
+        fun.(ok)
+
+      _ ->
+        :ok
+    end
+
+    :ok
+  end
+
+  def just(resp, default) do
+    case resp do
+      %{ok: []} -> default
+      %{ok: ok} -> ok
+    end
+  end
+
   def result(%{result: r}, id) do
     Enum.find(r, &(elem(&1, 0) == id)) |> elem(1)
   end

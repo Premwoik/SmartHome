@@ -22,41 +22,55 @@ defmodule Core.DimmerController do
   alias Core.PortController
   alias DB.Data.Port
   alias DB.Proc.PortListProc
+  alias Core.Broadcast, as: Channel
 
   @impl true
   def set_state(dimmers, state, ops) do
     PortController.set_state(dimmers, state, ops)
   end
 
-  @spec set_color([Port.t()], 0..255, 0..255, 0..255) :: Response.t()
-  def set_color(dimmers, red, green, blue) do
-    color = %{red: red, green: green, blue: blue}
-
-    Enum.map(dimmers, &Port.put_state(&1, "color", color))
+  @spec set_color([Port.t()], binary()) :: Response.t()
+  def set_color(dimmers, color) do
+    dimmers
+    |> Enum.filter(&Port.state_value_changed(&1, "color", color))
+    |> Enum.map(&Port.put_state(&1, "color", color))
     |> Core.Device.do_r(:set_color)
-    |> Response.map(fn p ->
-      {:ok, updated_port} = PortListProc.update(p.id, p)
-      updated_port
+    |> Response.map(fn ps ->
+      Enum.map(ps, fn p ->
+        {:ok, updated_port} = PortListProc.update(p.id, p)
+        :ok = Channel.broadcast_item_change(updated_port.type, updated_port)
+        updated_port
+      end)
     end)
   end
 
   @spec set_white_brightness([Port.t()], 0..255) :: Response.t()
   def set_white_brightness(dimmers, fill) do
-    Enum.map(dimmers, &Port.put_state(&1, "white", fill))
+    dimmers
+    |> Enum.filter(&Port.state_value_changed(&1, "white", fill))
+    |> Enum.map(&Port.put_state(&1, "white", fill))
     |> Core.Device.do_r(:set_white_brightness)
-    |> Response.map(fn p ->
-      {:ok, updated_port} = PortListProc.update(p.id, p)
-      updated_port
+    |> Response.map(fn ps ->
+      Enum.map(ps, fn p ->
+        {:ok, updated_port} = PortListProc.update(p.id, p)
+        :ok = Channel.broadcast_item_change(updated_port.type, updated_port)
+        updated_port
+      end)
     end)
   end
 
   @spec set_brightness([Port.t()], 0..100) :: Response.t()
   def set_brightness(dimmers, fill) do
-    Enum.map(dimmers, &Port.put_state(&1, "fill", fill))
+    dimmers
+    |> Enum.filter(&Port.state_value_changed(&1, "brightness", fill))
+    |> Enum.map(&Port.put_state(&1, "brightness", fill))
     |> Core.Device.do_r(:set_brightness)
-    |> Response.map(fn p ->
-      {:ok, updated_port} = PortListProc.update(p.id, p)
-      updated_port
+    |> Response.map(fn ps ->
+      Enum.map(ps, fn p ->
+        {:ok, updated_port} = PortListProc.update(p.id, p)
+        :ok = Channel.broadcast_item_change(updated_port.type, updated_port)
+        updated_port
+      end)
     end)
   end
 

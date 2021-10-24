@@ -21,7 +21,7 @@ defmodule Core.Telemetry.DeviceMetrics do
         log_error(mesurements, tags)
       end)
 
-      #DJ.log_use(device.id, res, fun)
+      # DJ.log_use(device.id, res, fun)
     end)
   end
 
