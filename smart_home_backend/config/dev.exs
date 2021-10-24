@@ -1,6 +1,6 @@
 import Config
 
-config :logger, backends: [RingLogger]
+config :logger, backends: [RingLogger, {Core.LoggerHistoryBackend, :logger_cache}]
 
 # Set the number of messages to hold in the circular buffer
 config :logger, RingLogger, max_size: 1024

@@ -25,6 +25,7 @@ defmodule HomeUiWeb.Router do
     live "/dash/:page_id", DashboardLive, :show
 
     live "/settings", SettingsLive, :index
+    live "/loggs", LoggsLive, :index
   end
 
   # Other scopes may use custom stacks.

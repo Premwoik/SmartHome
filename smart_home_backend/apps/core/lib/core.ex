@@ -1,6 +1,8 @@
 defmodule Core do
   use Application
 
+  import Cachex.Spec
+
   @moduledoc """
   Documentation for Core.
   """
@@ -15,6 +17,8 @@ defmodule Core do
 
   defp children() do
     [
+      {Cachex,
+       name: :loggs_cache, limit: limit(size: 2048, policy: Cachex.Policy.LRW, reclaim: 0.2)},
       Core.Telemetry,
       Core.Scheduler,
       Core.Actions,
