@@ -1,0 +1,20 @@
+{application, smart_home_api,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, {smart_home_api_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    cowboy,
+    graphql
+   ]},
+  {env,[
+   {schema_file, "api.gql"},
+   {http_port, 8080}
+  ]},
+  {modules, []},
+
+  {licenses, ["Apache 2.0"]},
+  {links, []}
+ ]}.
