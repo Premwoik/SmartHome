@@ -6,9 +6,9 @@ defmodule Core.Device.Static.Response do
   alias Core.Device.Static.Response
   alias DB.Proc.PortListProc
 
-  @type t() :: %Response{ok: list(any), error: list(any), result: list(any)}
+  @type t() :: %Response{ok: list(any), error: list(any), result: list(any), save: boolean()}
 
-  defstruct ok: [], error: [], result: []
+  defstruct ok: [], error: [], result: [], save: true
 
   @spec fold([Response.t()]) :: Response.t()
   def fold([]), do: %Response{}
@@ -25,10 +25,24 @@ defmodule Core.Device.Static.Response do
     end
   end
 
+  def save(resp, fun) do
+    case(resp) do
+      %{save: true} -> map(resp, fun)
+      %{save: false} -> resp
+    end
+  end
+
+  def no_save(resp, fun) do
+    case(resp) do
+      %{save: false} -> map(resp, fun)
+      %{save: true} -> resp
+    end
+  end
+
   @spec map(Response.t(), (any() -> any())) :: :ok
   def on_error(resp, fun) do
     case resp do
-      %{ok: [], error: err} ->
+      %{ok: [], error: [_ | _] = err} ->
         fun.(err)
 
       _ ->
@@ -69,8 +83,12 @@ defmodule Core.Device.Static.Response do
   def wrap_same(res, device), do: wrap(res, device)
 
   def wrap_with_ports({:ok, numbers} = res, device) do
-    {:ok, ports} = PortListProc.identify(device.id, numbers)
-    wrap(res, device, ports)
+    case PortListProc.identify(device.id, numbers) do
+      {:ok, ports} -> 
+        wrap(res, device, ports)
+      _otherwise ->
+        wrap(res, device, [])
+    end
   end
 
   def wrap_with_ports(res, device), do: wrap(res, device)

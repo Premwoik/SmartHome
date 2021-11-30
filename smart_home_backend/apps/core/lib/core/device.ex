@@ -4,10 +4,7 @@ defmodule Core.Device do
   @callback start_link(
               ip :: String.t(),
               port :: integer(),
-              opts :: any(),
-              keywords :: any(),
-              timeout :: integer,
-              length :: integer
+              opts :: any()
             ) :: bool()
 
   @callback need_process?() :: boolean()

@@ -17,13 +17,13 @@ defmodule Core.Device.Supervisor do
     |> Supervisor.init(strategy: :one_for_one)
   end
 
-  defp get_specs(%Device{name: name, ip: ip, port: port, type: type}) do
+  defp get_specs(%Device{id: id, name: name, ip: ip, port: port, type: type}) do
     mod = module(type)
 
     if mod.need_process?() do
       %{
         id: String.to_atom(name),
-        start: {mod, :start_link, [String.to_charlist(ip), port, [name: String.to_atom(name)]]}
+        start: {mod, :start_link, [String.to_charlist(ip), port, [name: String.to_atom(name), device_id: id]]}
       }
     else
       nil

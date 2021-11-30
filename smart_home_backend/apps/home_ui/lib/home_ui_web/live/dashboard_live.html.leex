@@ -65,7 +65,11 @@
           <hr>
           <div class="">
             <%= for p <- @others do %>
-              <%= render(HomeUiWeb.DashboardView, "other_item.html", port: p, socket: @socket)%>
+              <%= if p.type == :circut do %>
+                <%= render(HomeUiWeb.DashboardView, "circut_item.html", port: p, socket: @socket)%>
+              <% else %>
+                <%= render(HomeUiWeb.DashboardView, "other_item.html", port: p, socket: @socket)%>
+              <% end %>
             <% end %>
           </div>
         </div>

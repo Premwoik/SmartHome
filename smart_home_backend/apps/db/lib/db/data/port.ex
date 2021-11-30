@@ -11,7 +11,7 @@ defmodule DB.Data.Port do
   alias DB.MainRepo
 
   @type mode_t :: :input | :output | :input_output
-  @type type_t :: :light | :dimmer | :sunblind | :custom | :signal | :motion_sensor
+  @type type_t :: :light | :dimmer | :sunblind | :custom | :signal | :motion_sensor | :circut
 
   @typedoc """
 
@@ -45,7 +45,7 @@ defmodule DB.Data.Port do
     field(:mode, Ecto.Enum, values: [:input, :output, :input_output], default: :output)
 
     field(:type, Ecto.Enum,
-      values: [:light, :dimmer, :sunblind, :custom, :signal, :motion_sensor],
+      values: [:light, :dimmer, :sunblind, :custom, :signal, :motion_sensor, :circut],
       default: :custom
     )
 
@@ -80,6 +80,12 @@ defmodule DB.Data.Port do
   def normalize_state(:sunblind, params) do
     valid_keys = ["move_duration", "position"]
     requested = %{"move_duration" => 30_000, "position" => "open"}
+    normalize_state2(valid_keys, requested, params)
+  end
+
+  def normalize_state(:circut, params) do
+    valid_keys = ["status", "temp"]
+    requested = %{"temp" => nil, "status" => "idle"}
     normalize_state2(valid_keys, requested, params)
   end
 

@@ -14,7 +14,7 @@ defmodule Core.Device.Shelly do
   alias DB.Proc.PortListProc
 
   @impl Core.Device
-  def start_link(_, _) do
+  def start_link(_, _, _) do
     false
   end
 

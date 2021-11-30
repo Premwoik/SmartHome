@@ -228,6 +228,7 @@ defmodule HomeUiWeb.DashboardLive do
       :dimmer -> :dimmers
       :sunblind -> :sunblinds
       :sensor -> :sensors
+      :circut -> :others
       :custom -> :others
     end
   end

@@ -27,7 +27,7 @@ defmodule Core.PortController do
     ports = Enum.map(ports, &Port.put_state(&1, "value", state))
 
     Device.do_r(ports, :set_outputs)
-    |> Response.map(fn ports ->
+    |> Response.save(fn ports ->
       Enum.map(ports, fn p ->
         {:ok, updated_port} = PortListProc.update(p.id, Map.from_struct(p))
 

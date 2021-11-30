@@ -13,7 +13,7 @@ defmodule Core.Device.SonoffBasic do
   alias DB.Proc.PortListProc
 
   @impl Core.Device
-  def start_link(_host, _port) do
+  def start_link(_host, _port, _opts) do
     false
   end
 

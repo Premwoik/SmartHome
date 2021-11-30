@@ -11,7 +11,7 @@ defmodule Core.Device.SonoffRfBridge do
   alias DB.Data.{Port, Device}
 
   @impl Core.Device
-  def start_link(_host, _port) do
+  def start_link(_host, _port, _opts) do
     false
   end
 

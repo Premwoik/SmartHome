@@ -92,6 +92,6 @@ defmodule DB.Data.Page do
   end
 
   def others(%{ports: ports}) do
-    Enum.filter(ports, fn p -> p.type == :custom end)
+    Enum.filter(ports, fn p -> p.type in [:custom, :circut] end)
   end
 end

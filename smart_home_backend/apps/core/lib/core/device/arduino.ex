@@ -11,7 +11,7 @@ defmodule Core.Device.Arduino do
   alias Core.Device.Static.Response
 
   @impl Core.Device
-  def start_link(_, _) do
+  def start_link(_, _, _) do
     false
   end
 

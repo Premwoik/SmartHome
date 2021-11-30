@@ -9,7 +9,7 @@ defmodule DB.Data.Device do
   alias DB.Data.Device
   alias DB.MainRepo
 
-  @type type_t :: :SonoffBasic | :Shelly | :Arduino | :SonoffRfBridge | :ShellyRGBW2 | :Satel
+  @type type_t :: :SonoffBasic | :Shelly | :Arduino | :SonoffRfBridge | :ShellyRGBW2 | :Satel | :BasementPi
   @type status_t :: :online | :unknown | :offline
 
   @typedoc """
@@ -29,7 +29,7 @@ defmodule DB.Data.Device do
     field(:port, :integer)
     # FIXME add real module atoms
     field(:type, Ecto.Enum,
-      values: [:SonoffBasic, :Shelly, :Arduino, :SonoffRfBridge, :ShellyRGBW2, :Satel]
+      values: [:SonoffBasic, :Shelly, :Arduino, :SonoffRfBridge, :ShellyRGBW2, :Satel, :BasementPi]
     )
 
     field(:status, Ecto.Enum, values: [:online, :unknown, :offline], default: :unknown)
