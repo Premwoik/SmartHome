@@ -209,8 +209,10 @@ defmodule Core.Device.BasementPi do
          {:ok, s1} <- Keyword.fetch(data, :high) do
       v0 = s0 == :running
       v1 = s1 == :running
+
       PortListProc.update_state(id0, %{"status" => to_string(s0), "value" => v0})
       |> broadcast()
+
       PortListProc.update_state(id1, %{"status" => to_string(s1), "value" => v1})
       |> broadcast()
     end
@@ -223,6 +225,7 @@ defmodule Core.Device.BasementPi do
          {:ok, s1} <- Keyword.fetch(data, :high) do
       PortListProc.update_state(id0, %{"temp" => s0})
       |> broadcast()
+
       PortListProc.update_state(id1, %{"temp" => s1})
       |> broadcast()
     end
@@ -236,6 +239,7 @@ defmodule Core.Device.BasementPi do
   def broadcast({:ok, port}) do
     Core.Broadcast.broadcast_item_change(:circut, port)
   end
+
   def broadcast(_) do
     :ok
   end

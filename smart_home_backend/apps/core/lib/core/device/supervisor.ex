@@ -23,7 +23,9 @@ defmodule Core.Device.Supervisor do
     if mod.need_process?() do
       %{
         id: String.to_atom(name),
-        start: {mod, :start_link, [String.to_charlist(ip), port, [name: String.to_atom(name), device_id: id]]}
+        start:
+          {mod, :start_link,
+           [String.to_charlist(ip), port, [name: String.to_atom(name), device_id: id]]}
       }
     else
       nil

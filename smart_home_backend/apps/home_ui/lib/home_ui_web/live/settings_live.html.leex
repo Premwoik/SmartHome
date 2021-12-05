@@ -36,5 +36,60 @@
         </tbody>
       </table>
     </div>
+    <%= for {pilot, buttons} <- @pilots do %>
+      <div class="p-2">
+        <h1>Pilot - <%= pilot %> </h1>
+        <%= render(HomeUiWeb.SettingsView, "rf_button_item.html", socket: @socket, selected: @selected, pilot: pilot)%>
+        <table class="table-auto shadow-lg">
+          <thead>
+            <tr>
+            <th class="px-4">Rząd A</th>
+            <th class="px-4">Rząd B</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="<%= HomeUiWeb.SettingsView.custom_td_class("1", pilot, @selected)%>" 
+                phx-value-pilot="<%= pilot %>" phx-value-id="1" phx-click="select_btn">
+                <%= HomeUiWeb.SettingsView.rf_button_view(Keyword.get(buttons, :"1")) %>
+              </td>
+              <td class="<%= HomeUiWeb.SettingsView.custom_td_class("2", pilot, @selected)%>" 
+                phx-value-pilot="<%= pilot %>" phx-value-id="2" phx-click="select_btn">
+                <%= HomeUiWeb.SettingsView.rf_button_view(Keyword.get(buttons, :"2")) %>
+              </td>
+            </tr>
+            <tr>
+              <td class="<%= HomeUiWeb.SettingsView.custom_td_class("3", pilot, @selected)%>" 
+                phx-value-pilot="<%= pilot %>" phx-value-id="3" phx-click="select_btn">
+                <%= HomeUiWeb.SettingsView.rf_button_view(Keyword.get(buttons, :"3")) %>
+              </td>
+              <td class="<%= HomeUiWeb.SettingsView.custom_td_class("4", pilot, @selected)%>" 
+                phx-value-pilot="<%= pilot %>" phx-value-id="4" phx-click="select_btn">
+                <%= HomeUiWeb.SettingsView.rf_button_view(Keyword.get(buttons, :"4")) %></td>
+            </tr>
+            <tr>
+              <td class="<%= HomeUiWeb.SettingsView.custom_td_class("5", pilot, @selected)%>" 
+                phx-value-pilot="<%= pilot %>" phx-value-id="5" phx-click="select_btn">
+                <%= HomeUiWeb.SettingsView.rf_button_view(Keyword.get(buttons, :"5")) %>
+              </td>
+              <td class="<%= HomeUiWeb.SettingsView.custom_td_class("6", pilot, @selected)%>" 
+                phx-value-pilot="<%= pilot %>" phx-value-id="6" phx-click="select_btn">
+                <%= HomeUiWeb.SettingsView.rf_button_view(Keyword.get(buttons, :"6")) %>
+              </td>
+            </tr>
+            <tr>
+              <td class="<%= HomeUiWeb.SettingsView.custom_td_class("7", pilot, @selected)%>" 
+                  phx-value-pilot="<%= pilot %>" phx-value-id="7" phx-click="select_btn">
+                <%= HomeUiWeb.SettingsView.rf_button_view(Keyword.get(buttons, :"7")) %>
+              </td>
+              <td class="<%= HomeUiWeb.SettingsView.custom_td_class("8", pilot, @selected)%>" 
+                phx-value-pilot="<%= pilot %>" phx-value-id="8" phx-click="select_btn">
+                <%= HomeUiWeb.SettingsView.rf_button_view(Keyword.get(buttons, :"8")) %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
   </div>
 </section>

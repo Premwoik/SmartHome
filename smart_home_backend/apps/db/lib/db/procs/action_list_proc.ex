@@ -56,6 +56,12 @@ defmodule DB.Proc.ActionListProc do
     GenServer.call(__MODULE__, :all)
   end
 
+  @spec list_all!() :: {:ok, [Action.t()]}
+  def list_all!() do
+    {:ok, res} = GenServer.call(__MODULE__, :all)
+    res
+  end
+
   def force_read_all() do
     GenServer.cast(__MODULE__, {:force_read, :all})
   end

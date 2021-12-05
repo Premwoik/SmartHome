@@ -26,6 +26,7 @@ defmodule Core.Actions.MonitorHeating do
         })
       end)
     end
+
     :ok
   end
 

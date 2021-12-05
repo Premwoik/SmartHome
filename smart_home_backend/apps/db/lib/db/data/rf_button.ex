@@ -17,6 +17,7 @@ defmodule DB.Data.RfButton do
   """
   @type t :: %RfButton{
           id: integer(),
+          name: String.t(),
           mode: mode_t(),
           key_value: String.t(),
           page: integer(),
@@ -64,5 +65,65 @@ defmodule DB.Data.RfButton do
 
   def list_all!() do
     MainRepo.all(RfButton)
+  end
+
+  def group_by_pilot!() do
+    list_all!()
+    |> Enum.group_by(
+      fn p ->
+        case String.split(p.name, "-") do
+          [pilot, _] -> pilot
+          _ -> "unknown"
+        end
+      end,
+      fn p ->
+        case String.split(p.name, "-") do
+          [_, num] -> {String.to_atom(num), p}
+          _ -> {"unknown", p}
+        end
+      end
+    )
+  end
+
+  def update_action(rf_button, page, action) do
+    pages =
+      case rf_button.on_click_action do
+        nil -> %{}
+        otherwise -> Map.get(otherwise, "pages", %{})
+      end
+
+    pages = Map.put(pages, page, action)
+
+    rf_button = Ecto.Changeset.change(rf_button, on_click_action: %{"pages" => pages})
+
+    case MainRepo.update(rf_button) do
+      {:ok, struct} -> struct
+      {:error, _} -> nil
+    end
+  end
+
+  def get_actions(rf_button) do
+    case rf_button.on_click_action do
+      nil -> %{}
+      otherwise -> Map.get(otherwise, "pages", %{})
+    end
+    |> Enum.map(fn {page, action} ->
+      case action do
+        %{"id" => id, "type" => "action"} ->
+          {page, DB.Proc.ActionListProc.get!(id)}
+
+        %{"id" => id, "type" => "port"} ->
+          {page, DB.Proc.PortListProc.get!(id)}
+      end
+    end)
+  end
+
+  def clear_actions(%RfButton{} = rf_button) do
+    rf_button = Ecto.Changeset.change(rf_button, on_click_action: nil)
+
+    case MainRepo.update(rf_button) do
+      {:ok, struct} -> struct
+      {:error, _} -> nil
+    end
   end
 end

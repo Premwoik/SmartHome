@@ -84,8 +84,9 @@ defmodule Core.Device.Static.Response do
 
   def wrap_with_ports({:ok, numbers} = res, device) do
     case PortListProc.identify(device.id, numbers) do
-      {:ok, ports} -> 
+      {:ok, ports} ->
         wrap(res, device, ports)
+
       _otherwise ->
         wrap(res, device, [])
     end

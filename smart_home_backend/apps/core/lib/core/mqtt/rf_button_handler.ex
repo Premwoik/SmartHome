@@ -24,7 +24,7 @@ defmodule Core.Mqtt.RfButtonHandler do
   ###  Privates
 
   defp next_page_id(curr_id, max_page_id) do
-    if max_page_id == curr_id do
+    if max_page_id <= curr_id do
       1
     else
       curr_id + 1
