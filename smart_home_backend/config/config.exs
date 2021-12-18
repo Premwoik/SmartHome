@@ -9,7 +9,7 @@
 # move said applications out of the umbrella.
 import Config
 
-server_ip = "localhost"
+server_ip = "192.168.2.100"
 
 config :core, two_way_client: Core.Device.Client.TwoWay
 config :core, one_way_client: Core.Device.Client.OneWay

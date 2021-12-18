@@ -36,6 +36,9 @@ if [] == Device.list_all!() do
   %Device{id: 9, name: "Zasilanie-led", ip: "192.168.2.209", port: 80, type: :SonoffBasic}
   |> Repo.insert()
 
+  %Device{id: 10, name: "Raspberry piwnica", ip: "192.168.2.142", port: 80, type: :BasementPi}
+  |> Repo.insert()
+
   IO.puts("Initializing devices!")
 end
 
@@ -46,7 +49,7 @@ if [] == Port.list_all() do
     number: 18,
     mode: :output,
     type: :dimmer,
-    state: %{"value" => false},
+    state: %{"value" => false, "light_ids" => [2, 3], "subtype" => "mono"},
     device_id: 1
   }
   |> Repo.insert()
@@ -79,7 +82,7 @@ if [] == Port.list_all() do
     number: 21,
     mode: :output,
     type: :dimmer,
-    state: %{"value" => false},
+    state: %{"value" => false, "light_ids" => [5, 6], "subtype" => "mono"},
     device_id: 1
   }
   |> Repo.insert()
@@ -112,7 +115,7 @@ if [] == Port.list_all() do
     number: 24,
     mode: :output,
     type: :dimmer,
-    state: %{"value" => false},
+    state: %{"value" => false, "light_ids" => [8, 9], "subtype" => "mono"},
     device_id: 1
   }
   |> Repo.insert()
@@ -150,10 +153,7 @@ if [] == Port.list_all() do
   }
   |> Repo.insert()
 
-  sunblid_default_state = 
-    %{"value" => false, 
-      "position" => "open", 
-      "move_duration" => 30_000}
+  sunblid_default_state = %{"value" => false, "position" => "open", "move_duration" => 30_000}
 
   %Port{
     id: 11,
@@ -359,7 +359,14 @@ if [] == Port.list_all() do
     number: 0,
     mode: :output,
     type: :dimmer,
-    state: %{"value" => false},
+    state: %{
+      "value" => false,
+      "lights_ids" => [],
+      "brightness" => 0,
+      "white" => 0,
+      "color" => 0,
+      "subtype" => "rgbw"
+    },
     device_id: 5
   }
   |> Repo.insert()
@@ -573,6 +580,30 @@ if [] == Port.list_all() do
   }
   |> Repo.insert()
 
+  default_circut_state = %{"value" => false, "temp" => nil, "status" => "idle"}
+
+  %Port{
+    id: 49,
+    name: "Cyrkulacja wody dół",
+    number: 0,
+    mode: :output,
+    type: :circut,
+    state: default_circut_state,
+    device_id: 10
+  }
+  |> Repo.insert()
+
+  %Port{
+    id: 50,
+    name: "Cyrkulacja wody góra",
+    number: 1,
+    mode: :output,
+    type: :circut,
+    state: default_circut_state,
+    device_id: 10
+  }
+  |> Repo.insert()
+
   IO.puts("Initializing ports!")
 end
 
@@ -666,7 +697,7 @@ if [] == Action.list_all() do
   %Action{
     id: 9,
     name: "Grupa świateł salon",
-    state: true,
+    state: false,
     module: "ToggleGroup",
     pause: 1000,
     attributes: %{
@@ -678,7 +709,7 @@ if [] == Action.list_all() do
   %Action{
     id: 10,
     name: "Sterowanie ściemniaczem TV",
-    state: true,
+    state: false,
     module: "DimmerController"
   }
   |> Repo.insert()
@@ -686,7 +717,7 @@ if [] == Action.list_all() do
   %Action{
     id: 11,
     name: "Sterowanie ściemniaczem Kanapa",
-    state: true,
+    state: false,
     module: "DimmerController"
   }
   |> Repo.insert()
@@ -703,7 +734,7 @@ if [] == Action.list_all() do
   %Action{
     id: 13,
     name: "Odczyt temperatury mega",
-    state: true,
+    state: false,
     module: "ReadTemperature",
     attributes: %{"device_id" => 1}
   }
@@ -712,7 +743,7 @@ if [] == Action.list_all() do
   %Action{
     id: 14,
     name: "Heartbeat mega",
-    state: true,
+    state: false,
     module: "Heartbeat",
     attributes: %{"device_id" => 1}
   }
@@ -724,7 +755,7 @@ end
 if [] == ScheduleJob.list_all!() do
   %ScheduleJob{
     id: 1,
-    name: "",
+    name: "Satel odczyt wejść",
     expr: "*/2 * * * * *",
     extended: true,
     task: %{"action_id" => 12}
@@ -733,15 +764,15 @@ if [] == ScheduleJob.list_all!() do
 
   %ScheduleJob{
     id: 2,
-    name: "",
-    expr: "* 17 * * * *",
+    name: "Zamknij okna cały dom",
+    expr: "* 16 * * * *",
     task: %{"action_id" => 1, "state" => "up"}
   }
   |> Repo.insert()
 
   %ScheduleJob{
     id: 3,
-    name: "",
+    name: "Otwórz okna cały dom",
     expr: "* 8 * * * *",
     task: %{"action_id" => 1, "state" => "down"}
   }
@@ -749,15 +780,16 @@ if [] == ScheduleJob.list_all!() do
 
   %ScheduleJob{
     id: 4,
-    name: "",
-    expr: "* 10 * * * *",
+    name: "Otwórz okna Przemek",
+    expr: "* 8 * * * *",
     task: %{"action_id" => 5, "state" => "down"}
   }
   |> Repo.insert()
 
   %ScheduleJob{
     id: 5,
-    name: "",
+    name: "Heartbeat Arduino MEGA",
+    status: false,
     expr: "*/1 * * * * *",
     task: %{"action_id" => 14}
   }
@@ -765,7 +797,8 @@ if [] == ScheduleJob.list_all!() do
 
   %ScheduleJob{
     id: 6,
-    name: "",
+    name: "Odczyt temperatury Arduino MEGA",
+    status: false,
     expr: "*/30 * * * * *",
     task: %{"action_id" => 13}
   }
@@ -872,18 +905,25 @@ if [] == RfButton.list_all!() do
 
   %RfButton{name: "836500138C-2", key_value: "6195BC"}
   |> Repo.insert()
+
   %RfButton{name: "836500138C-3", key_value: "6195B4"}
   |> Repo.insert()
+
   %RfButton{name: "836500138C-4", key_value: "6195B9"}
   |> Repo.insert()
+
   %RfButton{name: "836500138C-5", key_value: "6195B2"}
   |> Repo.insert()
+
   %RfButton{name: "836500138C-6", key_value: "6195B5"}
   |> Repo.insert()
+
   %RfButton{name: "836500138C-7", key_value: "6195B1"}
   |> Repo.insert()
+
   %RfButton{name: "836500138C-8", key_value: "6195B3"}
   |> Repo.insert()
+
   %RfButton{
     name: "8365001354-1",
     key_value: "9B6758",
@@ -930,10 +970,13 @@ if [] == RfButton.list_all!() do
 
   %RfButton{name: "8365001354-5", key_value: "9B6752"}
   |> Repo.insert()
+
   %RfButton{name: "8365001354-6", key_value: "9B6755"}
   |> Repo.insert()
+
   %RfButton{name: "8365001354-7", key_value: "9B6751"}
   |> Repo.insert()
+
   %RfButton{name: "8365001354-8", key_value: "9B6753"}
   |> Repo.insert()
 
@@ -967,7 +1010,8 @@ if [] == Page.list_all!() do
     %{page_id: 2, port_id: 23},
     %{page_id: 2, port_id: 37},
     %{page_id: 2, port_id: 38},
-    %{page_id: 2, port_id: 39}
+    %{page_id: 2, port_id: 39},
+    %{page_id: 2, port_id: 49}
   ])
 
   Repo.insert_all("page_actions", [%{page_id: 2, action_id: 6}])
@@ -1023,7 +1067,8 @@ if [] == Page.list_all!() do
     %{page_id: 4, port_id: 24},
     %{page_id: 4, port_id: 45},
     %{page_id: 4, port_id: 46},
-    %{page_id: 4, port_id: 47}
+    %{page_id: 4, port_id: 47},
+    %{page_id: 4, port_id: 50}
   ])
 
   Repo.insert_all("page_actions", [%{page_id: 4, action_id: 5}, %{page_id: 4, action_id: 8}])
