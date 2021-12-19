@@ -34,6 +34,7 @@ defmodule Core.MixProject do
       {:tortoise, "~> 0.9"},
       {:quantum, "~> 3.0"},
       {:cachex, "~> 3.4"},
+      {:circuits_gpio, "~> 0.4"},
       {:db, in_umbrella: true}
     ]
   end

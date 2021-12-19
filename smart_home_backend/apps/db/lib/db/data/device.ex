@@ -17,6 +17,7 @@ defmodule DB.Data.Device do
           | :ShellyRGBW2
           | :Satel
           | :BasementPi
+          | :GPIO
   @type status_t :: :online | :unknown | :offline
 
   @typedoc """
@@ -43,7 +44,8 @@ defmodule DB.Data.Device do
         :SonoffRfBridge,
         :ShellyRGBW2,
         :Satel,
-        :BasementPi
+        :BasementPi,
+        :GPIO
       ]
     )
 

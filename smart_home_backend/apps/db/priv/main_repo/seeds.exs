@@ -39,10 +39,15 @@ if [] == Device.list_all!() do
   %Device{id: 10, name: "Raspberry piwnica", ip: "192.168.2.142", port: 80, type: :BasementPi}
   |> Repo.insert()
 
+  %Device{id: 11, name: "local", ip: "localhost", port: 80, type: :GPIO}
+  |> Repo.insert()
+
   IO.puts("Initializing devices!")
 end
 
 if [] == Port.list_all() do
+  default_state = %{"value" => false}
+
   %Port{
     id: 1,
     name: "Jadalnia",
@@ -601,6 +606,17 @@ if [] == Port.list_all() do
     type: :circut,
     state: default_circut_state,
     device_id: 10
+  }
+  |> Repo.insert()
+
+  %Port{
+    id: 51,
+    name: "Buzzer strych",
+    number: 18,
+    mode: :output,
+    type: :buzzer,
+    state: default_state,
+    device_id: 11
   }
   |> Repo.insert()
 

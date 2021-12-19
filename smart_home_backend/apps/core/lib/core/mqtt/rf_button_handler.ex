@@ -6,6 +6,7 @@ defmodule Core.Mqtt.RfButtonHandler do
   def handle_button_click(%RfButton{mode: :page} = btn, %{pages: pages} = data) do
     controller_id = extract_controller_name(btn.name)
     pages_ = Map.update(pages, controller_id, 2, fn i -> next_page_id(i, btn.page) end)
+    Core.GPIO.beep()
 
     %{data | pages: pages_}
   end

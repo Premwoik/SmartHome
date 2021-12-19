@@ -20,6 +20,7 @@ defmodule Core do
       {Cachex,
        name: :loggs_cache, limit: limit(size: 2048, policy: Cachex.Policy.LRW, reclaim: 0.2)},
       Core.Telemetry,
+      Core.GPIO,
       Core.Scheduler,
       Core.Actions,
       Core.Mqtt.Supervisor,

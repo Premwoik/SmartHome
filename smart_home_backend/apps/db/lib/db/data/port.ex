@@ -11,7 +11,15 @@ defmodule DB.Data.Port do
   alias DB.MainRepo
 
   @type mode_t :: :input | :output | :input_output
-  @type type_t :: :light | :dimmer | :sunblind | :custom | :signal | :motion_sensor | :circut
+  @type type_t ::
+          :light
+          | :dimmer
+          | :sunblind
+          | :custom
+          | :signal
+          | :motion_sensor
+          | :circut
+          | :buzzer
 
   @typedoc """
 
@@ -45,7 +53,7 @@ defmodule DB.Data.Port do
     field(:mode, Ecto.Enum, values: [:input, :output, :input_output], default: :output)
 
     field(:type, Ecto.Enum,
-      values: [:light, :dimmer, :sunblind, :custom, :signal, :motion_sensor, :circut],
+      values: [:light, :dimmer, :sunblind, :custom, :signal, :motion_sensor, :circut, :buzzer],
       default: :custom
     )
 
