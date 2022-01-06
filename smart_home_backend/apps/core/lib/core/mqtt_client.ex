@@ -9,7 +9,7 @@ defmodule Core.MqttClient do
   alias DB.Data.RfButton
 
   def init(_args) do
-    {:ok, %{pages: %{}}}
+    {:ok, %{pages: %{}, aliases: %{}}}
   end
 
   def connection(_status, state) do
