@@ -10,7 +10,7 @@ defmodule DB.Data.RfButton do
   alias DB.Data.RfButton
   alias DB.MainRepo
 
-  @type mode_t :: :on | :off | :toggle | :page
+  @type mode_t :: :on | :off | :toggle | :page | :alias
 
   @typedoc """
   FIXME add doc for fields
@@ -26,7 +26,7 @@ defmodule DB.Data.RfButton do
 
   schema "rf_buttons" do
     field(:name, :string)
-    field(:mode, Ecto.Enum, values: [:on, :off, :toggle, :page])
+    field(:mode, Ecto.Enum, values: [:on, :off, :toggle, :page, :alias])
     field(:key_value, :string)
     field(:page, :integer, default: 0)
     field(:on_click_action, :map)
