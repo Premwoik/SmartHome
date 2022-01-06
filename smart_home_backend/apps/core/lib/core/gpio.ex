@@ -6,7 +6,7 @@ defmodule Core.GPIO do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  def beep(pin \\ 18) do 
+  def beep(pin \\ 18) do
     GenServer.cast(__MODULE__, {:beep, pin})
   end
 
@@ -36,6 +36,7 @@ defmodule Core.GPIO do
     Process.send_after(self(), {:write, pin, 1}, 300)
     {:noreply, state}
   end
+
   def handle_cast(request, state) do
     Logger.error("Unsupported request #{inspect(request)}")
     {:noreply, state}
@@ -45,6 +46,7 @@ defmodule Core.GPIO do
     {:reply, _, state} = handle_call(data, self(), state)
     {:noreply, state}
   end
+
   def handle_info(msg, state) do
     Logger.error("Unsupported msg #{inspect(msg)}")
     {:noreply, state}

@@ -28,7 +28,10 @@ defmodule Core.Device.SonoffRfBridge do
   end
 
   @impl true
-  def set_outputs(%Device{ip: ip, port: port} = d, [%Port{number: num, state: s}] = ports) do
+  def set_outputs(
+        %Device{ip: ip, port: port} = d,
+        [%Port{number: num, state: %{"value" => s}}] = ports
+      ) do
     key = if s, do: num, else: num + 1
     url_ = url(ip, port, num) <> "?cmnd=RfKey" <> to_string(key)
 
