@@ -2,7 +2,7 @@ defmodule Core.GPIO do
   use GenServer
   require Logger
 
-  def start_link() do
+  def start_link(_) do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
@@ -16,7 +16,8 @@ defmodule Core.GPIO do
 
   def init(_) do
     {:ok, buzzer_ref} = Circuits.GPIO.open(18, :output)
-    %{18 => buzzer_ref}
+    Circuits.GPIO.write(buzzer_ref, 1)
+    {:ok, %{18 => buzzer_ref}}
   end
 
   def handle_call({:write, pin, val}, _from, state) do
@@ -31,8 +32,8 @@ defmodule Core.GPIO do
   end
 
   def handle_cast({:beep, pin}, state) do
-    handle_call({:write, pin, 1}, self(), state)
-    Process.send_after(self(), {:write, pin, 0}, 300)
+    handle_call({:write, pin, 0}, self(), state)
+    Process.send_after(self(), {:write, pin, 1}, 300)
     {:noreply, state}
   end
   def handle_cast(request, state) do
@@ -40,6 +41,10 @@ defmodule Core.GPIO do
     {:noreply, state}
   end
 
+  def handle_info({:write, _, _} = data, state) do
+    {:reply, _, state} = handle_call(data, self(), state)
+    {:noreply, state}
+  end
   def handle_info(msg, state) do
     Logger.error("Unsupported msg #{inspect(msg)}")
     {:noreply, state}

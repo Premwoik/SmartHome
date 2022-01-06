@@ -12,6 +12,7 @@ defmodule Core.Mqtt.RfButtonHandler do
   end
 
   def handle_button_click(%RfButton{name: name} = btn, %{pages: pages} = data) do
+    Core.GPIO.beep()
     page = get_current_page(name, pages)
 
     RfButton.click_action(btn, page)
