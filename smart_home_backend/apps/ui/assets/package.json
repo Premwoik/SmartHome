@@ -8,5 +8,8 @@
   },
   "dependencies": {
     "alpinejs": "^3.7.1"
+  },
+  "scripts": {
+    "deploy": "NODE_ENV=production postcss css/app.css -o ../priv/static/assets/app.css"
   }
 }
