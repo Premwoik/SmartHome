@@ -53,12 +53,33 @@ config :db, DB.MainRepo,
 # ecto_repos: [HomeUi.Repo]
 
 # Configures the endpoint
-config :home_ui, HomeUiWeb.Endpoint,
+config :ui, UiWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "rQRP/j3RkvaPk6NcMaNmAifMzy19/BRrAJHZObDJMHAzxzfpVv6dJsI3Mjw07LUl",
-  render_errors: [view: HomeUiWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: HomeUi.PubSub,
-  live_view: [signing_salt: "tail8oyy"]
+  render_errors: [view: UiWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Ui.PubSub,
+  live_view: [signing_salt: "gxuEv+rN"]
+
+# Configures the mailer
+#
+# By default it uses the "Local" adapter which stores the emails
+# locally. You can see the emails in your browser, at "/dev/mailbox".
+#
+# For production it's recommended to configure a different adapter
+# at the `config/runtime.exs`.
+config :ui, Ui.Mailer, adapter: Swoosh.Adapters.Local
+
+# Swoosh API client is needed for adapters other than SMTP.
+config :swoosh, :api_client, false
+
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.14.0",
+  default: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../apps/ui/assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
 
 # Configures Elixir's Logger
 #
@@ -74,12 +95,6 @@ config :logger,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
-
-config :kaffy,
-  otp_app: :db,
-  hide_dashboard: true,
-  ecto_repo: DB.MainRepo,
-  router: HomeUiWeb.Router
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment

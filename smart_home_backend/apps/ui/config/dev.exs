@@ -1,17 +1,5 @@
 import Config
 
-config :logger, backends: [RingLogger, {Core.LoggerHistoryBackend, :logger_cache}]
-
-# Set the number of messages to hold in the circular buffer
-config :logger, RingLogger, max_size: 1024
-
-# You can also configure RingLogger.Client options to be used
-# with every client by default
-config :logger, RingLogger,
-  application_levels: %{db: :error},
-  color: [debug: :yellow],
-  level: :debug
-
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -35,7 +23,7 @@ config :ui, UiWeb.Endpoint,
       "--output=../priv/static/assets/app.css",
       "--postcss",
       "--watch",
-      cd: Path.expand("../apps/ui/assets", __DIR__)
+      cd: Path.expand("../assets", __DIR__)
     ]
   ]
 

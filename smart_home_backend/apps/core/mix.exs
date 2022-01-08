@@ -23,7 +23,7 @@ defmodule Core.MixProject do
   defp deps do
     [
       {:telemetry_metrics, "~> 0.4"},
-      {:telemetry_poller, "~> 0.4"},
+      {:telemetry_poller, "~> 1.0"},
       {:phoenix_pubsub, "~> 2.0"},
       {:mock, "~> 0.3.0", only: :test},
       {:mox, "~> 0.4", only: :test},

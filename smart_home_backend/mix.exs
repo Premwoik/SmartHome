@@ -24,9 +24,7 @@ defmodule SmartHomeBackend.MixProject do
   defp deps do
     [
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:gradualizer_ex, github: "Premwoik/gradualizer-ex", ref: "master"},
-      {:erlang_doctor,
-       github: "chrzaszcz/erlang_doctor", only: [:dev], manage: :rebar3, ref: "master"}
+      {:gradient, github: "esl/gradient"}
     ]
   end
 
