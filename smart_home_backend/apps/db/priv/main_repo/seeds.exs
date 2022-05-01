@@ -36,7 +36,7 @@ if [] == Device.list_all!() do
   %Device{id: 9, name: "Zasilanie-led", ip: "192.168.2.209", port: 80, type: :SonoffBasic}
   |> Repo.insert()
 
-  %Device{id: 10, name: "Raspberry piwnica", ip: "192.168.2.142", port: 80, type: :BasementPi}
+  %Device{id: 10, name: "Raspberry piwnica", ip: "heating@192.168.2.142", port: 80, type: :BasementPi}
   |> Repo.insert()
 
   # %Device{id: 11, name: "local", ip: "localhost", port: 80, type: :GPIO}
