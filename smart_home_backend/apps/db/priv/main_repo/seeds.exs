@@ -39,7 +39,16 @@ if [] == Device.list_all!() do
   %Device{id: 10, name: "Raspberry piwnica", ip: "192.168.2.142", port: 80, type: :BasementPi}
   |> Repo.insert()
 
-  %Device{id: 11, name: "local", ip: "localhost", port: 80, type: :GPIO}
+  # %Device{id: 11, name: "local", ip: "localhost", port: 80, type: :GPIO}
+  # |> Repo.insert()
+
+  %DB.Data.Device{
+    id: 11,
+    ip: "192.168.2.211",
+    name: "Lazienka parter",
+    port: 80,
+    type: :SonoffBasic
+  }
   |> Repo.insert()
 
   IO.puts("Initializing devices!")
@@ -610,13 +619,35 @@ if [] == Port.list_all() do
   |> Repo.insert()
 
   %Port{
+    device_id: 10,
     id: 51,
-    name: "Buzzer strych",
-    number: 18,
     mode: :output,
-    type: :buzzer,
-    state: default_state,
+    name: "Ogrzewanie podłogowe",
+    number: 2,
+    state: %{"status" => "idle", "temp" => 21.0, "value" => false},
+    type: :circut
+  }
+  |> Repo.insert()
+
+  %DB.Data.Port{
+    id: 52,
+    name: "Radio łazienka parter",
+    number: 0,
+    mode: :output,
+    type: :custom,
+    state: %{"value" => false},
     device_id: 11
+  }
+  |> Repo.insert()
+
+  %DB.Data.Port{
+    id: 53,
+    name: "Światło łazienka parter",
+    number: 0,
+    mode: :output,
+    type: :light,
+    state: %{"value" => false},
+    device_id: 10
   }
   |> Repo.insert()
 
@@ -1027,7 +1058,8 @@ if [] == Page.list_all!() do
     %{page_id: 2, port_id: 37},
     %{page_id: 2, port_id: 38},
     %{page_id: 2, port_id: 39},
-    %{page_id: 2, port_id: 49}
+    %{page_id: 2, port_id: 49},
+    %{page_id: 2, port_id: 52}
   ])
 
   Repo.insert_all("page_actions", [%{page_id: 2, action_id: 6}])
