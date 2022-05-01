@@ -1,8 +1,7 @@
 -module(heating_api).
 
--export([run_circut/2, get_temps/1, get_config/1, set_config/2, register_observer/2,
-         unregister_observer/2]).
-
+-export([write_pin/3, run_circut/2, get_temps/1, get_config/1, set_config/2,
+         register_observer/2, unregister_observer/2]).
 -export([config_mock/0]).
 
 -include_lib("../../../deps/basement_core/src/heating.hrl").
@@ -42,6 +41,16 @@ config_mock() ->
       circuts => [C1, C2]}.
 
 %% Api
+
+-spec write_pin(device(), integer(), true | false) -> ok | node_issue.
+write_pin(#{ip := Node}, Pin, State) ->
+    State2 =
+        if State ->
+               high;
+           true ->
+               low
+        end,
+    call(Node, ?FUNCTION_NAME, [Pin, State2]).
 
 -spec run_circut(device(), atom() | integer()) -> ok | node_issue.
 run_circut(#{ip := Node}, CircutID) ->

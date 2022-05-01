@@ -64,10 +64,19 @@ defmodule Core.Device.BasementPi do
   ## BasicIO behaviour
 
   @impl BasicIO
-  def set_outputs(device, [%Port{number: number, state: %{"value" => true}} = port]) do
+  def set_outputs(device, [%Port{number: number, type: :circut, state: %{"value" => true}} = port]) do
     case run_circut(device, number) do
       :ok ->
         %Response{ok: [port], result: [{device.id, :ok}], save: false}
+
+      err ->
+        Response.error({device.id, err}, [port])
+    end
+  end
+  def set_outputs(device, [%Port{number: n, state: %{"value" => state}} = port]) do
+    case :heating_api.write_pin(device, n, state) do
+      :ok ->
+        %Response{ok: [port], result: [{device.id, :ok}], save: true}
 
       err ->
         Response.error({device.id, err}, [port])
