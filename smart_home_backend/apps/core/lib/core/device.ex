@@ -2,10 +2,10 @@ defmodule Core.Device do
   @moduledoc false
 
   @callback start_link(
-              ip :: String.t(),
+              ip :: charlist(),
               port :: integer(),
               opts :: any()
-            ) :: bool()
+            ) :: GenServer.on_start()
 
   @callback need_process?() :: boolean()
 

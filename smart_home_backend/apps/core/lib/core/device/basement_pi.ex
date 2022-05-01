@@ -9,12 +9,13 @@ defmodule Core.Device.BasementPi do
 
   use GenServer
 
-  require Record
+  require Logger
 
   alias DB.Data.Device
   alias DB.Data.Port
   alias DB.Proc.PortListProc
   alias Core.Device.Static.Response
+  alias Core.Device.BasicIO
 
   @behaviour Core.Device
   @behaviour Core.Device.BasicIO
@@ -24,138 +25,47 @@ defmodule Core.Device.BasementPi do
   @type circut_planned_run() ::
           {day :: :null | atom(), start_time :: :calendar.time(), duration :: :calendar.time()}
 
-  Record.defrecord(:circut,
-    name: :undefined,
-    break_duration: {0, 0, 0},
-    running_duration: {0, 0, 0},
-    stop_timer_ref: :null,
-    max_temp: 0.0,
-    min_temp: 0.0,
-    status: :idle,
-    valve_pin: 0,
-    thermometer_id: '',
-    auto_allow: false,
-    planned_runs: [],
-    current_temp: :null
-  )
+  @type config :: :heating_api.config()
 
-  @type circut() ::
-          Record.record(
-            :circut,
-            name :: atom(),
-            break_duration :: :calendar.time(),
-            running_duration :: :calendar.time(),
-            stop_timer_ref :: :null | reference(),
-            max_temp :: float(),
-            min_temp :: float(),
-            status :: circut_status(),
-            valve_pin :: integer(),
-            thermometer_id :: charlist(),
-            auto_allow :: boolean(),
-            planned_run :: [circut_planned_run()],
-            current_temp :: :null | float()
-          )
+  ## Api behaviour
 
-  Record.defrecord(:state,
-    circuts: [],
-    temp_read_interval: {0, 0, 0},
-    pomp_pin: 0,
-    boiler_thermometer_id: '',
-    boiler_min_temp: 0.0,
-    boiler_temp: :null
-  )
+  @spec run_circut(Device.t(), atom() | integer()) :: :ok | :node_issue
+  def run_circut(device, id), do: :heating_api.run_circut(device, id)
 
-  @type config() ::
-          Record.record(
-            :state,
-            circuts :: [circut()],
-            temp_read_interval :: :calendar.time(),
-            pomp_pin :: integer(),
-            boiler_thermometer_id :: charlist(),
-            boiler_min_temp :: float(),
-            boiler_temp :: float() | :null
-          )
+  @spec get_temps(Device.t()) :: :ok | :node_issue
+  def get_temps(device), do: :heating_api.get_temps(device)
 
-  #############################################################################
-  ### API Beh
-  #############################################################################
+  @spec get_config(Device.t()) :: {:ok, config()} | :node_issue
+  def get_config(device), do: :heating_api.get_config(device)
 
-  def run_circut(device, name) do
-    node = String.to_atom(device.ip)
+  def get_local_config(device),
+    do: GenServer.call(String.to_existing_atom(device.name), :get_config)
 
-    try do
-      :rpc.call(node, :heating_server, :run_circut, [name])
-    rescue
-      err ->
-        IO.inspect(err)
-        {:error, :node_issue}
-    end
-  end
+  @spec set_config(Device.t(), config()) :: :ok
+  def set_config(device, config),
+    do: GenServer.cast(String.to_existing_atom(device.name), {:set_config, config})
 
-  @spec get_temps(Device.t()) :: {:ok, list()} | {:error, term()}
-  def get_temps(%{id: node}) do
-    node = String.to_atom(node)
+  # def set_config(device, config), do: :heating_api.set_config(device, config)
 
-    try do
-      :rpc.call(node, :heating_server, :get_temps, [])
-    rescue
-      err ->
-        IO.inspect(err)
-        {:error, :node_issue}
-    end
-  end
+  ## Device behaviour
 
-  @spec get_config(Device.t()) :: config()
-  def get_config(%{ip: node}) do
-    try do
-      node = String.to_atom(node)
-      {:ok, conf} = :rpc.call(node, :heating_server, :get_config, [])
-      state2 = state(conf) |> Enum.into(%{})
+  @impl Core.Device
+  def need_process?(), do: true
 
-      state3 = %{
-        state2
-        | circuts: Enum.map(state2.circuts, fn c -> Enum.into(circut(c), %{}) end)
-      }
-
-      {:ok, state3}
-    rescue
-      err ->
-        IO.inspect(err)
-        {:error, :node_issue}
-    end
-  end
-
-  #############################################################################
-  ### Device beh
-  #############################################################################
-
-  @impl true
-  def need_process?() do
-    true
-  end
-
-  @impl true
+  @impl Core.Device
   def start_link(ip, _port, opts) do
     map =
       [{:node, List.to_atom(ip)} | opts]
       |> Map.new()
 
-    GenServer.start_link(__MODULE__, map)
+    GenServer.start_link(__MODULE__, map, name: String.to_existing_atom(map.device.name))
   end
 
-  #############################################################################
-  ### BasicIO beh
-  #############################################################################
+  ## BasicIO behaviour
 
-  @impl true
-  def set_outputs(device, [%Port{number: n, state: %{"value" => true}} = port]) do
-    name =
-      case n do
-        0 -> :low
-        _ -> :high
-      end
-
-    case run_circut(device, name) do
+  @impl BasicIO
+  def set_outputs(device, [%Port{number: number, state: %{"value" => true}} = port]) do
+    case run_circut(device, number) do
       :ok ->
         %Response{ok: [port], result: [{device.id, :ok}], save: false}
 
@@ -168,79 +78,114 @@ defmodule Core.Device.BasementPi do
     Response.error({device.id, :wrong_args}, ports)
   end
 
-  @impl true
+  @impl BasicIO
   def read_outputs(device) do
     Response.error({device.id, :not_implemented}, [])
-    {:error, :not_implemented}
   end
 
-  @impl true
+  @impl BasicIO
   def read_inputs(device) do
     Response.error({device.id, :not_implemented}, [])
   end
 
-  @impl true
+  @impl BasicIO
   def heartbeat(device) do
     Response.error({device.id, :not_implemented}, [])
   end
 
-  #############################################################################
-  ### GenServer 
-  #############################################################################
+  ## GenServer behaviour
 
   @impl GenServer
-  def init(%{device_id: device_id, node: node} = opts) do
-    {:ok, [%{id: id0}, %{id: id1}]} = PortListProc.identify(device_id, [0, 1])
-    pid = self()
+  def init(%{device: device} = opts) do
+    {ids, config} = try_init(device, self())
+    opts = Map.put(opts, :config, config)
 
-    try do
-      :rpc.call(node, :heating_server, :register_observer, [pid])
-    rescue
-      err ->
-        IO.inspect(err)
-    end
-
-    {:ok, Map.put(opts, :port_ids, [id0, id1])}
+    {:ok, Map.put(opts, :port_ids, ids)}
   end
 
   @impl GenServer
-  def handle_info({:status_update, data}, %{port_ids: [id0, id1]} = state) do
-    with {:ok, s0} <- Keyword.fetch(data, :low),
-         {:ok, s1} <- Keyword.fetch(data, :high) do
-      v0 = s0 == :running
-      v1 = s1 == :running
+  def terminate(_reason, %{device: device}) do
+    :heating_api.unregister_observer(device, self())
+    :ok
+  end
 
-      PortListProc.update_state(id0, %{"status" => to_string(s0), "value" => v0})
-      |> broadcast()
+  @impl GenServer
+  def handle_call(:get_config, _From, state) do
+    {:reply, state.config, state}
+  end
 
-      PortListProc.update_state(id1, %{"status" => to_string(s1), "value" => v1})
+  @impl GenServer
+  def handle_cast({:set_config, config}, state) do
+    {:noreply, Map.put(state, :config, config)}
+  end
+
+  @impl GenServer
+  def handle_info({:status_update, data}, %{port_ids: ids} = state) do
+    Enum.zip(data, ids)
+    |> Enum.each(fn {{name, state}, {name, id}} ->
+      value = state == :running
+
+      PortListProc.update_state(id, %{"status" => to_string(state), "value" => value})
       |> broadcast()
-    end
+    end)
 
     {:noreply, state}
   end
 
-  def handle_info({:temp_update, data}, %{port_ids: [id0, id1]} = state) do
-    with {:ok, s0} <- Keyword.fetch(data, :low),
-         {:ok, s1} <- Keyword.fetch(data, :high) do
-      PortListProc.update_state(id0, %{"temp" => s0})
+  @impl GenServer
+  def handle_info({:temp_update, data}, %{port_ids: ids} = state) do
+    Enum.zip(data, ids)
+    |> Enum.each(fn {{name, temp}, {name, id}} ->
+      PortListProc.update_state(id, %{"temp" => temp})
       |> broadcast()
-
-      PortListProc.update_state(id1, %{"temp" => s1})
-      |> broadcast()
-    end
+    end)
 
     {:noreply, state}
   end
 
-  #############################################################################
-  ### Internals
-  #############################################################################
-  def broadcast({:ok, port}) do
+  @impl GenServer
+  def handle_info(:try_init, %{device: device} = state) do
+    {ids, config} = try_init(device, self())
+    state = Map.put(state, :config, config)
+
+    {:noreply, Map.put(state, :port_ids, ids)}
+  end
+
+  ## Internal
+
+  def try_init(device, pid) do
+    with :ok <- :heating_api.register_observer(device, pid),
+         {:ok, config} <- :heating_api.get_config(device) do
+      Logger.info("Heating client `#{to_string(device.name)}` initialized successfully!")
+      {get_port_ids(device, config), config}
+    else
+      _ ->
+        Logger.warn(
+          "Heating client `#{to_string(device.name)}` initialization failed. Will try again after 5sec!"
+        )
+
+        Process.send_after(pid, :try_init, 5_000)
+        {[], %{}}
+    end
+  end
+
+  @spec get_port_ids(Device.t(), config()) :: [{atom(), integer()}]
+  defp get_port_ids(device, %{circuts: circuts}) do
+    nums = Enum.with_index(circuts) |> Enum.map(&elem(&1, 1))
+
+    pairs =
+      PortListProc.identify!(device.id, nums)
+      |> Enum.zip(circuts)
+      |> Enum.map(fn {%{id: id}, %{name: name}} -> {name, id} end)
+
+    pairs
+  end
+
+  defp broadcast({:ok, port}) do
     Core.Broadcast.broadcast_item_change(:circut, port)
   end
 
-  def broadcast(_) do
+  defp broadcast(_) do
     :ok
   end
 end
