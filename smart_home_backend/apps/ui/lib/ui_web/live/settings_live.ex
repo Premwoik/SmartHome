@@ -15,8 +15,29 @@ defmodule UiWeb.SettingsLive do
       Enum.map(pilots, fn {k, _} -> {k, %{"items" => items}} end)
       |> Map.new()
 
-    {:ok, assign(socket, jobs: jobs, pilots: pilots, selected: selected_btn)}
+    device = DB.MainRepo.get!(DB.Data.Device, 10)
+    config = Core.Device.BasementPi.get_local_config(device)
+
+    categories = %{tasks: true, pilots: false, circuts: false}
+
+    {:ok,
+     assign(socket,
+       jobs: jobs,
+       pilots: pilots,
+       selected: selected_btn,
+       heating_config: config,
+       hc_device: device,
+       categories: categories
+     )}
   end
+
+  def handle_event("toggle_category", %{"value" => category}, socket) do
+    cat = String.to_existing_atom(category)
+    cats = Map.update!(socket.assigns[:categories], cat, fn v -> !v end)
+    {:noreply, assign(socket, categories: cats)}
+  end
+
+  # Tasks handle_event {{{
 
   def handle_event("save", %{"job" => %{"id" => id} = params}, socket) do
     params = Map.merge(%{"status" => "false", "extended" => "false"}, params)
@@ -45,6 +66,9 @@ defmodule UiWeb.SettingsLive do
     socket = put_flash(socket, :info, "Akcja została wywołana pomyślnie!")
     {:noreply, socket}
   end
+
+  # }}}
+  # RfButton handle_event {{{
 
   def handle_event(
         "rf_button_change",
@@ -126,6 +150,101 @@ defmodule UiWeb.SettingsLive do
     pilots = Map.put(pilots, pilot, pilot_btns)
 
     {:noreply, assign(socket, pilots: pilots)}
+  end
+
+  # }}}
+  # Circuts handle_event {{{
+
+  def handle_event("add_run", %{"circut" => circut_id}, socket) do
+    circut_id = String.to_integer(circut_id)
+    IO.inspect(circut_id)
+    config = socket.assigns[:heating_config]
+
+    config =
+      %{
+        config
+        | circuts:
+            List.update_at(config.circuts, circut_id, fn circut ->
+              new_run = {:null, {0, 0, 0}, {0, 0, 0}}
+              %{circut | planned_runs: [new_run | circut.planned_runs]}
+            end)
+      }
+      |> IO.inspect()
+
+    {:noreply, assign(socket, heating_config: config)}
+  end
+
+  def handle_event("delete_run", %{"circut" => circut_id, "run" => run_id}, socket) do
+    circut_id = String.to_integer(circut_id)
+    run_id = String.to_integer(run_id)
+    config = socket.assigns[:heating_config]
+
+    config = %{
+      config
+      | circuts:
+          List.update_at(config.circuts, circut_id, fn circut ->
+            %{circut | planned_runs: List.delete_at(circut.planned_runs, run_id)}
+          end)
+    }
+
+    {:noreply, assign(socket, heating_config: config)}
+  end
+
+  def handle_event("save_config", %{"config" => config}, socket) do
+    org_config = socket.assigns[:heating_config]
+    device = socket.assigns[:hc_device]
+
+    config = update_config(org_config, config)
+    :ok = Core.Device.BasementPi.set_config(device, config)
+
+    {:noreply, socket}
+  end
+
+  # }}}
+
+  # Internal
+
+  def update_config(config, data) do
+    %{
+      config
+      | boiler_min_temp: String.to_float(data["boiler_min_temp"]),
+        temp_read_interval: Time.to_erl(Time.from_iso8601!(data["temp_read_interval"])),
+        circuts: update_circuts(config.circuts, data["circuts"])
+    }
+  end
+
+  def update_circuts(conf_circuts, circuts) do
+    Enum.map(conf_circuts, fn circut ->
+      data = Map.get(circuts, Atom.to_string(circut.name))
+
+      %{
+        circut
+        | max_temp: String.to_float(data["max_temp"]),
+          min_temp: String.to_float(data["min_temp"]),
+          running_duration: parse_time(data["running_duration"]),
+          break_duration: parse_time(data["break_duration"]),
+          planned_runs: update_planned_runs(data["runs"])
+      }
+    end)
+  end
+
+  def update_planned_runs(nil) do
+    []
+  end
+
+  def update_planned_runs(runs) do
+    Enum.map(runs, fn {_, data} ->
+      days = Enum.map(Map.get(data, "days", []), &String.to_existing_atom/1)
+      days = if days == [], do: :null, else: days
+      start_time = parse_time(data["time"])
+      duration = parse_time(data["duration"])
+      {days, start_time, duration}
+    end)
+  end
+
+  def parse_time(str) do
+    str = if String.length(str) > 5, do: str, else: str <> ":00"
+    Time.to_erl(Time.from_iso8601!(str))
   end
 
   def update(jobs, %{id: id} = job) do

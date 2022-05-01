@@ -6,6 +6,10 @@ defmodule UiWeb.SettingsView do
   alias DB.Data.Action
   import Phoenix.HTML
 
+  def time_to_str(t = {_, _, _}) do
+    Time.to_string(Time.from_erl!(t))
+  end
+
   def custom_td_class(id, pilot, selected) do
     selected_id = Map.get(selected[pilot], "id", "0")
 
