@@ -148,7 +148,7 @@ defmodule Core.Device.BasementPi do
   #############################################################################
 
   @impl true
-  def set_outputs(device, [%Port{number: n, state: %{"value" => true}} = port]) do
+  def set_outputs(device, [%Port{number: n, type: :circut, state: %{"value" => true}} = port]) do
     name =
       case n do
         0 -> :low
@@ -163,9 +163,30 @@ defmodule Core.Device.BasementPi do
         Response.error({device.id, err}, [port])
     end
   end
+  def set_outputs(device, [%Port{number: n, state: %{"value" => state}} = port]) do
+    case set_output(device, n, state) do
+      :ok ->
+        %Response{ok: [port], result: [{device.id, :ok}], save: true}
+
+      err ->
+        Response.error({device.id, err}, [port])
+    end
+  end
 
   def set_outputs(device, ports) do
     Response.error({device.id, :wrong_args}, ports)
+  end
+
+  def set_output(device, number, state) do
+    node = String.to_atom(device.ip)
+    state = if(state, do: :low, else: :high)
+    try do
+      :rpc.call(node, :hardware_api, :write_pin, [number, state])
+    rescue
+      err ->
+	IO.inspect(err)
+	{:error, :node_issue}
+    end 
   end
 
   @impl true

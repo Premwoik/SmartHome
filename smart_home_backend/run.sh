@@ -7,7 +7,7 @@ export PHX_SERVER=true
 
 export $(grep -v '^#' .priv_env | xargs)
 
-_build/prod/rel/ui/bin/ui start_iex
+~/SmartHome/smart_home_backend/_build/prod/rel/ui/bin/ui start_iex
 
 #cd /home/pi/SmartHome/smart_home_backend
 #iex --name sh@192.168.2.100 --cookie COOKIE -S mix phx.server
