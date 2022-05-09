@@ -20,6 +20,7 @@
       circuts := [circut()]}.
 
 -define(MOD, heating_server).
+-define(HARDWARE, hardware_api).
 
 %% Debug
 
@@ -50,7 +51,7 @@ write_pin(#{ip := Node}, Pin, State) ->
            true ->
                low
         end,
-    call(Node, ?FUNCTION_NAME, [Pin, State2]).
+    hcall(Node, ?FUNCTION_NAME, [Pin, State2]).
 
 -spec run_circut(device(), atom() | integer()) -> ok | node_issue.
 run_circut(#{ip := Node}, CircutID) ->
@@ -86,8 +87,16 @@ unregister_observer(#{ip := Node}, Pid) ->
 %% Internal
 -spec call(binary(), atom(), list()) -> any().
 call(Node, Function, Args) ->
+    call(Node, ?MOD, Function, Args).
+
+-spec hcall(binary(), atom(), list()) -> any().
+hcall(Node, Function, Args) ->
+    call(Node, ?HARDWARE, Function, Args).
+
+-spec call(binary(), atom(), atom(), list()) -> any().
+call(Node, Mod, Function, Args) ->
     try
-        rpc:call(binary_to_atom(Node), ?MOD, Function, Args)
+        rpc:call(binary_to_atom(Node), Mod, Function, Args)
     catch
         _:_ ->
             node_issue
