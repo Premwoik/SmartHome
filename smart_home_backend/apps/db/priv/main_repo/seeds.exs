@@ -36,7 +36,13 @@ if [] == Device.list_all!() do
   %Device{id: 9, name: "Zasilanie-led", ip: "192.168.2.209", port: 80, type: :SonoffBasic}
   |> Repo.insert()
 
-  %Device{id: 10, name: "Raspberry piwnica", ip: "heating@192.168.2.142", port: 80, type: :BasementPi}
+  %Device{
+    id: 10,
+    name: "Raspberry piwnica",
+    ip: "heating@192.168.2.142",
+    port: 80,
+    type: :BasementPi
+  }
   |> Repo.insert()
 
   # %Device{id: 11, name: "local", ip: "localhost", port: 80, type: :GPIO}
@@ -825,7 +831,7 @@ if [] == ScheduleJob.list_all!() do
   %ScheduleJob{
     id: 2,
     name: "Zamknij okna cały dom",
-    expr: "0 16 * * * *",
+    expr: "30 20 * * * *",
     task: %{"action_id" => 1, "state" => "up"}
   }
   |> Repo.insert()
@@ -1040,6 +1046,56 @@ if [] == RfButton.list_all!() do
   %RfButton{name: "8365001354-8", key_value: "9B6753"}
   |> Repo.insert()
 
+  %RfButton{
+    name: "Sonoff-Lazienka-Gora-1",
+    key_value: "D3CA08",
+    on_click_action: %{
+      "pages" => %{
+        1 => %{"type" => "port", "id" => 50}
+      }
+    }
+  }
+  |> Repo.insert()
+
+  %RfButton{
+    name: "Sonoff-Lazienka-Gora-2",
+    key_value: "D3CA02"
+  }
+  |> Repo.insert()
+
+  %RfButton{
+    name: "Sonoff-Lazienka-Dol-1",
+    key_value: "ECAD08",
+    on_click_action: %{
+      "pages" => %{
+        1 => %{"type" => "port", "id" => 49}
+      }
+    }
+  }
+  |> Repo.insert()
+
+  %RfButton{
+    name: "Sonoff-Lazienka-Dol-2",
+    key_value: "ECAD04",
+    on_click_action: %{
+      "pages" => %{
+        1 => %{"type" => "port", "id" => 53}
+      }
+    }
+  }
+  |> Repo.insert()
+
+  %RfButton{
+    name: "Sonoff-Lazienka-Dol-3",
+    key_value: "ECAD02",
+    on_click_action: %{
+      "pages" => %{
+        1 => %{"type" => "port", "id" => 52}
+      }
+    }
+  }
+  |> Repo.insert()
+
   IO.puts("Initializing rf_buttons!")
 end
 
@@ -1087,14 +1143,14 @@ if [] == Page.list_all!() do
 
   Repo.insert_all("page_ports", [
     %{page_id: 3, port_id: 1},
-    %{page_id: 3, port_id: 2},
-    %{page_id: 3, port_id: 3},
+    # %{page_id: 3, port_id: 2},
+    # %{page_id: 3, port_id: 3},
     %{page_id: 3, port_id: 4},
-    %{page_id: 3, port_id: 5},
-    %{page_id: 3, port_id: 6},
+    # %{page_id: 3, port_id: 5},
+    # %{page_id: 3, port_id: 6},
     %{page_id: 3, port_id: 7},
-    %{page_id: 3, port_id: 8},
-    %{page_id: 3, port_id: 9},
+    # %{page_id: 3, port_id: 8},
+    # %{page_id: 3, port_id: 9},
     %{page_id: 3, port_id: 18},
     %{page_id: 3, port_id: 19},
     %{page_id: 3, port_id: 15},
