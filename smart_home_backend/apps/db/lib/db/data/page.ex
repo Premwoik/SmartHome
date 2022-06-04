@@ -14,6 +14,10 @@ defmodule DB.Data.Page do
   alias DB.Data.Page
   alias DB.Data.Port
 
+  alias DB.Proc.ActionListProc
+  alias DB.Proc.DeviceListProc
+  alias DB.Proc.PortListProc
+
   @typedoc """
   FIXME add doc for fields
   """
@@ -62,7 +66,8 @@ defmodule DB.Data.Page do
 
   def get(page_id) do
     MainRepo.get(Page, page_id)
-    |> MainRepo.preload(ports: [:device], actions: [], devices: [], meters: [])
+    |> MainRepo.preload(meters: [])
+    |> preload_from_proc()
   end
 
   def lights(%{ports: ports}) do
@@ -77,7 +82,7 @@ defmodule DB.Data.Page do
           p
 
         ids ->
-          {:ok, lights} = DB.Proc.PortListProc.get_ids(ids)
+          lights = DB.Proc.PortListProc.get_ids(ids)
           DB.Data.Port.put_state(p, "lights", lights)
       end
     end)
@@ -93,5 +98,43 @@ defmodule DB.Data.Page do
 
   def others(%{ports: ports}) do
     Enum.filter(ports, fn p -> p.type in [:custom, :circut] end)
+  end
+
+  defp get_port_ids(page_id) do
+    from("page_ports",
+      where: [page_id: ^page_id],
+      select: [:port_id]
+    )
+    |> MainRepo.all()
+    |> Enum.map(fn %{port_id: id} -> id end)
+  end
+
+  defp get_action_ids(page_id) do
+    from("page_actions",
+      where: [page_id: ^page_id],
+      select: [:action_id]
+    )
+    |> MainRepo.all()
+    |> Enum.map(fn %{action_id: id} -> id end)
+  end
+
+  defp get_device_ids(page_id) do
+    from("page_devices",
+      where: [page_id: ^page_id],
+      select: [:device_id]
+    )
+    |> MainRepo.all()
+    |> Enum.map(fn %{device_id: id} -> id end)
+  end
+
+  defp preload_from_proc(nil) do
+    nil
+  end
+
+  defp preload_from_proc(%Page{id: id} = page) do
+    ports = PortListProc.get_ids(get_port_ids(id))
+    actions = ActionListProc.get_ids(get_action_ids(id))
+    devices = DeviceListProc.get_ids(get_device_ids(id))
+    %{page | ports: ports, actions: actions, devices: devices}
   end
 end

@@ -81,16 +81,14 @@ defmodule DB.Data.Action do
         :down -> action.attributes["down"]
       end
 
-    {:ok, ports} = PortListProc.get_ids(ids)
-    ports
+    PortListProc.get_ids(ids)
   end
 
   @spec get_ports(Action.t(), String.t()) :: [Port.t()]
   def get_ports(action, str_key) do
     ids = action.attributes[str_key]
 
-    {:ok, ports} = PortListProc.get_ids(ids)
-    ports
+    PortListProc.get_ids(ids)
   end
 
   @spec get_device(Action.t()) :: [Device.t()]
