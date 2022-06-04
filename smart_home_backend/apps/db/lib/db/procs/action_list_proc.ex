@@ -36,6 +36,11 @@ defmodule DB.Proc.ActionListProc do
     end
   end
 
+  @spec get_ids([integer()]) :: [Action.t()]
+  def get_ids(action_ids) do
+    GenServer.call(__MODULE__, {:get_ids, action_ids})
+  end
+
   @spec get(integer()) :: {:ok, Action.t()} | {:error, term()}
   def get(action_id) do
     GenServer.call(__MODULE__, {:get, action_id})
@@ -99,6 +104,11 @@ defmodule DB.Proc.ActionListProc do
       end
 
     {:reply, return, state}
+  end
+
+  @impl GenServer
+  def handle_call({:get_ids, ids}, _from, %{actions: actions} = state) do
+    {:reply, Map.values(Map.take(actions, ids)), state}
   end
 
   @impl true

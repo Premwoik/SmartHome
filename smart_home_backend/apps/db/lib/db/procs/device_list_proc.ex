@@ -29,6 +29,11 @@ defmodule DB.Proc.DeviceListProc do
     ProcBeh.get_maybe(get!(device_id))
   end
 
+  @spec get_ids([id()]) :: [Device.t()]
+  def get_ids(device_ids) do
+    GenServer.call(__MODULE__, {:get_ids, device_ids})
+  end
+
   @impl ProcBeh
   @doc ""
   @spec get!(integer()) :: resp!()
@@ -91,6 +96,11 @@ defmodule DB.Proc.DeviceListProc do
   @impl GenServer
   def handle_call({:get, id}, _from, %{devices: devices} = state) do
     {:reply, devices[id], state}
+  end
+
+  @impl GenServer
+  def handle_call({:get_ids, ids}, _from, %{devices: devices} = state) do
+    {:reply, Map.values(Map.take(devices, ids)), state}
   end
 
   @impl GenServer
