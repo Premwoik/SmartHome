@@ -108,6 +108,9 @@ defmodule Core.Device.BasementPi do
 
   @impl GenServer
   def init(%{device: device} = opts) do
+    # This config is only a copy of the oryginal one that is stored in the basement_pi device.
+    # Some values (especially readings) could be outdated. Thus don't use it as a source of truth
+    # about the device. TODO Remove this copy and use oryginal config instead.
     config = do_init(device, self())
     {:ok, Map.put(opts, :config, config)}
   end
@@ -182,7 +185,9 @@ defmodule Core.Device.BasementPi do
     with :ok <- do_check_subscription(device, pid),
          {:ok, config} <- :heating_api.get_config(device) do
       Logger.info("Heating client `#{to_string(device.name)}` initialized successfully!")
-      add_port_ids(device, config)
+      config = add_port_ids(device, config)
+      update_circut_ports(config)
+      config
     else
       _ ->
         Logger.warn(
@@ -204,6 +209,18 @@ defmodule Core.Device.BasementPi do
       |> Enum.map(fn {%{id: id}, circut} -> Map.put(circut, :port_id, id) end)
 
     %{config | circuts: circuts}
+  end
+
+  def update_circut_ports(%{circuts: circuts}) do
+    Enum.each(circuts, fn %{port_id: id, current_temp: current_temp, status: status} ->
+      value = status == :running
+
+      PortListProc.fast_update_state(id, %{
+        "value" => value,
+        "temp" => current_temp,
+        "status" => to_string(status)
+      })
+    end)
   end
 
   defp broadcast({:ok, port}) do
