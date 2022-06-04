@@ -3,6 +3,7 @@ defmodule Core.Device.Supervisor do
   use Supervisor
 
   alias DB.Data.Device
+  alias DB.Proc.DeviceListProc
 
   def start_link(arg) do
     Supervisor.start_link(__MODULE__, arg, name: __MODULE__)
@@ -10,7 +11,7 @@ defmodule Core.Device.Supervisor do
 
   @impl true
   def init(_arg) do
-    Device.list_all!()
+    DeviceListProc.list_all!()
     |> Enum.map(&get_specs(&1))
     # remove empty
     |> Enum.filter(&(&1 != nil))
