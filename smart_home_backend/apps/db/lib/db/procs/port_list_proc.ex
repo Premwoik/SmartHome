@@ -24,7 +24,7 @@ defmodule DB.Proc.PortListProc do
     GenServer.call(__MODULE__, {:update_state, port_id, params})
   end
 
-  @spec update!(integer(), map()) :: nil | Port.t()
+  @spec update_state!(integer(), map()) :: nil | Port.t()
   def update_state!(port_id, params) do
     update_state(port_id, params) |> get_just()
   end

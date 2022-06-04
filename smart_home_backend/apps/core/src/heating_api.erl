@@ -1,7 +1,7 @@
 -module(heating_api).
 
 -export([write_pin/3, run_circut/2, get_temps/1, get_config/1, set_config/2,
-         register_observer/2, unregister_observer/2]).
+         is_registered_observer/2, register_observer/2, unregister_observer/2]).
 -export([config_mock/0]).
 
 -include_lib("../../../deps/basement_core/src/heating.hrl").
@@ -9,15 +9,18 @@
 -type device() :: 'Elixir.DB.Data.Device':t().
 -type circut() ::
     #{name := atom(),
+      port_id => integer(),
       max_temp := float(),
       min_temp := float(),
       planned_runs := planned_run(),
       running_duration := calendar:time(),
-      break_duration := calendar:time()}.
+      break_duration := calendar:time(),
+      atom() => any()}.
 -type config() ::
     #{boiler_min_temp := float(),
       temp_read_interval := calendar:time(),
-      circuts := [circut()]}.
+      circuts := [circut()],
+      atom() => any()}.
 
 -define(MOD, heating_server).
 -define(HARDWARE, hardware_api).
@@ -47,9 +50,9 @@ config_mock() ->
 write_pin(#{ip := Node}, Pin, State) ->
     State2 =
         if State ->
-               high;
+               low;
            true ->
-               low
+               high
         end,
     hcall(Node, ?FUNCTION_NAME, [Pin, State2]).
 
@@ -83,6 +86,15 @@ register_observer(#{ip := Node}, Pid) ->
 -spec unregister_observer(device(), pid()) -> ok.
 unregister_observer(#{ip := Node}, Pid) ->
     call(Node, ?FUNCTION_NAME, [Pid]).
+
+-spec is_registered_observer(device(), pid()) -> boolean().
+is_registered_observer(#{ip := Node}, Pid) ->
+    case call(Node, ?FUNCTION_NAME, [Pid]) of
+        {ok, Status} ->
+            Status;
+        node_issue ->
+            false
+    end.
 
 %% Internal
 -spec call(binary(), atom(), list()) -> any().
