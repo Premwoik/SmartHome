@@ -84,4 +84,21 @@ defmodule DB.Data.Device do
       device -> {:ok, device}
     end
   end
+
+  @spec update(%Device{}, map()) :: {:ok, Device.t()} | {:error, Ecto.Changeset.t()}
+  def update(device, params) do
+    changeset(device, params)
+    |> MainRepo.update()
+  end
+
+  @spec virtual_update(%Device{}, map()) :: {:ok, Device.t()} | {:error, Ecto.Changeset.t()}
+  def virtual_update(device, params) do
+    with %Ecto.Changeset{valid?: true, data: data, changes: changes} <- changeset(device, params) do
+      new_data = Map.merge(Map.from_struct(data), changes)
+      {:ok, struct(%Device{}, new_data)}
+    else
+      error_changeset ->
+        {:error, error_changeset}
+    end
+  end
 end

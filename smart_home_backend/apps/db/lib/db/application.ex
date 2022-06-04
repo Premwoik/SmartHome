@@ -7,6 +7,7 @@ defmodule DB.Application do
 
   alias DB.Proc.ActionListProc
   alias DB.Proc.PortListProc
+  alias DB.Proc.DeviceListProc
 
   #  @otp_app Mix.Project.config()[:app]
   def start(_type, _args) do
@@ -15,6 +16,7 @@ defmodule DB.Application do
     children = [
       DB.MainRepo,
       DB.StatsRepo,
+      DeviceListProc,
       PortListProc,
       ActionListProc
     ]
