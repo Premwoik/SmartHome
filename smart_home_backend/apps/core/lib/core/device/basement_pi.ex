@@ -131,7 +131,7 @@ defmodule Core.Device.BasementPi do
   @impl GenServer
   def handle_info({:status_update, data}, %{config: %{circuts: circuts}} = state) do
     Enum.zip(data, circuts)
-    |> Enum.each(fn {{name, state}, {name, id}} ->
+    |> Enum.each(fn {{name, state}, %{name: name, port_id: id}} ->
       value = state == :running
 
       PortListProc.fast_update_state(id, %{"status" => to_string(state), "value" => value})
@@ -170,6 +170,7 @@ defmodule Core.Device.BasementPi do
     Process.send_after(pid, :check_subscription, @observer_check_time)
 
     unless :heating_api.is_registered_observer(device, pid) do
+      Logger.info("Subscribing to the #{device.name} heating_server events")
       :heating_api.register_observer(device, pid)
     else
       :ok
