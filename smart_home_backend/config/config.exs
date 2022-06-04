@@ -48,9 +48,6 @@ config :db, DB.MainRepo,
   hostname: server_ip,
   port: 5433
 
-# TODO add PubSub deps to the core
-# config :core, :broadcast_handler, HomeUiWeb.Channels.BroadcastHandler
-
 # config :home_ui,
 # ecto_repos: [HomeUi.Repo]
 
