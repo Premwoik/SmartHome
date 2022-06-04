@@ -28,6 +28,9 @@ import Config
 
 # config :core, :devices_module, Core.Devices
 
+
+config :core, :target, System.get_env("TARGET", "rpi")
+
 config :core, two_way_client: Core.Device.Client.TwoWay
 config :core, one_way_client: Core.Device.Client.OneWay
 
