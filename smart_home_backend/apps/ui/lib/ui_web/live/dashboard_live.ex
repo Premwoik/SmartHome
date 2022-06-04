@@ -269,8 +269,4 @@ defmodule UiWeb.DashboardLive do
           {socket, Enum.reverse(items)}
         end).()
   end
-
-  # defp broadcast(data) do
-  # UiWeb.Endpoint.broadcast!(@topic, "object:updated", data)
-  # end
 end
