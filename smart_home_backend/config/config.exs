@@ -9,6 +9,8 @@
 # move said applications out of the umbrella.
 import Config
 
+config :core, :target, System.get_env("TARGET", "rpi")
+
 server_ip = "192.168.2.100"
 
 config :core, two_way_client: Core.Device.Client.TwoWay
