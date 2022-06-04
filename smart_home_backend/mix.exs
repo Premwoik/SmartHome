@@ -24,7 +24,7 @@ defmodule SmartHomeBackend.MixProject do
   defp deps do
     [
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:gradient, github: "esl/gradient"}
+      {:gradient, github: "esl/gradient", only: [:dev], runtime: false}
     ]
   end
 
