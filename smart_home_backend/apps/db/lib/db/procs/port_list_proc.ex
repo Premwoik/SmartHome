@@ -139,7 +139,7 @@ defmodule DB.Proc.PortListProc do
     ProcBeh.get_just(add(params))
   end
 
-  @spec identify(integer(), integer() | [integer()]) :: {:ok, [Port.t()]} | {:error, term()}
+  @spec identify(integer(), integer() | [integer()]) :: resp() | [resp()]
   def identify(device_id, numbers) when is_list(numbers) do
     GenServer.call(__MODULE__, {:identify, device_id, numbers})
   end
@@ -148,9 +148,9 @@ defmodule DB.Proc.PortListProc do
     GenServer.call(__MODULE__, {:identify, device_id, [number]})
   end
 
-  @spec identify!(integer(), integer() | [integer()]) :: nil | Port.t()
-  def identify!(device_id, number) do
-    ProcBeh.get_just(identify(device_id, number), [])
+  @spec identify!(integer(), integer() | [integer()]) :: resp!()  | [resp!()]
+  def identify!(device_id, numbers) do
+    ProcBeh.get_just(identify(device_id, numbers), [])
   end
 
   ## GenServer API
