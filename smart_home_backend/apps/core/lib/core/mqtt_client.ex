@@ -6,7 +6,7 @@ defmodule Core.MqttClient do
 
   alias Core.Device.{SonoffBasic, Shelly}
   alias Core.Mqtt.RfButtonHandler
-  alias DB.Data.RfButton
+  alias DB.Proc.RfButtonListProc
 
   def init(_args) do
     {:ok, %{pages: %{}, aliases: %{}}}
@@ -21,29 +21,13 @@ defmodule Core.MqttClient do
   end
 
   def handle_message(["shellies", name, "relay", "0"], payload, state) do
-    with {:ok, state} <- Shelly.handle_mqtt_result(name, payload, state) do
-      {:ok, state}
-    else
-      :ok ->
-        {:ok, state}
-
-      _ ->
-        Logger.info("Can not find handler for device: #{name}}")
-        {:ok, state}
-    end
+    :ok = Shelly.handle_mqtt_result(name, payload, state)
+    {:ok, state}
   end
 
   def handle_message(["stat", "sonoff_basic", name, "RESULT"], payload, state) do
-    with {:ok, state} <- SonoffBasic.handle_mqtt_result(name, payload, state) do
-      {:ok, state}
-    else
-      :ok ->
-        {:ok, state}
-
-      _ ->
-        Logger.info("Can not find handler for device: #{name}}")
-        {:ok, state}
-    end
+    :ok = SonoffBasic.handle_mqtt_result(name, payload, state)
+    {:ok, state}
   end
 
   def handle_message(["tele", _, "RESULT"], payload, state) do
@@ -52,13 +36,9 @@ defmodule Core.MqttClient do
     # messages could be a strategy though.
     Logger.info("RfButton handling #{inspect(payload)}")
 
-    %{
-      "RfReceived" => %{
-        "Data" => key_value
-      }
-    } = Poison.decode!(payload)
+    %{"RfReceived" => %{"Data" => key_value}} = Poison.decode!(payload)
 
-    btn = RfButton.identify(key_value)
+    btn = RfButtonListProc.identify!(key_value)
     state = RfButtonHandler.handle_button_click(btn, state)
     {:ok, state}
   end

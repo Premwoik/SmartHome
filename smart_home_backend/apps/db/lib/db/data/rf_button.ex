@@ -59,6 +59,10 @@ defmodule DB.Data.RfButton do
     MainRepo.get_by(RfButton, key_value: key_value)
   end
 
+  def identify(buttons, values) do
+    for b <- buttons, b.key_value in values, do: b
+  end
+
   def list_all() do
     {:ok, list_all!()}
   end
@@ -124,6 +128,23 @@ defmodule DB.Data.RfButton do
     case MainRepo.update(rf_button) do
       {:ok, struct} -> struct
       {:error, _} -> nil
+    end
+  end
+
+  @spec update(%RfButton{}, map()) :: {:ok, RfButton.t()} | {:error, Ecto.Changeset.t()}
+  def update(btn, params) do
+    changeset(btn, params)
+    |> MainRepo.update()
+  end
+
+  @spec virtual_update(%RfButton{}, map()) :: {:ok, RfButton.t()} | {:error, Ecto.Changeset.t()}
+  def virtual_update(btn, params) do
+    with %Ecto.Changeset{valid?: true, data: data, changes: changes} <- changeset(btn, params) do
+      new_data = Map.merge(Map.from_struct(data), changes)
+      {:ok, struct(%RfButton{}, new_data)}
+    else
+      error_changeset ->
+        {:error, error_changeset}
     end
   end
 end
