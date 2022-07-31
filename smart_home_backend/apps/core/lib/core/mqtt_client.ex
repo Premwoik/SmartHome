@@ -38,9 +38,12 @@ defmodule Core.MqttClient do
 
     %{"RfReceived" => %{"Data" => key_value}} = Poison.decode!(payload)
 
-    btn = RfButtonListProc.identify!(key_value)
-    state = RfButtonHandler.handle_button_click(btn, state)
-    {:ok, state}
+    case RfButtonListProc.identify!([key_value]) do
+      [btn] ->
+        {:ok, RfButtonHandler.handle_button_click(btn, state)}
+      [] ->
+        {:ok, state}
+    end
   end
 
   def handle_message(topic, payload, state) do

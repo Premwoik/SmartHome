@@ -22,8 +22,6 @@ defmodule Core.Mqtt.RfButtonHandler do
     data
   end
 
-  def handle_button_click(nil, data), do: data
-
   ###  Privates
 
   defp next_page_id(curr_id, max_page_id) do

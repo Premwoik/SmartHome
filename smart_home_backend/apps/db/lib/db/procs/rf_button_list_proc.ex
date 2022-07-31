@@ -5,11 +5,14 @@ defmodule DB.Proc.RfButtonListProc do
 
   alias DB.Proc.Beh, as: ProcBeh
   alias DB.Data.RfButton
+  alias DB.Data.RemoteController
 
   @behaviour ProcBeh
 
   @type resp() :: ProcBeh.resp(RfButton.t())
   @type resp!() :: ProcBeh.resp!(RfButton.t())
+  @type resp_list() :: ProcBeh.resp([RfButton.t()])
+  @type resp_list!() :: ProcBeh.resp!([RfButton.t()])
   @type id() :: ProcBeh.item_id()
 
   @type state_t() :: %{buttons: [RfButton.t()]}
@@ -56,11 +59,50 @@ defmodule DB.Proc.RfButtonListProc do
     |> ProcBeh.get_just([])
   end
 
+  @doc ""
+  @spec list_all_controllers() :: {:ok, [RemoteController.t()]}
+  def list_all_controllers() do
+    GenServer.call(__MODULE__, :all_controllers)
+  end
+
+  @doc ""
+  @spec list_all_controllers!() :: [RemoteController.t()]
+  def list_all_controllers!() do
+    list_all_controllers()
+    |> ProcBeh.get_just([])
+  end
+
   @impl ProcBeh
   @doc ""
   @spec force_read_all() :: :ok
   def force_read_all() do
     GenServer.cast(__MODULE__, {:force_read, :all})
+  end
+
+  @spec update_action(integer(), String.t(), map()) :: resp()
+  def update_action(port_id, page, params) do
+    GenServer.call(__MODULE__, {:update_action, port_id, page, params})
+  end
+
+  @spec update_action!(integer(), String.t(), map()) :: resp!()
+  def update_action!(port_id, btn, params) do
+    ProcBeh.get_just(update_action(port_id, btn, params))
+  end
+
+  @impl ProcBeh
+  @doc ""
+  @spec update(id(), map() | RfButton.t()) :: resp()
+  def update(btn_id, params) do
+    params = Map.delete(params, :__struct__)
+    GenServer.call(__MODULE__, {:update, btn_id, params})
+  end
+
+  @impl ProcBeh
+  @doc ""
+  @spec update!(id(), map() | RfButton.t()) :: resp!()
+  def update!(btn_id, params) do
+    update(btn_id, params)
+    |> ProcBeh.get_just()
   end
 
   @impl ProcBeh
@@ -79,35 +121,37 @@ defmodule DB.Proc.RfButtonListProc do
     |> ProcBeh.get_just()
   end
 
-  @spec identify(String.t() | [String.t()]) :: resp() | [resp()]
+  @spec identify([String.t()]) :: resp_list()
   def identify(numbers) when is_list(numbers) do
     GenServer.call(__MODULE__, {:identify, numbers})
   end
 
-  def identify(number) do
-    GenServer.call(__MODULE__, {:identify, [number]})
-  end
-
-  @spec identify!(String.t() | [String.t()]) :: resp!() | [resp!()]
+  @spec identify!([String.t()]) :: resp_list!()
   def identify!(numbers) when is_list(numbers) do
     ProcBeh.get_just(identify(numbers), [])
-  end
-
-  def identify!(number) do
-    ProcBeh.get_just(identify(number), nil)
   end
 
   ## Genserver handlers 
 
   @impl GenServer
   def init(_init_arg) do
-    buttons = read_all_from_db()
-    {:ok, %{buttons: buttons}}
+    buttons = read_all_from_db(RfButton)
+    controllers = read_all_from_db(RemoteController)
+    {:ok, %{buttons: buttons, controllers: controllers}}
   end
 
   @impl GenServer
   def handle_call(:all, _from, %{buttons: buttons} = state) do
     return = Map.values(buttons)
+    {:reply, {:ok, return}, state}
+  end
+
+  @impl GenServer
+  def handle_call(:all_controllers, _from, %{controllers: controllers, buttons: buttons} = state) do
+    return =
+      Map.values(controllers)
+      |> Enum.map(&controller_with_buttons(&1, state))
+
     {:reply, {:ok, return}, state}
   end
 
@@ -119,6 +163,19 @@ defmodule DB.Proc.RfButtonListProc do
   @impl GenServer
   def handle_call({:get_ids, ids}, _from, %{devices: buttons} = state) do
     {:reply, Map.values(Map.take(buttons, ids)), state}
+  end
+
+  @impl GenServer
+  def handle_call({:update_action, btn_id, page, page_params}, _from, state) do
+    with {:ok, %{on_click_action: action} = btn} <- get_btn(state, btn_id),
+         params <- %{on_click_action: put_in(action["pages"][page], page_params)},
+         {:ok, updated_btn} <- RfButton.update(btn, params) do
+      new_state = put_btn(state, updated_btn)
+      {:reply, {:ok, updated_btn}, new_state}
+    else
+      {:error, _} = error ->
+        {:reply, error, state}
+    end
   end
 
   @impl GenServer
@@ -158,7 +215,9 @@ defmodule DB.Proc.RfButtonListProc do
 
   @impl GenServer
   def handle_cast({:force_read, :all}, state) do
-    {:noreply, %{state | buttons: read_all_from_db()}}
+    buttons = read_all_from_db(RfButton)
+    controllers = read_all_from_db(RemoteController)
+    {:noreply, %{state | buttons: buttons, controllers: controllers}}
   end
 
   ## Internal helpers
@@ -168,12 +227,17 @@ defmodule DB.Proc.RfButtonListProc do
   end
 
   defp put_btn(%{buttons: buttons} = state, button) do
-    %{state | button: Map.put(buttons, button.id, button)}
+    %{state | buttons: Map.put(buttons, button.id, button)}
   end
 
-  @spec read_all_from_db() :: map()
-  defp read_all_from_db() do
-    RfButton.list_all!()
+  defp controller_with_buttons(%RemoteController{id: id} = c, %{buttons: buttons}) do
+    filtered = for {_, rf = %RfButton{controller_id: ^id}} <- buttons, do: rf
+    %RemoteController{c | buttons: filtered}
+  end
+
+  @spec read_all_from_db(module()) :: map()
+  defp read_all_from_db(mod) do
+    mod.list_all!()
     |> Enum.map(&{&1.id, &1})
     |> Enum.into(%{})
   end

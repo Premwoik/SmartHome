@@ -78,7 +78,7 @@ defmodule DB.Proc.ActionListProc do
   @doc ""
   @spec list_all!() :: [Action.t()]
   def list_all!() do
-    ProcBeh.get_just(list_all!(), [])
+    ProcBeh.get_just(list_all(), [])
   end
 
   @impl ProcBeh
