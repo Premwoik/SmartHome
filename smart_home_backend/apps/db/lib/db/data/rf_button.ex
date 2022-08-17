@@ -7,6 +7,7 @@ defmodule DB.Data.RfButton do
 
   alias DB.Data.Action
   alias DB.Data.Port
+  alias DB.Data.RemoteController
   alias DB.Data.RfButton
   alias DB.MainRepo
 
@@ -21,7 +22,8 @@ defmodule DB.Data.RfButton do
           mode: mode_t(),
           key_value: String.t(),
           page: integer(),
-          on_click_action: map()
+          on_click_action: map(),
+          controller: RemoteController.t()
         }
 
   schema "rf_buttons" do
@@ -30,12 +32,40 @@ defmodule DB.Data.RfButton do
     field(:key_value, :string)
     field(:page, :integer, default: 0)
     field(:on_click_action, :map)
+    belongs_to(:controller, RemoteController)
   end
 
   def changeset(schema, params) do
     schema
     |> cast(params, __schema__(:fields))
-    |> validate_required([:name, :mode, :key_value, :on_click_action])
+    |> validate_required([:name, :key_value, :on_click_action])
+  end
+
+  @spec list_all!() :: [RfButton.t()]
+  def list_all!() do
+    MainRepo.all(RfButton)
+  end
+
+  @spec identify([RfButton.t()], [String.t()]) :: [RfButton.t()]
+  def identify(buttons, key_values) do
+    for b <- buttons, b.key_value in key_values, do: b
+  end
+
+  @spec update(%RfButton{}, map()) :: {:ok, RfButton.t()} | {:error, Ecto.Changeset.t()}
+  def update(btn, params) do
+    changeset(btn, params)
+    |> MainRepo.update()
+  end
+
+  @spec virtual_update(%RfButton{}, map()) :: {:ok, RfButton.t()} | {:error, Ecto.Changeset.t()}
+  def virtual_update(btn, params) do
+    with %Ecto.Changeset{valid?: true, data: data, changes: changes} <- changeset(btn, params) do
+      new_data = Map.merge(Map.from_struct(data), changes)
+      {:ok, struct(%RfButton{}, new_data)}
+    else
+      error_changeset ->
+        {:error, error_changeset}
+    end
   end
 
   @spec click_action(RfButton.t(), integer()) :: Port.t() | Action.t() | nil
@@ -55,58 +85,13 @@ defmodule DB.Data.RfButton do
     end
   end
 
-  def identify(key_value) do
-    MainRepo.get_by(RfButton, key_value: key_value)
-  end
-
-  def list_all() do
-    {:ok, list_all!()}
-  end
-
-  def list_all!() do
-    MainRepo.all(RfButton)
-  end
-
-  def group_by_pilot!() do
-    list_all!()
-    |> Enum.group_by(
-      fn p ->
-        case String.split(p.name, "-") do
-          [pilot, _] -> pilot
-          _ -> "unknown"
-        end
-      end,
-      fn p ->
-        case String.split(p.name, "-") do
-          [_, num] -> {String.to_atom(num), p}
-          _ -> {"unknown", p}
-        end
-      end
-    )
-  end
-
-  def update_action(rf_button, page, action) do
-    pages =
-      case rf_button.on_click_action do
-        nil -> %{}
-        otherwise -> Map.get(otherwise, "pages", %{})
-      end
-
-    pages = Map.put(pages, page, action)
-
-    rf_button = Ecto.Changeset.change(rf_button, on_click_action: %{"pages" => pages})
-
-    case MainRepo.update(rf_button) do
-      {:ok, struct} -> struct
-      {:error, _} -> nil
-    end
-  end
-
+  @spec get_actions(%RfButton{}) :: [{page, item}]
+        when page: integer(), item: %Port{} | %Action{} | nil
   def get_actions(rf_button) do
-    case rf_button.on_click_action do
-      nil -> %{}
-      otherwise -> Map.get(otherwise, "pages", %{})
-    end
+    rf_button
+    |> Map.get(:on_click_action)
+    |> nil_to_empty_map()
+    |> Map.get("pages", %{})
     |> Enum.map(fn {page, action} ->
       case action do
         %{"id" => id, "type" => "action"} ->
@@ -114,16 +99,25 @@ defmodule DB.Data.RfButton do
 
         %{"id" => id, "type" => "port"} ->
           {page, DB.Proc.PortListProc.get!(id)}
+
+        _ ->
+          nil
       end
     end)
   end
 
-  def clear_actions(%RfButton{} = rf_button) do
-    rf_button = Ecto.Changeset.change(rf_button, on_click_action: nil)
+  def nil_to_empty_map(nil), do: %{}
+  def nil_to_empty_map(map), do: map
 
-    case MainRepo.update(rf_button) do
-      {:ok, struct} -> struct
-      {:error, _} -> nil
-    end
+  def get_layout(rf_button) do
+    rf_button
+    |> Map.get(:on_click_action, %{})
+    |> Map.get("layout", %{"cols" => 1, "rows" => 1})
+  end
+
+  @sep "-"
+
+  def group_by_pilot(buttons) do
+    Enum.group_by(buttons, fn %RfButton{name: name} -> hd(String.split(name, @sep)) end)
   end
 end
