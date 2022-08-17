@@ -7,6 +7,8 @@ defmodule DB.Application do
 
   alias DB.Proc.ActionListProc
   alias DB.Proc.PortListProc
+  alias DB.Proc.DeviceListProc
+  alias DB.Proc.RfButtonListProc
 
   #  @otp_app Mix.Project.config()[:app]
   def start(_type, _args) do
@@ -15,8 +17,10 @@ defmodule DB.Application do
     children = [
       DB.MainRepo,
       DB.StatsRepo,
+      DeviceListProc,
       PortListProc,
-      ActionListProc
+      ActionListProc,
+      RfButtonListProc
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

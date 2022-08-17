@@ -103,7 +103,7 @@ defmodule Core.Controller do
   defp get_module(item) do
     case item do
       %Port{} -> port_based_type(item)
-      %Action{} -> {:ok, ActionController.Activate}
+      %Action{} -> {:ok, ActionController}
       _ -> {:error, "Not supported item type!"}
     end
   end

@@ -1,47 +1,40 @@
 -module(heating_api).
 
--export([run_circut/2, get_temps/1, get_config/1, set_config/2, register_observer/2,
-         unregister_observer/2]).
-
--export([config_mock/0]).
+-export([write_pin/3, run_circut/2, get_temps/1, get_config/1, set_config/2,
+         is_registered_observer/2, register_observer/2, unregister_observer/2]).
 
 -include_lib("../../../deps/basement_core/src/heating.hrl").
 
 -type device() :: 'Elixir.DB.Data.Device':t().
--type circut() ::
+-type circut_map() ::
     #{name := atom(),
+      port_id => integer(),
       max_temp := float(),
       min_temp := float(),
       planned_runs := planned_run(),
       running_duration := calendar:time(),
-      break_duration := calendar:time()}.
+      break_duration := calendar:time(),
+      atom() => any()}.
 -type config() ::
     #{boiler_min_temp := float(),
       temp_read_interval := calendar:time(),
-      circuts := [circut()]}.
+      circuts := [circut_map()],
+      atom() => any()}.
 
 -define(MOD, heating_server).
-
-%% Debug
-
-config_mock() ->
-    C1 = #{name => high,
-           max_temp => 30.0,
-           min_temp => 20.0,
-           planned_runs => [{[mon], {6, 20, 0}, {1, 0, 0}}, {null, {8, 0, 0}, {1, 0, 0}}],
-           running_duration => {0, 10, 0},
-           break_duration => {0, 5, 0}},
-    C2 = #{name => low,
-           max_temp => 30.0,
-           min_temp => 20.0,
-           planned_runs => [],
-           running_duration => {0, 10, 0},
-           break_duration => {0, 5, 0}},
-    #{boiler_min_temp => 40.0,
-      temp_read_interval => {0, 0, 30},
-      circuts => [C1, C2]}.
+-define(HARDWARE, hardware_api).
 
 %% Api
+
+-spec write_pin(device(), integer(), true | false) -> ok | node_issue.
+write_pin(#{ip := Node}, Pin, State) ->
+    State2 =
+        if State ->
+               low;
+           true ->
+               high
+        end,
+    hcall(Node, ?FUNCTION_NAME, [Pin, State2]).
 
 -spec run_circut(device(), atom() | integer()) -> ok | node_issue.
 run_circut(#{ip := Node}, CircutID) ->
@@ -74,11 +67,33 @@ register_observer(#{ip := Node}, Pid) ->
 unregister_observer(#{ip := Node}, Pid) ->
     call(Node, ?FUNCTION_NAME, [Pid]).
 
+-spec is_registered_observer(device(), pid()) -> boolean().
+is_registered_observer(#{ip := Node}, Pid) ->
+    case call(Node, ?FUNCTION_NAME, [Pid]) of
+        {ok, Status} ->
+            Status;
+        node_issue ->
+            false
+    end.
+
 %% Internal
 -spec call(binary(), atom(), list()) -> any().
 call(Node, Function, Args) ->
+    call(Node, ?MOD, Function, Args).
+
+-spec hcall(binary(), atom(), list()) -> any().
+hcall(Node, Function, Args) ->
+    call(Node, ?HARDWARE, Function, Args).
+
+-spec call(binary(), atom(), atom(), list()) -> any().
+call(Node, Mod, Function, Args) ->
     try
-        rpc:call(binary_to_atom(Node), ?MOD, Function, Args)
+        case rpc:call(binary_to_atom(Node), Mod, Function, Args) of
+            {badrpc, _} ->
+                node_issue;
+            Res ->
+                Res
+        end
     catch
         _:_ ->
             node_issue
@@ -87,14 +102,16 @@ call(Node, Function, Args) ->
 -spec state_to_map(#state{}) -> map().
 state_to_map(State) ->
     Circuts = lists:map(fun record_to_map/1, State#state.circuts),
+    Pomp = record_to_map(State#state.pomp),
     StateMap = record_to_map(State),
-    StateMap#{circuts => Circuts}.
+    StateMap#{circuts => Circuts, pomp => Pomp}.
 
 -spec map_to_state(map()) -> #state{}.
 map_to_state(StateMap) ->
     State = map_to_record(StateMap, state),
     Circuts = lists:map(fun(M) -> map_to_record(M, circut) end, State#state.circuts),
-    State#state{circuts = Circuts}.
+    Pomp = map_to_record(maps:get(pomp, State), cwu_pomp),
+    State#state{circuts = Circuts, pomp = Pomp}.
 
 map_to_record(Map, RecordType) ->
     RecordFields = record_fields(RecordType),
@@ -112,5 +129,7 @@ record_fields(state) ->
     record_info(fields, state);
 record_fields(circut) ->
     record_info(fields, circut);
+record_fields(cwu_pomp) ->
+    record_info(fields, cwu_pomp);
 record_fields(_) ->
     [].

@@ -2,34 +2,34 @@ defmodule UiWeb.SettingsLive do
   use UiWeb, :live_view
 
   alias DB.Data.ScheduleJob
+  alias DB.Data.RemoteController
   alias DB.Data.RfButton
   alias DB.Proc.PortListProc
   alias DB.Proc.ActionListProc
+  alias DB.Proc.RfButtonListProc
 
+  @impl true
   def mount(_params, _session, socket) do
     jobs = ScheduleJob.list_all!()
-    pilots = RfButton.group_by_pilot!()
-    items = ActionListProc.list_all!()
-
-    selected_btn =
-      Enum.map(pilots, fn {k, _} -> {k, %{"items" => items}} end)
-      |> Map.new()
+    controllers = prepare_controllers()
+    selected = prepare_selected_buttons(controllers)
 
     device = DB.MainRepo.get!(DB.Data.Device, 10)
     config = Core.Device.BasementPi.get_local_config(device)
 
-    categories = %{tasks: true, pilots: false, circuts: false}
+    categories = %{tasks: true, controllers: false, circuts: false}
 
     {:ok,
      assign(socket,
        jobs: jobs,
-       pilots: pilots,
-       selected: selected_btn,
-       heating_config: config,
+       controllers: controllers,
+       selected: selected,
        hc_device: device,
        categories: categories
      )}
   end
+
+  ## Toggle 
 
   def handle_event("toggle_category", %{"value" => category}, socket) do
     cat = String.to_existing_atom(category)
@@ -37,8 +37,9 @@ defmodule UiWeb.SettingsLive do
     {:noreply, assign(socket, categories: cats)}
   end
 
-  # Tasks handle_event {{{
+  ## Tasks handle_event/3
 
+  @impl true
   def handle_event("save", %{"job" => %{"id" => id} = params}, socket) do
     params = Map.merge(%{"status" => "false", "extended" => "false"}, params)
 
@@ -67,93 +68,48 @@ defmodule UiWeb.SettingsLive do
     {:noreply, socket}
   end
 
-  # }}}
-  # RfButton handle_event {{{
+  ## Remote controllers handle_event/3
 
-  def handle_event(
-        "rf_button_change",
-        %{"button" => %{"type" => type, "pilot" => pilot, "page" => page, "mode" => mode}},
-        socket
-      ) do
-    items =
-      case type do
-        "action" ->
-          ActionListProc.list_all!()
-
-        "port" ->
-          PortListProc.list_all!()
-
-        "" ->
-          []
-      end
-
-    selected = socket.assigns[:selected]
-    btn_mem = Map.get(selected, pilot, %{})
-    btn_mem = Map.put(btn_mem, "type", type)
-    btn_mem = Map.put(btn_mem, "items", items)
-    btn_mem = Map.put(btn_mem, "page", page)
-    btn_mem = Map.put(btn_mem, "mode", mode)
-    selected = Map.put(selected, pilot, btn_mem)
+  def handle_event("rf_button_change", %{"button" => button}, socket) do
+    %{"id" => id, "type" => type, "pilot" => pilot, "page" => page, "mode" => mode} = button
+    id = if(id != "", do: String.to_integer(id), else: nil)
+    pilot_id = String.to_integer(pilot)
+    btn_mem = %{id: id, type: type, items: prepare_items(type), page: page, mode: mode}
+    selected = Map.put(socket.assigns[:selected], pilot_id, btn_mem)
 
     {:noreply, assign(socket, selected: selected)}
   end
 
-  def handle_event(
-        "rf_button_submit",
-        %{
-          "button" =>
-            %{"pilot" => _pilot, "type" => type, "page" => page, "item_id" => item_id} = params
-        },
-        socket
-      ) do
-    socket =
-      case Map.get(params, "pilot") do
-        nil ->
-          put_flash(socket, :error, "Przycisk nie został wybrany!")
+  def handle_event("rf_button_submit", %{"button" => button}, socket) do
+    %{"id" => id, "type" => type, "page" => page, "item_id" => item_id} = button
 
-        pilot ->
-          selected = socket.assigns[:selected]
-          pilots = socket.assigns[:pilots]
-          data = Map.fetch!(selected, pilot)
-          id = String.to_atom(Map.fetch!(data, "id"))
+    case id do
+      nil ->
+        {:noreply, put_flash(socket, :error, "Przycisk nie został wybrany!")}
 
-          {item_id, ""} = Integer.parse(item_id)
+      _ ->
+        id = String.to_integer(id)
+        item_id = String.to_integer(item_id)
+        RfButtonListProc.update_action!(id, page, %{"type" => type, "id" => item_id})
 
-          pilot_d = Map.fetch!(pilots, pilot)
-          btn = Keyword.fetch!(pilot_d, id)
-          new_btn = RfButton.update_action(btn, page, %{"type" => type, "id" => item_id})
-          new_pilot = Keyword.put(pilot_d, id, new_btn)
-          new_pilots = Map.put(pilots, pilot, new_pilot)
-
-          assign(socket, :pilots, new_pilots)
-      end
-
-    {:noreply, socket}
+        {:noreply, assign(socket, :controllers, prepare_controllers())}
+    end
   end
 
-  def handle_event("select_btn", %{"pilot" => pilot, "id" => id}, socket) do
-    selected = socket.assigns[:selected]
-    btn_mem = Map.get(selected, pilot, %{})
-    btn_mem = Map.put(btn_mem, "id", id)
-    selected = Map.put(selected, pilot, btn_mem)
-
+  def handle_event("rf_button_select", %{"pilot" => pilot, "id" => id}, socket) do
+    id = String.to_integer(id)
+    pilot_id = String.to_integer(pilot)
+    selected = put_in(socket.assigns[:selected], [pilot_id, :id], id)
     {:noreply, assign(socket, selected: selected)}
   end
 
-  def handle_event("clear_btn", %{"pilot" => pilot, "id" => id}, socket) do
-    pilots = socket.assigns[:pilots]
-    pilot_btns = Map.get(pilots, pilot, [])
-    id = String.to_atom(id)
-    {:ok, %RfButton{} = btn} = Keyword.fetch(pilot_btns, id)
-    btn = RfButton.clear_actions(btn)
-    pilot_btns = Keyword.put(pilot_btns, id, btn)
-    pilots = Map.put(pilots, pilot, pilot_btns)
-
-    {:noreply, assign(socket, pilots: pilots)}
+  def handle_event("rf_button_clear", %{"id" => id}, socket) do
+    id = String.to_integer(id)
+    RfButtonListProc.update(id, %{on_click_action: %{"pages" => %{}}})
+    {:noreply, assign(socket, controllers: prepare_controllers())}
   end
 
-  # }}}
-  # Circuts handle_event {{{
+  # Circuts handle_event/3
 
   def handle_event("add_run", %{"circut" => circut_id}, socket) do
     circut_id = String.to_integer(circut_id)
@@ -200,11 +156,9 @@ defmodule UiWeb.SettingsLive do
     {:noreply, socket}
   end
 
-  # }}}
+  ## Helpers
 
-  # Internal
-
-  def update_config(config, data) do
+  defp update_config(config, data) do
     %{
       config
       | boiler_min_temp: String.to_float(data["boiler_min_temp"]),
@@ -213,7 +167,7 @@ defmodule UiWeb.SettingsLive do
     }
   end
 
-  def update_circuts(conf_circuts, circuts) do
+  defp update_circuts(conf_circuts, circuts) do
     Enum.map(conf_circuts, fn circut ->
       data = Map.get(circuts, Atom.to_string(circut.name))
 
@@ -228,11 +182,11 @@ defmodule UiWeb.SettingsLive do
     end)
   end
 
-  def update_planned_runs(nil) do
+  defp update_planned_runs(nil) do
     []
   end
 
-  def update_planned_runs(runs) do
+  defp update_planned_runs(runs) do
     Enum.map(runs, fn {_, data} ->
       days = Enum.map(Map.get(data, "days", []), &String.to_existing_atom/1)
       days = if days == [], do: :null, else: days
@@ -242,18 +196,42 @@ defmodule UiWeb.SettingsLive do
     end)
   end
 
-  def parse_time(str) do
+  defp parse_time(str) do
     str = if String.length(str) > 5, do: str, else: str <> ":00"
     Time.to_erl(Time.from_iso8601!(str))
   end
 
-  def update(jobs, %{id: id} = job) do
-    Enum.map(jobs, fn
-      %{id: id2} when id2 == id ->
-        job
-
-      j ->
-        j
+  defp update(items, %{id: id} = item) do
+    Enum.map(items, fn
+      %{id: ^id} -> item
+      i -> i
     end)
+  end
+
+  defp default_btn_mem() do
+    %{id: nil, items: prepare_items("action"), type: "action", page: "1", mode: "action"}
+  end
+
+  defp prepare_controllers() do
+    for %RemoteController{} = c <- RfButtonListProc.list_all_controllers!() do
+      %{cols: cols, buttons: btns} = c
+      %RemoteController{c | buttons: Enum.chunk_every(btns, cols)}
+    end
+  end
+
+  defp prepare_selected_buttons(controllers) do
+    btn_mem = default_btn_mem()
+
+    controllers
+    |> Enum.map(fn %RemoteController{id: id} -> {id, btn_mem} end)
+    |> Map.new()
+  end
+
+  defp prepare_items("action"), do: ActionListProc.list_all!() |> format_items()
+  defp prepare_items("port"), do: PortListProc.list_all!() |> format_items()
+  defp prepare_items(_), do: []
+
+  defp format_items(items) do
+    items |> Enum.sort_by(& &1.name) |> Enum.map(&{&1.name, &1.id})
   end
 end

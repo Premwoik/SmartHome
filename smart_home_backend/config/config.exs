@@ -9,6 +9,8 @@
 # move said applications out of the umbrella.
 import Config
 
+config :core, :target, System.get_env("TARGET", "rpi")
+
 server_ip = "192.168.2.100"
 
 config :core, two_way_client: Core.Device.Client.TwoWay
@@ -45,9 +47,6 @@ config :db, DB.MainRepo,
   password: "postgres",
   hostname: server_ip,
   port: 5433
-
-# TODO add PubSub deps to the core
-# config :core, :broadcast_handler, HomeUiWeb.Channels.BroadcastHandler
 
 # config :home_ui,
 # ecto_repos: [HomeUi.Repo]

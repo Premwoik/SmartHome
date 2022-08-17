@@ -1,5 +1,5 @@
 %{
-  "basement_core": {:git, "https://github.com/Premwoik/basement-core.git", "d5e1238ccceaef8f5b76aad90d009c0660ee544b", []},
+  "basement_core": {:git, "https://github.com/Premwoik/basement-core.git", "ddd79517bad938ae390aa0e5ae757a134686feb6", []},
   "cachex": {:hex, :cachex, "3.4.0", "868b2959ea4aeb328c6b60ff66c8d5123c083466ad3c33d3d8b5f142e13101fb", [:mix], [{:eternal, "~> 1.2", [hex: :eternal, repo: "hexpm", optional: false]}, {:jumper, "~> 1.0", [hex: :jumper, repo: "hexpm", optional: false]}, {:sleeplocks, "~> 1.1", [hex: :sleeplocks, repo: "hexpm", optional: false]}, {:unsafe, "~> 1.0", [hex: :unsafe, repo: "hexpm", optional: false]}], "hexpm", "370123b1ab4fba4d2965fb18f87fd758325709787c8c5fce35b3fe80645ccbe5"},
   "castore": {:hex, :castore, "0.1.14", "3f6d7c7c1574c402fef29559d3f1a7389ba3524bc6a090a5e9e6abc3af65dcca", [:mix], [], "hexpm", "b34af542eadb727e6c8b37fdf73e18b2e02eb483a4ea0b52fd500bc23f052b7b"},
   "certifi": {:hex, :certifi, "2.8.0", "d4fb0a6bb20b7c9c3643e22507e42f356ac090a1dcea9ab99e27e0376d695eba", [:rebar3], [], "hexpm", "6ac7efc1c6f8600b08d625292d4bbf584e14847ce1b6b5c44d983d273e1097ea"},
@@ -26,8 +26,8 @@
   "gen_stage": {:hex, :gen_stage, "1.1.2", "b1656cd4ba431ed02c5656fe10cb5423820847113a07218da68eae5d6a260c23", [:mix], [], "hexpm", "9e39af23140f704e2b07a3e29d8f05fd21c2aaf4088ff43cb82be4b9e3148d02"},
   "gen_state_machine": {:hex, :gen_state_machine, "3.0.0", "1e57f86a494e5c6b14137ebef26a7eb342b3b0070c7135f2d6768ed3f6b6cdff", [:mix], [], "hexpm", "0a59652574bebceb7309f6b749d2a41b45fdeda8dbb4da0791e355dd19f0ed15"},
   "gettext": {:hex, :gettext, "0.19.0", "6909d61b38bb33339558f128f8af5913d5d5fe304a770217bf352b1620fb7ec4", [:mix], [], "hexpm", "3f7a274f52ebda9bb6655dfeda3d6b0dc4537ae51ce41dcccc7f73ca7379ad5e"},
-  "gradient": {:git, "https://github.com/esl/gradient.git", "455b270d8e2e9d4bea944449aa64563f72a0fcd2", []},
-  "gradualizer": {:git, "https://github.com/josefs/Gradualizer.git", "e226803c023bf9ceb94dfb517068208af37b9d7f", [ref: "master"]},
+  "gradient": {:git, "https://github.com/esl/gradient.git", "f78555691b44756130b7004adecb0a390879300d", []},
+  "gradualizer": {:git, "https://github.com/josefs/Gradualizer.git", "a72e7f0b7e55f235fdaa944340a13e0e41bc5ee3", [ref: "a72e7f0"]},
   "gradualizer_ex": {:git, "https://github.com/Premwoik/gradualizer-ex.git", "acaad8dacab5d988a1fcd105778289faf0f99e4a", [ref: "master"]},
   "hackney": {:hex, :hackney, "1.18.0", "c4443d960bb9fba6d01161d01cd81173089686717d9490e5d3606644c48d121f", [:rebar3], [{:certifi, "~>2.8.0", [hex: :certifi, repo: "hexpm", optional: false]}, {:idna, "~>6.1.0", [hex: :idna, repo: "hexpm", optional: false]}, {:metrics, "~>1.0.0", [hex: :metrics, repo: "hexpm", optional: false]}, {:mimerl, "~>1.1", [hex: :mimerl, repo: "hexpm", optional: false]}, {:parse_trans, "3.3.1", [hex: :parse_trans, repo: "hexpm", optional: false]}, {:ssl_verify_fun, "~>1.1.0", [hex: :ssl_verify_fun, repo: "hexpm", optional: false]}, {:unicode_util_compat, "~>0.7.0", [hex: :unicode_util_compat, repo: "hexpm", optional: false]}], "hexpm", "9afcda620704d720db8c6a3123e9848d09c87586dc1c10479c42627b905b5c5e"},
   "html_entities": {:hex, :html_entities, "0.5.2", "9e47e70598da7de2a9ff6af8758399251db6dbb7eebe2b013f2bbd2515895c3c", [:mix], [], "hexpm", "c53ba390403485615623b9531e97696f076ed415e8d8058b1dbaa28181f4fdcc"},

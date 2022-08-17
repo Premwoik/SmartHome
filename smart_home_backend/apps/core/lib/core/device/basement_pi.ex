@@ -20,12 +20,18 @@ defmodule Core.Device.BasementPi do
   @behaviour Core.Device
   @behaviour Core.Device.BasicIO
 
-  @type circut_name() :: :high | :low
-  @type circut_status() :: :idle | :running | :blocked
-  @type circut_planned_run() ::
-          {day :: :null | atom(), start_time :: :calendar.time(), duration :: :calendar.time()}
+  @type circut_name() :: atom()
+  @type port_id() :: integer()
 
   @type config :: :heating_api.config()
+
+  @type state_t() :: %{
+          device: Device.t(),
+          registered: boolean(),
+          circuts: %{circut_name() => port_id()}
+        }
+
+  @observer_check_time 60_000
 
   ## Api behaviour
 
@@ -45,8 +51,6 @@ defmodule Core.Device.BasementPi do
   def set_config(device, config),
     do: GenServer.cast(String.to_existing_atom(device.name), {:set_config, config})
 
-  # def set_config(device, config), do: :heating_api.set_config(device, config)
-
   ## Device behaviour
 
   @impl Core.Device
@@ -64,10 +68,21 @@ defmodule Core.Device.BasementPi do
   ## BasicIO behaviour
 
   @impl BasicIO
-  def set_outputs(device, [%Port{number: number, state: %{"value" => true}} = port]) do
+  def set_outputs(device, [%Port{number: number, type: :circut, state: %{"value" => true}} = port]) do
     case run_circut(device, number) do
       :ok ->
         %Response{ok: [port], result: [{device.id, :ok}], save: false}
+
+      err ->
+        Response.error({device.id, err}, [port])
+    end
+  end
+
+  @impl BasicIO
+  def set_outputs(device, [%Port{number: n, state: %{"value" => state}} = port]) do
+    case :heating_api.write_pin(device, n, state) do
+      :ok ->
+        %Response{ok: [port], result: [{device.id, :ok}], save: true}
 
       err ->
         Response.error({device.id, err}, [port])
@@ -96,11 +111,9 @@ defmodule Core.Device.BasementPi do
   ## GenServer behaviour
 
   @impl GenServer
-  def init(%{device: device} = opts) do
-    {ids, config} = try_init(device, self())
-    opts = Map.put(opts, :config, config)
-
-    {:ok, Map.put(opts, :port_ids, ids)}
+  def init(%{device: device}) do
+    state = %{device: device, registered: false, circuts: %{}}
+    {:ok, do_init(state, self())}
   end
 
   @impl GenServer
@@ -120,65 +133,105 @@ defmodule Core.Device.BasementPi do
   end
 
   @impl GenServer
-  def handle_info({:status_update, data}, %{port_ids: ids} = state) do
-    Enum.zip(data, ids)
-    |> Enum.each(fn {{name, state}, {name, id}} ->
-      value = state == :running
+  def handle_info({:status_update, data}, %{circuts: circuts} = state) do
+    Enum.each(data, fn {name, state} ->
+      case circuts[name] do
+        nil ->
+          Logger.warn("Cannot find `port_id` for circut: #{to_string(name)}")
 
-      PortListProc.update_state(id, %{"status" => to_string(state), "value" => value})
-      |> broadcast()
+        id ->
+          value = state == :running
+
+          PortListProc.fast_update_state(id, %{"status" => to_string(state), "value" => value})
+          |> broadcast()
+      end
     end)
 
     {:noreply, state}
   end
 
   @impl GenServer
-  def handle_info({:temp_update, data}, %{port_ids: ids} = state) do
-    Enum.zip(data, ids)
-    |> Enum.each(fn {{name, temp}, {name, id}} ->
-      PortListProc.update_state(id, %{"temp" => temp})
-      |> broadcast()
+  def handle_info({:temp_update, data}, %{circuts: circuts} = state) do
+    Enum.each(data, fn {name, temp} ->
+      case circuts[name] do
+        nil ->
+          Logger.warn("Cannot find `port_id` for circut: #{to_string(name)}")
+
+        id ->
+          PortListProc.fast_update_state(id, %{"temp" => temp})
+          |> broadcast()
+      end
     end)
 
     {:noreply, state}
   end
 
   @impl GenServer
-  def handle_info(:try_init, %{device: device} = state) do
-    {ids, config} = try_init(device, self())
-    state = Map.put(state, :config, config)
+  def handle_info(:init, state) do
+    {:noreply, do_init(state, self())}
+  end
 
-    {:noreply, Map.put(state, :port_ids, ids)}
+  @impl GenServer
+  def handle_info(:check_subscription, %{device: device} = state) do
+    do_check_subscription(device, self())
+    {:noreply, state}
   end
 
   ## Internal
 
-  def try_init(device, pid) do
-    with :ok <- :heating_api.register_observer(device, pid),
+  def do_check_subscription(device, pid) do
+    Process.send_after(pid, :check_subscription, @observer_check_time)
+
+    unless :heating_api.is_registered_observer(device, pid) do
+      Logger.info("Subscribing to the #{device.name} heating_server events")
+      :heating_api.register_observer(device, pid)
+    else
+      :ok
+    end
+  end
+
+  @spec do_init(state_t(), pid()) :: state_t()
+  def do_init(%{device: device} = state, pid) do
+    with :ok <- do_check_subscription(device, pid),
          {:ok, config} <- :heating_api.get_config(device) do
       Logger.info("Heating client `#{to_string(device.name)}` initialized successfully!")
-      {get_port_ids(device, config), config}
+      update_state(%{state | registered: true}, config)
     else
       _ ->
         Logger.warn(
           "Heating client `#{to_string(device.name)}` initialization failed. Will try again after 5sec!"
         )
 
-        Process.send_after(pid, :try_init, 5_000)
-        {[], %{}}
+        Process.send_after(pid, :init, 5_000)
+        state
     end
   end
 
-  @spec get_port_ids(Device.t(), config()) :: [{atom(), integer()}]
-  defp get_port_ids(device, %{circuts: circuts}) do
-    nums = Enum.with_index(circuts) |> Enum.map(&elem(&1, 1))
+  @spec update_state(state_t(), config()) :: state_t()
+  defp update_state(state = %{device: device}, %{circuts: circuts}) do
+    nums = Enum.to_list(1..length(circuts))
 
-    pairs =
+    circuts =
       PortListProc.identify!(device.id, nums)
+      |> Enum.sort(&(&1.number < &2.number))
       |> Enum.zip(circuts)
-      |> Enum.map(fn {%{id: id}, %{name: name}} -> {name, id} end)
+      |> Enum.map(fn {%{id: id}, %{name: name} = circut} ->
+        update_circut_port(id, circut)
+        {name, id}
+      end)
+      |> Map.new()
 
-    pairs
+    %{state | circuts: circuts}
+  end
+
+  def update_circut_port(port_id, %{current_temp: current_temp, status: status}) do
+    value = status == :running
+
+    PortListProc.fast_update_state(port_id, %{
+      "value" => value,
+      "temp" => current_temp,
+      "status" => to_string(status)
+    })
   end
 
   defp broadcast({:ok, port}) do

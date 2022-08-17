@@ -12,19 +12,6 @@ defmodule Core.Mqtt.RfButtonHandler do
     %{data | pages: pages_}
   end
 
-  def handle_button_click(%RfButton{id: id, mode: :alias}, %{aliases: aliases} = data) do
-    Core.GPIO.beep()
-
-    case Map.fetch(aliases, id) do
-      {:ok, btn} ->
-        handle_button_click(btn, data)
-
-      :error ->
-        Logger.info("Not found any button registered for this alias!")
-        data
-    end
-  end
-
   def handle_button_click(%RfButton{name: name} = btn, %{pages: pages} = data) do
     Core.GPIO.beep()
     page = get_current_page(name, pages)
@@ -32,23 +19,10 @@ defmodule Core.Mqtt.RfButtonHandler do
     RfButton.click_action(btn, page)
     |> execute_in_mode(btn.mode)
 
-    update_alias(btn, data)
-  end
-
-  def handle_button_click(nil, data), do: data
-
-  ###  Privates
-  #
-  defp update_alias(
-         %RfButton{on_click_action: %{"alias_id" => id}} = btn,
-         %{aliases: aliases} = data
-       ) do
-    %{data | aliases: Map.put(aliases, id, btn)}
-  end
-
-  defp update_alias(_, data) do
     data
   end
+
+  ###  Privates
 
   defp next_page_id(curr_id, max_page_id) do
     if max_page_id <= curr_id do

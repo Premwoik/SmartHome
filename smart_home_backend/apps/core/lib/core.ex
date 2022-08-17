@@ -12,10 +12,11 @@ defmodule Core do
     opts = [strategy: :one_for_one, name: Core.Supervisor]
     :ok = create_quick_tasks_ets()
     :ok = Core.HandyConfig.init()
-    Supervisor.start_link(children(), opts)
+    target = Application.get_env(:core, :target)
+    Supervisor.start_link(children(target), opts)
   end
 
-  defp children() do
+  defp children("rpi") do
     [
       {Cachex,
        name: :loggs_cache, limit: limit(size: 2048, policy: Cachex.Policy.LRW, reclaim: 0.2)},
@@ -25,6 +26,13 @@ defmodule Core do
       Core.Actions,
       Core.Mqtt.Supervisor,
       Core.Device.Supervisor
+    ]
+  end
+
+  defp children(_) do
+    [
+      {Cachex,
+       name: :loggs_cache, limit: limit(size: 2048, policy: Cachex.Policy.LRW, reclaim: 0.2)}
     ]
   end
 

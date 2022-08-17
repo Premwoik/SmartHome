@@ -21,5 +21,7 @@ erl_crash.dump
 
 .DS_Store
 
+.priv_env
+
 # Temporary files for e.g. tests
 /tmp

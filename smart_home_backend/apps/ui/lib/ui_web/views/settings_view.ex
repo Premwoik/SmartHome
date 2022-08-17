@@ -11,9 +11,7 @@ defmodule UiWeb.SettingsView do
   end
 
   def custom_td_class(id, pilot, selected) do
-    selected_id = Map.get(selected[pilot], "id", "0")
-
-    if selected_id == id do
+    if selected[pilot][:id] == id do
       "px-4 border bg-green-300"
     else
       "px-4 border"
@@ -31,6 +29,7 @@ defmodule UiWeb.SettingsView do
       Enum.map(actions, fn
         {page, %Port{name: name}} -> raw("<p>#{page} - #{name}</p>")
         {page, %Action{name: name}} -> raw("<p>#{page} - #{name}</p>")
+        nil -> nil
       end)
 
     case txt do
