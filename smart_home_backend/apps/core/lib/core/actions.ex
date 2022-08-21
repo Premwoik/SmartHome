@@ -12,7 +12,7 @@ defmodule Core.Actions do
 
   @type action_state() :: map()
   @type full_action_state() :: %{last_invoke: integer(), state: action_state()}
-  @type state() :: %{actions_state: [full_action_state()]}
+  @type state() :: %{actions_state: %{integer() => full_action_state()}}
 
   def start_link(arg) do
     GenServer.start_link(__MODULE__, arg, name: __MODULE__)
@@ -29,20 +29,20 @@ defmodule Core.Actions do
   def activate_up(ids, name \\ __MODULE__) do
     try do
       GenServer.call(name, {:activate, :up, ids})
-    catch
-      :exit, _ -> :error
     rescue
       _ -> :error
+    catch
+      :exit, _ -> :error
     end
   end
 
   def activate_down(ids, name \\ __MODULE__) do
     try do
       GenServer.call(name, {:activate, :down, ids})
-    catch
-      :exit, _ -> :error
     rescue
       _ -> :error
+    catch
+      :exit, _ -> :error
     end
   end
 
@@ -95,7 +95,7 @@ defmodule Core.Actions do
   @spec get_memory(Action.t(), state()) :: full_action_state()
   def get_memory(action, %{actions_state: states}) do
     with nil <- Map.get(states, action.id) do
-      %{state: get_module(Map.fetch!(action, :module)).init_state()}
+      %{state: get_module(Map.fetch!(action, :module)).init_state(), last_invoke: 0}
     end
   end
 
@@ -124,10 +124,6 @@ defmodule Core.Actions do
     end
   end
 
-  defp check_activation_freq(_, action_state) do
-    {:ok, Map.put(action_state, :lastInvoke, :os.system_time(:millisecond))}
-  end
-
   @spec check_activation_time(nil | Time.t(), nil | Time.t()) :: :ok | {:error, String.t()}
   defp check_activation_time(nil, nil), do: :ok
 
@@ -139,7 +135,7 @@ defmodule Core.Actions do
     end
   end
 
-  @spec run_action(pid(), ActionB.state(), atom() | Action.t(), state()) :: any
+  @spec run_action(pid(), ActionB.state(), atom() | Action.t(), full_action_state()) :: any
   defp run_action(_server_pid, on_off, action, memory) do
     module = get_module(action.module)
 
