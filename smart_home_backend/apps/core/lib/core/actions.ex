@@ -14,6 +14,9 @@ defmodule Core.Actions do
   @type full_action_state() :: %{last_invoke: integer(), state: action_state()}
   @type state() :: %{actions_state: %{integer() => full_action_state()}}
 
+  # flush inactive actions' states every hour
+  @flush_interval 1 * 24 * 3_600_000
+
   def start_link(arg) do
     GenServer.start_link(__MODULE__, arg, name: __MODULE__)
   end
@@ -50,6 +53,7 @@ defmodule Core.Actions do
 
   @impl true
   def init(_) do
+    flush_inactive_states()
     {:ok, %{actions_state: %{}}}
   end
 
@@ -65,6 +69,23 @@ defmodule Core.Actions do
   @impl true
   def handle_cast({:action_result, action_id, action_state}, state) do
     {:noreply, put_action_state(state, action_id, action_state)}
+  end
+
+  @impl true
+  def handle_info(:flush_inactive_states, %{actions_state: as} = state) do
+    flush_inactive_states()
+    state_ids = Map.keys(as)
+
+    with {:ok, active_actions} <- ActionListProc.list_active(),
+         true <- length(active_actions) < length(state_ids) do
+      active_actions_ids = Enum.map(active_actions, & &1.id)
+      inactive_actions_ids = state_ids -- active_actions_ids
+      flushed_as = Map.drop(as, inactive_actions_ids)
+      {:noreply, %{state | actions_state: flushed_as}}
+    else
+      _ ->
+        {:noreply, state}
+    end
   end
 
   ##   Privates
@@ -166,4 +187,7 @@ defmodule Core.Actions do
   defp get_module(function) do
     String.to_existing_atom("Elixir.Core.Actions." <> function)
   end
+
+  defp flush_inactive_states(),
+    do: Process.send_after(self(), :flush_inactive_states, @flush_interval)
 end
