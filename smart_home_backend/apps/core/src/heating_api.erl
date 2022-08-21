@@ -56,8 +56,7 @@ get_config(#{ip := Node}) ->
 -spec set_config(device(), config()) -> ok.
 set_config(#{ip := Node}, Config) ->
     State = map_to_state(Config),
-    ok = rpc:call(Node, heating_server, set_config, [State]),
-    ok.
+    call(Node, ?FUNCTION_NAME, [State]).
 
 -spec register_observer(device(), pid()) -> ok.
 register_observer(#{ip := Node}, Pid) ->
@@ -109,9 +108,14 @@ state_to_map(State) ->
 -spec map_to_state(map()) -> #state{}.
 map_to_state(StateMap) ->
     State = map_to_record(StateMap, state),
-    Circuts = lists:map(fun(M) -> map_to_record(M, circut) end, State#state.circuts),
-    Pomp = map_to_record(maps:get(pomp, State), cwu_pomp),
+    Circuts = circuts_to_records(State#state.circuts),
+    Pomp = map_to_record(State#state.pomp, cwu_pomp),
     State#state{circuts = Circuts, pomp = Pomp}.
+
+circuts_to_records(Circuts) when is_list(Circuts) ->
+    lists:map(fun(M) -> map_to_record(M, circut) end, Circuts);
+circuts_to_records(Circuts) when is_map(Circuts) ->
+    circuts_to_records(maps:values(Circuts)).
 
 map_to_record(Map, RecordType) ->
     RecordFields = record_fields(RecordType),

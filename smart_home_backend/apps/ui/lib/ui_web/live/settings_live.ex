@@ -3,30 +3,45 @@ defmodule UiWeb.SettingsLive do
 
   alias DB.Data.ScheduleJob
   alias DB.Data.RemoteController
-  alias DB.Data.RfButton
+  # alias DB.Data.RfButton
   alias DB.Proc.PortListProc
   alias DB.Proc.ActionListProc
   alias DB.Proc.RfButtonListProc
+  alias Core.Device.BasementPi
 
   @impl true
   def mount(_params, _session, socket) do
-    jobs = ScheduleJob.list_all!()
-    controllers = prepare_controllers()
-    selected = prepare_selected_buttons(controllers)
-
-    device = DB.MainRepo.get!(DB.Data.Device, 10)
-    config = Core.Device.BasementPi.get_local_config(device)
-
     categories = %{tasks: true, controllers: false, circuts: false}
 
-    {:ok,
-     assign(socket,
-       jobs: jobs,
-       controllers: controllers,
-       selected: selected,
-       hc_device: device,
-       categories: categories
-     )}
+    case connected?(socket) do
+      true ->
+        jobs = ScheduleJob.list_all!()
+        controllers = prepare_controllers()
+        selected = prepare_selected_buttons(controllers)
+
+        heating_config =
+          DB.MainRepo.get!(DB.Data.Device, 10)
+          |> Core.Device.BasementPi.get_local_config()
+
+        {:ok,
+         assign(socket,
+           jobs: jobs,
+           controllers: controllers,
+           selected: selected,
+           heating_config: heating_config,
+           categories: categories
+         )}
+
+      false ->
+        {:ok,
+         assign(socket,
+           jobs: [],
+           controllers: [],
+           selected: %{},
+           heating_config: %{},
+           categories: categories
+         )}
+    end
   end
 
   ## Toggle 
@@ -111,34 +126,31 @@ defmodule UiWeb.SettingsLive do
 
   # Circuts handle_event/3
 
-  def handle_event("add_run", %{"circut" => circut_id}, socket) do
-    circut_id = String.to_integer(circut_id)
-    IO.inspect(circut_id)
+  def handle_event("add_planned_run", %{"circut" => circut_name}, socket) do
+    name = String.to_existing_atom(circut_name)
     config = socket.assigns[:heating_config]
 
-    config =
-      %{
-        config
-        | circuts:
-            List.update_at(config.circuts, circut_id, fn circut ->
-              new_run = {:null, {0, 0, 0}, {0, 0, 0}}
-              %{circut | planned_runs: [new_run | circut.planned_runs]}
-            end)
-      }
-      |> IO.inspect()
+    config = %{
+      config
+      | circuts:
+          Map.update!(config.circuts, name, fn circut ->
+            new_run = {:null, {0, 0, 0}, {0, 0, 0}}
+            %{circut | planned_runs: [new_run | circut.planned_runs]}
+          end)
+    }
 
     {:noreply, assign(socket, heating_config: config)}
   end
 
-  def handle_event("delete_run", %{"circut" => circut_id, "run" => run_id}, socket) do
-    circut_id = String.to_integer(circut_id)
+  def handle_event("delete_planned_run", %{"circut" => circut_name, "run" => run_id}, socket) do
+    name = String.to_existing_atom(circut_name)
     run_id = String.to_integer(run_id)
     config = socket.assigns[:heating_config]
 
     config = %{
       config
       | circuts:
-          List.update_at(config.circuts, circut_id, fn circut ->
+          Map.update!(config.circuts, name, fn circut ->
             %{circut | planned_runs: List.delete_at(circut.planned_runs, run_id)}
           end)
     }
@@ -146,40 +158,52 @@ defmodule UiWeb.SettingsLive do
     {:noreply, assign(socket, heating_config: config)}
   end
 
-  def handle_event("save_config", %{"config" => config}, socket) do
+  def handle_event("save_heating_config", %{"config" => config}, socket) do
     org_config = socket.assigns[:heating_config]
-    device = socket.assigns[:hc_device]
 
     config = update_config(org_config, config)
-    :ok = Core.Device.BasementPi.set_config(device, config)
 
-    {:noreply, socket}
+    case Core.Device.BasementPi.set_config(config.device, config) do
+      :ok ->
+        socket = put_flash(socket, :info, "Zapisano pomyślnie!")
+        {:noreply, assign(socket, :heating_config, config)}
+
+      _ ->
+        socket = put_flash(socket, :error, "Coś poszło nie tak!")
+        {:noreply, socket}
+    end
   end
 
   ## Helpers
 
   defp update_config(config, data) do
+    {boiler_min_temp, _} = Float.parse(data["boiler_min_temp"])
+
     %{
       config
-      | boiler_min_temp: String.to_float(data["boiler_min_temp"]),
+      | boiler_min_temp: boiler_min_temp,
         temp_read_interval: Time.to_erl(Time.from_iso8601!(data["temp_read_interval"])),
         circuts: update_circuts(config.circuts, data["circuts"])
     }
   end
 
-  defp update_circuts(conf_circuts, circuts) do
-    Enum.map(conf_circuts, fn circut ->
-      data = Map.get(circuts, Atom.to_string(circut.name))
+  defp update_circuts(old_circuts, new_circuts) do
+    Enum.map(old_circuts, fn {name, old_circut} ->
+      data = Map.get(new_circuts, Atom.to_string(name))
+      {max_temp, _} = Float.parse(data["max_temp"])
+      {min_temp, _} = Float.parse(data["min_temp"])
 
-      %{
-        circut
-        | max_temp: String.to_float(data["max_temp"]),
-          min_temp: String.to_float(data["min_temp"]),
-          running_duration: parse_time(data["running_duration"]),
-          break_duration: parse_time(data["break_duration"]),
-          planned_runs: update_planned_runs(data["runs"])
-      }
+      {name,
+       %{
+         old_circut
+         | max_temp: max_temp,
+           min_temp: min_temp,
+           running_duration: parse_time(data["running_duration"]),
+           break_duration: parse_time(data["break_duration"]),
+           planned_runs: update_planned_runs(data["runs"])
+       }}
     end)
+    |> Map.new()
   end
 
   defp update_planned_runs(nil) do
@@ -189,7 +213,7 @@ defmodule UiWeb.SettingsLive do
   defp update_planned_runs(runs) do
     Enum.map(runs, fn {_, data} ->
       days = Enum.map(Map.get(data, "days", []), &String.to_existing_atom/1)
-      days = if days == [], do: :null, else: days
+      days = if length(days) in [0, 7], do: :null, else: days
       start_time = parse_time(data["time"])
       duration = parse_time(data["duration"])
       {days, start_time, duration}

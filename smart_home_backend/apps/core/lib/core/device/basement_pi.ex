@@ -26,6 +26,7 @@ defmodule Core.Device.BasementPi do
   @type config :: :heating_api.config()
 
   @type state_t() :: %{
+          atom() => term(),
           device: Device.t(),
           registered: boolean(),
           circuts: %{circut_name() => port_id()}
@@ -47,9 +48,9 @@ defmodule Core.Device.BasementPi do
   def get_local_config(device),
     do: GenServer.call(String.to_existing_atom(device.name), :get_config)
 
-  @spec set_config(Device.t(), config()) :: :ok
+  @spec set_config(Device.t(), config()) :: :ok | :node_issue
   def set_config(device, config),
-    do: GenServer.cast(String.to_existing_atom(device.name), {:set_config, config})
+    do: GenServer.call(String.to_existing_atom(device.name), {:set_config, config})
 
   ## Device behaviour
 
@@ -124,12 +125,14 @@ defmodule Core.Device.BasementPi do
 
   @impl GenServer
   def handle_call(:get_config, _From, state) do
-    {:reply, state.config, state}
+    {:reply, state, state}
   end
 
   @impl GenServer
-  def handle_cast({:set_config, config}, state) do
-    {:noreply, Map.put(state, :config, config)}
+  def handle_call({:set_config, config}, _From, state) do
+    new_state = Map.merge(state, config)
+    result = :heating_api.set_config(new_state.device, new_state)
+    {:reply, result, new_state}
   end
 
   @impl GenServer
@@ -208,20 +211,20 @@ defmodule Core.Device.BasementPi do
   end
 
   @spec update_state(state_t(), config()) :: state_t()
-  defp update_state(state = %{device: device}, %{circuts: circuts}) do
+  defp update_state(state = %{device: device}, config = %{circuts: circuts}) do
     nums = Enum.to_list(1..length(circuts))
 
     circuts =
       PortListProc.identify!(device.id, nums)
       |> Enum.sort(&(&1.number < &2.number))
       |> Enum.zip(circuts)
-      |> Enum.map(fn {%{id: id}, %{name: name} = circut} ->
+      |> Enum.map(fn {%{id: id, name: v_name}, %{name: name} = circut} ->
         update_circut_port(id, circut)
-        {name, id}
+        {name, Map.merge(circut, %{v_id: id, v_name: v_name})}
       end)
       |> Map.new()
 
-    %{state | circuts: circuts}
+    Map.merge(config, %{state | circuts: circuts})
   end
 
   def update_circut_port(port_id, %{current_temp: current_temp, status: status}) do

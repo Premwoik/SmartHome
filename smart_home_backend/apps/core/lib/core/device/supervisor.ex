@@ -10,8 +10,18 @@ defmodule Core.Device.Supervisor do
   end
 
   @impl true
-  def init(_arg) do
+  def init(whitelist: whitelist) do
     DeviceListProc.list_all!()
+    |> Enum.filter(fn %Device{name: n} -> n in whitelist end)
+    |> init_devices()
+  end
+
+  def init(_arg) do
+    DeviceListProc.list_all!() |> init_devices()
+  end
+
+  defp init_devices(devices) do
+    devices
     |> Enum.map(&get_specs(&1))
     # remove empty
     |> Enum.filter(&(&1 != nil))
