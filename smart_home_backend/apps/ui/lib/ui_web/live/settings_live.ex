@@ -21,7 +21,7 @@ defmodule UiWeb.SettingsLive do
 
         heating_config =
           DB.MainRepo.get!(DB.Data.Device, 10)
-          |> Core.Device.BasementPi.get_local_config()
+          |> BasementPi.get_local_config()
 
         {:ok,
          assign(socket,

@@ -216,7 +216,6 @@ defmodule Core.Device.BasementPi do
 
     circuts =
       PortListProc.identify!(device.id, nums)
-      |> Enum.sort(&(&1.number < &2.number))
       |> Enum.zip(circuts)
       |> Enum.map(fn {%{id: id, name: v_name}, %{name: name} = circut} ->
         update_circut_port(id, circut)
