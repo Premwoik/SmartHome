@@ -115,7 +115,8 @@ map_to_state(StateMap) ->
 circuts_to_records(Circuts) when is_list(Circuts) ->
     lists:map(fun(M) -> map_to_record(M, circut) end, Circuts);
 circuts_to_records(Circuts) when is_map(Circuts) ->
-    circuts_to_records(maps:values(Circuts)).
+    SFun = fun(#{v_id := IdA}, #{v_id := IdB}) -> IdA =< IdB end,
+    circuts_to_records(lists:sort(SFun, maps:values(Circuts))).
 
 map_to_record(Map, RecordType) ->
     RecordFields = record_fields(RecordType),
