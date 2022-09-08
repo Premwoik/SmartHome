@@ -131,9 +131,11 @@ defmodule Core.Actions do
     end
   end
 
-  @spec check_activation_freq(integer, full_action_state()) ::
+  @spec check_activation_freq(integer() | nil, full_action_state()) ::
           {:ok, action_state()} | {:error, String.t()}
   defp check_activation_freq(0, action_state), do: {:ok, action_state}
+
+  defp check_activation_freq(nil, action_state), do: {:ok, action_state}
 
   defp check_activation_freq(delay, %{last_invoke: last_invoke} = action_state) do
     current_time = :os.system_time(:millisecond)
