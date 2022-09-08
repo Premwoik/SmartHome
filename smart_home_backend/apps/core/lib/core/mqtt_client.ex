@@ -41,6 +41,7 @@ defmodule Core.MqttClient do
     case RfButtonListProc.identify!([key_value]) do
       [btn] ->
         {:ok, RfButtonHandler.handle_button_click(btn, state)}
+
       [] ->
         {:ok, state}
     end

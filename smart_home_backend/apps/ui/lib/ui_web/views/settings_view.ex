@@ -6,6 +6,10 @@ defmodule UiWeb.SettingsView do
   alias DB.Data.Action
   import Phoenix.HTML
 
+  def time_to_str(t = {_, _, _}) do
+    Time.to_string(Time.from_erl!(t))
+  end
+
   def custom_td_class(id, pilot, selected) do
     if selected[pilot][:id] == id do
       "px-4 border bg-green-300"
@@ -13,6 +17,15 @@ defmodule UiWeb.SettingsView do
       "px-4 border"
     end
   end
+
+  def translate_action_type("CloseSunblind"), do: "Rolety"
+  def translate_action_type("AutoLights"), do: "Auto Światła"
+  def translate_action_type("ToggleGroup"), do: "Grupa wł/wył"
+  def translate_action_type("DimmerController"), do: "Sterowanie ściemniaczem"
+  def translate_action_type("ReadInputs"), do: "Odczyt wejść"
+  def translate_action_type("ReadTemperature"), do: "Odczyt temperatury"
+  def translate_action_type("Heartbeat"), do: "Wyślij ping"
+  def translate_action_type(module), do: module
 
   def rf_button_view(%RfButton{mode: :page}) do
     raw("<p>* - Strona</p>")

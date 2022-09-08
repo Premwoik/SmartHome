@@ -32,7 +32,8 @@ defmodule Core do
   defp children(_) do
     [
       {Cachex,
-       name: :loggs_cache, limit: limit(size: 2048, policy: Cachex.Policy.LRW, reclaim: 0.2)}
+       name: :loggs_cache, limit: limit(size: 2048, policy: Cachex.Policy.LRW, reclaim: 0.2)},
+      {Core.Device.Supervisor, whitelist: ["Raspberry piwnica"]}
     ]
   end
 
