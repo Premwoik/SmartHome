@@ -2,6 +2,7 @@ defmodule UiWeb.SettingsLive do
   use UiWeb, :live_view
 
   alias DB.Data.ScheduleJob
+  alias DB.Data.Action
   alias DB.Data.RemoteController
   # alias DB.Data.RfButton
   alias DB.Proc.PortListProc
@@ -11,11 +12,12 @@ defmodule UiWeb.SettingsLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    categories = %{tasks: true, controllers: false, circuts: false}
+    categories = %{tasks: true, actions: false, controllers: false, circuts: false}
 
     case connected?(socket) do
       true ->
         jobs = ScheduleJob.list_all!()
+        actions = ActionListProc.list_all!()
         controllers = prepare_controllers()
         selected = prepare_selected_buttons(controllers)
 
@@ -26,6 +28,7 @@ defmodule UiWeb.SettingsLive do
         {:ok,
          assign(socket,
            jobs: jobs,
+           actions: actions,
            controllers: controllers,
            selected: selected,
            heating_config: heating_config,
@@ -36,6 +39,7 @@ defmodule UiWeb.SettingsLive do
         {:ok,
          assign(socket,
            jobs: [],
+           actions: [],
            controllers: [],
            selected: %{},
            heating_config: %{},
@@ -61,15 +65,16 @@ defmodule UiWeb.SettingsLive do
     with {id, ""} <- Integer.parse(id),
          {:ok, %ScheduleJob{} = job} <- ScheduleJob.update(id, params) do
       :ok = Core.Scheduler.reload_job_from_db(id)
-      jobs = update(socket.assigns[:jobs], job)
 
-      socket = put_flash(socket, :info, "Zapisano pomyślnie!")
-      {:noreply, assign(socket, jobs: jobs)}
+      socket
+      |> succesful_flash()
+
+      assign(:jobs, update(socket.assigns[:jobs], job))
     else
       _ ->
-        socket = put_flash(socket, :error, "Coś poszło nie tak!")
-        {:noreply, socket}
+        fail_flash(socket)
     end
+    |> noreply()
   end
 
   def handle_event("run", %{"value" => id}, socket) do
@@ -81,6 +86,46 @@ defmodule UiWeb.SettingsLive do
 
     socket = put_flash(socket, :info, "Akcja została wywołana pomyślnie!")
     {:noreply, socket}
+  end
+
+  ## Actions handle_event/3
+
+  @impl true
+  def handle_event("save_action", %{"action" => %{"id" => id} = params}, socket) do
+    with {id, ""} <- Integer.parse(id),
+         {:ok, %Action{} = action} <- ActionListProc.update(id, params) do
+      socket
+      |> succesful_flash()
+      |> assign(:actions, update(socket.assigns[:actions], action))
+    else
+      _ ->
+        fail_flash(socket)
+    end
+    |> noreply()
+  end
+
+  @impl true
+  def handle_event("run_action_high", %{"value" => id}, socket) do
+    case Core.Actions.activate_up([id]) do
+      {:ok, []} ->
+        succesful_flash(socket)
+
+      _ ->
+        fail_flash(socket)
+    end
+    |> noreply()
+  end
+
+  @impl true
+  def handle_event("run_action_low", %{"value" => id}, socket) do
+    case Core.Actions.activate_down([id]) do
+      {:ok, []} ->
+        succesful_flash(socket)
+
+      _ ->
+        fail_flash(socket)
+    end
+    |> noreply()
   end
 
   ## Remote controllers handle_event/3
@@ -160,18 +205,18 @@ defmodule UiWeb.SettingsLive do
 
   def handle_event("save_heating_config", %{"config" => config}, socket) do
     org_config = socket.assigns[:heating_config]
-
     config = update_config(org_config, config)
 
     case Core.Device.BasementPi.set_config(config.device, config) do
       :ok ->
-        socket = put_flash(socket, :info, "Zapisano pomyślnie!")
-        {:noreply, assign(socket, :heating_config, config)}
+        socket
+        |> succesful_flash()
+        |> assign(:heating_config, config)
 
       _ ->
-        socket = put_flash(socket, :error, "Coś poszło nie tak!")
-        {:noreply, socket}
+        fail_flash(socket)
     end
+    |> noreply()
   end
 
   ## Helpers
@@ -258,4 +303,10 @@ defmodule UiWeb.SettingsLive do
   defp format_items(items) do
     items |> Enum.sort_by(& &1.name) |> Enum.map(&{&1.name, &1.id})
   end
+
+  defp succesful_flash(socket), do: put_flash(socket, :info, "Zapisano pomyślnie!")
+
+  defp fail_flash(socket), do: put_flash(socket, :error, "Coś poszło nie tak!")
+
+  defp noreply(state), do: {:noreply, state}
 end

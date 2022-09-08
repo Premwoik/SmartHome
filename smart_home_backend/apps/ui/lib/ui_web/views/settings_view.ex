@@ -18,6 +18,15 @@ defmodule UiWeb.SettingsView do
     end
   end
 
+  def translate_action_type("CloseSunblind"), do: "Rolety"
+  def translate_action_type("AutoLights"), do: "Auto Światła"
+  def translate_action_type("ToggleGroup"), do: "Grupa wł/wył"
+  def translate_action_type("DimmerController"), do: "Sterowanie ściemniaczem"
+  def translate_action_type("ReadInputs"), do: "Odczyt wejść"
+  def translate_action_type("ReadTemperature"), do: "Odczyt temperatury"
+  def translate_action_type("Heartbeat"), do: "Wyślij ping"
+  def translate_action_type(module), do: module
+
   def rf_button_view(%RfButton{mode: :page}) do
     raw("<p>* - Strona</p>")
   end
