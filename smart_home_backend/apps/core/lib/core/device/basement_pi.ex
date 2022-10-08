@@ -128,7 +128,6 @@ defmodule Core.Device.BasementPi do
     {:reply, state, state}
   end
 
-  @impl GenServer
   def handle_call({:set_config, config}, _From, state) do
     new_state = Map.merge(state, config)
     result = :heating_api.set_config(new_state.device, new_state)
@@ -142,10 +141,11 @@ defmodule Core.Device.BasementPi do
         nil ->
           Logger.warn("Cannot find `port_id` for circut: #{to_string(name)}")
 
-        id ->
+        %{v_port_id: port_id} ->
           value = state == :running
+          Logger.debug("Read thermometer port_id=#{port_id} status=#{state}")
 
-          PortListProc.fast_update_state(id, %{"status" => to_string(state), "value" => value})
+          PortListProc.fast_update_state(port_id, %{"status" => to_string(state), "value" => value})
           |> broadcast()
       end
     end)
@@ -153,15 +153,16 @@ defmodule Core.Device.BasementPi do
     {:noreply, state}
   end
 
-  @impl GenServer
   def handle_info({:temp_update, data}, %{circuts: circuts} = state) do
     Enum.each(data, fn {name, temp} ->
       case circuts[name] do
         nil ->
           Logger.warn("Cannot find `port_id` for circut: #{to_string(name)}")
 
-        id ->
-          PortListProc.fast_update_state(id, %{"temp" => temp})
+        %{v_port_id: port_id} ->
+          Logger.debug("Read thermometer port_id=#{port_id} temp=#{temp}")
+
+          PortListProc.fast_update_state(port_id, %{"temp" => temp})
           |> broadcast()
       end
     end)
@@ -169,12 +170,10 @@ defmodule Core.Device.BasementPi do
     {:noreply, state}
   end
 
-  @impl GenServer
   def handle_info(:init, state) do
     {:noreply, do_init(state, self())}
   end
 
-  @impl GenServer
   def handle_info(:check_subscription, %{device: device} = state) do
     do_check_subscription(device, self())
     {:noreply, state}
@@ -188,8 +187,6 @@ defmodule Core.Device.BasementPi do
     unless :heating_api.is_registered_observer(device, pid) do
       Logger.info("Subscribing to the #{device.name} heating_server events")
       :heating_api.register_observer(device, pid)
-    else
-      :ok
     end
   end
 
@@ -220,6 +217,7 @@ defmodule Core.Device.BasementPi do
       |> Enum.zip(circuts)
       |> Enum.map(fn {%{id: id, name: v_name, number: num}, %{name: name} = circut} ->
         update_circut_port(id, circut)
+        # Add some virtual fields with information about smart_home port
         {name, Map.merge(circut, %{v_id: num, v_port_id: id, v_name: v_name})}
       end)
       |> Map.new()
