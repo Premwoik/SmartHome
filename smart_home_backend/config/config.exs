@@ -30,15 +30,7 @@ config :core, Core.Scheduler,
   run_strategy: Quantum.RunStrategy.Local
 
 config :db,
-  ecto_repos: [DB.MainRepo, DB.StatsRepo]
-
-config :db, DB.StatsRepo,
-  adapter: Ecto.Adapters.Postgres,
-  database: "smart_home_statistics",
-  username: "postgres",
-  password: "postgres",
-  hostname: server_ip,
-  port: 5433
+  ecto_repos: [DB.MainRepo]
 
 config :db, DB.MainRepo,
   adapter: Ecto.Adapters.Postgres,
@@ -57,18 +49,6 @@ config :ui, UiWeb.Endpoint,
   render_errors: [view: UiWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Ui.PubSub,
   live_view: [signing_salt: "gxuEv+rN"]
-
-# Configures the mailer
-#
-# By default it uses the "Local" adapter which stores the emails
-# locally. You can see the emails in your browser, at "/dev/mailbox".
-#
-# For production it's recommended to configure a different adapter
-# at the `config/runtime.exs`.
-config :ui, Ui.Mailer, adapter: Swoosh.Adapters.Local
-
-# Swoosh API client is needed for adapters other than SMTP.
-config :swoosh, :api_client, false
 
 # Configure esbuild (the version is required)
 config :esbuild,

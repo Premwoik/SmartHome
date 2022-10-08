@@ -39,9 +39,6 @@ defmodule Core.Actions.ReadTemperature do
   defp save_temp_read(temp_id, raw_temp) do
     tempC = raw_temp * 0.0078125
 
-    %DB.Stats.Temperature.Reading{value: tempC, meter_id: temp_id}
-    |> DB.StatsRepo.insert!()
-
     Logger.info("Read temps #{inspect(tempC)} | thermometer_id #{inspect(temp_id)}")
   end
 end

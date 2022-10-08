@@ -5,6 +5,7 @@ defmodule DB.Application do
 
   use Application
 
+  alias DB.MainRepo
   alias DB.Proc.ActionListProc
   alias DB.Proc.PortListProc
   alias DB.Proc.DeviceListProc
@@ -15,8 +16,7 @@ defmodule DB.Application do
     # List all child processes to be supervised
 
     children = [
-      DB.MainRepo,
-      DB.StatsRepo,
+      MainRepo,
       DeviceListProc,
       PortListProc,
       ActionListProc,
