@@ -145,7 +145,10 @@ defmodule Core.Device.BasementPi do
           value = state == :running
           Logger.debug("Read thermometer port_id=#{port_id} status=#{state}")
 
-          PortListProc.fast_update_state(port_id, %{"status" => to_string(state), "value" => value})
+          PortListProc.fast_update_state(port_id, %{
+            "status" => to_string(state),
+            "value" => value
+          })
           |> broadcast()
       end
     end)

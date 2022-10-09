@@ -72,14 +72,28 @@ defmodule Core.Actions.ReadInputs do
   end
 
   defp log(up, down) do
-    up = Enum.map(up, & &1.name)
-    down = Enum.map(down, & &1.name)
+    if length(up) > 0 || length(down) > 0 do
+      # Write input change to database
+      write(up, down)
 
-    if length(up) > 0 || length(down) > 0,
-      do:
-        Logger.info(
-          "Active outputs - up: #{inspect(up, charlists: :as_lists)}, down: #{inspect(down, charlists: :as_lists)}",
-          ansi_color: :yellow
-        )
+      opts = [charlists: :as_lists]
+      up = Enum.map(up, & &1.name)
+      down = Enum.map(down, & &1.name)
+
+      Logger.info(
+        "Active outputs - up: #{inspect(up, opts)}, down: #{inspect(down, opts)}",
+        ansi_color: :yellow,
+        write_log: false
+      )
+    end
+  end
+
+  alias DB.Series.Input
+  alias DB.InfluxConnection
+
+  defp write(up, down) do
+    up = Enum.map(up, &Input.new(&1.device_id, &1.number, 1))
+    down = Enum.map(down, &Input.new(&1.device_id, &1.number, 0))
+    InfluxConnection.write(up ++ down)
   end
 end

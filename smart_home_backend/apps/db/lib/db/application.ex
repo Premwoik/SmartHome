@@ -6,6 +6,7 @@ defmodule DB.Application do
   use Application
 
   alias DB.MainRepo
+  alias DB.InfluxConnection
   alias DB.Proc.ActionListProc
   alias DB.Proc.PortListProc
   alias DB.Proc.DeviceListProc
@@ -17,6 +18,7 @@ defmodule DB.Application do
 
     children = [
       MainRepo,
+      InfluxConnection,
       DeviceListProc,
       PortListProc,
       ActionListProc,

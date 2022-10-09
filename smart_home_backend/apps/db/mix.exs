@@ -28,7 +28,8 @@ defmodule Db.MixProject do
       {:ecto_sql, "~> 3.0"},
       {:postgrex, "~> 0.11"},
       {:timex, "~> 3.6"},
-      {:jason, "~> 1.2"}
+      {:jason, "~> 1.2"},
+      {:instream, "~> 2.0"}
     ]
   end
 

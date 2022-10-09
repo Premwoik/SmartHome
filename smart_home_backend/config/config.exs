@@ -40,6 +40,18 @@ config :db, DB.MainRepo,
   hostname: server_ip,
   port: 5433
 
+# InfluxDB v2.x
+config :db, DB.InfluxConnection,
+  auth: [
+    method: :token,
+    token:
+      "y3DYfh2j2ozpBcBqI554BL21fiHZCycNMaLLE79ej9tF5HeL5k-P4Hs80Vec4ofLUmvJEMRaKlDTld7u4iMySg=="
+  ],
+  bucket: "logs",
+  org: "SmartHome",
+  host: server_ip,
+  version: :v2
+
 # config :home_ui,
 # ecto_repos: [HomeUi.Repo]
 
