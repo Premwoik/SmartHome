@@ -33,7 +33,7 @@ defmodule Core.MixProject do
       {:timex, "~> 3.6"},
       {:tortoise, "~> 0.9"},
       {:quantum, "~> 3.0"},
-      {:cachex, "~> 3.4"},
+      # {:cachex, "~> 3.4"},
       {:circuits_gpio, "~> 0.4"},
       {:basement_core, github: "Premwoik/basement-core", runtime: false},
       {:db, in_umbrella: true}

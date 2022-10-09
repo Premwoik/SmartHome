@@ -17,7 +17,7 @@ defmodule UiWeb.Router do
   scope "/", UiWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", DashboardLive, :index
 
     live "/dash", DashboardLive, :index
     live "/dash/:page_id", DashboardLive, :show
