@@ -16,7 +16,7 @@ defmodule Core do
     Supervisor.start_link(children(target), opts)
   end
 
-  defp children(_) do
+  defp children("rpi") do
     [
       Core.Telemetry,
       Core.GPIO,
