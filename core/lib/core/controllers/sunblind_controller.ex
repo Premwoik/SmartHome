@@ -5,9 +5,8 @@ defmodule Core.Controllers.SunblindController do
   alias Core.Controllers.IOBeh
 
   alias Core.Broadcast, as: Channel
-  alias DB.{Port, Repo}
-  alias Core.Controllers.{BasicController}
-  import Core.Controllers.Universal
+  alias DB.Port
+  alias Core.Controllers.{PortController}
   import Witchcraft.Functor
 
   @impl IOBeh
@@ -19,23 +18,21 @@ defmodule Core.Controllers.SunblindController do
   def toggle([], _ops), do: :ok
 
   def toggle([s | _] = sunblinds, _ops) do
-    case s.state do
-      :open -> open(sunblinds)
-      :close -> close(sunblinds)
+    case s.more.state do
+      :open -> close(sunblinds)
+      :close -> open(sunblinds)
     end
   end
 
   def close(sunblinds) do
     skip_not(sunblinds, :open)
-    |> to_ports()
-    |> BasicController.turn_on()
+    |> PortController.turn_on()
     |> map(&lock_sunblinds(&1, :close))
   end
 
   def open(sunblinds) do
     skip_not(sunblinds, :close)
-    |> to_ports()
-    |> BasicController.turn_off()
+    |> PortController.turn_off()
     |> map(&lock_sunblinds(&1, :open))
   end
 
@@ -57,35 +54,10 @@ defmodule Core.Controllers.SunblindController do
     Enum.filter(sunblinds, &(Port.from_more(&1, :state) == state))
   end
 
-  defp to_ports(sunblinds) do
-    Enum.map(sunblinds, &to_port/1)
-  end
-
-  defp to_port(%{more: %{type: type, state: state}} = p) do
-    #    takes current state and assumes that the next action is change to opposite one eg. :close -> :open
-    case {type, state} do
-      {:pulse2, :close} ->
-        Port.from_more(p, :open_port_id) |> Repo.preload()
-
-      _ ->
-        p
-    end
-  end
-
   defp lock_sunblinds(sunblinds, state) do
-    sunblinds = map(sunblinds, &back_to_main/1) |> update_state(:in_move)
+    sunblinds = update_state(sunblinds, :in_move)
     Task.start(fn -> unlock_sunblinds(sunblinds, state) end)
     sunblinds
-  end
-
-  def back_to_main(port) do
-    case port do
-      %{type: :sunblind_helper} ->
-        IO.puts("ok")
-        Port.from_more(port, :close_port_id) |> Repo.preload()
-
-      _ -> port
-    end
   end
 
   def unlock_sunblinds(sunblinds, state) do
@@ -96,15 +68,17 @@ defmodule Core.Controllers.SunblindController do
       receive do
       after
         t ->
-          update_state(ss, state)
+          update_state(ss, state, true)
       end
     end)
   end
 
-  defp update_state(sunblinds, state) do
+  defp update_state(sunblinds, state, broadcast \\ false) do
     Enum.map(sunblinds, fn s ->
       port = Port.update(s, more: [state: state])
-      Channel.broadcast_item_change("sunblind", port.id, port.ref)
+      if broadcast do
+        Channel.broadcast_item_change(:sunblind, port)
+      end
       port
     end)
   end

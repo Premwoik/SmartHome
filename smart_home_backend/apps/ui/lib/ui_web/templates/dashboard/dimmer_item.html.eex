@@ -1,0 +1,76 @@
+<div class="max-w-auto rounded overflow-hidden shadow-sm my-2 p-2">
+  <div class="grid grid-cols-3 gap-3">
+    <%= if @dimmer.state["value"] do %>
+      <img class="w-12 h-12" src="<%= Routes.static_path(@socket, "/images/icons/icons8_light_dimming_100_percent_96.png") %>"/>
+    <% else %>
+      <img class="w-12 h-12" src="<%= Routes.static_path(@socket, "/images/icons/icons8_light_dimming_off_96.png") %>"/>
+    <% end %>
+    <h2 class="inline"><%= @dimmer.name %></h2>
+    <button class="inline mt-2 rounded bg-blue-400 hover:bg-blue-500 text-white p-2" 
+      phx-click="toggle_dimmer" value="<%= @dimmer.id%>">
+      <%= if @dimmer.state["value"] do %> Wyłącz <% else %> Włącz <% end %>
+    </button>
+  </div>
+
+  <%= if not is_nil(@dimmer.state["lights"]) do %>
+    <div class="mt-2 float-right">
+
+      <%= for light <- @dimmer.state["lights"] do %>
+        <div class="inline">
+          <%= if light.state["value"] do %>
+            <img class="inline w-6 h-6" src="<%= Routes.static_path(@socket, "/images/icons/icons8_light_on_96.png") %>"/>
+          <% else %>
+            <img class="inline w-6 h-6" src="<%= Routes.static_path(@socket, "/images/icons/icons8_light_off_96.png") %>"/>
+          <% end %>
+
+          <%= if @dimmer.state["value"] do %>
+          <button class="inline text-xs rounded bg-blue-400 hover:bg-blue-500 text-white p-2" 
+                  phx-click="toggle_dimmer_light" value="<%= light.id%>" phx-value-dimmer_id="<%=@dimmer.id%>">
+            <%= light.name %>
+          </button>
+        <% else %>
+          <button class="inline text-xs rounded  bg-grey-500 text-black p-2" 
+                  phx-click="toggle_dimmer_light" value="<%= light.id%>" phx-value-dimmer_id="<%=@dimmer.id%>" disabled>
+            <%= light.name %>
+          </button>
+        <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= if @dimmer.state["subtype"] not in ["mono"] do %>
+    <div class="mt-4">
+      <form id="form-fill-dimmer-<%=@dimmer.id%>" action="#" phx-change="fill_changed">
+        <%= hidden_input :dimmer, :id, id: "dimmer-fill-id-#{@dimmer.id}", value: @dimmer.id%>
+        <label class="text-sm">Jasność        
+          <input id="dimmer-brightness-<%=@dimmer.id%>" class="w-full" type="range"  value="<%= @dimmer.state["brightness"] %>" name="dimmer[fill]" min="0" max="100">
+        </label>
+
+      </form>
+    </div>
+  <% end %>
+
+  <%= if @dimmer.state["subtype"] in ["rgb", "rgbw"] do %>
+    <div class="mt-2 float-right">
+      <form id="form-color-dimmer-<%=@dimmer.id%>" action="#" phx-change="color_changed">
+        <%= hidden_input :dimmer, :id, id: "dimmer-color-id-#{@dimmer.id}", value: @dimmer.id%>
+        <label class="inline text-sm">Kolor
+          <input id="dimmer-color-<%=@dimmer.id%>" class="inline" type="color" name="dimmer[color]" value="<%= @dimmer.state["color"] %>">
+        <label>
+      </form>
+    </div>
+  <% end %>
+
+  <%= if @dimmer.state["subtype"] == "rgbw" do %>
+    <div class="">
+      <form id="form-white-dimmer-<%=@dimmer.id%>" action="#" phx-change="white_fill_changed">
+        <%= hidden_input :dimmer, :id, id: "dimmer-white-id-#{@dimmer.id}", value: @dimmer.id%>
+        <label class="text-sm">Biały        
+          <input id="dimmer-white-<%=@dimmer.id%>" class="w-full" type="range" value="<%= @dimmer.state["white"] %>" name="dimmer[white]" min="0" max="255">
+        </label>
+      </form>
+    </div>
+  <% end %>
+
+</div>

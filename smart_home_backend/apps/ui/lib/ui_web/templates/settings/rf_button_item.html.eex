@@ -1,0 +1,28 @@
+<div>
+  <form phx-change="rf_button_change", phx-submit="rf_button_submit">
+    <label> ID:
+      <%= get_in(@selected, [@pilot, :id]) %>
+      <%= hidden_input :button, :pilot, value: @pilot, id: "pilot_#{@pilot}"%>
+      <%= hidden_input :button, :id, value: get_in(@selected, [@pilot, :id]), id: "pilot_id_#{@pilot}"%>
+    </label>
+    <label> Tryb:
+      <%= select(:button, :mode, ["Przełącz": "toggle", "Włącz": "on", "Wyłącz": "off" ,"Strona": "page"], 
+        id: "pilot_mode_#{@pilot}", class: "border", value: get_in(@selected, [@pilot, :mode]))%> 
+    </label>
+    <label> Typ:
+      <%= select(:button, :type, ["Akcja": "action", "Port": "port"], 
+        id: "pilot_type_#{@pilot}", class: "border", value: get_in(@selected, [@pilot, :type]))%> 
+    </label>
+    <label> Strona:
+      <%= select(:button, :page, ["1": "1", "2": "2", "3": "3", "4": "4"], 
+        id: "pilot_page_#{@pilot}", class: "border", value: get_in(@selected, [@pilot, :page])) %> 
+    </label>
+    <label> Item: 
+      <%= select(:button, :item_id, get_in(@selected, [@pilot, :items]), 
+        id: "pilot_item_#{@pilot}", class: "border") %> 
+    </label>
+    <button type="submit" class="inline rounded bg-blue-400 hover:bg-blue-500 text-white p-2" onclick="return confirm('Czy na pewno chcesz zapisać?');">Zapisz</button>
+    <button type="button" class="inline rounded bg-blue-400 hover:bg-blue-500 text-white p-2" phx-value-id="<%= get_in(@selected, [@pilot, :id])%>" 
+      phx-value-pilot="<%= @pilot %>" phx-click="rf_button_clear" onclick="return confirm('Czy na pewno chcesz wyczyscić przycisk?');">Wyczyść</button>
+  </form>
+</div>

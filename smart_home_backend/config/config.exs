@@ -1,0 +1,96 @@
+# This file is responsible for configuring your umbrella
+# and **all applications** and their dependencies with the
+# help of the Config module.
+#
+# Note that all applications in your umbrella share the
+# same configuration and dependencies, which is why they
+# all use the same configuration file. If you want different
+# configurations or dependencies per app, it is best to
+# move said applications out of the umbrella.
+import Config
+
+config :core, :target, System.get_env("TARGET", "rpi")
+
+server_ip = "192.168.2.100"
+
+config :core, two_way_client: Core.Device.Client.TwoWay
+config :core, one_way_client: Core.Device.Client.OneWay
+
+config :core, actions: Core.Actions
+config :core, device_helper: Core.Device
+
+config :core, mqtt_ip: server_ip
+
+config :core, database_module: DB
+
+config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
+
+config :core, Core.Scheduler,
+  timezone: "Europe/Warsaw",
+  run_strategy: Quantum.RunStrategy.Local
+
+config :db,
+  ecto_repos: [DB.MainRepo]
+
+config :db, DB.MainRepo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "smart_home",
+  username: "postgres",
+  password: "postgres",
+  hostname: server_ip,
+  port: 5433
+
+# InfluxDB v2.x
+config :db, DB.InfluxConnection,
+  auth: [
+    method: :token,
+    token:
+      "y3DYfh2j2ozpBcBqI554BL21fiHZCycNMaLLE79ej9tF5HeL5k-P4Hs80Vec4ofLUmvJEMRaKlDTld7u4iMySg=="
+  ],
+  bucket: "logs",
+  org: "SmartHome",
+  host: server_ip,
+  version: :v2
+
+# config :home_ui,
+# ecto_repos: [HomeUi.Repo]
+
+# Configures the endpoint
+config :ui, UiWeb.Endpoint,
+  url: [host: "localhost"],
+  render_errors: [view: UiWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Ui.PubSub,
+  live_view: [signing_salt: "gxuEv+rN"]
+
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.14.0",
+  default: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../apps/ui/assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+# Configures Elixir's Logger
+#
+config :logger,
+  level: :info
+
+config :logger, :console,
+  format: "$time $metadata[$level] $message\n",
+  metadata: [:request_id]
+
+config :logger,
+  backends: [{Core.LoggerHistoryBackend, :logger_cache}]
+
+# Use Jason for JSON parsing in Phoenix
+config :phoenix, :json_library, Jason
+
+# It is also possible to import configuration files, relative to this
+# directory. For example, you can emulate configuration per environment
+# by uncommenting the line below and defining dev.exs, test.exs and such.
+# Configuration from the imported file will override the ones defined
+# here (which is why it is important to import them last).
+#
+import_config "#{Mix.env()}.exs"

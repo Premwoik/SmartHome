@@ -13,7 +13,7 @@ import_config "../../rstp_to_ws/config/config.exs"
 
 # Configures broadcast for core
 
-config :core, :broadcast_handler, UiWeb.Broadcast.Handler
+config :core, :broadcast_handler, UiWeb.Channels.BroadcastHandler
 
 # Configures the endpoint
 config :ui,

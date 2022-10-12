@@ -31,16 +31,6 @@ defmodule Core.Controllers.ActionController do
     end
   end
 
-  @impl IOBeh
-  def turn_on(actions, _ops) do
-    set(actions, true)
-  end
-
-  @impl IOBeh
-  def turn_off(actions, _ops) do
-    set(actions, false)
-  end
-
   defmodule Job do
     @spec new(String.t(), boolean, boolean) :: any
     def new(action_id, expr, signal, extended \\ false) do
@@ -70,6 +60,16 @@ defmodule Core.Controllers.ActionController do
     end
   end
 
+  @impl IOBeh
+  def turn_on(actions, _ops) do
+    set(actions, true)
+  end
+
+  @impl IOBeh
+  def turn_off(actions, _ops) do
+    set(actions, false)
+  end
+
   # Privates
 
   defp set(actions, state) do
@@ -77,10 +77,9 @@ defmodule Core.Controllers.ActionController do
 
     Core.Actions.reload_actions()
 
-    Enum.each(actions, fn %{id: id, ref: ref} ->
-      Channel.broadcast_item_change("action", id, ref + 1)
-    end)
-
+    #Enum.each(res, fn action ->
+      #Channel.broadcast_item_change(:action, action)
+    #end)
     res
   end
 end

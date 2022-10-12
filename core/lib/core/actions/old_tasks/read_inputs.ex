@@ -2,7 +2,7 @@ defmodule Core.Actions.ReadInputs do
   @moduledoc false
 
   alias Core.Controllers.DeviceController, as: DeviceC
-  #  alias Core.Broadcast, as: Channel
+  alias Core.Broadcast, as: Channel
   require Logger
   alias DB.Action
   alias Core.Device.Static.Response
@@ -31,7 +31,7 @@ defmodule Core.Actions.ReadInputs do
   end
 
   def handle_inputs(device, read, %{last_inputs: last_read} = state) do
-    #    Channel.broadcast_inputs_change(device.id, read)
+    Channel.broadcast_inputs_change(device.id, read)
     new_up = read -- last_read
     new_down = last_read -- read
     proceed_up(device.id, new_up)

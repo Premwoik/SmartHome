@@ -3,7 +3,7 @@ defmodule Core.Broadcast.BroadcastHandlerMock do
 
   use Core.Broadcast
 
-  def broadcast_item_change(_, _, _), do: :ok
+  def broadcast_item_change(_, _), do: :ok
   def broadcast_inputs_change(_, _), do: :ok
   def broadcast_outputs_change(_, _), do: :ok
 end

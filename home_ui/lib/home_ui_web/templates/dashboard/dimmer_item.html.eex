@@ -1,0 +1,54 @@
+<div class="max-w-xs rounded overflow-hidden shadow-sm my-2 p-2">
+  <div class="grid grid-cols-3 gap-3">
+    <%= if @dimmer.state do %>
+      <img class="w-12 h-12" src="<%= Routes.static_path(@socket, "/images/icons/icons8_light_dimming_100_percent_96.png") %>"/>
+    <% else %>
+      <img class="w-12 h-12" src="<%= Routes.static_path(@socket, "/images/icons/icons8_light_dimming_off_96.png") %>"/>
+    <% end %>
+    <h2 class="inline"><%= @dimmer.name %></h2>
+    <button class="inline mt-2 rounded bg-blue-400 hover:bg-blue-500 text-white p-2" 
+      phx-click="toggle_dimmer" value="<%= @dimmer.id%>">
+      <%= if @dimmer.state do %> Wyłącz <% else %> Włącz <% end %>
+    </button>
+  </div>
+
+  <%= if @dimmer.type in [:dimmer_rgbw, :dimmer_rgb] do %>
+    <div class="mt-2 float-right">
+      <label class="inline text-sm" for="color_picker">Kolor<label>
+      <input class="inline" type="color" name="color_picker">
+    </div>
+  <% end %>
+
+  <%= if length(@dimmer.more.lights) > 0 do %>
+    <div class="mt-2 float-right">
+
+      <%= for light <- @dimmer.more.lights do %>
+        <div class="inline">
+          <%= if light.state do %>
+            <img class="inline w-6 h-6" src="<%= Routes.static_path(@socket, "/images/icons/icons8_light_on_96.png") %>"/>
+          <% else %>
+            <img class="inline w-6 h-6" src="<%= Routes.static_path(@socket, "/images/icons/icons8_light_off_96.png") %>"/>
+          <% end %>
+
+          <button class="inline text-xs rounded bg-blue-400 hover:bg-blue-500 text-white p-2" 
+                  phx-click="toggle_dimmer_light" value="<%= light.id%>" phx-value-dimmer_id="<%=@dimmer.id%>">
+            <%= light.name %>
+          </button>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="mt-4">
+    <label class="text-sm" for="fill_bar">Jasność</label>
+        <input class="w-full" type="range"  value="<%= @dimmer.more.fill %>" name="fill_bar" min="0" max="100" phx-value-dimmer_id="<%= @dimmer.id %>" phx-keyup="fill_changed" phx-click="fill_changed">
+  </div>
+
+  <%= if @dimmer.type == :dimmer_rgbw do %>
+    <div class="">
+      <label class="text-sm" for="white_bar">Biały kolor</label>
+      <input class="w-full" type="range" value="<%= @dimmer.more.white %>" name="white_bar" min="0" max="255" phx-value-dimmer_id="<%= @dimmer.id %>" phx-keyup="white_fill_changed" phx-click="white_fill_changed">
+    </div>
+  <% end %>
+
+</div>

@@ -1,0 +1,24 @@
+type Query {
+  ports: [Port]
+  port(id: ID!): Port
+}
+
+type Mutation {
+  updateState(id: ID!, state: PortStateInput!) : Port!
+}
+
+input PortStateInput {
+  value: Bool
+}
+
+type PortState {
+  value: Bool!
+  dupa: String 
+}
+
+type Port{
+  id: ID!
+  name: String!
+  state: PortState
+}
+

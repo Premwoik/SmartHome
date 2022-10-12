@@ -12,14 +12,16 @@ defmodule Core.Controllers.IOBeh do
       def turn_on(_, _), do: {:error, "Not implemented yet"}
       def turn_off(items, ops \\ [])
       def turn_off(_, _), do: {:error, "Not implemented yet"}
-      def set_state(items, ops \\ [])
-      def set_state(_, _), do: {:error, "Not implemented yet"}
+      def set_state(items, state, ops \\ [])
+      def set_state(_, _, _), do: {:error, "Not implemented yet"}
       def toggle(items, ops \\ [])
       def toggle(_, _), do: {:error, "Not implemented yet"}
+      def set_fill(items, fill, ops \\ [])
+      def set_fill(_, _, _), do: {:error, "Not implemented yet"}
       def read(items, ops \\ [])
       def read(_, _), do: {:error, "Not implemented yet"}
 
-      defoverridable turn_on: 2, turn_off: 2, toggle: 2, read: 2, set_state: 2
+      defoverridable turn_on: 2, turn_off: 2, toggle: 2, read: 2, set_state: 3
     end
   end
 
@@ -28,7 +30,8 @@ defmodule Core.Controllers.IOBeh do
 
   @callback turn_on(list(any), ops :: keyword()) :: def_result()
   @callback turn_off(list(any), ops :: keyword()) :: def_result()
-  @callback set_state(list(any), ops :: keyword()) :: content_result()
+  @callback set_state(list(any), state :: boolean(), ops :: keyword()) :: content_result()
   @callback toggle(list(any), ops :: keyword()) :: def_result()
+  @callback set_fill(list(any), fill :: integer(), ops :: keyword()) :: content_result()
   @callback read(list(any), ops :: keyword()) :: content_result()
 end

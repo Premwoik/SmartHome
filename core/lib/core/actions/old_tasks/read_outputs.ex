@@ -57,8 +57,8 @@ defmodule Core.Actions.ReadOutputs do
         "[Task|ReadOutputs] All outputs are up to date! device: #{device.name}, id: #{device.id}"
       )
     else
-      Enum.each(res, fn %{type: type, id: id, ref: ref} ->
-        Channel.broadcast_item_change(type, id, ref)
+      Enum.each(res, fn %{type: type} = item ->
+        Channel.broadcast_item_change(type, item)
       end)
 
       Logger.info(

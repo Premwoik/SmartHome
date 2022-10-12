@@ -1,0 +1,19 @@
+<div class="grid grid-cols-3 gap-3 max-w-auto rounded overflow-hidden shadow-sm my-2 p-2">
+  <div>
+    <%= if @port.state["value"] do %>
+      <img class="w-12 h-12" src="<%= Routes.static_path(@socket, "/images/icons/icons8_toggle_on_96.png") %>"/>
+    <% else %>
+      <img class="w-12 h-12" src="<%= Routes.static_path(@socket, "/images/icons/icons8_toggle_off_96.png") %>"/>
+    <% end %>
+    <h3 class="">Temp: <%= @port.state["temp"] %> C</h3>
+  </div>
+  <h2 class="inline"><%= @port.name %></h2>
+  <%= if @port.state["status"] != "idle" do %> 
+    <h3 class="mt-2 p-2"><%= @port.state["status"] %></h3>
+  <% else %>   
+    <button class="inline mt-2 rounded bg-blue-400 hover:bg-blue-500 text-white p-2 h-10" 
+      phx-click="toggle_other" value="<%= @port.id%>">
+      Włącz 
+    </button>
+  <% end %>
+</div>

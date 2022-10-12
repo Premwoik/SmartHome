@@ -23,10 +23,10 @@ defmodule Core do
 
   def children() do
     [
-#      Core.Scheduler,
-#      Core.Actions,
-#      Core.Mqtt.Supervisor,
-#      Core.Device.Supervisor
+      Core.Scheduler,
+      Core.Actions,
+      Core.Mqtt.Supervisor,
+      Core.Device.Supervisor
     ]
   end
   @doc"""

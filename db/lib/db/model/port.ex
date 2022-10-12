@@ -166,6 +166,15 @@ defmodule DB.Port do
       |> Enum.any?(& &1.state)
     end
 
+    def preload_lights(dimmer) do
+      lights = Port.lights()
+        |> Enum.filter(fn 
+          %{more: %{dimmer_id: {:foreign, Port, id}}} -> id == dimmer.id
+          _otherwise -> false
+        end)
+      Map.put(dimmer, :more, Map.put(dimmer.more, :lights, lights))
+    end
+
     @spec fill_to_time(map, integer) :: integer
     def fill_to_time(%{more: %{fill: fill, direction: dir, time: time}}, new_fill) when fill != new_fill do
       res = (new_fill - fill) * dir

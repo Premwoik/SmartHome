@@ -1,0 +1,201 @@
+<% import UiWeb.SettingsView %>
+<section>
+  <div class="container w-auto">
+    <div class="p-2">
+      <p class="text-xl inline">Zadania</p>
+      <button class="inline rounded bg-blue-400 hover:bg-blue-500 text-white p-1 text-sm" phx-click="toggle_category" value="tasks">
+        <%= if @categories.tasks, do: "Zwiń", else: "Rozwiń"%>
+      </button>
+      <%= if @categories.tasks do %>
+      <%= for j <- @jobs do %>
+        <form id="<%="job_form_#{j.id}"%>" method="POST" action="#" phx-submit="save"></form>
+      <% end %>
+      <table class="table-auto shadow-lg">
+        <thead>
+          <tr>
+          <th>Nazwa</th>
+          <th>Status</th>
+          <th>CRON</th>
+          <th>Format rozszerzony</th>
+          <th>Akcje</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= for {j, index} <- Enum.with_index(@jobs) do %>
+            <%= if rem(index, 2) == 0 do %>
+              <tr>
+            <% else %>
+              <tr class="bg-gray-50">
+            <% end %>
+              <%= hidden_input :job, :id, value: j.id, id: "job_id_#{j.id}", form: "job_form_#{j.id}"%>
+                <td class="px-4 border"><%= j.name %></td>
+                <td class="px-4 border"><%= checkbox :job, :status, value: j.status, id: "job_status_#{j.id}", form: "job_form_#{j.id}" %></td>
+                <td class="px-4 border"><%= text_input :job, :expr, value: j.expr, class: "border", id: "job_expr_#{j.id}", form: "job_form_#{j.id}"%></td>
+                <td class="px-4 border"><%= checkbox :job, :extended, value: j.extended, id: "job_extended_#{j.id}", form: "job_form_#{j.id}"%></td>
+                <td class="px-4 border">
+                  <%= submit "Zapisz", class: "inline rounded bg-blue-400 hover:bg-blue-500 text-white p-2", form: "job_form_#{j.id}"%>
+                  <button type="button" class="inline rounded bg-blue-400 hover:bg-blue-500 text-white p-2" value="<%= j.id %>" phx-click="run" onclick="return confirm('Czy na pewno chcesz wywołać zadanie?');">Wywołaj</button>
+                </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    </div>
+  </div>
+  <div class="container w-auto">
+    <div class="p-2">
+      <p class="text-xl inline">Akcje</p>
+      <button class="inline rounded bg-blue-400 hover:bg-blue-500 text-white p-1 text-sm" phx-click="toggle_category" value="actions">
+        <%= if @categories.actions, do: "Zwiń", else: "Rozwiń"%>
+      </button>
+      <%= if @categories.actions do %>
+      <%= for j <- @actions do %>
+        <form id="<%= "action_form_#{j.id}"%>" method="POST" action="#" phx-submit="save_action"></form>
+      <% end %>
+      <table class="table-auto shadow-lg">
+        <thead>
+          <tr>
+          <th>Nazwa</th>
+          <th>Status</th>
+          <th>Typ</th>
+          <th>Od</th>
+          <th>Do</th>
+          <!--<th>Id aktywatora</th>-->
+          <th>Akcje</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= for {j, index} <- Enum.with_index(@actions) do %>
+            <% form = "action_form_#{j.id}" %>
+            <%= if rem(index, 2) == 0 do %>
+              <tr>
+            <% else %>
+              <tr class="bg-gray-50">
+            <% end %>
+              <%= hidden_input :action, :id, value: j.id, id: "acction_id_#{j.id}", form: form %>
+                <td class="px-4 border"><%= j.name %></td>
+                <td class="px-4 border"><%= checkbox :action, :state, value: j.state, id: "action_state_#{j.id}", form: form %></td>
+                <td class="px-4 border"><%= UiWeb.SettingsView.translate_action_type(j.module) %></td>
+                <td class="px-4 border"><%= time_input :action, :start_time, value: j.start_time, class: "border", id: "action_start_time_#{j.id}", form: form %></td>
+                <td class="px-4 border"><%= time_input :action, :end_time, value: j.end_time, id: "action_end_time_#{j.id}", form: form %></td>
+                <!--<td class="px-4 border"><%= text_input :action, :activator_id, value: j.activator_id, id: "action_activator_id_#{j.id}", form: form %></td>-->
+                <td class="px-4 border">
+                  <%= submit "Zapisz", class: "inline rounded bg-blue-400 hover:bg-blue-500 text-white p-2", form: form %>
+                  <button type="button" class="inline rounded bg-blue-400 hover:bg-blue-500 text-white p-2" value={j.id} phx-click="run_action_high" onclick="return confirm('Czy na pewno chcesz wywołać akcję ze stanem wysokim?');">H</button>
+                  <button type="button" class="inline rounded bg-blue-400 hover:bg-blue-500 text-white p-2" value={j.id} phx-click="run_action_low" onclick="return confirm('Czy na pewno chcesz wywołać akcję ze stanem niskim?');">L</button>
+                </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    </div>
+  </div>
+  <div class="container w-auto">
+    <div class="p-2">
+      <h1 class="text-xl inline">Piloty</h1>
+      <button class="inline rounded bg-blue-400 hover:bg-blue-500 text-white p-1 text-sm" phx-click="toggle_category" value="controllers">
+        <%= if @categories.controllers, do: "Zwiń", else: "Rozwiń"%>
+      </button>
+      <%= if @categories.controllers do %>
+        <%= for %{name: cname, id: cid, cols: cols, buttons: btn_rows} <- @controllers do %>
+          <div class="p-2">
+            <h1>Pilot - <%= cname %> </h1>
+            <%= render(UiWeb.SettingsView, "rf_button_item.html", socket: @socket, selected: @selected, pilot: cid)%>
+            <table class="table-auto shadow-lg">
+              <thead>
+                <tr>
+                <%= for i <- 1..cols do %>
+                  <th class="px-4">Rząd <%=i%></th>
+                <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <%= for row <- btn_rows do %>
+                  <tr>
+                  <%= for btn <- row do %>
+                    <td class="<%= UiWeb.SettingsView.custom_td_class(btn.id, cid, @selected)%>" 
+                      phx-value-pilot="<%= cid %>" phx-value-id="<%= btn.id %>" phx-click="rf_button_select">
+                      <%= UiWeb.SettingsView.rf_button_view(btn) %>
+                    </td>
+                  <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="container w-auto">
+    <div class="p-2">
+      <p class="text-xl inline">Ogrzewanie</p>
+      <button class="inline rounded bg-blue-400 hover:bg-blue-500 text-white p-1 text-sm" phx-click="toggle_category" value="circuts">
+        <%= if @categories.circuts, do: "Zwiń", else: "Rozwiń"%>
+      </button>
+      <%= if @categories.circuts do %>
+      <form id="heating_config_form" method="POST" action="#" phx-submit="save_heating_config"></form>
+      <div class="p-2">
+        <label>Częstotliwość odczytu temperatury (hh:mm:ss):
+          <%= time_input :config, :temp_read_interval, value: time_to_str(@heating_config.temp_read_interval), step: 1, class: "border", form: "heating_config_form"%>
+        </label>
+        <br>
+        <label>Temperatura MIN zbiornika (°C):
+          <%= number_input :config, :boiler_min_temp, value: @heating_config.boiler_min_temp, step: "0.1", class: "border", form: "heating_config_form"%>
+        </label>
+        <%= for {circut_name, circut} <- @heating_config.circuts do %>
+          <% cf = :"config[circuts][#{circut_name}]" %>
+          <div class="p-2">
+            <p class="text-lg font-bold"><%= circut.v_name %></p>
+            <ul class="p-2">
+              <li>
+                <label>Temperatura MAX (°C):
+                  <%= number_input cf, :max_temp, value: circut.max_temp, step: "0.1", class: "border", form: "heating_config_form" %>
+                </label>
+              </li>
+              <li>
+                <label>Temperatura MIN (°C):
+                  <%= number_input cf, :min_temp, value: circut.min_temp, step: "0.1", class: "border", form: "heating_config_form" %>
+                </label>
+              </li>
+              <li>
+                <label>Czas pracy (hh:mm):
+                  <%= time_input cf, :running_duration, value: time_to_str(circut.running_duration), class: "border", form: "heating_config_form" %>
+                </label>
+              </li>
+              <li>
+                <label>Czas przerwy (hh:mm):
+                  <%= time_input cf, :break_duration, value: time_to_str(circut.break_duration), class: "border", form: "heating_config_form" %>
+                </label>
+              </li>
+              <li>
+                <label>Harmonogram:</label>
+                <button class="inline rounded bg-blue-400 hover:bg-blue-500 text-white p-2" phx-click="add_planned_run" phx-value-circut="<%= circut_name %>">Dodaj</button>
+                <%= for {{days, time, duration}, i} <- Enum.with_index(circut.planned_runs) do %>
+                <% hf = :"config[circuts][#{circut.name}][runs][#{i}]" %>
+                <% days2 = if days == :null, do: [:mon, :tue, :wed, :thu, :fri, :sat, :sun], else: days %>
+                <div class="p-2">
+                  <label> Dni
+                    <%= multiple_select hf, :days, ["Pon": :mon, "Wt": :tue, "Śr": :wed, "Czw": :thu, "Pt": :fri, "Sob": :sat, "Nd": :sun], value: days2, class: "border mx-2 p-2", form: "heating_config_form"%>
+                  </label>
+                  <label>Godzina rozpoczęcia:
+                    <%= time_input hf, :time, value: time_to_str(time), class: "border mx-2", form: "heating_config_form"%>
+                  </label>
+                  <label>Czas trwania (hh:mm):
+                    <%= time_input hf, :duration, value: time_to_str(duration), class: "border mx-2", form: "heating_config_form"%>
+                  </label>
+                  <button class="inline rounded bg-blue-400 hover:bg-blue-500 text-white p-2" phx-click="delete_planned_run" phx-value-circut="<%= circut_name %>" phx-value-run="<%= i %>">Usuń</button>
+                </div>
+                <% end %>
+             </li>
+            </ul>
+          </div>
+        <%end%>
+        <%= submit "Zapisz", class: "inline rounded bg-blue-400 hover:bg-blue-500 text-white p-2", form: "heating_config_form"%>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</section>
